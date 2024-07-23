@@ -1,51 +1,16 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
 import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-Future<void> main() async {
-  print("test1");
+import 'package:image_picker/image_picker.dart';
+
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  print("test2");
-  // Firebase Authentication testing
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  print("test3");
-  try {
-    print("test4");
-    // Sign in with email and password
-    final credential = await auth.signInWithEmailAndPassword(
-        email: 'deeplearning402@gmail.com', password: '123456');
-    print("test5");
-    final user = credential.user;
-    print("UserID: ${user?.uid}");
-    print("UserEmail: ${user?.email}");
-    // update user profile
-    await user?.updateDisplayName("Deep Learning");
-    await user?.updatePhotoURL("${user.uid}.jpg");
-    print("UserName: ${user?.displayName}");
-    print("UserPhotoURL: ${user?.photoURL}");
-
-    // Firebase Firestore Database testing
-    var db = FirebaseFirestore.instance;
-    db.collection('users').doc(user?.uid).set({
-      'isHost': true,
-    }).onError((e, _) => print("Error writing document: $e")).then((value) {
-      print("Document written with ID: ${user?.uid}");
-    });
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      print('No user found for that email.');
-    } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
-    }
-  }
 
   runApp(const MyApp());
 }
@@ -151,16 +116,9 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-              onPressed: () async {
-              final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-                      if (image != null) {
-                        var imageName = user?.uid;
-                        var imageFile = File(image.path);
-                        var imageRef = usersRef.child('$imageName.jpg');
-                        var uploadTask = await imageRef.putFile(imageFile);
-                        print('File uploaded: ${uploadTask.ref.fullPath}');
-                      }
-                    },
+              onPressed: () {
+                
+              },
               child: const Text('Select image'),
             ),
           ],
