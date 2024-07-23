@@ -1,13 +1,4 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'firebase_options.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
-import 'package:image_picker/image_picker.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,17 +57,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  User? user = FirebaseAuth.instance.currentUser;
-  // Firebase Storage testing
-  late final Reference storageRef;
-  late final Reference usersRef;
-  late final Reference adsRef;
-
-  _MyHomePageState() {
-    storageRef = FirebaseStorage.instance.ref();
-    usersRef = storageRef.child("photos/users");
-    adsRef = storageRef.child("photos/ads");
-  }
 
   @override
   Widget build(BuildContext context) {
