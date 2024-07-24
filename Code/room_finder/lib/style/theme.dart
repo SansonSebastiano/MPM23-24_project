@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:room_finder/style/color_palette.dart';
+
 class GlobalThemeData {
   static final Color _lightFocusColor =
       const Color.fromARGB(255, 0, 0, 0).withOpacity(0.12);
@@ -23,26 +25,26 @@ class GlobalThemeData {
   }
 
   static const ColorScheme lightColorScheme = ColorScheme(
-    primary: Color.fromARGB(255, 24, 60, 129),
+    primary: ColorPalette.darkConflowerBlue,
     secondary: Color.fromARGB(255, 234, 0, 255),
-    surface: Color.fromARGB(255, 237, 240, 253),
+    surface: ColorPalette.aliceBlue,
     error: Color.fromARGB(255, 242, 17, 17),
-    onPrimary: Color.fromARGB(255, 237, 240, 253),
+    onPrimary: ColorPalette.aliceBlue,
     onSecondary: Color.fromARGB(255, 0, 255, 174),
-    onSurface: Color.fromARGB(255, 9, 31, 72),
-    onError: Color.fromARGB(255, 237, 240, 253),
+    onSurface: ColorPalette.oxfordBlue,
+    onError: ColorPalette.aliceBlue,
     brightness: Brightness.light,
   );
 
   static const ColorScheme darkColorScheme = ColorScheme(
-    primary: Color.fromARGB(255, 237, 240, 253),
+    primary: ColorPalette.aliceBlue,
     secondary: Color.fromARGB(255, 234, 0, 255),
-    surface: Color.fromARGB(255, 9, 31, 72),
+    surface: ColorPalette.oxfordBlue,
     error: Color.fromARGB(255, 242, 17, 17),
-    onPrimary: Color.fromARGB(255, 24, 60, 129),
+    onPrimary: ColorPalette.darkConflowerBlue,
     onSecondary: Color.fromARGB(255, 0, 255, 174),
-    onSurface: Color.fromARGB(255, 237, 240, 253),
-    onError: Color.fromARGB(255, 237, 240, 253),
+    onSurface: ColorPalette.aliceBlue,
+    onError: ColorPalette.aliceBlue,
     brightness: Brightness.dark,
   );
 }
