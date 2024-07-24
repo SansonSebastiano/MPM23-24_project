@@ -1,0 +1,304 @@
+{
+  "@@locale": "en",
+  "lblWelcome": "Welcome to RoomFinder!",
+  "@lblWelcome": {
+    "description": "The welcome label to greet the new user"
+  },
+  "lblWelcomeMessage": "Are you a student looking for a home or a host who wants to make his apartment available? This is the place for you! Use RoomFinder to create or search for the most suitable solutions for you and to fully enjoy university life in your city.",
+  "@lblWelcomeMessage": {
+    "description": "The welcome message to greet the new user"
+  },
+  "btnStart": "Let's start!",
+  "@btnStart": {
+    "description": "The button to start using the app"
+  },
+  "lblWelcomeUser": "Welcome {name}! 😃",
+  "@lblWelcomeUser": {
+    "description": "The welcome message to greet the returning user",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "John"
+      }
+    }
+  },
+  "lblFindRoom": "Find the solution that best suits your needs:",
+  "@lblFindRoom": {
+    "description": "The label to find the best solution for the user"
+  },
+  "lblEnterCity": "Enter a city",
+  "@lblEnterCity": {
+    "description": "The label to enter the city"
+  },
+  "lblExploreSolutions": "Or explore the latest adverts placed:",
+  "@lblExploreSolutions": {
+    "description": "The label to explore the latest adverts"
+  },
+  "btnExpandSolution": "View the solution",
+  "@btnExpandSolution": {
+    "description": "The button to view the solution"
+  },
+  "btnSearch": "Search",
+  "@btnSearch": {
+    "description": "The button to search for a room"
+  },
+  "btnSavedAds": "Saved",
+  "@btnSavedAds": {
+    "description": "The button to view the saved adverts"
+  },
+  "btnChat": "Chat",
+  "@btnChat": {
+    "description": "The button to chat with the hosts"
+  },
+  "btnProfile": "Profile",
+  "@btnProfile": {
+    "description": "The button to view the user profile"
+  },
+  "btnAds": "Ads",
+  "@btnAds": {
+    "description": "The button to view the published adverts"
+  },
+  "lblFilters": "Filters",
+  "lblPriceRange": "Price range",
+  "@lblPriceRange": {
+    "description": "The label to set the price range"
+  },
+  "lblPriceDesc": "Security deposit excluded",
+  "@lblPriceDesc": {
+    "description": "The description to clarify that the security deposit is not included in the price"
+  },
+  "lblMin": "Minimum",
+  "@lblMin": {
+    "description": "The label to set the minimum price"
+  },
+  "lblMax": "Maximum",
+  "@lblMax": {
+    "description": "The label to set the maximum price"
+  },
+  "lblAmenities": "Amenities",
+  "@lblAmenities": {
+    "description": "The label to set the amenities"
+  },
+  "lblShowMore": "Show more",
+  "@lblShowMore": {
+    "description": "The label to show more amenities"
+  },
+  "lblRooms": "Rooms",
+  "@lblRooms": {
+    "description": "The label to set the number of rooms"
+  },
+  "btnApplyFilters": "Apply filters",
+  "@btnApplyFilters": {
+    "description": "The button to apply the selected filters"
+  },
+  "lblCurrentRenters": "Current renters",
+  "@lblCurrentRenters": {
+    "description": "The label to set the number of current renters"
+  },
+  "btnMoreDetails": "More details",
+  "@btnMoreDetails": {
+    "description": "The label to view more details about the room"
+  },
+  "btnRequestInfo": "Request informations",
+  "@btnRequestInfo": {
+    "description": "The button to request more information about the room"
+  },
+  "lblLogin": "Login",
+  "@lblLogin": {
+    "description": "The label to login into the app"
+  },
+  "lblLoginDesc": "Log in to fully use RoomFinder's features",
+  "@lblLoginDesc": {
+    "description": "The description to login into the app"
+  },
+  "lblEmail": "Email",
+  "@lblEmail": {
+    "description": "The label to enter the email"
+  },
+  "lblPassword": "Password",
+  "@lblPassword": {
+    "description": "The label to enter the password"
+  },
+  "lblNoAccount": "Don't have an account?",
+  "@lblNoAccount": {
+    "description": "The label to register a new account"
+  },
+  "btnSignUp": "Sign up",
+  "@btnSignUp": {
+    "description": "The button to register a new account"
+  },
+  "lblRegistration": "Registration",
+  "@lblRegistration": {
+    "description": "The label to register a new account"
+  },
+  "lblAccountType": "Type of account",
+  "@lblAccountType": {
+    "description": "The label to select the type of account"
+  },
+  "btnStudent": "Student",
+  "@btnStudent": {
+    "description": "The label to select the student account"
+  },
+  "btnHost": "Host",
+  "@btnHost": {
+    "description": "The label to select the host account"
+  },
+  "lblName": "Name",
+  "@lblName": {
+    "description": "The label to enter the name"
+  },
+  "lblChoosePswd": "Choose a password",
+  "@lblChoosePswd": {
+    "description": "The label to choose a password"
+  },
+  "lblConfirmPswd": "Confirm your password",
+  "@lblConfirmPswd": {
+    "description": "The label to confirm the password"
+  },
+  "lblCurrRentDesc": "Get to know your future roommates already present in the facility 😊",
+  "@lblCurrRentDesc": {
+    "description": "The description to get to know the current renters"
+  },
+  "lblSavedAds": "Saved adverts",
+  "@lblSavedAds": {
+    "description": "The label to view the saved adverts"
+  },
+  "lblSavedAdsDesc": "Explore and manage all your save adverts",
+  "@lblSavedAdsDesc": {
+    "description": "The description to view the saved adverts"
+  },
+  "lblChat": "Chat",
+  "@lblChat": {
+    "description": "The label to chat with the hosts"
+  },
+  "lblSettings": "Settings",
+  "@lblSettings": {
+    "description": "The label to view the app settings"
+  },
+  "btnPersonalInfo": "Personal information",
+  "@btnPersonalInfo": {
+    "description": "The label to view the personal information"
+  },
+  "btnNotifications": "Notifications",
+  "@btnNotifications": {
+    "description": "The label to view the notifications"
+  },
+  "btnLoginSecurity": "Login & Security",
+  "@btnLoginSecurity": {
+    "description": "The label to view the login and security settings"
+  },
+  "btnTutorial": "Tutorial",
+  "@btnTutorial": {
+    "description": "The label to view the app tutorial"
+  },
+  "lblCreateAds": "Create and manage your offers",
+  "@lblCreateAds": {
+    "description": "The label to create and manage the adverts"
+  },
+  "btnLogout": "Logout",
+  "@btnLogout": {
+    "description": "The button to logout from the app"
+  },
+  "lblAddress": "Select the right spot",
+  "@lblAddress": {
+    "description": "The label to select the address"
+  },
+  "lblEnterAddress": "Enter an address",
+  "@lblEnterAddress": {
+    "description": "The label to enter the address"
+  },
+  "btnNext": "Next",
+  "@btnNext": {
+    "description": "The button to go to the next step"
+  },
+  "lblSetRooms": "Set the rooms",
+  "@lblSetRooms": {
+    "description": "The label to set the number of rooms"
+  },
+  "lblAddRooms": "Add rooms",
+  "@lblAddRooms": {
+    "description": "The label to add more rooms"
+  },
+  "lblManageRenters": "Manage renters",
+  "@lblManageRenters": {
+    "description": "The label to manage the renters"
+  },
+  "lblAddRenters": "Add renters",
+  "@lblAddRenters": {
+    "description": "The label to add more renters"
+  },
+  "btnRemove": "Remove",
+  "@btnRemove": {
+    "description": "The button to remove an item"
+  },
+  "btnEdit": "Edit",
+  "@btnEdit": {
+    "description": "The button to edit an item"
+  },
+  "lblAddEditRenters": "Add or edit renters",
+  "@lblAddEditRenters": {
+    "description": "The label to add or edit the renters"
+  },
+  "lblEnterName": "Enter a name",
+  "@lblEnterName": {
+    "description": "The label to enter the name"
+  },
+  "lblStudies": "Faculty of studies",
+  "@lblStudies": {
+    "description": "The label to enter the faculty of studies"
+  },
+  "lblEnterStudies": "Enter a faculty of studies",
+  "@lblEnterStudies": {
+    "description": "The label to enter the faculty of studies"
+  },
+  "lblInterests": "Interests",
+  "@lblInterests": {
+    "description": "The label to enter the interests"
+  },
+  "lblEnterInterests": "Enter some interests",
+  "@lblEnterInterests": {
+    "description": "The label to enter the interests"
+  },
+  "lblContractDeadline": "Contract deadline",
+  "@lblContractDeadline": {
+    "description": "The label to enter the contract deadline"
+  },
+  "dateContractDeadline": "{date}",
+  "@dateContractDeadline": {
+    "description": "The date to enter the contract deadline",
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  },
+  "btnConfirm": "Confirm",
+  "@btnConfirm": {
+    "description": "The button to confirm the action"
+  },
+  "lblAmenitieService": "Amenities and Services",
+  "@lblAmenitieService": {
+    "description": "The label to set the amenities and services"
+  },
+  "lblSetMonthlyRent": "Set the monthly rent",
+  "@lblSetMonthlyRent": {
+    "description": "The label to set the monthly rent"
+  },
+  "lblAdsTitle": "Let's give yout house title",
+  "@lblAdsTitle": {
+    "description": "The label to set the house title"
+  },
+  "lblEnterTitle": "Enter a title", 
+  "@lblEnterTitle": {
+    "description": "The label to enter the title"
+  },
+  "lblChosePhotos": "Choose photos",
+  "@lblChosePhotos": {
+    "description": "The label to choose the photos"
+  },
+  "btnReviewListing": "Review listing",
+  "@btnReviewListing": {
+    "description": "The button to review the listing"
+  }
+}
