@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A class that contains the color palette used in the app.
 class ColorPalette {
   static const Color oxfordBlue = Color.fromARGB(255, 9, 31, 72);
   static const Color darkConflowerBlue = Color.fromARGB(255, 24, 60, 129);

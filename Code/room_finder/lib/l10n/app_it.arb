@@ -1,6 +1,6 @@
 {
     "@@locale": "it",
-    "lblWelcome": "Benvenuto",
+    "lblWelcome": "Benvenuto su RoomFinder!",
     "lblWelcomeMessage": "Sei uno studente alla ricerca di una casa o un host che vuole mettere a disposizione il suo appartamento? Questo è il posto giusto per te! Usa RoomFinder per creare o cercare le soluzioni più adatte a te e goditi appieno la vita universitaria nella tua città.",
     "btnStart": "Iniziamo!",
     "lblWelcomeUser": "Benvenuto {name}! 😃",
@@ -72,4 +72,5 @@
     "lblEnterTitle": "Inserisci un titolo",
     "lblChosePhotos": "Scegli le foto",
     "btnReviewListing": "Rivedi l'annuncio"
+    
 }

@@ -164,8 +164,8 @@ class _LikeButtonState extends State<LikeButton> {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
-            spreadRadius: 4,
-            blurRadius: 60,
+            spreadRadius: 4.r,
+            blurRadius: 60.r,
           )
         ]
       ),
@@ -173,10 +173,10 @@ class _LikeButtonState extends State<LikeButton> {
         style: ElevatedButton.styleFrom(
           backgroundColor: buttonColor,
           shape: const CircleBorder(),
-          minimumSize: const Size(50, 50), // Fixed dimensions
+          minimumSize: Size(50.w, 50.h), // Fixed dimensions
         ),
         onPressed: _toggleSave,
-        child: Icon(icon, color: iconColor, size: 37),
+        child: Icon(icon, color: iconColor, size: 37.w),
       ),
     );
   }

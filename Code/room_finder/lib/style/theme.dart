@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:room_finder/style/color_palette.dart';
 
+/// A class that contains the global theme data used in the app.
+/// 
+/// This class contains the [lightTheme] and [darkTheme] themes used in the app, as well as the color schemes ([lightColorScheme] and [darkColorScheme]) for each theme.
+/// The light and dark themes changes according to the system preference.
 class GlobalThemeData {
   static final Color _lightFocusColor =
       const Color.fromARGB(255, 0, 0, 0).withOpacity(0.12);
