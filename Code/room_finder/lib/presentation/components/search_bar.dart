@@ -11,7 +11,8 @@ class CustomSearchBar extends StatelessWidget {
   // TODO: check eventually if other parameters are needed
   // TODO: cities autocomplete
 
-  const CustomSearchBar({super.key, required this.width, required this.hintText});
+  const CustomSearchBar(
+      {super.key, required this.width, required this.hintText});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,14 @@ class CustomSearchBar extends StatelessWidget {
             ),
           ),
           hintText: hintText,
-          trailing: const [Icon(Icons.search)],
+          trailing: [
+            IconButton(
+              onPressed: () {
+                // TODO: Implement search functionality
+              },
+              icon: const Icon(Icons.search),
+            )
+          ],
         ),
       );
     }, suggestionsBuilder: (BuildContext context, SearchController controller) {
