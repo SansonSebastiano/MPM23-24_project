@@ -183,30 +183,19 @@ class AddRemoveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 4.r,
-            blurRadius: 60.r,
-          )
-        ]
-      ),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: buttonColor,
-          shape: const CircleBorder(
-            side: BorderSide(
-              color: ColorPalette.oxfordBlue, 
-              width: 2,
-            ),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: buttonColor,
+        shape: const CircleBorder(
+          side: BorderSide(
+            color: ColorPalette.oxfordBlue, 
+            width: 2,
           ),
-          minimumSize: Size(size, size),
         ),
-        onPressed: onPressed,
-        child: Icon(isAddButton ? Icons.add : Icons.remove, color: iconColor, size: size-5),
+        minimumSize: Size(size, size),
       ),
+      onPressed: onPressed,
+      child: Icon(isAddButton ? Icons.add : Icons.remove, color: iconColor, size: size-5),
     );
   }
 }
