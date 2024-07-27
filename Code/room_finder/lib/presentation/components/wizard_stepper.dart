@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 /// [WizardStepper] is a widget that represents the steps of a wizard
 /// [currentStep] is the current step in the wizard
@@ -47,9 +48,9 @@ class _Stepper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Divider(
-        thickness: currentStep == numStep ? 6 : 3,
-        indent: 3,
-        endIndent: 3,
+        thickness: currentStep == numStep ? 6.h : 3.h,
+        indent: 3.w,
+        endIndent: 3.w,
         color: currentStep == numStep
             ? Theme.of(context).colorScheme.onSurface
             : Theme.of(context).colorScheme.onSurface.withOpacity(0.50),
