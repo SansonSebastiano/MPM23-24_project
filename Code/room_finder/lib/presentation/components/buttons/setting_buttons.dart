@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/style/color_palette.dart';
 
+/// The class [SettingButtons] is a widget that represents buttons for the settings page.
+/// It contains a label and an icon to represent a setting.
 class SettingButtons extends StatelessWidget {
   final void Function()? onPressed;
   final String label;

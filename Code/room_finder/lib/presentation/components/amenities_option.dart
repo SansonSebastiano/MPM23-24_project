@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/style/color_palette.dart';
 
+/// The class [AmenitiesOption] is a widget that represents an option for the amenities that a room can have.
+/// It contains a label and a checkbox to select the option.
 class AmenitiesOption extends StatefulWidget {
   final String label;
 
