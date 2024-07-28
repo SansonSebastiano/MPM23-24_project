@@ -307,7 +307,7 @@ class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
 }
 
 
-/// The class [RegistrationPswdTextField] defines an input field to digit the password during login process. 
+/// The class [RegistrationPswdTextField] defines an input field to digit and confirm the password during registration process. 
 class RegistrationPswdTextField extends StatefulWidget {
   const RegistrationPswdTextField({super.key});
 
