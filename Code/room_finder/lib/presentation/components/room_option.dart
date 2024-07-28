@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'buttons/circle_buttons.dart';
 
+/// The [RoomOption] widget defines the component used during the adding rental proposal process to manage the number of rooms present in a specif facility.
+/// When you construct the [RoomOption] widget you need to specify the name of the room that you want to manage.
 class RoomOption extends StatefulWidget {
   const RoomOption({super.key, required this.roomName});
 

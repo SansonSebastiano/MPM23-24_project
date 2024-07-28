@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/style/color_palette.dart';
 
+/// This file contains the implementations of all circle buttons used in the app. 
+
+
+/// This abstract class [CustomButton] defines a standard fixed-size circle button that you can find in the app. The only things that you need to define when you try to implement this class are the following parameters: 
+/// - [buttonColor], the background color of the button;
+/// - [icon], the button icon;
+/// - [iconColor], the color of the icon;
+/// - [onPressed], the onPressed method.
 abstract class CustomButton extends StatelessWidget {
   final void Function() onPressed;
 
@@ -124,7 +132,10 @@ class DeleteButton extends CustomButton {
 }
 
 
-// Info button
+/// The [InfoButton] class defines an helper button, placed near a label, that is used to get more information about the content of the page in which the user is. 
+/// When you try to build an [InfoButton] widget you need to specify parameters:
+/// - [size], the size of the button;
+/// - [onPressed], the onPressed method.
 class InfoButton extends StatelessWidget {
   const InfoButton({
     super.key,
@@ -164,7 +175,11 @@ class InfoButton extends StatelessWidget {
   }
 }
 
-// Add/Remove button
+/// The [AddRemoveButton] class defines a button used to manage the quantity of a specific item in the app (for instance, the number of beds in a facility).
+/// When you try to build an [AddRemoveButton] widget you need to specify some parameters:
+/// - [isAddButton], used to istantiate an add button (= true) or a remove button (= false);
+/// - [size], the size of the button;
+/// - [onPressed], the onPressed method.
 class AddRemoveButton extends StatelessWidget {
   const AddRemoveButton({
     super.key,
@@ -200,7 +215,8 @@ class AddRemoveButton extends StatelessWidget {
   }
 }
 
-// Logout button
+/// The [LogoutButton] class defines a button used to logout from the app.
+/// When you try to build an [LogoutButton] widget you need to specify the [onPressed] parameter corresponding to the onPressed method.
 class LogoutButton extends StatelessWidget {
   const LogoutButton({
     super.key,
@@ -245,7 +261,8 @@ class LogoutButton extends StatelessWidget {
   }
 }
 
-// Bookmark button
+/// The class [BookmarkButton] defines a button that allows to save ads in the app. The button is a Stateful widget, charactherized by the state "isSaved" to understand if the rental proposal has been saved by the user or not.
+/// The only parameter that you have to define when you invoke the [BookmarkButton] constructor is the [size] of the button. 
 class BookmarkButton extends StatefulWidget {
   const BookmarkButton({super.key});
 
