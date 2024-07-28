@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:room_finder/presentation/components/buttons/photo_buttons.dart';
 
@@ -56,7 +57,7 @@ class _RoomPhotoState extends State<RoomPhoto> {
                     Navigator.of(context).pop();
                   },
                 ),
-                const Padding(padding: EdgeInsets.all(8.0)),
+                Padding(padding: EdgeInsets.all(8.0.w)),
                 GestureDetector(
                   child: Text(AppLocalizations.of(context)!.btnCamera),
                   onTap: () {
@@ -113,14 +114,23 @@ class _RoomPhotoState extends State<RoomPhoto> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: display images in a grid of n x 2 (in their own screen)
     return Column(
       children: [
         AddPhotoButton(
             onPressed: showOptionsDialog,
           ),
-          // TODO: display images cropped in a square shape of 150x150 in a matrix of n x 2
-          Center(
-            child: _image == null ? const Text('No Image selected') : Image.file(_image!),
+          _image == null ? const Text('No Image selected') : Card(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0.r),
+            ),
+            child: Image.file(
+              _image!,
+              fit: BoxFit.cover,
+              width: 150.0.w,
+              height: 150.0.h,
+            ),
           ),
       ],
     );
