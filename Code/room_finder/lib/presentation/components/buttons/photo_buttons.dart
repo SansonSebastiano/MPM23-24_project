@@ -4,8 +4,6 @@ import 'package:room_finder/style/color_palette.dart';
 
 /// The class [AddPhotoButton] is a widget that represents a button to add a photo.
 class AddPhotoButton extends StatelessWidget {
-  // TODO: maybe fix the onPressed behavior: it should allow the user to open the camera or gallery to select a photo
-  // This action should not be costumizable
   final void Function()? onPressed;
 
   const AddPhotoButton({super.key, required this.onPressed});

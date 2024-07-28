@@ -59,6 +59,9 @@
     "description": "The button to view the published adverts"
   },
   "lblFilters": "Filters",
+  "@lblFilters": {
+    "description": "The label to set the filters"
+  },
   "lblPriceRange": "Price range",
   "@lblPriceRange": {
     "description": "The label to set the price range"
@@ -300,5 +303,17 @@
   "btnReviewListing": "Review listing",
   "@btnReviewListing": {
     "description": "The button to review the listing"
+  },
+  "lblChooseOption": "Choose an option",
+  "@lblChooseOption": {
+    "description": "Select the source from which you want to upload the photos"
+  },
+  "btnCamera": "Camera",  
+  "@btnCamera": {
+    "description": "The button to take a photo with the camera"
+  },
+  "btnGallery": "Gallery",
+  "@btnGallery": {
+    "description": "The button to select a photo from the gallery"
   }
 }

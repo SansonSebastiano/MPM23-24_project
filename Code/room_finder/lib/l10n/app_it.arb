@@ -71,6 +71,8 @@
     "lblAdsTitle": "Diamo il titolo alla tua casa",
     "lblEnterTitle": "Inserisci un titolo",
     "lblChosePhotos": "Scegli le foto",
-    "btnReviewListing": "Rivedi l'annuncio"
-    
+    "btnReviewListing": "Rivedi l'annuncio",
+    "lblChooseOption": "Scegli un'opzione",
+    "btnCamera": "Fotocamera",
+    "btnGallery": "Galleria"
 }
