@@ -17,7 +17,7 @@ class RectangleButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorPalette.darkConflowerBlue,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
         minimumSize: Size(335.w, 52.h), // Fixed dimensions
       ),
       onPressed: onPressed,

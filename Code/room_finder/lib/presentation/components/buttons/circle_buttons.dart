@@ -152,25 +152,19 @@ class InfoButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 4.r,
-            blurRadius: 60.r,
-          )
-        ]
-      ),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: buttonColor,
-          shape: const CircleBorder(),
-          minimumSize: Size(size, size),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: buttonColor,
+        shape: CircleBorder(
+          side: BorderSide(
+            color: ColorPalette.oxfordBlue, 
+            width: 2.w,
+          ),
         ),
-        onPressed: onPressed,
-        child: Icon(icon, color: iconColor, size: size-5),
+        minimumSize: Size(size, size),
       ),
+      onPressed: onPressed,
+      child: Icon(icon, color: iconColor, size: size-5),
     );
   }
 }
@@ -201,10 +195,10 @@ class AddRemoveButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: buttonColor,
-        shape: const CircleBorder(
+        shape: CircleBorder(
           side: BorderSide(
             color: ColorPalette.oxfordBlue, 
-            width: 2,
+            width: 2.w,
           ),
         ),
         minimumSize: Size(size, size),
