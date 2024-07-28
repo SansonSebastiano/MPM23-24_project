@@ -296,8 +296,8 @@
   "@lblEnterTitle": {
     "description": "The label to enter the title"
   },
-  "lblChosePhotos": "Choose photos",
-  "@lblChosePhotos": {
+  "lblAddPhoto": "Add photo",
+  "@lblAddPhoto": {
     "description": "The label to choose the photos"
   },
   "btnReviewListing": "Review listing",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:room_finder/style/color_palette.dart';
 
@@ -28,6 +29,29 @@ class GlobalThemeData {
       focusColor: focusColor,
       useMaterial3: true,
       brightness: brightness,
+      textTheme: const TextTheme(
+        displayLarge: TextStyle(
+          fontSize: 400,
+          fontWeight: FontWeight.bold,
+        ),
+        displayMedium: TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+        ),
+        displaySmall: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 20,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 16,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 12,
+        ),
+      ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: ColorPalette.darkConflowerBlue,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
@@ -47,7 +71,7 @@ class GlobalThemeData {
     primary: ColorPalette.darkConflowerBlue,
     secondary: ColorPalette.jordyBlue,
     surface: ColorPalette.aliceBlue,
-    error: Color.fromARGB(255, 242, 17, 17),
+    error: Color.fromARGB(255, 255, 55, 55),
     onPrimary: ColorPalette.aliceBlue,
     onSecondary: ColorPalette.aliceBlue,
     onSurface: ColorPalette.oxfordBlue,

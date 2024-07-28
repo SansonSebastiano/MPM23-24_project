@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/style/color_palette.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// The class [AddPhotoButton] is a widget that represents a button to add a photo.
 class AddPhotoButton extends StatelessWidget {
@@ -41,11 +42,11 @@ class AddPhotoButton extends StatelessWidget {
           ColorPalette.lavenderBlue.withOpacity(0.5),
         ),
       ),
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.add_a_photo),
-          Text('Add photo'),
+          const Icon(Icons.add_a_photo),
+          Text(AppLocalizations.of(context)!.lblAddPhoto),
         ],
       ),
     );
