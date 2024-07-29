@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/style/color_palette.dart';
 
-/// This file contains the implementations of all circle buttons used in the app. 
+/// This file contains the implementations of all circle buttons used in the app.
 
-
-/// This abstract class [CustomButton] defines a standard fixed-size circle button that you can find in the app. The only things that you need to define when you try to implement this class are the following parameters: 
+/// This abstract class [CustomButton] defines a standard fixed-size circle button that you can find in the app. The only things that you need to define when you try to implement this class are the following parameters:
 /// - [buttonColor], the background color of the button;
 /// - [icon], the button icon;
 /// - [iconColor], the color of the icon;
@@ -41,7 +40,7 @@ abstract class CustomButton extends StatelessWidget {
           minimumSize: Size(50.w, 50.h), // Fixed dimensions
         ),
         onPressed: onPressed,
-        child: Icon(icon, color: iconColor, size: 37.w),
+        child: Icon(icon, color: iconColor, size: 30.w),
       ),
     );
   }
@@ -111,7 +110,7 @@ class EditButton extends CustomButton {
   Color get buttonColor => ColorPalette.aliceBlue;
 
   @override
-  IconData get icon => Icons.edit_square;
+  IconData get icon => Icons.mode_edit_outlined;
 
   @override
   Color get iconColor => ColorPalette.oxfordBlue;
@@ -131,8 +130,7 @@ class DeleteButton extends CustomButton {
   Color get iconColor => Colors.red;
 }
 
-
-/// The [InfoButton] class defines an helper button, placed near a label, that is used to get more information about the content of the page in which the user is. 
+/// The [InfoButton] class defines an helper button, placed near a label, that is used to get more information about the content of the page in which the user is.
 /// When you try to build an [InfoButton] widget you need to specify parameters:
 /// - [size], the size of the button;
 /// - [onPressed], the onPressed method.
@@ -157,14 +155,14 @@ class InfoButton extends StatelessWidget {
         backgroundColor: buttonColor,
         shape: CircleBorder(
           side: BorderSide(
-            color: ColorPalette.oxfordBlue, 
+            color: ColorPalette.oxfordBlue,
             width: 2.w,
           ),
         ),
         minimumSize: Size(size, size),
       ),
       onPressed: onPressed,
-      child: Icon(icon, color: iconColor, size: size-5),
+      child: Icon(icon, color: iconColor, size: size - 5),
     );
   }
 }
@@ -197,14 +195,15 @@ class AddRemoveButton extends StatelessWidget {
         backgroundColor: buttonColor,
         shape: CircleBorder(
           side: BorderSide(
-            color: ColorPalette.oxfordBlue, 
+            color: ColorPalette.oxfordBlue,
             width: 2.w,
           ),
         ),
         minimumSize: Size(size, size),
       ),
       onPressed: onPressed,
-      child: Icon(isAddButton ? Icons.add : Icons.remove, color: iconColor, size: size-5),
+      child: Icon(isAddButton ? Icons.add : Icons.remove,
+          color: iconColor, size: size - 5),
     );
   }
 }
@@ -226,40 +225,37 @@ class LogoutButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 4.r,
-            blurRadius: 60.r,
-          )
-        ]
-      ),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          spreadRadius: 4.r,
+          blurRadius: 60.r,
+        )
+      ]),
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: buttonColor,
-          minimumSize: Size(127.w, 42.h),
-          maximumSize: Size(127.w, 42.h),
-        ),
-        onPressed: onPressed,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Logout', style: TextStyle(color: Colors.red),),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: buttonColor,
+            minimumSize: Size(127.w, 42.h),
+            maximumSize: Size(127.w, 42.h),
+          ),
+          onPressed: onPressed,
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            const Text(
+              'Logout',
+              style: TextStyle(color: Colors.red),
+            ),
             SizedBox(width: 8.w),
             Icon(icon, color: iconColor, size: 24.w),
-          ]
-        )
-      ),
+          ])),
     );
   }
 }
 
 /// The class [BookmarkButton] defines a button that allows to save ads in the app. The button is a Stateful widget, charactherized by the state "isSaved" to understand if the rental proposal has been saved by the user or not.
-/// The only parameter that you have to define when you invoke the [BookmarkButton] constructor is the [size] of the button. 
+/// The only parameter that you have to define when you invoke the [BookmarkButton] constructor is the [size] of the button.
 class BookmarkButton extends StatefulWidget {
   final double size;
-  
+
   const BookmarkButton({super.key, required this.size});
 
   @override
@@ -276,7 +272,7 @@ class _BookmarkButtonState extends State<BookmarkButton> {
 
   void _toggleSave() {
     setState(() {
-      isSaved = !isSaved;  // Toggle the save state
+      isSaved = !isSaved; // Toggle the save state
       icon = isSaved ? Icons.bookmark : Icons.bookmark_border_outlined;
     });
   }
@@ -284,23 +280,21 @@ class _BookmarkButtonState extends State<BookmarkButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 4.r,
-            blurRadius: 60.r,
-          )
-        ]
-      ),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          spreadRadius: 4.r,
+          blurRadius: 60.r,
+        )
+      ]),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: buttonColor,
           shape: const CircleBorder(),
-          minimumSize: Size(widget.size, widget.size), 
+          minimumSize: Size(widget.size.w, widget.size.h),
         ),
         onPressed: _toggleSave,
-        child: Icon(icon, color: iconColor, size: widget.size-13.w),
+        child: Icon(icon, color: iconColor, size: widget.size - 20.w),
       ),
     );
   }
