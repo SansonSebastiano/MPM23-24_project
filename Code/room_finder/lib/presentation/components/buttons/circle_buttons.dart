@@ -258,7 +258,9 @@ class LogoutButton extends StatelessWidget {
 /// The class [BookmarkButton] defines a button that allows to save ads in the app. The button is a Stateful widget, charactherized by the state "isSaved" to understand if the rental proposal has been saved by the user or not.
 /// The only parameter that you have to define when you invoke the [BookmarkButton] constructor is the [size] of the button. 
 class BookmarkButton extends StatefulWidget {
-  const BookmarkButton({super.key});
+  final double size;
+  
+  const BookmarkButton({super.key, required this.size});
 
   @override
   State<BookmarkButton> createState() => _BookmarkButtonState();
@@ -295,10 +297,10 @@ class _BookmarkButtonState extends State<BookmarkButton> {
         style: ElevatedButton.styleFrom(
           backgroundColor: buttonColor,
           shape: const CircleBorder(),
-          minimumSize: Size(50.w, 50.h), // Fixed dimensions
+          minimumSize: Size(widget.size, widget.size), 
         ),
         onPressed: _toggleSave,
-        child: Icon(icon, color: iconColor, size: 37.w),
+        child: Icon(icon, color: iconColor, size: widget.size-13.w),
       ),
     );
   }

@@ -211,7 +211,7 @@ class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
   // Widget state
   bool _isPswdEmpty = false;
   bool _userInteraction = false;
-  bool _showPswd = false;
+  bool _showPswd = true;
 
   @override
   void initState() {
@@ -328,8 +328,8 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
 
   bool _passwordsMatch = true;
 
-  bool _showChoosePswd = false;
-  bool _showConfirmPswd = false;
+  bool _showChoosePswd = true;
+  bool _showConfirmPswd = true;
 
   @override
   void initState() {
