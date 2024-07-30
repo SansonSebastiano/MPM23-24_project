@@ -9,7 +9,8 @@ import 'package:room_finder/style/color_palette.dart';
 /// - [city], facility city;
 /// - [street], facility address;
 /// - [price], montly price;
-/// - [bookmarkButton], if specified it provides a way to save preferred ads. 
+/// - [bookmarkButton], if specified it provides a way to save preferred ads;
+/// - [onTap], specifies the redirect to the apartment page. 
 class AdsBox extends StatelessWidget {
   final String imageUrl;
   final String city;
