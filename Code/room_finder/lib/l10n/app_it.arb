@@ -59,6 +59,7 @@
     "btnRemove": "Rimuovi",
     "btnEdit": "Modifica",
     "lblAddEditRenters": "Aggiungi o modifica i coinquilini",
+    "lblRenterName": "Nome",
     "lblEnterName": "Inserisci un nome",
     "lblStudies": "Facoltà di studi",
     "lblEnterStudies": "Inserisci la facoltà di studi",
@@ -76,7 +77,7 @@
     "btnCamera": "Fotocamera",
     "btnGallery": "Galleria",
     "lblRenterAge": "Età: ",
-    "lblRenterFacultyOfStudies": "Facoltà di studi: ",
+    "lblRenterStudies": "Facoltà di studi: ",
     "lblRenterInterests": "Interessi: ",
-    "lblRenterContractDeadline": "Termine del contratto: "
+    "lblRenterContract": "Scadenza del contratto: "
 }

@@ -4,7 +4,7 @@ import 'package:room_finder/style/color_palette.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-/// The class [RenterBox] defines a widget that represents a current renter for a specific facility. 
+/// The class [RenterBox] defines a widget that represents a current renter for a specific facility.
 /// The widget is characterized by the following parameters:
 /// - [name];
 /// - [age];
@@ -19,22 +19,21 @@ class RenterBox extends StatelessWidget {
   final int age;
   final String facultyOfStudies;
   final String interests;
-  final DateTime contractDeadline; 
+  final DateTime contractDeadline;
   final bool hostView;
   final void Function()? onEditPressed;
   final void Function()? onRemovePressed;
-  
-  const RenterBox({
-    super.key,
-    required this.name,
-    required this.age,
-    required this.facultyOfStudies,
-    required this.interests,
-    required this.contractDeadline,
-    required this.hostView, 
-    this.onEditPressed,
-    this.onRemovePressed
-  });
+
+  const RenterBox(
+      {super.key,
+      required this.name,
+      required this.age,
+      required this.facultyOfStudies,
+      required this.interests,
+      required this.contractDeadline,
+      required this.hostView,
+      this.onEditPressed,
+      this.onRemovePressed});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +62,7 @@ class RenterBox extends StatelessWidget {
             SizedBox(height: 10.h),
             RichText(
               text: TextSpan(
-                text: AppLocalizations.of(context)!.lblName,
+                text: AppLocalizations.of(context)!.lblRenterAge,
                 style: TextStyle(
                   fontSize: 16.h,
                   fontWeight: FontWeight.bold,
@@ -82,7 +81,7 @@ class RenterBox extends StatelessWidget {
             SizedBox(height: 10.h),
             RichText(
               text: TextSpan(
-                text: 'Faculty of studies: ',
+                text: AppLocalizations.of(context)!.lblRenterStudies,
                 style: TextStyle(
                   fontSize: 16.h,
                   fontWeight: FontWeight.bold,
@@ -101,7 +100,7 @@ class RenterBox extends StatelessWidget {
             SizedBox(height: 10.h),
             RichText(
               text: TextSpan(
-                text: 'Interests: ',
+                text: AppLocalizations.of(context)!.lblRenterInterests,
                 style: TextStyle(
                   fontSize: 16.h,
                   fontWeight: FontWeight.bold,
@@ -120,7 +119,7 @@ class RenterBox extends StatelessWidget {
             SizedBox(height: 10.h),
             RichText(
               text: TextSpan(
-                text: 'Contract deadline: ',
+                text: AppLocalizations.of(context)!.lblRenterContract,
                 style: TextStyle(
                   fontSize: 16.h,
                   fontWeight: FontWeight.bold,
@@ -137,7 +136,9 @@ class RenterBox extends StatelessWidget {
               ),
             ),
             if (hostView) ...[
-              SizedBox(height: 20.h,),
+              SizedBox(
+                height: 20.h,
+              ),
               const Divider(
                 color: ColorPalette.oxfordBlue,
               ),
@@ -149,13 +150,13 @@ class RenterBox extends StatelessWidget {
                       onRemovePressed!();
                     },
                     child: Text(
-                      'Remove',
+                      AppLocalizations.of(context)!.btnRemove,
                       style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 16.h,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                      ),
+                          color: Colors.red,
+                          fontSize: 16.h,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.red),
                     ),
                   ),
                   TextButton(
@@ -163,7 +164,7 @@ class RenterBox extends StatelessWidget {
                       onEditPressed!();
                     },
                     child: Text(
-                      'Edit',
+                      AppLocalizations.of(context)!.btnEdit,
                       style: TextStyle(
                         color: ColorPalette.oxfordBlue,
                         fontSize: 16.h,
