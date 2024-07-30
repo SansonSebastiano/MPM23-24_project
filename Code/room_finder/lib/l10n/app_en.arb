@@ -315,5 +315,9 @@
   "btnGallery": "Gallery",
   "@btnGallery": {
     "description": "The button to select a photo from the gallery"
-  }
+  },
+  "lblRenterAge": "Age: ",
+  "lblRenterFacultyOfStudies:": "Faculty of studies: ",
+  "lblRenterInterests": "Interests: ",
+  "lblRenterContractDeadline": "Contract deadline: "
 }

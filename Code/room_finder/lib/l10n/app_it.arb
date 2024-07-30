@@ -74,5 +74,9 @@
     "btnReviewListing": "Rivedi l'annuncio",
     "lblChooseOption": "Scegli un'opzione",
     "btnCamera": "Fotocamera",
-    "btnGallery": "Galleria"
+    "btnGallery": "Galleria",
+    "lblRenterAge": "Età: ",
+    "lblRenterFacultyOfStudies": "Facoltà di studi: ",
+    "lblRenterInterests": "Interessi: ",
+    "lblRenterContractDeadline": "Termine del contratto: "
 }
