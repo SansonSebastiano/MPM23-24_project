@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:room_finder/style/color_palette.dart';
@@ -30,26 +31,23 @@ class GlobalThemeData {
       brightness: brightness,
       textTheme: const TextTheme(
         displayLarge: TextStyle(
-          fontSize: 400,
-          fontWeight: FontWeight.bold,
-        ),
+            fontSize: 400,
+            fontWeight: FontWeight.bold,
+            color: ColorPalette.darkConflowerBlue),
         displayMedium: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.bold,
-        ),
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: ColorPalette.darkConflowerBlue),
         displaySmall: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 20,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 16,
-        ),
-        bodySmall: TextStyle(
-          fontSize: 12,
-        ),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: ColorPalette.darkConflowerBlue),
+        bodyLarge:
+            TextStyle(fontSize: 20, color: ColorPalette.darkConflowerBlue),
+        bodyMedium:
+            TextStyle(fontSize: 16, color: ColorPalette.darkConflowerBlue),
+        bodySmall:
+            TextStyle(fontSize: 12, color: ColorPalette.darkConflowerBlue),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: ColorPalette.darkConflowerBlue,
@@ -60,6 +58,21 @@ class GlobalThemeData {
         labelTextStyle: WidgetStateProperty.all(
           const TextStyle(
             color: ColorPalette.aliceBlue,
+          ),
+        ),
+      ),
+      cupertinoOverrideTheme: CupertinoThemeData(
+        primaryColor: colorScheme.primary,
+        primaryContrastingColor: colorScheme.onPrimary,
+        scaffoldBackgroundColor: colorScheme.surface,
+        applyThemeToAll: true,
+        brightness: brightness,
+        textTheme: CupertinoTextThemeData(
+          textStyle: TextStyle(
+            color: colorScheme.primary,
+          ),
+          actionTextStyle: TextStyle(
+            color: colorScheme.primary,
           ),
         ),
       ),
