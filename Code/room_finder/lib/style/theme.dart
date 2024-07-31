@@ -31,7 +31,7 @@ class GlobalThemeData {
       brightness: brightness,
       textTheme: const TextTheme(
         displayLarge: TextStyle(
-            fontSize: 400,
+            fontSize: 40,
             fontWeight: FontWeight.bold,
             color: ColorPalette.darkConflowerBlue),
         displayMedium: TextStyle(
@@ -39,7 +39,7 @@ class GlobalThemeData {
             fontWeight: FontWeight.bold,
             color: ColorPalette.darkConflowerBlue),
         displaySmall: TextStyle(
-            fontSize: 16,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             color: ColorPalette.darkConflowerBlue),
         bodyLarge:
@@ -75,6 +75,24 @@ class GlobalThemeData {
             color: colorScheme.primary,
           ),
         ),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: colorScheme.surface,
+        selectedColor: colorScheme.primary,
+        secondarySelectedColor: colorScheme.primary,
+        disabledColor: colorScheme.onSurface.withOpacity(0.38),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.all(4),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        labelStyle: const TextStyle(
+          color: ColorPalette.oxfordBlue,
+        ),
+        secondaryLabelStyle: const TextStyle(
+          color: ColorPalette.aliceBlue,
+        ),
+        brightness: brightness,
       ),
     );
   }

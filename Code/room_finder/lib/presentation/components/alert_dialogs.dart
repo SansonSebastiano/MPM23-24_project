@@ -147,7 +147,9 @@ void _showAndroidDialog({required BuildContext context, required InfoAndroidDial
 }
 
 
-/// A function that shows a dialog based on the platform
+/// A function that shows a dialog based on the platform.
+/// 
+/// It is required to pass an [InfoAndroidDialog] and an [InfoIosDialog] to show the dialog for both platforms.
 void showOptionsDialog({required BuildContext context, required InfoAndroidDialog androidDialog, required InfoIosDialog iosDialog}) {
   if (Theme.of(context).platform == TargetPlatform.android) {
     _showAndroidDialog(

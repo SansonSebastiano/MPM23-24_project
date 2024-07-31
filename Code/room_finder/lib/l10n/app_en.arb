@@ -86,9 +86,21 @@
   "@lblShowMore": {
     "description": "The label to show more amenities"
   },
-  "lblRooms": "Rooms",
-  "@lblRooms": {
-    "description": "The label to set the number of rooms"
+  "lblBedrooms": "Bedrooms",
+  "@lblBedrooms": {
+    "description": "The label to set the number of bedrooms"
+  },
+  "lblBathrooms": "Bathrooms",
+  "@lblBathrooms": {
+    "description": "The label to set the number of bathrooms"
+  },
+  "lblBeds": "Beds",
+  "@lblBeds": {
+    "description": "The label to set the number of beds"
+  },
+  "lblRoommates": "Roommates",
+  "@lblRoommates": {
+    "description": "The label to set the number of roommates"
   },
   "btnApplyFilters": "Apply filters",
   "@btnApplyFilters": {
