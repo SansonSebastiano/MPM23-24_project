@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/style/color_palette.dart';
 import 'buttons/circle_buttons.dart';
 
 /// The [RoomOption] widget defines the component used during the adding rental proposal process to manage the number of rooms present in a specif facility.
 /// When you construct the [RoomOption] widget you need to specify the name of the room that you want to manage.
 class RoomOption extends StatefulWidget {
-  const RoomOption({super.key, required this.roomName});
-
   final String roomName;
+
+  const RoomOption({super.key, required this.roomName});
 
   @override
   State<RoomOption> createState() => _RoomOptionState();
@@ -40,7 +41,7 @@ class _RoomOptionState extends State<RoomOption> {
             if(widget.roomName !="Beds") SizedBox(width: 15.w),
             Text(
               widget.roomName,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 22.w, fontWeight: FontWeight.w500),
             ),
             Expanded(
               child: Row(
@@ -54,7 +55,7 @@ class _RoomOptionState extends State<RoomOption> {
                   SizedBox(width: 10.w),
                   Text(
                     '$counter',
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 20.w, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(width: 10.w),
                   AddRemoveButton(
@@ -73,12 +74,20 @@ class _RoomOptionState extends State<RoomOption> {
             (index) => Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 32.0, top: 10.0),
+                  padding: EdgeInsets.only(left: 32.w, top: 10.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Bedroom ${index + 1}', style: const TextStyle(fontSize: 18)),
-                      const Divider(endIndent: 20),
+                      Text(
+                        'Bedroom ${index + 1}', 
+                        style: TextStyle(
+                          fontSize: 18.w,
+                          color: ColorPalette.oxfordBlue
+                      )),
+                      Divider(
+                        endIndent: 20.w,
+                        color:  const Color.fromRGBO(78, 128, 240, 47),
+                      ),
                       const RoomOption(roomName: 'Beds'),
                     ],
                   ),

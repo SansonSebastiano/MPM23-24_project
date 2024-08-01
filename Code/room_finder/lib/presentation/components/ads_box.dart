@@ -17,7 +17,7 @@ class AdsBox extends StatelessWidget {
   final String street;
   final double price;
   final BookmarkButton? bookmarkButton;
-  final VoidCallback onTap;
+  final void Function() onPressed;
 
   const AdsBox({
     super.key,
@@ -26,13 +26,13 @@ class AdsBox extends StatelessWidget {
     required this.street,
     required this.price,
     this.bookmarkButton,
-    required this.onTap
+    required this.onPressed
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: onPressed,
       child: Container(
         width: 337.w,
         height: 318.h,

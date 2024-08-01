@@ -6,7 +6,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// This class contains the [SwitchTypeAccountButton] widget, which is a switch button that allows the user to select between two predifined options. 
 class SwitchTypeAccountButton extends StatefulWidget {
-  const SwitchTypeAccountButton({super.key});
+  final void Function() onPressed;
+  
+  const SwitchTypeAccountButton({super.key, required this.onPressed});
 
   @override
   State<SwitchTypeAccountButton> createState() => _SwitchTypeAccountButtonState();
@@ -33,7 +35,7 @@ class _SwitchTypeAccountButtonState extends State<SwitchTypeAccountButton> {
                     color: ColorPalette.oxfordBlue
                   ),
                 ),
-                InfoButton(size: 30.w, onPressed: () {})
+                InfoButton(size: 30.w, onPressed: widget.onPressed)
               ]
             ),
           ),
