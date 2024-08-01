@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/presentation/components/amenities_option.dart';
+import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -9,32 +10,36 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// The filter panel contains a [title] and a list of [items].
 abstract class BaseFilterPanel extends StatelessWidget {
   final String title;
+  final String btnLabel;
 
-  const BaseFilterPanel({super.key, required this.title});
+  const BaseFilterPanel(
+      {super.key, required this.title, required this.btnLabel});
 
   Widget get items;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 20.h),
-            _FilterTitle(
-              title: title,
+      child: Column(
+        children: [
+          SizedBox(height: 20.h),
+          _FilterTitle(
+            title: title,
+          ),
+          SizedBox(height: 10.h),
+          const Divider(
+            thickness: 1,
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: items,
             ),
-            SizedBox(height: 10.h),
-            const Divider(
-              thickness: 2,
-            ),
-            SizedBox(height: 20.h),
-            items,
-            // TODO: add confirm button
-            // SizedBox(height: 20.h),
-            // ElevatedButton(onPressed: () {}, child: const Text('Apply Filters'))
-          ],
-        ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+            child: RectangleButton(label: btnLabel, onPressed: () {}),
+          )
+        ],
       ),
     );
   }
@@ -141,7 +146,10 @@ class SearchFilterPanel extends BaseFilterPanel {
   final BuildContext context;
 
   const SearchFilterPanel(
-      {super.key, required this.context, required super.title});
+      {super.key,
+      required this.context,
+      required super.title,
+      required super.btnLabel});
 
   @override
   Widget get items => Column(
@@ -153,6 +161,19 @@ class SearchFilterPanel extends BaseFilterPanel {
           ),
           _AmenitiesItem(
             itemTitle: AppLocalizations.of(context)!.lblAmenities,
+            amenitiesOptions: [
+              AmenitiesOption(label: AppLocalizations.of(context)!.lblWiFi),
+              AmenitiesOption(
+                  label: AppLocalizations.of(context)!.lblDishwasher),
+              AmenitiesOption(
+                  label: AppLocalizations.of(context)!.lblWashingMachine),
+              AmenitiesOption(label: AppLocalizations.of(context)!.lblDryer),
+              AmenitiesOption(
+                  label: AppLocalizations.of(context)!.lblDedicatedParking),
+              AmenitiesOption(
+                  label: AppLocalizations.of(context)!.lblAirConditioning),
+              AmenitiesOption(label: AppLocalizations.of(context)!.lblHeating),
+            ],
           ),
           _RoomsItem(
             itemTitle: AppLocalizations.of(context)!.lblBedrooms,
@@ -224,7 +245,6 @@ class _CustomRangeSliderState extends State<_CustomRangeSlider> {
 class _PriceRangeItem extends _FilterItem {
   final BuildContext context;
 
-  // ignore: unused_element
   const _PriceRangeItem(
       {required this.context, required super.itemTitle, super.itemDesc});
 
@@ -237,24 +257,15 @@ class _PriceRangeItem extends _FilterItem {
 }
 
 class _AmenitiesItem extends _FilterItem {
-  // ignore: unused_element
-  _AmenitiesItem({required super.itemTitle, super.itemDesc});
+  final List<AmenitiesOption> amenitiesOptions;
 
-  // TODO: to be parametrized
-  final List<AmenitiesOption> amenitiesOptions = <AmenitiesOption>[
-    const AmenitiesOption(label: 'label'),
-    const AmenitiesOption(label: 'label'),
-    const AmenitiesOption(label: 'label'),
-    const AmenitiesOption(label: 'label'),
-    const AmenitiesOption(label: 'label'),
-    const AmenitiesOption(label: 'label'),
-  ];
+  const _AmenitiesItem(
+      {required super.itemTitle, required this.amenitiesOptions});
 
   @override
   Widget get content {
     return SizedBox(
       height: 100.h,
-      // TODO: maybe change the widget in order to get data from firebase and limit the number of amenities, then add the possibility to show more options
       child: ListView.builder(
           shrinkWrap: true,
           itemCount: amenitiesOptions.length,
@@ -266,7 +277,7 @@ class _AmenitiesItem extends _FilterItem {
 }
 
 /// Customization of the [ChoiceChip] widget.
-/// 
+///
 /// It allows to select only one option at a time from a list of options [any, 1, 2, 3, 4, 5].
 class _CustomChoiceChip extends StatefulWidget {
   const _CustomChoiceChip();
@@ -277,7 +288,7 @@ class _CustomChoiceChip extends StatefulWidget {
 
 class _CustomChoiceChipState extends State<_CustomChoiceChip> {
   int _selectedIndex = 0;
-  final List<String> _options = <String>['Any', '1', '2', '3', '4', '5'];
+  final List<String> _options = <String>['Any', '1', '2', '3', '4'];
 
   @override
   Widget build(BuildContext context) {
@@ -299,13 +310,12 @@ class _CustomChoiceChipState extends State<_CustomChoiceChip> {
 }
 
 /// Create a filter item for the number of rooms.
-/// 
+///
 /// The filter item allows to select the number of rooms from a list of options [any, 1, 2, 3, 4, 5].
-/// 
+///
 /// The [content] is a [_CustomChoiceChip] widget.
 class _RoomsItem extends _FilterItem {
-  // ignore: unused_element
-  const _RoomsItem({required super.itemTitle, super.itemDesc});
+  const _RoomsItem({required super.itemTitle});
 
   @override
   Widget get content {
@@ -313,4 +323,4 @@ class _RoomsItem extends _FilterItem {
   }
 }
 
-// TODO: DatePicker for the initial date of the contract
+// Panel for add/edit renters

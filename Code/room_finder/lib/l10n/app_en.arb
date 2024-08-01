@@ -347,5 +347,37 @@
   "lblRenterContract": "Contract deadline: ",
   "@lblRenterContract": {
     "description": "The label to enter the contract deadline"
+  },
+  "lblWiFi": "Wi-Fi",
+  "@lblWiFi": {
+    "description": "The label to set the Wi-Fi"
+  },
+  "lblDishwasher": "Dishwasher",
+  "@lblDishwasher": {
+    "description": "The label to set the dishwasher"
+  },
+  "lblWashingMachine": "Washing machine",
+  "@lblWashingMachine": {
+    "description": "The label to set the washing machine"
+  },
+  "lblDedicatedParking": "Dedicated parking",
+  "@lblDedicatedParking": {
+    "description": "The label to set the dedicated parking"
+  },
+  "lblDryer": "Dryer",
+  "@lblDryer": {
+    "description": "The label to set the dryer"
+  },
+  "lblAirConditioning": "Air conditioning",
+  "@lblAirConditioning": {
+    "description": "The label to set the air conditioning"
+  },
+  "lblHeating": "Heating",
+  "@lblHeating": {
+    "description": "The label to set the heating"
+  },
+  "lblStartContract": "Start contract",
+  "@lblStartContract": {
+    "description": "The label to set the start of the contract"
   }
 }

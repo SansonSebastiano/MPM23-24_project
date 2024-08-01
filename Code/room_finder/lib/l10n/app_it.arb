@@ -82,5 +82,13 @@
     "lblRenterAge": "Età: ",
     "lblRenterStudies": "Facoltà di studi: ",
     "lblRenterInterests": "Interessi: ",
-    "lblRenterContract": "Scadenza del contratto: "
+    "lblRenterContract": "Scadenza del contratto: ",
+    "lblWiFi": "Wi-Fi",
+    "lblDishwasher": "Lavastoviglie",
+    "lblWashingMachine": "Lavatrice",
+    "lblDedicatedParking": "Parcheggio dedicato",
+    "lblDryer": "Asciugatrice",
+    "lblAirConditioning": "Aria condizionata",
+    "lblHeating": "Riscaldamento",
+    "lblStartContract": "Inizio del contratto"
 }
