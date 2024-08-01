@@ -1,148 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/presentation/components/amenities_option.dart';
-import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
-import 'package:room_finder/style/color_palette.dart';
+import 'package:room_finder/presentation/components/base_panel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-/// Create a filter panel implementing the [BaseFilterPanel] abstract class.
-/// The filter panel contains a [title] and a list of [items].
-abstract class BaseFilterPanel extends StatelessWidget {
-  final String title;
-  final String btnLabel;
-
-  const BaseFilterPanel(
-      {super.key, required this.title, required this.btnLabel});
-
-  Widget get items;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        children: [
-          SizedBox(height: 20.h),
-          _FilterTitle(
-            title: title,
-          ),
-          SizedBox(height: 10.h),
-          const Divider(
-            thickness: 1,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: items,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            child: RectangleButton(label: btnLabel, onPressed: () {}),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-/// Show the filter panel.
+/// [SearchFilterPanel] is a filter panel that contains a list of filter items, in order to filter the search results.
 ///
-/// The [filterPanel] is the panel to be shown.
+/// The filter items are:
 ///
-/// The [context] is the context of the app.
-Future showFilterPanel(
-    {required BuildContext context, required BaseFilterPanel filterPanel}) {
-  return showModalBottomSheet(
-    useSafeArea: true,
-    isScrollControlled: true,
-    context: context,
-    backgroundColor: ColorPalette.lavenderBlue,
-    builder: (BuildContext context) {
-      return filterPanel;
-    },
-  );
-}
-
-/// Create a [title] for the filter panel.
-class _FilterTitle extends StatelessWidget {
-  final String title;
-
-  const _FilterTitle({required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.close)),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.displaySmall,
-        ),
-        const Visibility(
-            visible: false,
-            maintainSize: true,
-            maintainAnimation: true,
-            maintainState: true,
-            child: IconButton(onPressed: null, icon: Icon(Icons.close))),
-      ],
-    );
-  }
-}
-
-/// Create a filter item implementing the [_FilterItem] abstract class.
-/// The filter item requires a [itemTitle] and an optional [itemDesc].
-/// The [content] is the main content of the filter item.
-abstract class _FilterItem extends StatelessWidget {
-  final String itemTitle;
-  final String? itemDesc;
-
-  const _FilterItem({
-    // ignore: unused_element
-    required this.itemTitle,
-    this.itemDesc = '',
-  });
-
-  Widget get content;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.only(left: 26.w),
-            child: RichText(
-              text: TextSpan(
-                text: itemTitle,
-                style: Theme.of(context).textTheme.displaySmall,
-                children: [
-                  TextSpan(
-                    text: '\n$itemDesc',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        content,
-        SizedBox(height: 20.h),
-        const Divider(
-          indent: 20,
-          endIndent: 20,
-        ),
-      ],
-    );
-  }
-}
-
-// Creation of the filters panels.
-
-class SearchFilterPanel extends BaseFilterPanel {
+/// - Price range
+///
+/// - Amenities
+///
+/// - Bedrooms
+///
+/// - Beds
+///
+/// - Bathrooms
+///
+/// - Roommates
+class SearchFilterPanel extends BaseModalPanel {
   final BuildContext context;
 
   const SearchFilterPanel(
@@ -242,7 +119,7 @@ class _CustomRangeSliderState extends State<_CustomRangeSlider> {
 }
 
 /// Create a price range filter item.
-class _PriceRangeItem extends _FilterItem {
+class _PriceRangeItem extends PanelItem {
   final BuildContext context;
 
   const _PriceRangeItem(
@@ -256,7 +133,8 @@ class _PriceRangeItem extends _FilterItem {
   }
 }
 
-class _AmenitiesItem extends _FilterItem {
+/// Create a filter item for the amenities.
+class _AmenitiesItem extends PanelItem {
   final List<AmenitiesOption> amenitiesOptions;
 
   const _AmenitiesItem(
@@ -314,7 +192,7 @@ class _CustomChoiceChipState extends State<_CustomChoiceChip> {
 /// The filter item allows to select the number of rooms from a list of options [any, 1, 2, 3, 4, 5].
 ///
 /// The [content] is a [_CustomChoiceChip] widget.
-class _RoomsItem extends _FilterItem {
+class _RoomsItem extends PanelItem {
   const _RoomsItem({required super.itemTitle});
 
   @override
@@ -322,5 +200,3 @@ class _RoomsItem extends _FilterItem {
     return const _CustomChoiceChip();
   }
 }
-
-// Panel for add/edit renters
