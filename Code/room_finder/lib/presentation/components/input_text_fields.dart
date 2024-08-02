@@ -515,3 +515,82 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
     );
   }
 }
+
+
+/// The class [MessageInputField] defines the input text field to digit and send a new message in a chat page.
+class MessageInputField extends StatefulWidget {
+  final void Function() onTap;
+
+  const MessageInputField({
+    super.key,
+    required this.onTap,
+  });
+
+  @override
+  State<MessageInputField> createState() => _MessageInputFieldState();
+}
+
+class _MessageInputFieldState extends State<MessageInputField> {
+  late TextEditingController _controller;
+  
+  // Widget state
+  bool _isButtonActive = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+
+    _controller.addListener(() {
+      setState(() {
+        _isButtonActive = _controller.text.isNotEmpty;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: _controller,
+            minLines: 1,
+            maxLines: 6,
+            decoration: InputDecoration(
+              hintText: 'Write a message',
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25.r),
+                borderSide: BorderSide(
+                  color: const Color.fromRGBO(9, 31, 72, 70),
+                  width: 3.w,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(25.r),
+                borderSide: BorderSide(
+                  color: const Color.fromRGBO(9, 31, 72, 70),
+                  width: 3.w,
+                ),
+              ),
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.send),
+                color: _isButtonActive ? ColorPalette.oxfordBlue : ColorPalette.lavenderBlue,
+                onPressed: _isButtonActive ? widget.onTap : null,
+                padding: EdgeInsets.all(8.w),
+                iconSize: 20.w,
+                splashRadius: 24.w,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

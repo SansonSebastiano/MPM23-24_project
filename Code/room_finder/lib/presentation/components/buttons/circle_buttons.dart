@@ -65,7 +65,7 @@ class DarkBackButton extends CustomButton {
   const DarkBackButton({super.key, required super.onPressed});
 
   @override
-  Color get buttonColor => ColorPalette.oxfordBlue;
+  Color get buttonColor => const Color.fromRGBO(24, 60, 129, 90);
 
   @override
   IconData get icon => Icons.arrow_back;
@@ -79,7 +79,7 @@ class FilterButton extends CustomButton {
   const FilterButton({super.key, required super.onPressed});
 
   @override
-  Color get buttonColor => ColorPalette.oxfordBlue;
+  Color get buttonColor => const Color.fromRGBO(24, 60, 129, 90);
 
   @override
   IconData get icon => Icons.filter_alt_outlined;
@@ -93,7 +93,7 @@ class CancelButton extends CustomButton {
   const CancelButton({super.key, required super.onPressed});
 
   @override
-  Color get buttonColor => ColorPalette.oxfordBlue;
+  Color get buttonColor => const Color.fromRGBO(24, 60, 129, 90);
 
   @override
   IconData get icon => Icons.close;
