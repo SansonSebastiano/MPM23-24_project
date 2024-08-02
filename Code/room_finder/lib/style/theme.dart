@@ -22,6 +22,7 @@ class GlobalThemeData {
   static ThemeData themeData(
       ColorScheme colorScheme, Color focusColor, Brightness brightness) {
     return ThemeData(
+      fontFamily: 'Poppins',
       colorScheme: colorScheme,
       canvasColor: colorScheme.surface,
       scaffoldBackgroundColor: colorScheme.surface,

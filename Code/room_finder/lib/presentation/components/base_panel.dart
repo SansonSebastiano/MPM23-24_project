@@ -44,18 +44,18 @@ abstract class BaseModalPanel extends StatelessWidget {
 
 /// Show the filter panel.
 ///
-/// The [filterPanel] is the panel to be shown.
+/// The [panel] is the panel to be shown.
 ///
 /// The [context] is the context of the app.
 Future showModalPanel(
-    {required BuildContext context, required BaseModalPanel filterPanel}) {
+    {required BuildContext context, required BaseModalPanel panel}) {
   return showModalBottomSheet(
     useSafeArea: true,
     isScrollControlled: true,
     context: context,
     backgroundColor: ColorPalette.lavenderBlue,
     builder: (BuildContext context) {
-      return filterPanel;
+      return panel;
     },
   );
 }
