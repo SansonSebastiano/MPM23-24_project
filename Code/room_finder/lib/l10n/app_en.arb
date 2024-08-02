@@ -379,5 +379,18 @@
   "lblStartContract": "Start contract",
   "@lblStartContract": {
     "description": "The label to set the start of the contract"
+  },
+  "lblConnectioError": "Connection error",
+  "lblConnectionErrorDesc": "Please check your network connection and try again",
+  "@lblConnectioError": {
+    "description": "The error message to show when there is a connection error"
+  },
+  "lblGenericError": "An error occurred \nPlease try again later",
+  "@lblGenericError": {
+    "description": "The error message to show when there is a generic error"
+  },
+  "lblNoResults": "No results found",
+  "@lblNoResults": {
+    "description": "The message to show when there are no results"
   }
 }
