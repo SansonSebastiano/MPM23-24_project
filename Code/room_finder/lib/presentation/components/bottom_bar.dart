@@ -7,10 +7,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// The label is used to describe the destination.
 /// The icon is used to represent the destination.
 /// [isHost] is a boolean value that determines if the user is a host, in order to display the correct destinations.
-class CustomNavigationBar extends StatefulWidget {
-  final bool isHost;
+abstract class CustomNavigationBar extends StatefulWidget {
+  const CustomNavigationBar({super.key});
 
-  const CustomNavigationBar({super.key, required this.isHost});
+  bool get isHost;
 
   @override
   State<CustomNavigationBar> createState() => _CustomNavigationBarState();
@@ -24,7 +24,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     final List<Widget> studentDestination = [
       NavigationDestination(
         icon: const Icon(Icons.search),
-        label: AppLocalizations.of(context)!.lblEnterCity,
+        label: AppLocalizations.of(context)!.btnSearch,
       ),
       NavigationDestination(
         icon: const Icon(Icons.bookmark_border_outlined),
@@ -65,4 +65,18 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
       selectedIndex: currentPageIndex,
     );
   }
+}
+
+class StudentNavigationBar extends CustomNavigationBar {
+  const StudentNavigationBar({super.key});
+
+  @override
+  bool get isHost => false;
+}
+
+class HostNavigationBar extends CustomNavigationBar {
+  const HostNavigationBar({super.key});
+
+  @override
+  bool get isHost => true;
 }
