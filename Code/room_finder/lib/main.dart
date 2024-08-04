@@ -4,17 +4,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:room_finder/presentation/components/bottom_bar.dart';
-import 'package:room_finder/presentation/components/error_messages.dart';
+import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:room_finder/style/theme.dart';
-import 'package:room_finder/util/network_handler.dart';
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   // Set the device orientation to portrait
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) => runApp(const ProviderScope(child: MyApp(),)));
+      .then((_) => runApp(const ProviderScope(
+            child: MyApp(),
+          )));
 }
 
 class MyApp extends StatelessWidget {
@@ -40,34 +39,32 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends ConsumerStatefulWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
   MyHomePageState createState() => MyHomePageState();
 }
 
-class MyHomePageState extends ConsumerState<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    var connectivityStatusProvider = ref.watch(networkAwareProvider);
-    
     return ScreenUtilInit(
       builder: (BuildContext context, Widget? child) {
-        return 
-        Scaffold(
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                connectivityStatusProvider == NetworkStatus.off
-                    ? NoInternetErrorMessage(context: context)
-                    : const CircularProgressIndicator(),
-              ],
-            ),
-          ),
-          bottomNavigationBar: const StudentNavigationBar(),
-        );
+        return const StudentTemplateScreen();
+        // Scaffold(
+        //   body: Center(
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: <Widget>[
+        //         connectivityStatusProvider == NetworkStatus.off
+        //             ? NoInternetErrorMessage(context: context)
+        //             : const CircularProgressIndicator(),
+        //       ],
+        //     ),
+        //   ),
+        //   bottomNavigationBar: const StudentNavigationBar(),
+        // );
       },
       designSize: const Size(393, 852),
     );
