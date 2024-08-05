@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/screens/chat_detail_page.dart';
 import 'package:room_finder/style/color_palette.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'dart:async';
 import 'package:after_layout/after_layout.dart';
@@ -23,14 +24,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     if (seen) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-            builder: (context) => ChatDetailPage(
-                  receiverImageUrl:
-                      "https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8",
-                  receiverName: "Giorgia Rossi",
-                  facilityName: "Casa Dolce Casa",
-                  lastMessage: DateTime(2024, 10, 2),
-                  onTap: () {},
-                )),
+            builder: (context) => const IntroScreen()),
       );
     } else {
       Navigator.of(context).pushReplacement(
@@ -55,7 +49,7 @@ class IntroScreen extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('seen', true);
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => IntroScreen()),
+      MaterialPageRoute(builder: (context) => const IntroScreen()), // replace with homepage
     );
   }
 
@@ -70,7 +64,7 @@ class IntroScreen extends StatelessWidget {
             children: [
               const Spacer(flex: 2),
               Text(
-                'Welcome to RoomFinder!',
+                AppLocalizations.of(context)!.lblWelcome,
                 style: TextStyle(
                   fontSize: 24.h,
                   fontWeight: FontWeight.bold,
@@ -86,7 +80,7 @@ class IntroScreen extends StatelessWidget {
               ),
               const Spacer(flex: 2),
               Text(
-                'Are you a student looking for a home or a host who wants to make his apartment available?',
+                AppLocalizations.of(context)!.lblWelcomeMessage1,
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: ColorPalette.oxfordBlue,
@@ -95,7 +89,7 @@ class IntroScreen extends StatelessWidget {
               ),
               SizedBox(height: 10.h),
               Text(
-                'This is the place for you!',
+                AppLocalizations.of(context)!.lblWelcomeMessage2,
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: ColorPalette.oxfordBlue,
@@ -103,17 +97,30 @@ class IntroScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 10.h),
-              Text(
-                'Use RoomFinder to create or search for the most suitable solutions for you and to fully enjoy university life in your city.',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: ColorPalette.oxfordBlue,
-                ),
+              RichText(
                 textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.lblWelcomeMessage3,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: ColorPalette.oxfordBlue,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.lblWelcomeMessage4, 
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold
+                      )
+                    ),
+                    TextSpan(
+                      text: AppLocalizations.of(context)!.lblWelcomeMessage5, 
+                    ),
+                  ],
+                ),
               ),
               const Spacer(flex: 2),
               RectangleButton(
-                label: "Let's start",
+                label: AppLocalizations.of(context)!.btnStart,
                 onPressed: () => _onStartPressed(context),
               ),
               const Spacer(flex: 2),
