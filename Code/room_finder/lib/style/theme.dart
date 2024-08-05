@@ -32,23 +32,20 @@ class GlobalThemeData {
       brightness: brightness,
       textTheme: const TextTheme(
         displayLarge: TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-            color: ColorPalette.darkConflowerBlue),
+          fontSize: 40,
+          fontWeight: FontWeight.bold,
+        ),
         displayMedium: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: ColorPalette.darkConflowerBlue),
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+        ),
         displaySmall: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: ColorPalette.darkConflowerBlue),
-        bodyLarge:
-            TextStyle(fontSize: 20, color: ColorPalette.darkConflowerBlue),
-        bodyMedium:
-            TextStyle(fontSize: 16, color: ColorPalette.darkConflowerBlue),
-        bodySmall:
-            TextStyle(fontSize: 12, color: ColorPalette.darkConflowerBlue),
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        bodyLarge: TextStyle(fontSize: 20),
+        bodyMedium: TextStyle(fontSize: 16),
+        bodySmall: TextStyle(fontSize: 12),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: ColorPalette.darkConflowerBlue,

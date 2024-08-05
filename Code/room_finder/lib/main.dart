@@ -51,7 +51,13 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: (BuildContext context, Widget? child) {
-        return const StudentTemplateScreen();
+        return HostTemplateScreen(
+          screenLabel: AppLocalizations.of(context)!.lblChat,
+          screenContent: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[],
+          ),
+        );
         // Scaffold(
         //   body: Center(
         //     child: Column(
