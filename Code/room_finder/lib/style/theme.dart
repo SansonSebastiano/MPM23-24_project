@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:room_finder/style/color_palette.dart';
 
@@ -30,22 +31,22 @@ class GlobalThemeData {
       focusColor: focusColor,
       useMaterial3: true,
       brightness: brightness,
-      textTheme: const TextTheme(
+      textTheme: TextTheme(
         displayLarge: TextStyle(
-          fontSize: 40,
+          fontSize: 40.sp,
           fontWeight: FontWeight.bold,
         ),
         displayMedium: TextStyle(
-          fontSize: 30,
+          fontSize: 30.sp,
           fontWeight: FontWeight.bold,
         ),
         displaySmall: TextStyle(
-          fontSize: 20,
+          fontSize: 20.sp,
           fontWeight: FontWeight.bold,
         ),
-        bodyLarge: TextStyle(fontSize: 20),
-        bodyMedium: TextStyle(fontSize: 16),
-        bodySmall: TextStyle(fontSize: 12),
+        bodyLarge: TextStyle(fontSize: 20.sp),
+        bodyMedium: TextStyle(fontSize: 16.sp),
+        bodySmall: TextStyle(fontSize: 12.sp),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: ColorPalette.darkConflowerBlue,
