@@ -4,8 +4,24 @@
   "@lblWelcome": {
     "description": "The welcome label to greet the new user"
   },
-  "lblWelcomeMessage": "Are you a student looking for a home or a host who wants to make his apartment available? This is the place for you! Use RoomFinder to create or search for the most suitable solutions for you and to fully enjoy university life in your city.",
+  "lblWelcomeMessage1": "Are you a student looking for a home or a host who wants to make his apartment available?",
   "@lblWelcomeMessage": {
+    "description": "The welcome message to greet the new user"
+  },
+  "lblWelcomeMessage2": "This is the place for you!",
+  "@lblWelcomeMessage2": {
+    "description": "The welcome message to greet the new user"
+  },
+  "lblWelcomeMessage3": "Use ",
+  "@lblWelcomeMessage3": {
+    "description": "The welcome message to greet the new user"
+  },
+  "lblWelcomeMessage4": "RoomFinder ",
+  "@lblWelcomeMessage4": {
+    "description": "The welcome message to greet the new user"
+  },
+  "lblWelcomeMessage5": "to create or search for the most suitable solutions for you and to fully enjoy university life in your city.",
+  "@lblWelcomeMessage5": {
     "description": "The welcome message to greet the new user"
   },
   "btnStart": "Let's start!",

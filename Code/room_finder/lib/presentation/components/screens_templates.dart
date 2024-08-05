@@ -24,7 +24,10 @@ abstract class MainTemplateScreen extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(title,
-                      style: Theme.of(context).textTheme.displayMedium),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(fontSize: 30.sp)),
                 ),
               ),
               content,
@@ -42,7 +45,8 @@ class StudentTemplateScreen extends MainTemplateScreen {
   final String screenLabel;
   final Widget screenContent;
 
-  const StudentTemplateScreen({super.key, required this.screenLabel, required this.screenContent});
+  const StudentTemplateScreen(
+      {super.key, required this.screenLabel, required this.screenContent});
 
   @override
   bool get isHost => false;
@@ -58,7 +62,8 @@ class HostTemplateScreen extends MainTemplateScreen {
   final String screenLabel;
   final Widget screenContent;
 
-  const HostTemplateScreen({super.key, required this.screenLabel, required this.screenContent});
+  const HostTemplateScreen(
+      {super.key, required this.screenLabel, required this.screenContent});
 
   @override
   bool get isHost => true;

@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
+import 'package:room_finder/presentation/screens/splash_page.dart';
 import 'package:room_finder/style/theme.dart';
 
 void main() {
@@ -51,8 +52,8 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: (BuildContext context, Widget? child) {
-        return HostTemplateScreen(
-          screenLabel: AppLocalizations.of(context)!.lblChat,
+        return StudentTemplateScreen(
+          screenLabel: AppLocalizations.of(context)!.lblWelcomeUser("John"),
           screenContent: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[],
