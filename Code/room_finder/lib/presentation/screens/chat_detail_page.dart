@@ -8,12 +8,12 @@ import 'package:room_finder/presentation/components/message.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:room_finder/style/color_palette.dart';
 
-
 class ChatDetailPage extends StatelessWidget {
   final String receiverImageUrl;
   final String receiverName;
   final String facilityName;
   final DateTime lastMessage;
+  final bool isHost;
   final void Function() onTap;
 
   const ChatDetailPage({
@@ -22,6 +22,7 @@ class ChatDetailPage extends StatelessWidget {
     required this.receiverName,
     required this.facilityName,
     required this.lastMessage,
+    required this.isHost,
     required this.onTap,
   });
   
@@ -35,6 +36,7 @@ class ChatDetailPage extends StatelessWidget {
         receiverName: receiverName, 
         facilityName: facilityName, 
         lastMessage: lastMessage, 
+        isHost: isHost,
         onTap: onTap
       )
     );
@@ -46,6 +48,7 @@ class ChatDetailPageBody extends StatelessWidget {
   final String receiverName;
   final String facilityName;
   final DateTime lastMessage;
+  final bool isHost;
   final void Function() onTap;
 
   const ChatDetailPageBody({
@@ -54,6 +57,7 @@ class ChatDetailPageBody extends StatelessWidget {
     required this.receiverName,
     required this.facilityName,
     required this.lastMessage,
+    required this.isHost,
     required this.onTap,
   });
 
@@ -95,22 +99,42 @@ class ChatDetailPageBody extends StatelessWidget {
           Expanded(
             child: ListView(
               padding: EdgeInsets.all(16.w),
-              children: const [
-                Message(
-                  message: "Good afternoon, I'm a student who is looking for an accommodation in Padova. Is your proposal still available?",
-                  isSent: true,
-                  time: '05:35 PM',
-                ),
-                Message(
-                  message: "Good afternoon, the room is still available.",
-                  isSent: false,
-                  time: '05:40 PM',
-                ),
-                Message(
-                  message: "Great, can we share our phone numbers to discuss more about the proposal?",
-                  isSent: true,
-                  time: '05:50 PM',
-                ),
+              children: [
+                if(isHost) ...[
+                  const Message(
+                    message: "Good afternoon, I'm a student who is looking for an accommodation in Padova. Is your proposal still available?",
+                    isSent: false,
+                    time: '05:35 PM',
+                  ),
+                  const Message(
+                    message: "Good afternoon, the room is still available.",
+                    isSent: true,
+                    time: '05:40 PM',
+                  ),
+                  const Message(
+                    message: "Great, can we share our phone numbers to discuss more about the proposal?",
+                    isSent: false,
+                    time: '05:50 PM',
+                  ),
+                ],
+                if(!isHost) ...[
+                  const Message(
+                    message: "Good afternoon, I'm a student who is looking for an accommodation in Padova. Is your proposal still available?",
+                    isSent: true,
+                    time: '05:35 PM',
+                  ),
+                  const Message(
+                    message: "Good afternoon, the room is still available.",
+                    isSent: false,
+                    time: '05:40 PM',
+                  ),
+                  const Message(
+                    message: "Great, can we share our phone numbers to discuss more about the proposal?",
+                    isSent: true,
+                    time: '05:50 PM',
+                  ),
+                ]
+                
               ],
             ),
           ),

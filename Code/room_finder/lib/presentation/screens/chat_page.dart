@@ -14,7 +14,7 @@ class StudentChatPage extends StatelessWidget {
       screenContent: Column(
           children: [
             ChatItem(
-              receiverPhoto: "https://media.gettyimages.com/id/1437816897/it/foto/ritratto-di-donna-daffari-manager-o-risorse-umane-per-il-successo-professionale-azienda-che.jpg?s=1024x1024&w=gi&k=20&c=AZl4qDLGEEdWlhxzv2xe7gWW9BLYW06adV8Zm0uXOaI=", 
+              receiverPhoto: "https://shotkit.com/wp-content/uploads/2020/04/david-hurley-xHKVr_OPTFI-unsplash.jpg", 
               facilityPhoto: "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg", 
               receiverName: "Giada Rossi", 
               facilityName: "Casa Dolce Casa", 
@@ -24,10 +24,11 @@ class StudentChatPage extends StatelessWidget {
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => ChatDetailPage(
-                    receiverImageUrl: "https://media.gettyimages.com/id/1437816897/it/foto/ritratto-di-donna-daffari-manager-o-risorse-umane-per-il-successo-professionale-azienda-che.jpg?s=1024x1024&w=gi&k=20&c=AZl4qDLGEEdWlhxzv2xe7gWW9BLYW06adV8Zm0uXOaI=", 
+                    receiverImageUrl: "https://shotkit.com/wp-content/uploads/2020/04/david-hurley-xHKVr_OPTFI-unsplash.jpg", 
                     receiverName: "Giada Rossi", 
                     facilityName: "Casa Dolce Casa", 
                     lastMessage: DateTime(2024,7,1), 
+                    isHost: false,
                     onTap: () => {}
                   )
                 )
@@ -49,6 +50,7 @@ class StudentChatPage extends StatelessWidget {
                     receiverName: "Mario Guidi", 
                     facilityName: "Bella Italia", 
                     lastMessage: DateTime(2024,6,28), 
+                    isHost: false,
                     onTap: () => {}
                   )
                 )
@@ -70,6 +72,7 @@ class StudentChatPage extends StatelessWidget {
                     receiverName: "Luigi Frassi", 
                     facilityName: "Casa Studenti", 
                     lastMessage: DateTime(2024,6,25), 
+                    isHost: false,
                     onTap: () => {}
                   )
                 )
@@ -77,7 +80,7 @@ class StudentChatPage extends StatelessWidget {
             ),
 
             ChatItem(
-              receiverPhoto: "https://www.thewom.it/content/uploads/2022/01/Rosalind-Brewer-830x1107.jpg", 
+              receiverPhoto: "https://dy7glz37jgl0b.cloudfront.net/advice/images/3f64195ec17bf2d488a315987f4861e5-woman-smiles-while-crossing-the-street-in-a-city_l.jpg", 
               facilityPhoto: "https://www.fiorenzointeriordesign.com/images/galcms/850x635c50q80/galleryone/gallery-prodotto-test/zoom/img_6206_65721.jpg", 
               receiverName: "Serena Pizzoli", 
               facilityName: "Casa Studio", 
@@ -87,10 +90,11 @@ class StudentChatPage extends StatelessWidget {
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => ChatDetailPage(
-                    receiverImageUrl: "https://www.thewom.it/content/uploads/2022/01/Rosalind-Brewer-830x1107.jpg", 
+                    receiverImageUrl: "https://dy7glz37jgl0b.cloudfront.net/advice/images/3f64195ec17bf2d488a315987f4861e5-woman-smiles-while-crossing-the-street-in-a-city_l.jpg", 
                     receiverName: "Serena Pizzoli", 
                     facilityName: "Casa Studio", 
                     lastMessage: DateTime(2024,6,20), 
+                    isHost: false,
                     onTap: () => {}
                   )
                 )
@@ -107,14 +111,14 @@ class HostChatPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return StudentTemplateScreen(
+    return HostTemplateScreen(
       screenLabel: AppLocalizations.of(context)!.lblChatPage, 
       screenContent: Column(
           children: [
             ChatItem(
-              receiverPhoto: "https://media.gettyimages.com/id/1437816897/it/foto/ritratto-di-donna-daffari-manager-o-risorse-umane-per-il-successo-professionale-azienda-che.jpg?s=1024x1024&w=gi&k=20&c=AZl4qDLGEEdWlhxzv2xe7gWW9BLYW06adV8Zm0uXOaI=", 
+              receiverPhoto: "https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2021/03/people-posing-photography-1003.jpg?w=1264&ssl=1", 
               facilityPhoto: "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg", 
-              receiverName: "Giada Rossi", 
+              receiverName: "Luna Delis", 
               facilityName: "Casa Dolce Casa", 
               address: "Via Roma 12", 
               lastMessage: DateTime(2024,7,1), 
@@ -122,10 +126,11 @@ class HostChatPage extends StatelessWidget {
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => ChatDetailPage(
-                    receiverImageUrl: "https://media.gettyimages.com/id/1437816897/it/foto/ritratto-di-donna-daffari-manager-o-risorse-umane-per-il-successo-professionale-azienda-che.jpg?s=1024x1024&w=gi&k=20&c=AZl4qDLGEEdWlhxzv2xe7gWW9BLYW06adV8Zm0uXOaI=", 
-                    receiverName: "Giada Rossi", 
+                    receiverImageUrl: "https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2021/03/people-posing-photography-1003.jpg?w=1264&ssl=1", 
+                    receiverName: "Luna Delis", 
                     facilityName: "Casa Dolce Casa", 
                     lastMessage: DateTime(2024,7,1), 
+                    isHost: true,
                     onTap: () => {}
                   )
                 )
@@ -133,20 +138,21 @@ class HostChatPage extends StatelessWidget {
             ),
 
             ChatItem(
-              receiverPhoto: "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg", 
+              receiverPhoto: "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=", 
               facilityPhoto: "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp", 
-              receiverName: "Mario Guidi", 
-              facilityName: "Bella Italia", 
-              address: "Via Belzoni 5", 
+              receiverName: "Mario Rossi", 
+              facilityName: "Casa Dolce Casa", 
+              address: "Via Roma 12", 
               lastMessage: DateTime(2024,6,28), 
               isLastChatItem: false, 
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => ChatDetailPage(
-                    receiverImageUrl: "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg", 
-                    receiverName: "Mario Guidi", 
-                    facilityName: "Bella Italia", 
+                    receiverImageUrl: "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=", 
+                    receiverName: "Mario Rossi", 
+                    facilityName: "Casa Dolce Casa", 
                     lastMessage: DateTime(2024,6,28), 
+                    isHost: true,
                     onTap: () => {}
                   )
                 )
@@ -154,20 +160,21 @@ class HostChatPage extends StatelessWidget {
             ),
 
             ChatItem(
-              receiverPhoto: "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-modello-uomo.jpg", 
+              receiverPhoto: "https://images.pexels.com/photos/7060238/pexels-photo-7060238.jpeg", 
               facilityPhoto: "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg", 
-              receiverName: "Luigi Frassi", 
-              facilityName: "Casa Studenti", 
-              address: "Viale Luna 289", 
+              receiverName: "Arianna Grandi", 
+              facilityName: "Casa Dolce Casa", 
+              address: "Via Roma 12", 
               lastMessage: DateTime(2024,6,25), 
               isLastChatItem: false, 
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => ChatDetailPage(
-                    receiverImageUrl: "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-modello-uomo.jpg", 
+                    receiverImageUrl: "https://images.pexels.com/photos/7060238/pexels-photo-7060238.jpeg", 
                     receiverName: "Luigi Frassi", 
-                    facilityName: "Casa Studenti", 
+                    facilityName: "Casa Dolce Casa", 
                     lastMessage: DateTime(2024,6,25), 
+                    isHost: true,
                     onTap: () => {}
                   )
                 )
@@ -175,20 +182,21 @@ class HostChatPage extends StatelessWidget {
             ),
 
             ChatItem(
-              receiverPhoto: "https://www.thewom.it/content/uploads/2022/01/Rosalind-Brewer-830x1107.jpg", 
+              receiverPhoto: "https://cdn.create.vista.com/api/media/medium/153585546/stock-photo-smiling-young-african-american-woman?token=", 
               facilityPhoto: "https://www.fiorenzointeriordesign.com/images/galcms/850x635c50q80/galleryone/gallery-prodotto-test/zoom/img_6206_65721.jpg", 
               receiverName: "Serena Pizzoli", 
-              facilityName: "Casa Studio", 
-              address: "Via Vittoria 10", 
+              facilityName: "Casa Dolce Casa", 
+              address: "Via Roma 12", 
               lastMessage: DateTime(2024,6,20), 
               isLastChatItem: true, 
               onPressed: () => Navigator.of(context).push(
                 MaterialPageRoute(
                     builder: (context) => ChatDetailPage(
-                    receiverImageUrl: "https://www.thewom.it/content/uploads/2022/01/Rosalind-Brewer-830x1107.jpg", 
+                    receiverImageUrl: "https://cdn.create.vista.com/api/media/medium/153585546/stock-photo-smiling-young-african-american-woman?token=", 
                     receiverName: "Serena Pizzoli", 
-                    facilityName: "Casa Studio", 
+                    facilityName: "Casa Dolce Casa",  
                     lastMessage: DateTime(2024,6,20), 
+                    isHost: true,
                     onTap: () => {}
                   )
                 )
