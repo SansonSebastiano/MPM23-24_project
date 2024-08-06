@@ -116,12 +116,15 @@ class SecondaryTemplateScreen extends StatelessWidget {
   final Widget? rightHeaderWidget;
   final bool rightHeaderWidgetVisibility;
 
+  final Widget content;
+
   const SecondaryTemplateScreen(
       {super.key,
       required this.leftHeaderWidget,
       required this.centerHeaderWidget,
       this.rightHeaderWidget,
-      this.rightHeaderWidgetVisibility = false});
+      this.rightHeaderWidgetVisibility = false,
+      required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +139,8 @@ class SecondaryTemplateScreen extends StatelessWidget {
                 rightWidget: rightHeaderWidget,
                 rightWidgetVisibility: rightHeaderWidgetVisibility,
               ),
+
+              content,
             ],
           ),
         ),
