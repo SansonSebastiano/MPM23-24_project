@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/bottom_bar.dart';
+import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
+import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/presentation/components/wizard_stepper.dart';
 
 /// [MainTemplateScreen] is an abstract class that represents the main template screen.
 ///
@@ -95,15 +100,15 @@ class HostTemplateScreen extends MainTemplateScreen {
 /// [SecondaryTemplateScreen] is an abstract class that represents the secondary template screen.
 ///
 /// The one that does not have a bottom navigation bar.
-/// 
+///
 /// Implementing this class will create a screen without a bottom navigation bar.
-/// 
+///
 /// The [leftHeaderWidget] is the widget placed on the left side of the header.
-/// 
+///
 /// The [centerHeaderWidget] is the widget placed in the center of the header.
-/// 
+///
 /// The [rightHeaderWidget] is the widget placed on the right side of the header.
-/// 
+///
 /// The [rightHeaderWidgetVisibility] is used to determine if the right widget is visible or not, default is false. And in case it is false, the portion of the header where the right widget is placed will not empty. If [rightHeaderWidget] will be not passed and [rightHeaderWidgetVisibility] will be set to true, nothing will be shown.
 class SecondaryTemplateScreen extends StatelessWidget {
   final Widget leftHeaderWidget;
@@ -111,7 +116,12 @@ class SecondaryTemplateScreen extends StatelessWidget {
   final Widget? rightHeaderWidget;
   final bool rightHeaderWidgetVisibility;
 
-  const SecondaryTemplateScreen({super.key, required this.leftHeaderWidget, required this.centerHeaderWidget, this.rightHeaderWidget, this.rightHeaderWidgetVisibility = false});
+  const SecondaryTemplateScreen(
+      {super.key,
+      required this.leftHeaderWidget,
+      required this.centerHeaderWidget,
+      this.rightHeaderWidget,
+      this.rightHeaderWidgetVisibility = false});
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +130,7 @@ class SecondaryTemplateScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              _ScreenHeader(
+              _SecondaryScreenHeader(
                 leftWidget: leftHeaderWidget,
                 centerWidget: centerHeaderWidget,
                 rightWidget: rightHeaderWidget,
@@ -134,7 +144,7 @@ class SecondaryTemplateScreen extends StatelessWidget {
   }
 }
 
-/// [_ScreenHeader] is a class that represents the header of a screen withouth a bottom navigation bar.
+/// [_SecondaryScreenHeader] is a class that represents the header of a screen withouth a bottom navigation bar.
 ///
 /// The header is composed by a [leftWidget], a [centerWidget] and an optional [rightWidget].
 ///
@@ -145,13 +155,13 @@ class SecondaryTemplateScreen extends StatelessWidget {
 /// [rightWidget] is the widget placed on the right side of the header.
 ///
 /// [rightWidgetVisibility] is used to determine if the right widget is visible or not, default is false. And in case it is false, the portion of the header where the right widget is placed will not empty.
-class _ScreenHeader extends StatelessWidget {
+class _SecondaryScreenHeader extends StatelessWidget {
   final Widget leftWidget;
   final Widget centerWidget;
   final Widget? rightWidget;
   final bool rightWidgetVisibility;
 
-  const _ScreenHeader(
+  const _SecondaryScreenHeader(
       {required this.leftWidget,
       required this.centerWidget,
       // ignore: unused_element
@@ -185,6 +195,133 @@ class _ScreenHeader extends StatelessWidget {
               )),
         ],
       ),
+    );
+  }
+}
+
+/// [WizardTemplateScreen] is a class that represents the wizard template screen.
+/// 
+/// This class is used to create a screen with a wizard stepper.
+/// 
+/// The [leftButton] is the widget placed on the left side of the header.
+/// 
+/// The [rightButton] is the optional widget placed on the right side of the header.
+/// 
+/// The [rightButtonVisibility] is used to determine if the right widget is visible or not, default is false. And in case it is false, the portion of the header where the right widget is placed will not empty.
+/// 
+/// The [screenLabel] is used to set the title of the screen.
+/// 
+/// The [screenContent] is used to set the content of the screen.
+/// 
+/// The [dialogTitle] is used to set the title of the dialog.
+/// 
+/// The [dialogContent] is used to set the content of the dialog.
+/// 
+/// The [currentStep] is used to set the current step of the wizard stepper.
+/// 
+/// The [btnNextLabel] is used to set the label of the next button.
+/// 
+/// The [btnNextOnPressed] is used to set the onPressed method of the next button.
+class WizardTemplateScreen extends StatelessWidget {
+  final CustomButton leftButton;
+  final CustomButton? rightButton;
+  final bool rightButtonVisibility;
+
+  final String screenLabel;
+  final Widget screenContent;
+
+  final String dialogTitle;
+  final String dialogContent;
+
+  final int currentStep;
+
+  final String btnNextLabel;
+  final void Function() btnNextOnPressed;
+
+  const WizardTemplateScreen(
+      {super.key,
+      required this.leftButton,
+      this.rightButton,
+      this.rightButtonVisibility = false,
+      required this.screenLabel,
+      required this.screenContent,
+      required this.dialogTitle,
+      required this.dialogContent,
+      required this.currentStep,
+      required this.btnNextLabel,
+      required this.btnNextOnPressed
+      });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10.h, bottom: 30.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    leftButton,
+                    Visibility(
+                      visible: rightButtonVisibility,
+                      maintainSize: true,
+                      maintainAnimation: true,
+                      maintainState: true,
+                      child: rightButton ?? const SizedBox.shrink(),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  Text(screenLabel,
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                          fontSize: 24.sp, fontWeight: FontWeight.w600)),
+                  Expanded(
+                    child: InfoButton(
+                      size: 20.w,
+                      onPressed: () {
+                        showOptionsDialog(
+                          context: context,
+                          androidDialog: InfoAndroidDialog(
+                              title: dialogTitle, content: dialogContent),
+                          iosDialog: InfoIosDialog(
+                              title: dialogTitle, content: dialogContent),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+              const Spacer(),
+
+              screenContent,
+
+              const Spacer(),
+              Padding(
+                padding: EdgeInsets.only(bottom: 30.h),
+                child: WizardStepper(
+                  context: context,
+                  currentStep: currentStep,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      persistentFooterAlignment: AlignmentDirectional.center,
+      persistentFooterButtons: [
+        RectangleButton(
+          label: btnNextLabel,
+          onPressed: btnNextOnPressed,
+        ),
+      ],
     );
   }
 }

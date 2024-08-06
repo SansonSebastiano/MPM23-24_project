@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:room_finder/style/color_palette.dart';
 
 /// A class that represents an Android dialog with a title and content.
-/// 
+///
 /// [title] is the title of the dialog.
 /// [content] is the content of the dialog.
 class InfoAndroidDialog extends StatelessWidget {
@@ -18,7 +18,11 @@ class InfoAndroidDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title),
+      title: Text(title,
+          style: Theme.of(context)
+              .textTheme
+              .displaySmall!
+              .copyWith(fontWeight: FontWeight.w600)),
       content: Text(content),
       actions: actions,
     );
@@ -26,7 +30,7 @@ class InfoAndroidDialog extends StatelessWidget {
 }
 
 /// A class that represents an Android dialog with a title, content, and actions.
-/// 
+///
 /// [title] is the title of the dialog.
 /// [content] is the content of the dialog.
 /// [onOk] is the function to be called when the OK button is pressed.
@@ -62,7 +66,7 @@ class ActionsAndroidDialog extends InfoAndroidDialog {
 }
 
 /// A class that represents an iOS dialog with a title and content.
-/// 
+///
 /// [title] is the title of the dialog.
 /// [content] is the content of the dialog.
 class InfoIosDialog extends StatelessWidget {
@@ -90,7 +94,7 @@ class InfoIosDialog extends StatelessWidget {
 }
 
 /// A class that represents an iOS dialog with a title, content, and actions.
-///   
+///
 /// [title] is the title of the dialog.
 /// [content] is the content of the dialog.
 /// [onOk] is the function to be called when the OK button is pressed.
@@ -126,7 +130,8 @@ class ActionsIosDialog extends InfoIosDialog {
 }
 
 /// A function that shows an Android dialog
-void _showIosDialog({required BuildContext context, required InfoIosDialog dialog}) {
+void _showIosDialog(
+    {required BuildContext context, required InfoIosDialog dialog}) {
   showCupertinoDialog(
     barrierDismissible: true,
     context: context,
@@ -137,7 +142,8 @@ void _showIosDialog({required BuildContext context, required InfoIosDialog dialo
 }
 
 /// A function that shows an iOS dialog
-void _showAndroidDialog({required BuildContext context, required InfoAndroidDialog dialog}) {
+void _showAndroidDialog(
+    {required BuildContext context, required InfoAndroidDialog dialog}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -146,11 +152,13 @@ void _showAndroidDialog({required BuildContext context, required InfoAndroidDial
   );
 }
 
-
 /// A function that shows a dialog based on the platform.
-/// 
+///
 /// It is required to pass an [InfoAndroidDialog] and an [InfoIosDialog] to show the dialog for both platforms.
-void showOptionsDialog({required BuildContext context, required InfoAndroidDialog androidDialog, required InfoIosDialog iosDialog}) {
+void showOptionsDialog(
+    {required BuildContext context,
+    required InfoAndroidDialog androidDialog,
+    required InfoIosDialog iosDialog}) {
   if (Theme.of(context).platform == TargetPlatform.android) {
     _showAndroidDialog(
       context: context,
