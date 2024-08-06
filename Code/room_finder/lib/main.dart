@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:room_finder/style/theme.dart';
 
@@ -56,9 +57,19 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return StudentTemplateScreen(
       screenLabel: AppLocalizations.of(context)!.lblWelcomeUser("John"),
-      screenContent: const Column(
+      screenContent: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[],
+        children: <Widget>[
+          HostRenterBox(
+            name: "Name",
+            age: 23,
+            facultyOfStudies: "facultyOfStudies",
+            interests: "interests",
+            contractDeadline: DateTime.now(),
+            onEditPressed: () {},
+            onRemovePressed: () {},
+          )
+        ],
       ),
     );
     // Scaffold(

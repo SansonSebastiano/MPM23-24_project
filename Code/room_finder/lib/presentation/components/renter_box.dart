@@ -14,13 +14,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// - [hostView], to allow or not editing on renters' information;
 /// - [onRemovePressed] to define the remove functionality;
 /// - [onEditPressed] to define the editing functionality.
-class RenterBox extends StatelessWidget {
+abstract class RenterBox extends StatelessWidget {
   final String name;
   final int age;
   final String facultyOfStudies;
   final String interests;
   final DateTime contractDeadline;
-  final bool hostView;
   final void Function()? onEditPressed;
   final void Function()? onRemovePressed;
 
@@ -31,9 +30,10 @@ class RenterBox extends StatelessWidget {
       required this.facultyOfStudies,
       required this.interests,
       required this.contractDeadline,
-      required this.hostView,
       this.onEditPressed,
       this.onRemovePressed});
+
+  bool get hostView;
 
   @override
   Widget build(BuildContext context) {
@@ -51,29 +51,18 @@ class RenterBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              name,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.h,
-                color: ColorPalette.oxfordBlue,
-              ),
-            ),
+            Text(name, style: Theme.of(context).textTheme.displaySmall),
             SizedBox(height: 10.h),
             RichText(
               text: TextSpan(
                 text: AppLocalizations.of(context)!.lblRenterAge,
-                style: TextStyle(
-                  fontSize: 16.h,
-                  fontWeight: FontWeight.bold,
-                  color: ColorPalette.oxfordBlue,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                 children: [
                   TextSpan(
                     text: '$age',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -82,17 +71,13 @@ class RenterBox extends StatelessWidget {
             RichText(
               text: TextSpan(
                 text: AppLocalizations.of(context)!.lblRenterStudies,
-                style: TextStyle(
-                  fontSize: 16.h,
-                  fontWeight: FontWeight.bold,
-                  color: ColorPalette.oxfordBlue,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                 children: [
                   TextSpan(
                     text: facultyOfStudies,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -101,17 +86,13 @@ class RenterBox extends StatelessWidget {
             RichText(
               text: TextSpan(
                 text: AppLocalizations.of(context)!.lblRenterInterests,
-                style: TextStyle(
-                  fontSize: 16.h,
-                  fontWeight: FontWeight.bold,
-                  color: ColorPalette.oxfordBlue,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                 children: [
                   TextSpan(
                     text: interests,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -120,17 +101,13 @@ class RenterBox extends StatelessWidget {
             RichText(
               text: TextSpan(
                 text: AppLocalizations.of(context)!.lblRenterContract,
-                style: TextStyle(
-                  fontSize: 16.h,
-                  fontWeight: FontWeight.bold,
-                  color: ColorPalette.oxfordBlue,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                 children: [
                   TextSpan(
                     text: formattedDate,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -181,4 +158,32 @@ class RenterBox extends StatelessWidget {
       ),
     );
   }
+}
+
+class StudentRenterBox extends RenterBox {
+  const StudentRenterBox(
+      {super.key,
+      required super.name,
+      required super.age,
+      required super.facultyOfStudies,
+      required super.interests,
+      required super.contractDeadline});
+
+  @override
+  bool get hostView => false;
+}
+
+class HostRenterBox extends RenterBox {
+  const HostRenterBox(
+      {super.key,
+      required super.name,
+      required super.age,
+      required super.facultyOfStudies,
+      required super.interests,
+      required super.contractDeadline,
+      required super.onEditPressed,
+      required super.onRemovePressed});
+
+  @override
+  bool get hostView => true;
 }

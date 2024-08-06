@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
-import 'package:room_finder/presentation/screens/chat_detail_page.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -23,8 +22,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
 
     if (seen) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (context) => const IntroScreen()),
+        MaterialPageRoute(builder: (context) => const IntroScreen()),
       );
     } else {
       Navigator.of(context).pushReplacement(
@@ -49,7 +47,8 @@ class IntroScreen extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('seen', true);
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const IntroScreen()), // replace with homepage
+      MaterialPageRoute(
+          builder: (context) => const IntroScreen()), // replace with homepage
     );
   }
 
@@ -65,11 +64,10 @@ class IntroScreen extends StatelessWidget {
               const Spacer(flex: 2),
               Text(
                 AppLocalizations.of(context)!.lblWelcome,
-                style: TextStyle(
-                  fontSize: 24.h,
-                  fontWeight: FontWeight.bold,
-                  color: ColorPalette.oxfordBlue,
-                ),
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      fontSize: 24.sp,
+                      color: ColorPalette.oxfordBlue,
+                    ),
                 textAlign: TextAlign.center,
               ),
               const Spacer(flex: 2),
@@ -79,45 +77,77 @@ class IntroScreen extends StatelessWidget {
                 height: 251.h,
               ),
               const Spacer(flex: 2),
-              Text(
-                AppLocalizations.of(context)!.lblWelcomeMessage1,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: ColorPalette.oxfordBlue,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10.h),
-              Text(
-                AppLocalizations.of(context)!.lblWelcomeMessage2,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: ColorPalette.oxfordBlue,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10.h),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: AppLocalizations.of(context)!.lblWelcomeMessage3,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: ColorPalette.oxfordBlue,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: AppLocalizations.of(context)!.lblWelcomeMessage4, 
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold
-                      )
-                    ),
-                    TextSpan(
-                      text: AppLocalizations.of(context)!.lblWelcomeMessage5, 
-                    ),
-                  ],
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50.w),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                      text: AppLocalizations.of(context)!.lblWelcomeMessage1,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      children: [
+                        TextSpan(
+                          text:
+                              "\n\n${AppLocalizations.of(context)!.lblWelcomeMessage2}",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        TextSpan(
+                          text:
+                              "\n\n${AppLocalizations.of(context)!.lblWelcomeMessage3}",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        TextSpan(
+                          text:
+                              AppLocalizations.of(context)!.lblWelcomeMessage4,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        TextSpan(
+                          text:
+                              AppLocalizations.of(context)!.lblWelcomeMessage5,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ]),
                 ),
               ),
+              // Text(
+              //   AppLocalizations.of(context)!.lblWelcomeMessage1,
+              //   style: TextStyle(
+              //     fontSize: 16.sp,
+              //     color: ColorPalette.oxfordBlue,
+              //   ),
+              //   textAlign: TextAlign.center,
+              // ),
+              // SizedBox(height: 10.h),
+              // Text(
+              //   AppLocalizations.of(context)!.lblWelcomeMessage2,
+              //   style: TextStyle(
+              //     fontSize: 16.sp,
+              //     color: ColorPalette.oxfordBlue,
+              //   ),
+              //   textAlign: TextAlign.center,
+              // ),
+              // SizedBox(height: 10.h),
+              // RichText(
+              //   textAlign: TextAlign.center,
+              //   text: TextSpan(
+              //     text: AppLocalizations.of(context)!.lblWelcomeMessage3,
+              //     style: TextStyle(
+              //       fontSize: 16.sp,
+              //       color: ColorPalette.oxfordBlue,
+              //     ),
+              //     children: [
+              //       TextSpan(
+              //           text: AppLocalizations.of(context)!.lblWelcomeMessage4,
+              //           style: const TextStyle(fontWeight: FontWeight.bold)),
+              //       TextSpan(
+              //         text: AppLocalizations.of(context)!.lblWelcomeMessage5,
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const Spacer(flex: 2),
               RectangleButton(
                 label: AppLocalizations.of(context)!.btnStart,
