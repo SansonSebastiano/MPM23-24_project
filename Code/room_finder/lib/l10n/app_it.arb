@@ -99,5 +99,6 @@
     "lblConnectionErrorDesc": "Controlla la tua connessione a Internet e riprova",
     "lblGenericError": "Si è verificato un errore. Riprova più tardi",
     "lblNoResults": "Nessun risultato trovato",
-    "lblLoading": "Caricamento..."
+    "lblLoading": "Caricamento...",
+    "lblChatPage": "Messaggi"
 }

@@ -415,5 +415,9 @@
   "lblLoading": "Loading...",
   "@lblLoading": {
     "description": "The message to show when the app is loading"
+  },
+  "lblChatPage": "Messages",
+  "@lblChatPage": {
+    "description": "The label of chat page"
   }
 }
