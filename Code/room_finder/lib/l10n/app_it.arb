@@ -7,6 +7,7 @@
     "lblWelcomeMessage4": "RoomFinder",
     "lblWelcomeMessage5": "per creare o cercare soluzioni più adatte alle tue esigenze e per godere appieno della tua vita universitaria nella tua città!",
     "btnStart": "Iniziamo!",
+    "lblWelcomeNotLogged": "Benvenuto 😃",
     "lblWelcomeUser": "Benvenuto {name}! 😃",
     "lblFindRoom": "Trova la soluzione che meglio si adatta alle tue esigenze:",
     "lblEnterCity": "Inserisci una città",

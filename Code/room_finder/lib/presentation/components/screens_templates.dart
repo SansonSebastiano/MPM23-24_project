@@ -4,7 +4,6 @@ import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/wizard_stepper.dart';
 
 /// [MainTemplateScreen] is an abstract class that represents the main template screen.

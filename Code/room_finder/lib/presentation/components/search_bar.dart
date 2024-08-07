@@ -23,8 +23,8 @@ class CustomSearchBar extends StatelessWidget {
             Theme.of(context).textTheme.bodyMedium!,
           ),
           controller: controller,
-          backgroundColor:
-              WidgetStateProperty.all<Color>(ColorPalette.lavenderBlue),
+          backgroundColor: WidgetStateProperty.all<Color>(
+              ColorPalette.lavenderBlue.withOpacity(0.5)),
           elevation: WidgetStateProperty.all<double>(0),
           shape: WidgetStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(

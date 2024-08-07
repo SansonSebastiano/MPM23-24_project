@@ -28,6 +28,10 @@
   "@btnStart": {
     "description": "The button to start using the app"
   },
+  "lblWelcomeNotLogged": "Welcome 😃",
+  "@lblWelcomeNotLogged": {
+    "description": "The welcome message to greet the unregistered user"
+  },
   "lblWelcomeUser": "Welcome {name}! 😃",
   "@lblWelcomeUser": {
     "description": "The welcome message to greet the returning user",
