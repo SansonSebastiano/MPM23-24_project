@@ -19,6 +19,7 @@ class SavedAdsPage extends StatelessWidget {
 
 // TODO: add "Text(AppLocalizations.of(context)!.lblSavedAdsDesc)" before the list of AdsBox
 // TODO: fix the BookMark button state
+// TODO: fix backgroud color of AdsBox
 
 class SavedAdsPageBody extends StatelessWidget {
   const SavedAdsPageBody({super.key});

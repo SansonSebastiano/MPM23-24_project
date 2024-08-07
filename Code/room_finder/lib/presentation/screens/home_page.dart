@@ -75,3 +75,69 @@ class _StudentHomePageBody extends StatelessWidget {
     );
   }
 }
+
+class HostHomePage extends StatelessWidget {
+  const HostHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StudentTemplateScreen(
+      // TODO: screenLabel should be adapted to the host user's name
+      screenLabel: AppLocalizations.of(context)!.lblWelcomeUser("<Name>"),
+      screenContent: const _HostHomePageBody(),
+    );
+  }
+}
+
+class _HostHomePageBody extends StatelessWidget {
+  const _HostHomePageBody();
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.w),
+            child: Column(
+              children: [
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(AppLocalizations.of(context)!.lblCreateAds),
+                      AddRemoveButton(
+                        isAddButton: true,
+                        size: 30.w,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              padding: EdgeInsets.all(20.w),
+              itemCount: 4,
+              itemBuilder: (BuildContext context, int index) {
+                return AdsBox(
+                    imageUrl:
+                        "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
+                    city: "Padova",
+                    street: "Via Roma 12",
+                    price: 300,
+                    bookmarkButton: const BookmarkButton(size: 50.0),
+                    onPressed: () => {});
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(height: 20.h); // Add padding between items
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

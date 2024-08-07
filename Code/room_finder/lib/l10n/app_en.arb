@@ -226,7 +226,7 @@
   "@btnTutorial": {
     "description": "The label to view the app tutorial"
   },
-  "lblCreateAds": "Create and manage your offers",
+  "lblCreateAds": "Create and manage your offers:",
   "@lblCreateAds": {
     "description": "The label to create and manage the adverts"
   },
