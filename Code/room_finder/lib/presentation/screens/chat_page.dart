@@ -171,7 +171,7 @@ class HostChatPage extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) => ChatDetailPage(
                     receiverImageUrl: "https://images.pexels.com/photos/7060238/pexels-photo-7060238.jpeg", 
-                    receiverName: "Luigi Frassi", 
+                    receiverName: "Arianna Grandi", 
                     facilityName: "Casa Dolce Casa", 
                     lastMessage: DateTime(2024,6,25), 
                     isHost: true,

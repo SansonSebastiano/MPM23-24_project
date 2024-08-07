@@ -78,18 +78,31 @@ class AdsBox extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '$city, €${price.toStringAsFixed(0)} per month',
-                    style: TextStyle(
-                      fontSize: 22.w,
-                      fontWeight: FontWeight.bold,
+                  RichText(
+                    text: TextSpan(
+                      text: '$city, €${price.toStringAsFixed(0)}',
+                      style: TextStyle(
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.bold,
+                        color: ColorPalette.oxfordBlue
+                      ),
+                      children: [
+                        TextSpan(
+                          text: " per month",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.bold,
+                            color: ColorPalette.oxfordBlue
+                          )
+                        )
+                      ]
                     ),
                   ),
                   SizedBox(height: 8.h),
                   Text(
                     street,
                     style: TextStyle(
-                      fontSize: 16.w,
+                      fontSize: 16.sp,
                       color: ColorPalette.oxfordBlue,
                     ),
                   ),
@@ -97,7 +110,7 @@ class AdsBox extends StatelessWidget {
                   Text(
                     'View the solution',
                     style: TextStyle(
-                      fontSize: 16.w,
+                      fontSize: 16.sp,
                       color: ColorPalette.oxfordBlue,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline
