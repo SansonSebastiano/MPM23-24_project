@@ -57,7 +57,7 @@ abstract class RenterBox extends StatelessWidget {
               text: TextSpan(
                 text: AppLocalizations.of(context)!.lblRenterAge,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                 children: [
                   TextSpan(
@@ -72,7 +72,7 @@ abstract class RenterBox extends StatelessWidget {
               text: TextSpan(
                 text: AppLocalizations.of(context)!.lblRenterStudies,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                 children: [
                   TextSpan(
@@ -87,7 +87,7 @@ abstract class RenterBox extends StatelessWidget {
               text: TextSpan(
                 text: AppLocalizations.of(context)!.lblRenterInterests,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                 children: [
                   TextSpan(
@@ -102,7 +102,7 @@ abstract class RenterBox extends StatelessWidget {
               text: TextSpan(
                 text: AppLocalizations.of(context)!.lblRenterContract,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                 children: [
                   TextSpan(
@@ -131,7 +131,7 @@ abstract class RenterBox extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: 16.h,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           decoration: TextDecoration.underline,
                           decorationColor: Colors.red),
                     ),
@@ -145,7 +145,7 @@ abstract class RenterBox extends StatelessWidget {
                       style: TextStyle(
                         color: ColorPalette.oxfordBlue,
                         fontSize: 16.h,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w600,
                         decoration: TextDecoration.underline,
                       ),
                     ),

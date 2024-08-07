@@ -30,7 +30,7 @@
     "lblBeds": "Letti",
     "lblRoomates": "Coinquilini",
     "btnApplyFilters": "Applica i filtri",
-    "lblCurrentRenters": "Coinquilini attuali",
+    "lblCurrentRenters": "Coinquilini attuali: {current_renters}/{total_renters}",
     "btnMoreDetails": "Maggiori dettagli",
     "btnRequestInfo": "Richiedi informazioni",
     "lblLogin": "Accedi",

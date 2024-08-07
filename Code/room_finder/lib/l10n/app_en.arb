@@ -126,9 +126,19 @@
   "@btnApplyFilters": {
     "description": "The button to apply the selected filters"
   },
-  "lblCurrentRenters": "Current renters",
+  "lblCurrentRenters": "Current renters: {current_renters}/{total_renters}",
   "@lblCurrentRenters": {
-    "description": "The label to set the number of current renters"
+    "description": "The label to set the number of current renters",
+    "placeholders": {
+      "current_renters": {
+        "type": "int",
+        "example": "2"
+      },
+      "total_renters": {
+        "type": "int",
+        "example": "4"
+      }
+    }
   },
   "btnMoreDetails": "More details",
   "@btnMoreDetails": {
