@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/base_panel.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
+import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/filter_panel.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:room_finder/presentation/components/search_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/util/network_handler.dart';
 
-class SearchResultsPage extends StatelessWidget {
+class SearchResultsPage extends ConsumerWidget {
   const SearchResultsPage({super.key});
   
   void _showSearchFilterPanel(BuildContext context) {
@@ -23,13 +26,17 @@ class SearchResultsPage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final networkStatus = ref.watch(networkAwareProvider);
+
     return SecondaryTemplateScreen(
       leftHeaderWidget: DarkBackButton(onPressed: () => Navigator.pop(context)), 
       centerHeaderWidget: const CustomSearchBar(hintText: "Padova"), 
       rightHeaderWidget: FilterButton(onPressed: () => _showSearchFilterPanel(context)),
       rightHeaderWidgetVisibility: true,
-      content: const SearchResultsPageBody()
+      content: networkStatus == NetworkStatus.off
+          ? Center(heightFactor: 8.h, child: NoInternetErrorMessage(context: context))
+          : const SearchResultsPageBody()
     );
   } 
 }

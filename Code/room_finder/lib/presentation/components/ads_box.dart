@@ -37,15 +37,8 @@ class AdsBox extends StatelessWidget {
           // height: 318.h,
           margin: EdgeInsets.all(8.r),
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 198, 219, 250),
+            color: ColorPalette.lavenderBlue.withOpacity(0.5),
             borderRadius: BorderRadius.circular(12.r),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 1.r,
-                offset: Offset(0.w, 2.h),
-              ),
-            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

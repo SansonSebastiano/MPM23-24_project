@@ -164,7 +164,7 @@
   "@lblPassword": {
     "description": "The label to enter the password"
   },
-  "lblNoAccount": "Don't have an account?",
+  "lblNoAccount": "Don't have an account? ",
   "@lblNoAccount": {
     "description": "The label to register a new account"
   },
@@ -208,7 +208,7 @@
   "@lblSavedAds": {
     "description": "The label to view the saved adverts"
   },
-  "lblSavedAdsDesc": "Explore and manage all your save adverts",
+  "lblSavedAdsDesc": "Explore and manage all your saved adverts",
   "@lblSavedAdsDesc": {
     "description": "The description to view the saved adverts"
   },

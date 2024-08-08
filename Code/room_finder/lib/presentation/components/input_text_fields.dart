@@ -41,11 +41,7 @@ class _NameTextFieldState extends State<NameTextField> {
       children: [
         Text(
           AppLocalizations.of(context)!.lblName,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 20.w,
-            color: ColorPalette.oxfordBlue
-          ),
+          style: Theme.of(context).textTheme.displaySmall
         ),
         SizedBox(height: 8.h,),
         if (_isNameEmpty)
@@ -130,11 +126,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
       children: [
         Text(
           AppLocalizations.of(context)!.lblEmail,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 20.w,
-            color: ColorPalette.oxfordBlue
-          ),
+          style: Theme.of(context).textTheme.displaySmall
         ),
         SizedBox(height: 8.h,),
         if (_isEmailEmpty)
@@ -232,11 +224,7 @@ class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
       children: [
         Text(
           AppLocalizations.of(context)!.lblPassword,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 20.w,
-            color: ColorPalette.oxfordBlue
-          ),
+          style: Theme.of(context).textTheme.displaySmall
         ),
         SizedBox(height: 8.h,),
         if (_isPswdEmpty)
@@ -354,11 +342,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
         // Choose a password
         Text(
           AppLocalizations.of(context)!.lblChoosePswd,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 20.w,
-            color: ColorPalette.oxfordBlue
-          ),
+          style: Theme.of(context).textTheme.displaySmall
         ),
         SizedBox(height: 8.h,),
         if (_isChoosePswdEmpty)
@@ -429,11 +413,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
         // Confirm password
         Text(
           AppLocalizations.of(context)!.lblConfirmPswd,
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 20.w,
-            color: ColorPalette.oxfordBlue
-          ),
+          style: Theme.of(context).textTheme.displaySmall
         ),
         SizedBox(height: 8.h,),
         if (_isConfirmPswdEmpty)
