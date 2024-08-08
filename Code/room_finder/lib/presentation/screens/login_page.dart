@@ -6,11 +6,32 @@ import 'package:room_finder/presentation/components/buttons/rectangle_buttons.da
 import 'package:room_finder/presentation/components/input_text_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/gestures.dart';
+import 'package:room_finder/presentation/screens/registration_page.dart';
 import 'package:room_finder/style/color_palette.dart';
 // import 'package:room_finder/util/network_handler.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _isEmailValid = false;
+  bool _isPasswordValid = false;
+
+  void _onEmailValidityChanged(bool isValid) {
+    setState(() {
+      _isEmailValid = isValid;
+    });
+  }
+
+  void _onPasswordValidityChanged(bool isValid) {
+    setState(() {
+      _isPasswordValid = isValid;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,25 +57,38 @@ class LoginPage extends StatelessWidget {
                           height: 127.h,
                         ),
                       ),
-                      SizedBox(height: 40.h), 
-                      Text(
-                        AppLocalizations.of(context)!.lblLogin,
-                        style: Theme.of(context).textTheme.displayMedium
-                      ),
-                      SizedBox(height: 20.h), 
-                      Text(
-                        AppLocalizations.of(context)!.lblLoginDesc,
-                        style: Theme.of(context).textTheme.bodyLarge
-                      ),
-                      SizedBox(height: 20.h), 
-                      const EmailTextField(),
-                      SizedBox(height: 20.h), 
-                      const LoginPswdTextField(),
-                      SizedBox(height: 30.h), 
+                      SizedBox(height: 40.h),
+                      Text(AppLocalizations.of(context)!.lblLogin,
+                          style: Theme.of(context).textTheme.displayMedium),
+                      SizedBox(height: 20.h),
+                      Text(AppLocalizations.of(context)!.lblLoginDesc,
+                          style: Theme.of(context).textTheme.bodyLarge),
+                      SizedBox(height: 20.h),
+                      EmailTextField(onEmailValidityChanged: _onEmailValidityChanged),
+                      SizedBox(height: 20.h),
+                      LoginPswdTextField(onPasswordValidityChanged: _onPasswordValidityChanged),
+                      SizedBox(height: 30.h),
                       Center(
-                        child: RectangleButton(label: "Log in", onPressed: () => {},),
+                        child: Stack(
+                          children: [
+                            RectangleButton(
+                              label: "Log in",
+                              onPressed:  () => {
+                                if(_isEmailValid && _isPasswordValid) {
+                                  print("login...")
+                                }  
+                              },
+                            ),
+                            if (!_isEmailValid || !_isPasswordValid)
+                              Positioned.fill(
+                                child: Container(
+                                  color: Colors.white.withOpacity(0.5),
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
-                      SizedBox(height: 20.h), 
+                      SizedBox(height: 20.h),
                       Center(
                         child: RichText(
                           text: TextSpan(
@@ -67,14 +101,15 @@ class LoginPage extends StatelessWidget {
                               TextSpan(
                                 text: 'Sign up',
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: ColorPalette.oxfordBlue,
-                                  decoration: TextDecoration.underline
-                                ),
+                                    fontWeight: FontWeight.bold,
+                                    color: ColorPalette.oxfordBlue,
+                                    decoration: TextDecoration.underline),
                                 recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    print("redirect to registration page...");
-                                }
+                                  ..onTap = () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => const RegistrationPage()
+                                    )
+                                  ),
                               ),
                             ],
                           ),
