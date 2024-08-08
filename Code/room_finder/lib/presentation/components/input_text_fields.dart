@@ -8,7 +8,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// The class [NameTextField] defines an input field to digit the name of the user.  
 class NameTextField extends StatefulWidget {
-  const NameTextField({super.key});
+  final Function(bool) onNameValidityChanged;
+
+  const NameTextField({super.key, required this.onNameValidityChanged});
 
   @override
   State<NameTextField> createState() => _NameTextFieldState();
@@ -24,12 +26,18 @@ class _NameTextFieldState extends State<NameTextField> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _controller.addListener(_validateName);
+  }
+
+  void _validateName() {
+    final name = _controller.text;
+
+    final isValid = name.isNotEmpty;
+    widget.onNameValidityChanged(isValid);
   }
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
     _controller.dispose();
     super.dispose();
   }
@@ -41,9 +49,9 @@ class _NameTextFieldState extends State<NameTextField> {
       children: [
         Text(
           AppLocalizations.of(context)!.lblName,
-          style: Theme.of(context).textTheme.displaySmall
+          style: Theme.of(context).textTheme.displaySmall,
         ),
-        SizedBox(height: 8.h,),
+        SizedBox(height: 8.h),
         if (_isNameEmpty)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
@@ -52,7 +60,7 @@ class _NameTextFieldState extends State<NameTextField> {
               style: TextStyle(
                 color: Colors.red,
                 fontSize: 14.w,
-                fontWeight: FontWeight.w500
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -61,13 +69,12 @@ class _NameTextFieldState extends State<NameTextField> {
           height: 52.h,
           decoration: const BoxDecoration(
             color: Color.fromRGBO(198, 208, 250, 50),
-            borderRadius: BorderRadius.all(Radius.circular(8.0),
-            ),
+            borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
           alignment: Alignment.centerLeft,
           child: TextField(
             controller: _controller,
-            decoration: InputDecoration (
+            decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '',
               contentPadding: EdgeInsets.only(left: 10.w),
@@ -77,12 +84,13 @@ class _NameTextFieldState extends State<NameTextField> {
               setState(() {
                 _isNameEmpty = value.isEmpty;
               });
+              widget.onNameValidityChanged(!_isNameEmpty);
 
               if (!_isNameEmpty) {
                 print('Submitted text: $value');
               }
             },
-          )
+          ),
         ),
       ],
     );
@@ -90,9 +98,16 @@ class _NameTextFieldState extends State<NameTextField> {
 }
 
 
+
 /// The class [EmailTextField] defines an input field to digit the email of the user.  
 class EmailTextField extends StatefulWidget {
-  const EmailTextField({super.key});
+  const EmailTextField({
+    super.key,
+    required this.onEmailValidityChanged,
+  });
+
+  // Callback function that will notify the parent widget when the email validity changes
+  final ValueChanged<bool> onEmailValidityChanged;
 
   @override
   State<EmailTextField> createState() => _EmailTextFieldState();
@@ -100,17 +115,24 @@ class EmailTextField extends StatefulWidget {
 
 class _EmailTextFieldState extends State<EmailTextField> {
   late TextEditingController _controller;
-  
-  // Widget state
+
   bool _isEmailEmpty = false;
   bool _userInteraction = false;
-  
-  final _emailRegExp = RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+
+  final _emailRegExp = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+
+  void _validateEmail() {
+    final email = _controller.text;
+    final isValid = email.isNotEmpty && _emailRegExp.hasMatch(email);
+    widget.onEmailValidityChanged(isValid);
+  }
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _controller.addListener(_validateEmail);
   }
 
   @override
@@ -191,7 +213,13 @@ class _EmailTextFieldState extends State<EmailTextField> {
 
 /// The class [LoginPswdTextField] defines an input field to digit the password during login process. 
 class LoginPswdTextField extends StatefulWidget {
-  const LoginPswdTextField({super.key});
+  const LoginPswdTextField({
+    super.key,
+    required this.onPasswordValidityChanged,
+  });
+
+  // Callback function that will notify the parent widget when the password validity changes
+  final ValueChanged<bool> onPasswordValidityChanged;
 
   @override
   State<LoginPswdTextField> createState() => _LoginPswdTextFieldState();
@@ -199,16 +227,23 @@ class LoginPswdTextField extends StatefulWidget {
 
 class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
   late TextEditingController _controller;
-  
-  // Widget state
+
   bool _isPswdEmpty = false;
   bool _userInteraction = false;
   bool _showPswd = true;
+
+  void _validatePassword() {
+    final password = _controller.text;
+
+    final isValid = password.isNotEmpty && _controller.text.length >= 6;
+    widget.onPasswordValidityChanged(isValid);
+  }
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _controller.addListener(_validatePassword);
   }
 
   @override
@@ -297,7 +332,9 @@ class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
 
 /// The class [RegistrationPswdTextField] defines an input field to digit and confirm the password during registration process. 
 class RegistrationPswdTextField extends StatefulWidget {
-  const RegistrationPswdTextField({super.key});
+  final Function(bool) onPswdValidationChanged;
+
+  const RegistrationPswdTextField({super.key, required this.onPswdValidationChanged});
 
   @override
   State<RegistrationPswdTextField> createState() => _RegistrationPswdTextFieldState();
@@ -314,16 +351,31 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
   bool _isConfirmPswdEmpty = false;
   bool _userConfirmInteraction = false;
 
-  bool _passwordsMatch = true;
+  bool _passwordsMatch = false;
 
   bool _showChoosePswd = true;
   bool _showConfirmPswd = true;
+
+  void _validateFields() {
+    final chosenPassword = _controllerChoosePswd.text;
+    final confirmedPassword = _controllerConfirmPswd.text;
+
+    bool isValid = chosenPassword.isNotEmpty &&
+                    chosenPassword.length >= 6 &&
+                    confirmedPassword.isNotEmpty &&
+                    confirmedPassword.length >= 6 &&
+                    chosenPassword == confirmedPassword;
+
+    widget.onPswdValidationChanged(isValid);
+  }
 
   @override
   void initState() {
     super.initState();
     _controllerChoosePswd = TextEditingController();
     _controllerConfirmPswd = TextEditingController();
+
+    _controllerChoosePswd.addListener(_validateFields);
   }
 
   @override
@@ -338,7 +390,6 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        
         // Choose a password
         Text(
           AppLocalizations.of(context)!.lblChoosePswd,
@@ -357,7 +408,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
               ),
             ),
           ),
-        if (_userChooseInteraction && !_isChoosePswdEmpty && _controllerChoosePswd.text.length<6)
+        if (_userChooseInteraction && !_isChoosePswdEmpty && _controllerChoosePswd.text.length < 6)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
@@ -400,10 +451,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
                 _isChoosePswdEmpty = value.isEmpty;
                 _userChooseInteraction = true;
               });
-
-              if (!_isChoosePswdEmpty) {
-                print('Submitted text: $value');
-              }
+              _validateFields();
             },
           )
         ),
@@ -428,7 +476,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
               ),
             ),
           ),
-        if (_userConfirmInteraction && !_isConfirmPswdEmpty && _controllerConfirmPswd.text.length<6)
+        if (_userConfirmInteraction && !_isConfirmPswdEmpty && _controllerConfirmPswd.text.length < 6)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
@@ -481,13 +529,10 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
             onSubmitted: (String value) {
               setState(() {
                 _isConfirmPswdEmpty = value.isEmpty;
+                _passwordsMatch = _controllerChoosePswd.text == value;
                 _userConfirmInteraction = true;
-                _passwordsMatch = _controllerChoosePswd.text == _controllerConfirmPswd.text;
               });
-
-              if (!_isConfirmPswdEmpty) {
-                print('Submitted text: $value');
-              }
+              _validateFields();
             },
           )
         ),

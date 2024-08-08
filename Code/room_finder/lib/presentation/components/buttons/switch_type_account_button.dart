@@ -29,11 +29,7 @@ class _SwitchTypeAccountButtonState extends State<SwitchTypeAccountButton> {
               children: [
                 Text(
                   AppLocalizations.of(context)!.lblAccountType,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20.w,
-                    color: ColorPalette.oxfordBlue
-                  ),
+                  style: Theme.of(context).textTheme.displaySmall
                 ),
                 InfoButton(size: 30.w, onPressed: widget.onPressed)
               ]
