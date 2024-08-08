@@ -9,4 +9,7 @@ class ColorPalette {
   static const Color jordyBlue = Color.fromARGB(255, 144, 168, 245);
   static const Color lavenderBlue = Color.fromARGB(255, 198, 208, 250);
   static const Color aliceBlue = Color.fromARGB(255, 237, 240, 253);
+
+  static const Color error = Color.fromARGB(255, 255, 55, 55);
+  static const Color success = Color.fromARGB(255, 0, 200, 0);
 }

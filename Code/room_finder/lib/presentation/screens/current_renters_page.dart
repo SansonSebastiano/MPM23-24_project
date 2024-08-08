@@ -1,34 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
+import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/util/network_handler.dart';
 
-class CurrentRentersPage extends StatelessWidget {
+class CurrentRentersPage extends ConsumerWidget {
   const CurrentRentersPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var connectivityStatusProvider = ref.watch(networkAwareProvider);
+    bool isOffline = connectivityStatusProvider == NetworkStatus.off;
+
     return SecondaryTemplateScreen(
       leftHeaderWidget: DarkBackButton(onPressed: () {}),
       centerHeaderWidget: Align(
         alignment: Alignment.center,
         // TODO: Replace with real data
-        child: RichText(
-          text: TextSpan(
-            text: "Casa dolce casa",
-            style: Theme.of(context).textTheme.displaySmall,
-            children: [
-              TextSpan(
-                text: "\nPadova - Via Roma 1",
-                style: Theme.of(context).textTheme.bodyMedium,
+        child: isOffline
+            ? const SizedBox.shrink()
+            : RichText(
+                text: TextSpan(
+                  text: "Casa dolce casa",
+                  style: Theme.of(context).textTheme.displaySmall,
+                  children: [
+                    TextSpan(
+                      text: "\nPadova - Via Roma 1",
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
       ),
-      content: const _CurrentRentersBody(),
+      content: isOffline
+          ? Expanded(
+              child: NoInternetErrorMessage(
+                context: context,
+              ),
+            )
+          : const _CurrentRentersBody(),
     );
   }
 }

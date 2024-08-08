@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
+import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/search_bar.dart';
+import 'package:room_finder/util/network_handler.dart';
 
 class StudentHomePage extends StatelessWidget {
   const StudentHomePage({super.key});
@@ -20,11 +23,13 @@ class StudentHomePage extends StatelessWidget {
   }
 }
 
-class _StudentHomePageBody extends StatelessWidget {
+class _StudentHomePageBody extends ConsumerWidget {
   const _StudentHomePageBody();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var connectivityStatusProvider = ref.watch(networkAwareProvider);
+
     return Expanded(
       child: Column(
         children: [
@@ -51,25 +56,31 @@ class _StudentHomePageBody extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.all(20.w),
-              itemCount: 4,
-              itemBuilder: (BuildContext context, int index) {
-                return AdsBox(
-                    imageUrl:
-                        "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                    city: "Padova",
-                    street: "Via Roma 12",
-                    price: 300,
-                    bookmarkButton: const BookmarkButton(size: 50.0),
-                    onPressed: () => {});
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 20.h); // Add padding between items
-              },
-            ),
-          ),
+          connectivityStatusProvider == NetworkStatus.off
+              ? Expanded(
+                  child: Center(
+                    child: NoInternetErrorMessage(context: context,),
+                  ),
+                )
+              : Expanded(
+                  child: ListView.separated(
+                    padding: EdgeInsets.all(20.w),
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AdsBox(
+                          imageUrl:
+                              "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
+                          city: "Padova",
+                          street: "Via Roma 12",
+                          price: 300,
+                          bookmarkButton: const BookmarkButton(size: 50.0),
+                          onPressed: () => {});
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(height: 20.h); // Add padding between items
+                    },
+                  ),
+                ),
         ],
       ),
     );
@@ -89,11 +100,13 @@ class HostHomePage extends StatelessWidget {
   }
 }
 
-class _HostHomePageBody extends StatelessWidget {
+class _HostHomePageBody extends ConsumerWidget {
   const _HostHomePageBody();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var connectivityStatusProvider = ref.watch(networkAwareProvider);
+
     return Expanded(
       child: Column(
         children: [
@@ -117,6 +130,13 @@ class _HostHomePageBody extends StatelessWidget {
               ],
             ),
           ),
+          connectivityStatusProvider == NetworkStatus.off
+              ? Expanded(
+                  child: Center(
+                    child: NoInternetErrorMessage(context: context),
+                  ),
+                )
+              :
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.all(20.w),
