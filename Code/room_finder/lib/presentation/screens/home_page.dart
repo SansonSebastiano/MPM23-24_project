@@ -81,7 +81,7 @@ class HostHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StudentTemplateScreen(
+    return HostTemplateScreen(
       // TODO: screenLabel should be adapted to the host user's name
       screenLabel: AppLocalizations.of(context)!.lblWelcomeUser("<Name>"),
       screenContent: const _HostHomePageBody(),
@@ -128,7 +128,6 @@ class _HostHomePageBody extends StatelessWidget {
                     city: "Padova",
                     street: "Via Roma 12",
                     price: 300,
-                    bookmarkButton: const BookmarkButton(size: 50.0),
                     onPressed: () => {});
               },
               separatorBuilder: (BuildContext context, int index) {
