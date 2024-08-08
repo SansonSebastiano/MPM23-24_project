@@ -8,9 +8,15 @@ import 'package:room_finder/style/color_palette.dart';
 abstract class BaseModalPanel extends StatelessWidget {
   final String title;
   final String btnLabel;
+  final void Function()? onBtnPressed;
+  final void Function()? onBtnClosed;
 
   const BaseModalPanel(
-      {super.key, required this.title, required this.btnLabel});
+      {super.key,
+      required this.title,
+      required this.btnLabel,
+      required this.onBtnPressed,
+      this.onBtnClosed});
 
   Widget get items;
 
@@ -22,6 +28,7 @@ abstract class BaseModalPanel extends StatelessWidget {
           SizedBox(height: 20.h),
           PanelTitle(
             title: title,
+            onBtnClosed: onBtnClosed,
           ),
           SizedBox(height: 10.h),
           const Divider(
@@ -34,7 +41,7 @@ abstract class BaseModalPanel extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            child: RectangleButton(label: btnLabel, onPressed: () {}),
+            child: RectangleButton(label: btnLabel, onPressed: onBtnPressed),
           )
         ],
       ),
@@ -48,10 +55,12 @@ abstract class BaseModalPanel extends StatelessWidget {
 ///
 /// The [context] is the context of the app.
 Future showModalPanel(
-    {required BuildContext context, required BaseModalPanel panel}) {
+    {required BuildContext context,
+    required BaseModalPanel panel,
+    bool isScrollControlled = true}) {
   return showModalBottomSheet(
     useSafeArea: true,
-    isScrollControlled: true,
+    isScrollControlled: isScrollControlled,
     context: context,
     backgroundColor: ColorPalette.lavenderBlue,
     builder: (BuildContext context) {
@@ -63,11 +72,15 @@ Future showModalPanel(
 /// Create a [title] for the filter panel.
 class PanelTitle extends StatelessWidget {
   final String title;
+  final void Function()? onBtnClosed;
 
-  const PanelTitle({super.key, required this.title});
+  const PanelTitle({super.key, required this.title, this.onBtnClosed});
 
   @override
   Widget build(BuildContext context) {
+    void defaultOnBtnClosed() {
+      Navigator.of(context).pop();
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -78,12 +91,14 @@ class PanelTitle extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.displaySmall,
         ),
-        const Visibility(
+        Visibility(
             visible: false,
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            child: IconButton(onPressed: null, icon: Icon(Icons.close))),
+            child: IconButton(
+              // FIXME: the onBtnClosed function is not working properly: it should get onBtnClosed because it is not null
+              onPressed: onBtnClosed ?? defaultOnBtnClosed, icon: const Icon(Icons.close))),
       ],
     );
   }

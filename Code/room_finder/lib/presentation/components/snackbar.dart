@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:room_finder/style/color_palette.dart';
 
+/// Shows a success snackbar with the given [snackText], with green background.
 void showSuccessSnackBar(BuildContext context, String snackText) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
@@ -15,6 +16,7 @@ void showSuccessSnackBar(BuildContext context, String snackText) {
   );
 }
 
+/// Shows an error snackbar with the given [snackText], with red background.
 void showErrorSnackBar(BuildContext context, String snackText) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(

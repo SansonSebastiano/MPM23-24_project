@@ -20,7 +20,9 @@ class SearchResultsPage extends ConsumerWidget {
       panel: SearchFilterPanel(
         context: context, 
         title: "Filters", 
-        btnLabel: AppLocalizations.of(context)!.btnApplyFilters
+        btnLabel: AppLocalizations.of(context)!.btnApplyFilters, 
+        // TODO: Implement the onPressed function
+        onBtnPressed: () {  },
       )
     );
   }

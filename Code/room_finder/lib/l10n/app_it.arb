@@ -58,10 +58,11 @@
     "lblCreateAds": "Crea e gestisci i tuoi annunci:",
     "btnLogout": "Esci",
     "lblAddress": "Seleziona l'indirizzo",
-    "lblEnterAddress": "Inserisci l'indirizzo",
     "btnNext": "Avanti",
     "lblSetRooms": "Imposta le stanze",
     "lblAddRooms": "Aggiungi stanze",
+    "lblAddNewRoom": "Aggiungi una nuova stanza",
+    "lblEnterRoomName": "Inserisci il nome della stanza",
     "lblManageRenters": "Gestisci i coinquilini",
     "lblAddRenters": "Aggiungi coinquilini",
     "btnRemove": "Rimuovi",
@@ -101,5 +102,8 @@
     "lblGenericError": "Si è verificato un errore. Riprova più tardi",
     "lblNoResults": "Nessun risultato trovato",
     "lblLoading": "Caricamento...",
-    "lblChatPage": "Messaggi"
+    "lblChatPage": "Messaggi",
+    "lblTitleDialogWizard": "Aiuto",
+    "lblContentDialogWizard1": "Seleziona l'indirizzo della tua struttura",
+    "lblContentDialogWizard2": "Imposta le stanze presenti nella tua struttura"
 }

@@ -12,7 +12,8 @@ class RenterPanel extends BaseModalPanel {
       {super.key,
       required this.context,
       required super.title,
-      required super.btnLabel});
+      required super.btnLabel,
+      required super.onBtnPressed});
 
   @override
   Widget get items => Column(
@@ -46,6 +47,20 @@ class _InputField extends StatefulWidget {
 }
 
 class _InputFieldState extends State<_InputField> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -58,6 +73,8 @@ class _InputFieldState extends State<_InputField> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: TextField(
+            // TODO: on text entered 
+            controller: _controller,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: widget.hint,

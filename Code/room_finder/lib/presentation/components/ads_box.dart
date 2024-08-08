@@ -30,84 +30,83 @@ class AdsBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return Container(
+      margin: EdgeInsets.all(8.r),
+      decoration: BoxDecoration(
+        color: ColorPalette.lavenderBlue.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: InkWell(
         onTap: onPressed,
-        child: Container(
-          width: 337.w,
-          // height: 318.h,
-          margin: EdgeInsets.all(8.r),
-          decoration: BoxDecoration(
-            color: ColorPalette.lavenderBlue.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12.r),
+                    topRight: Radius.circular(12.r),
+                  ),
+                  child: Image.network(
+                    imageUrl,
+                    height: 180.h,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                if (bookmarkButton != null)
+                  Positioned(
+                    top: 8.h,
+                    right: 8.w,
+                    child: bookmarkButton!,
+                  ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.all(16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(12.r),
-                      topRight: Radius.circular(12.r),
-                    ),
-                    child: Image.network(
-                      imageUrl,
-                      height: 180.h,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                  RichText(
+                    text: TextSpan(
+                        text: '$city, €${price.toStringAsFixed(0)}',
+                        style: TextStyle(
+                            fontSize: 22.sp,
+                            fontWeight: FontWeight.bold,
+                            color: ColorPalette.oxfordBlue),
+                        children: [
+                          TextSpan(
+                              text: " per month",
+                              style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorPalette.oxfordBlue))
+                        ]),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    street,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: ColorPalette.oxfordBlue,
                     ),
                   ),
-                  if (bookmarkButton != null)
-                    Positioned(
-                      top: 8.h,
-                      right: 8.w,
-                      child: bookmarkButton!,
-                    ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.all(16.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                          text: '$city, €${price.toStringAsFixed(0)}',
-                          style: TextStyle(
-                              fontSize: 22.sp,
-                              fontWeight: FontWeight.bold,
-                              color: ColorPalette.oxfordBlue),
-                          children: [
-                            TextSpan(
-                                text: " per month",
-                                style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: ColorPalette.oxfordBlue))
-                          ]),
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      street,
-                      style: TextStyle(
+                  SizedBox(height: 16.h),
+                  Text(
+                    'View the solution',
+                    style: TextStyle(
                         fontSize: 16.sp,
                         color: ColorPalette.oxfordBlue,
-                      ),
-                    ),
-                    SizedBox(height: 16.h),
-                    Text(
-                      'View the solution',
-                      style: TextStyle(
-                          fontSize: 16.sp,
-                          color: ColorPalette.oxfordBlue,
-                          fontWeight: FontWeight.bold,
-                          decoration: TextDecoration.underline),
-                    ),
-                  ],
-                ),
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

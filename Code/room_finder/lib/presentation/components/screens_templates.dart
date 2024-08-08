@@ -5,6 +5,7 @@ import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/wizard_stepper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// [MainTemplateScreen] is an abstract class that represents the main template screen.
 ///
@@ -234,7 +235,6 @@ class WizardTemplateScreen extends StatelessWidget {
   final String screenLabel;
   final Widget screenContent;
 
-  final String dialogTitle;
   final String dialogContent;
 
   final int currentStep;
@@ -249,7 +249,6 @@ class WizardTemplateScreen extends StatelessWidget {
       this.rightButtonVisibility = false,
       required this.screenLabel,
       required this.screenContent,
-      required this.dialogTitle,
       required this.dialogContent,
       required this.currentStep,
       required this.btnNextLabel,
@@ -294,9 +293,9 @@ class WizardTemplateScreen extends StatelessWidget {
                         showOptionsDialog(
                           context: context,
                           androidDialog: InfoAndroidDialog(
-                              title: dialogTitle, content: dialogContent),
+                              title: AppLocalizations.of(context)!.lblTitleDialogWizard, content: dialogContent),
                           iosDialog: InfoIosDialog(
-                              title: dialogTitle, content: dialogContent),
+                              title: AppLocalizations.of(context)!.lblTitleDialogWizard, content: dialogContent),
                         );
                       },
                     ),

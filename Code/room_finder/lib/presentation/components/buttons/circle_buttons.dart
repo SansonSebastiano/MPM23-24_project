@@ -199,11 +199,11 @@ class AddRemoveButton extends StatelessWidget {
             width: 2.w,
           ),
         ),
-        minimumSize: Size(size, size),
+        minimumSize: Size(size.w, size.h),
       ),
       onPressed: onPressed,
       child: Icon(isAddButton ? Icons.add : Icons.remove,
-          color: iconColor, size: size - 5),
+          color: iconColor, size: size.w - 5),
     );
   }
 }

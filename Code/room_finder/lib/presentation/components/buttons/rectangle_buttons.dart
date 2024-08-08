@@ -10,7 +10,7 @@ class RectangleButton extends StatelessWidget {
   const RectangleButton({super.key, required this.label, required this.onPressed});
 
   final String label;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
