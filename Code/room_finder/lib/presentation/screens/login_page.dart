@@ -6,18 +6,20 @@ import 'package:room_finder/presentation/components/buttons/rectangle_buttons.da
 import 'package:room_finder/presentation/components/input_text_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/gestures.dart';
+import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/presentation/screens/registration_page.dart';
 import 'package:room_finder/style/color_palette.dart';
-// import 'package:room_finder/util/network_handler.dart';
+import 'package:room_finder/util/network_handler.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   bool _isEmailValid = false;
   bool _isPasswordValid = false;
 
@@ -31,6 +33,19 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _isPasswordValid = isValid;
     });
+  }
+
+  void _handleLogin() {
+    if (_isEmailValid && _isPasswordValid) {
+      final networkStatus = ref.read(networkAwareProvider);
+
+      if (networkStatus == NetworkStatus.off) {
+        showErrorSnackBar(context, "No internet connection. Please try again.");
+      } else {
+        // Proceed with login logic
+        print("login...");
+      }
+    }
   }
 
   @override
@@ -73,11 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             RectangleButton(
                               label: "Log in",
-                              onPressed:  () => {
-                                if(_isEmailValid && _isPasswordValid) {
-                                  print("login...")
-                                }  
-                              },
+                              onPressed: _handleLogin,
                             ),
                             if (!_isEmailValid || !_isPasswordValid)
                               Positioned.fill(
