@@ -449,5 +449,13 @@
   "lblContentDialogWizard2": "Set the rooms present in your facility",
   "@lblContentDialogWizard2": {
     "description": "The content of the dialog wizard"
+  },
+  "logoutAlertMessage": "Are you sure you want to logout from RoomFinder?",
+  "@logoutAlertMessage": {
+    "description": "The message of the logout dialog"
+  },
+  "accountTypeAlertMessage": "In RoomFinder you can find two types of account: \n\n• Student: select it if you are looking for an accomodation in your city of studies. \n\n• Host: select it if you are interested in making available your spaces, creating rental proposals for future students. \n\nStudent type is the preselected option, so if you are a Student it is not necessary to select anything, otherwise select Host option.",
+  "@accountTypeAlertMessage": {
+    "description": "The message of account type dialog"
   }
 }

@@ -22,8 +22,6 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
   bool _isPasswordValid = false;
   bool _isNameValid = false;
 
-  String accountTypeInfo = "In RoomFinder you can find two types of account: \n\n• Student: select it if you are looking for an accomodation in your city of studies. \n\n• Host: select it if you are interested in making available your spaces, creating rental proposals for future students. \n\nStudent type is the preselected option, so if you are a Student it is not necessary to select anything, otherwise select Host option.";
-
   void _onEmailValidityChanged(bool isValid) {
     setState(() {
       _isEmailValid = isValid;
@@ -78,13 +76,15 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       SizedBox(height: 20.h),
                       SwitchTypeAccountButton(onPressed: () => showOptionsDialog(
                         context: context, 
-                        androidDialog: InfoAndroidDialog(
+                        androidDialog: ActionsAndroidDialog(
                           title: AppLocalizations.of(context)!.lblAccountType, 
-                          content: accountTypeInfo
+                          content: AppLocalizations.of(context)!.accountTypeAlertMessage,
+                          onOk: () => Navigator.pop(context)
                         ), 
-                        iosDialog: InfoIosDialog(
+                        iosDialog: ActionsIosDialog(
                           title: AppLocalizations.of(context)!.lblAccountType, 
-                          content: accountTypeInfo
+                          content: AppLocalizations.of(context)!.accountTypeAlertMessage,
+                          onOk: () => Navigator.pop(context)
                         ))
                       ),
                       SizedBox(height: 20.h),

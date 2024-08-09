@@ -27,7 +27,13 @@ class SettingButtons extends StatelessWidget {
               children: [
                 Icon(icon),
                 SizedBox(width: 10.w),
-                Text(label),
+                Text(
+                  label,
+                  style: TextStyle(
+                  color: ColorPalette.oxfordBlue,
+                  fontSize: 18.sp,
+                ),
+                ),
                 const Spacer(),
                 const Icon(Icons.arrow_forward_ios),
               ],
