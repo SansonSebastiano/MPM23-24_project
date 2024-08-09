@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'buttons/circle_buttons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// The [RoomOption] widget defines the component used during the adding rental proposal process to manage the number of rooms present in a specif facility.
 /// When you construct the [RoomOption] widget you need to specify the name of the room that you want to manage.
@@ -38,7 +39,7 @@ class _RoomOptionState extends State<RoomOption> {
       children: [
         Row(
           children: [
-            if(widget.roomName !="Beds") SizedBox(width: 15.w),
+            if(widget.roomName != AppLocalizations.of(context)!.lblBeds) SizedBox(width: 15.w),
             Text(
               widget.roomName,
               style: TextStyle(fontSize: 22.w, fontWeight: FontWeight.w500),
@@ -68,7 +69,7 @@ class _RoomOptionState extends State<RoomOption> {
             ),
           ],
         ),
-        if (widget.roomName == 'Bedrooms')
+        if (widget.roomName == AppLocalizations.of(context)!.lblBedrooms)
           ...List.generate(
             counter,
             (index) => Column(
@@ -88,7 +89,7 @@ class _RoomOptionState extends State<RoomOption> {
                         endIndent: 20.w,
                         color:  const Color.fromRGBO(78, 128, 240, 47),
                       ),
-                      const RoomOption(roomName: 'Beds'),
+                      RoomOption(roomName: AppLocalizations.of(context)!.lblBeds),
                     ],
                   ),
                 ),
