@@ -5,6 +5,7 @@ import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/setting_buttons.dart';
+import 'package:room_finder/presentation/screens/account_page_login_security.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -19,14 +20,11 @@ class AccountPage extends StatelessWidget {
           Stack(
             clipBehavior: Clip.none, // Allows elements to be positioned outside the container
             children: [
-              Container(
-                height: 220.h, // Adjust height to control how much of the image is inside the blue box
-                decoration: BoxDecoration(
+              ClipPath(
+                clipper: EllipseClipper(), 
+                child: Container(
+                  height: 300.h, // Adjust height to control how much of the image is inside the blue box
                   color: ColorPalette.darkConflowerBlue,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40.r),
-                    bottomRight: Radius.circular(40.r),
-                  ),
                 ),
               ),
               Positioned(
@@ -81,7 +79,7 @@ class AccountPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 170.h), // Space the body of the page from the top container
+          SizedBox(height: 100.h), // Space the body of the page from the top container
           Divider(
             color: ColorPalette.blueberry,
             indent: 25.w,
@@ -110,7 +108,11 @@ class AccountPage extends StatelessWidget {
                   icon: Icons.person_outline,
                 ),
                 SettingButtons(
-                  onPressed: () => {},
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => const LoginSecurityPage()
+                    )
+                  ),
                   label: AppLocalizations.of(context)!.btnLoginSecurity,
                   icon: Icons.login,
                 ),
@@ -122,5 +124,33 @@ class AccountPage extends StatelessWidget {
       // TODO: check if the current user is host or student
       bottomNavigationBar: const StudentNavigationBar() 
     );
+  }
+}
+
+class EllipseClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    // Start the path at the left edge, somewhat lower on the container's height
+    path.moveTo(0, size.height * 0.6);
+
+    // Create a quadratic bezier curve that defines the ellipse
+    // The first point is the control point for the curve
+    // The second point is the end point of the curve on the right edge
+    path.quadraticBezierTo(
+        size.width / 2, size.height * 0.8,  // This makes the curve flatter
+        size.width, size.height * 0.6);    // End point at the same level as the start point
+
+    // Draw lines to close the shape
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

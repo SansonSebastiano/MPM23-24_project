@@ -1,32 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
-import 'package:room_finder/presentation/components/buttons/switch_type_account_button.dart';
 import 'package:room_finder/presentation/components/input_text_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/util/network_handler.dart';
 
-class RegistrationPage extends ConsumerStatefulWidget {
-  const RegistrationPage({super.key});
+class LoginSecurityPage extends ConsumerStatefulWidget {
+  const LoginSecurityPage({super.key});
   
   @override
-  ConsumerState<RegistrationPage> createState() => _RegistrationPageState();
+  ConsumerState<LoginSecurityPage> createState() => _LoginSecurityPageState();
 }
 
-class _RegistrationPageState extends ConsumerState<RegistrationPage> {
-  bool _isEmailValid = false;
+class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
   bool _isPasswordValid = false;
-  bool _isNameValid = false;
-
-  void _onEmailValidityChanged(bool isValid) {
-    setState(() {
-      _isEmailValid = isValid;
-    });
-  }
 
   void _onPasswordValidityChanged(bool isValid) {
     setState(() {
@@ -34,21 +24,15 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
     });
   }
 
-  void _onNameValidityChanged(bool isValid) {
-    setState(() {
-      _isNameValid = isValid;
-    });
-  }
-
-  void _handleRegistration() {
-    if (_isEmailValid && _isPasswordValid) {
+  void _handleChangePassword() {
+    if (_isPasswordValid) {
       final networkStatus = ref.read(networkAwareProvider);
 
       if (networkStatus == NetworkStatus.off) {
         showErrorSnackBar(context, "No internet connection. Please try again.");
       } else {
         // Proceed with registration logic
-        print("registering user...");
+        print("changing user password...");
       }
     }
   }
@@ -70,38 +54,31 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DarkBackButton(onPressed: () => Navigator.pop(context)),
-                      SizedBox(height: 40.h),
-                      Text(AppLocalizations.of(context)!.lblRegistration,
-                          style: Theme.of(context).textTheme.displayMedium),
                       SizedBox(height: 20.h),
-                      SwitchTypeAccountButton(onPressed: () => showOptionsDialog(
-                        context: context, 
-                        androidDialog: ActionsAndroidDialog(
-                          title: AppLocalizations.of(context)!.lblAccountType, 
-                          content: AppLocalizations.of(context)!.accountTypeAlertMessage,
-                          onOk: () => Navigator.pop(context)
-                        ), 
-                        iosDialog: ActionsIosDialog(
-                          title: AppLocalizations.of(context)!.lblAccountType, 
-                          content: AppLocalizations.of(context)!.accountTypeAlertMessage,
-                          onOk: () => Navigator.pop(context)
-                        ))
+                      Center(
+                        child: Image(
+                          image: const AssetImage('assets/images/Change-password.png'),
+                          width: 200.w,
+                          height: 200.h,
+                        ),
                       ),
                       SizedBox(height: 20.h),
-                      NameTextField(onNameValidityChanged: _onNameValidityChanged),
+                      Text(AppLocalizations.of(context)!.btnLoginSecurity,
+                          style: Theme.of(context).textTheme.displayMedium),
                       SizedBox(height: 20.h),
-                      EmailTextField(onEmailValidityChanged: _onEmailValidityChanged),
+                      Text(AppLocalizations.of(context)!.lblLoginSecurity,
+                          style: Theme.of(context).textTheme.bodyLarge),
                       SizedBox(height: 20.h),
                       RegistrationPswdTextField(onPswdValidationChanged: _onPasswordValidityChanged),
-                      SizedBox(height: 30.h),
+                      SizedBox(height: 40.h),
                       Center(
                         child: Stack(
                           children: [
                             RectangleButton(
-                              label: "Sign up",
-                              onPressed: _handleRegistration,
+                              label: "Change password",
+                              onPressed: _handleChangePassword,
                             ),
-                            if (!_isNameValid || !_isEmailValid || !_isPasswordValid)
+                            if (!_isPasswordValid)
                               Positioned.fill(
                                 child: Container(
                                   color: Colors.white.withOpacity(0.5),
