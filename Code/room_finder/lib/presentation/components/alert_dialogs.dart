@@ -8,7 +8,7 @@ import 'package:room_finder/style/color_palette.dart';
 /// [content] is the content of the dialog.
 class InfoAndroidDialog extends StatelessWidget {
   final String title;
-  final String content;
+  final Widget content;
 
   const InfoAndroidDialog(
       {super.key, required this.title, required this.content});
@@ -23,7 +23,8 @@ class InfoAndroidDialog extends StatelessWidget {
               .textTheme
               .displaySmall!
               .copyWith(fontWeight: FontWeight.w600)),
-      content: Text(content),
+      content: content,
+      //Text(content),
       actions: actions,
     );
   }
@@ -71,7 +72,7 @@ class ActionsAndroidDialog extends InfoAndroidDialog {
 /// [content] is the content of the dialog.
 class InfoIosDialog extends StatelessWidget {
   final String title;
-  final String content;
+  final Widget content;
 
   const InfoIosDialog({super.key, required this.title, required this.content});
 
@@ -84,10 +85,11 @@ class InfoIosDialog extends StatelessWidget {
           style: const TextStyle(
             color: ColorPalette.darkConflowerBlue,
           )),
-      content: Text(content,
-          style: const TextStyle(
-            color: ColorPalette.darkConflowerBlue,
-          )),
+      content: content,
+      // Text(content,
+      //     style: const TextStyle(
+      //       color: ColorPalette.darkConflowerBlue,
+      //     )),
       actions: actions,
     );
   }

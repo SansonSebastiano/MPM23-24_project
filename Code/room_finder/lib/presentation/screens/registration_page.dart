@@ -80,11 +80,11 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                         context: context, 
                         androidDialog: InfoAndroidDialog(
                           title: AppLocalizations.of(context)!.lblAccountType, 
-                          content: accountTypeInfo
+                          content: Text(accountTypeInfo)
                         ), 
                         iosDialog: InfoIosDialog(
                           title: AppLocalizations.of(context)!.lblAccountType, 
-                          content: accountTypeInfo
+                          content: Text(accountTypeInfo)
                         ))
                       ),
                       SizedBox(height: 20.h),

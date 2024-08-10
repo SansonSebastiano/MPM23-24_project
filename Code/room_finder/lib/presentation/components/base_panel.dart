@@ -41,7 +41,8 @@ abstract class BaseModalPanel extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            child: RectangleButton(label: btnLabel, onPressed: onBtnPressed),
+            child: RectangleButton(
+                label: btnLabel, onPressed: onBtnPressed),
           )
         ],
       ),
@@ -81,6 +82,7 @@ class PanelTitle extends StatelessWidget {
     void defaultOnBtnClosed() {
       Navigator.of(context).pop();
     }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -97,8 +99,9 @@ class PanelTitle extends StatelessWidget {
             maintainAnimation: true,
             maintainState: true,
             child: IconButton(
-              // FIXME: the onBtnClosed function is not working properly: it should get onBtnClosed because it is not null
-              onPressed: onBtnClosed ?? defaultOnBtnClosed, icon: const Icon(Icons.close))),
+                // FIXME: the onBtnClosed function is not working properly: it should get onBtnClosed because it is not null
+                onPressed: onBtnClosed ?? defaultOnBtnClosed,
+                icon: const Icon(Icons.close))),
       ],
     );
   }

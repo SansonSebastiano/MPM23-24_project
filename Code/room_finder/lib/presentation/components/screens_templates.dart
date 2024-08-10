@@ -293,9 +293,9 @@ class WizardTemplateScreen extends StatelessWidget {
                         showOptionsDialog(
                           context: context,
                           androidDialog: InfoAndroidDialog(
-                              title: AppLocalizations.of(context)!.lblTitleDialogWizard, content: dialogContent),
+                              title: AppLocalizations.of(context)!.lblTitleDialogWizard, content: Text(dialogContent)),
                           iosDialog: InfoIosDialog(
-                              title: AppLocalizations.of(context)!.lblTitleDialogWizard, content: dialogContent),
+                              title: AppLocalizations.of(context)!.lblTitleDialogWizard, content: Text(dialogContent)),
                         );
                       },
                     ),
