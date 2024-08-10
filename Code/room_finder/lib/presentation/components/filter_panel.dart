@@ -27,7 +27,8 @@ class SearchFilterPanel extends BaseModalPanel {
       required this.context,
       required super.title,
       required super.btnLabel,
-      required super.onBtnPressed});
+      required super.onBtnPressed,
+      required super.onBtnClosed});
 
   @override
   Widget get items => Column(

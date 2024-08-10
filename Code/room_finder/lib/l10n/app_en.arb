@@ -450,6 +450,10 @@
   "@lblContentDialogWizard2": {
     "description": "The content of the dialog wizard"
   },
+  "lblContentDialogWizard3": "Set the maximum number of renters and add or edit them.",
+  "@lblContentDialogWizard3": {
+    "description": "The content of the dialog wizard"
+  },
   "logoutAlertMessage": "Are you sure you want to logout from RoomFinder?",
   "@logoutAlertMessage": {
     "description": "The message of the logout dialog"

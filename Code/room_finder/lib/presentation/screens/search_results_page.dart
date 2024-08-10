@@ -23,6 +23,7 @@ class SearchResultsPage extends ConsumerWidget {
         btnLabel: AppLocalizations.of(context)!.btnApplyFilters, 
         // TODO: Implement the onPressed function
         onBtnPressed: () {  },
+        onBtnClosed: () => Navigator.pop(context)
       )
     );
   }

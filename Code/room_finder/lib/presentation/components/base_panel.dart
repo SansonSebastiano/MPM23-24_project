@@ -9,14 +9,14 @@ abstract class BaseModalPanel extends StatelessWidget {
   final String title;
   final String btnLabel;
   final void Function()? onBtnPressed;
-  final void Function()? onBtnClosed;
+  final void Function() onBtnClosed;
 
   const BaseModalPanel(
       {super.key,
       required this.title,
       required this.btnLabel,
       required this.onBtnPressed,
-      this.onBtnClosed});
+      required this.onBtnClosed});
 
   Widget get items;
 
@@ -41,8 +41,7 @@ abstract class BaseModalPanel extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            child: RectangleButton(
-                label: btnLabel, onPressed: onBtnPressed),
+            child: RectangleButton(label: btnLabel, onPressed: onBtnPressed),
           )
         ],
       ),
@@ -73,35 +72,26 @@ Future showModalPanel(
 /// Create a [title] for the filter panel.
 class PanelTitle extends StatelessWidget {
   final String title;
-  final void Function()? onBtnClosed;
+  final void Function() onBtnClosed;
 
-  const PanelTitle({super.key, required this.title, this.onBtnClosed});
+  const PanelTitle({super.key, required this.title, required this.onBtnClosed});
 
   @override
   Widget build(BuildContext context) {
-    void defaultOnBtnClosed() {
-      Navigator.of(context).pop();
-    }
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        IconButton(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: const Icon(Icons.close)),
+        IconButton(onPressed: onBtnClosed, icon: const Icon(Icons.close)),
         Text(
           title,
           style: Theme.of(context).textTheme.displaySmall,
         ),
-        Visibility(
+        const Visibility(
             visible: false,
             maintainSize: true,
             maintainAnimation: true,
             maintainState: true,
-            child: IconButton(
-                // FIXME: the onBtnClosed function is not working properly: it should get onBtnClosed because it is not null
-                onPressed: onBtnClosed ?? defaultOnBtnClosed,
-                icon: const Icon(Icons.close))),
+            child: IconButton(onPressed: null, icon: Icon(Icons.close))),
       ],
     );
   }

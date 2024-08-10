@@ -182,7 +182,7 @@ class AddRemoveButton extends StatelessWidget {
 
   final bool isAddButton;
   final double size;
-  final void Function() onPressed;
+  final void Function()? onPressed;
 
   final Color buttonColor = ColorPalette.aliceBlue;
   final IconData icon = Icons.add;
@@ -191,16 +191,33 @@ class AddRemoveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: buttonColor,
-        shape: CircleBorder(
-          side: BorderSide(
-            color: ColorPalette.oxfordBlue,
-            width: 2.w,
+      style: ButtonStyle(
+        shape: WidgetStateProperty.all<CircleBorder>(
+           CircleBorder(
+            side: BorderSide(
+              color: ColorPalette.oxfordBlue,
+              width: 2.w,
+            ),
           ),
         ),
-        minimumSize: Size(size.w, size.h),
+        minimumSize: WidgetStateProperty.all<Size>(Size(size.w, size.h)),
+        backgroundColor: WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+          if (states.contains(WidgetState.disabled)) {
+            return buttonColor.withOpacity(0.5);
+          }
+          return buttonColor;
+        }),
       ),
+      // ElevatedButton.styleFrom(
+      //   backgroundColor: buttonColor,
+      //   shape: CircleBorder(
+      //     side: BorderSide(
+      //       color: ColorPalette.oxfordBlue,
+      //       width: 2.w,
+      //     ),
+      //   ),
+      //   minimumSize: Size(size.w, size.h),
+      // ),
       onPressed: onPressed,
       child: Icon(isAddButton ? Icons.add : Icons.remove,
           color: iconColor, size: size.w - 5),

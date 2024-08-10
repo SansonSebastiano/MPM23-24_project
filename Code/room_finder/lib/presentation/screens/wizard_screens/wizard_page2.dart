@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/presentation/components/add_on.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/room_option.dart';
@@ -56,51 +57,43 @@ class _WizardPage2BodyState extends State<_WizardPage2Body> {
         padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
         child: Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.lblAddRooms,
-                ),
-                AddRemoveButton(
-                  isAddButton: true,
-                  size: 25,
-                  onPressed: () {
-                    showOptionsDialog(
-                        context: context,
-                        androidDialog: ActionsAndroidDialog(
-                            context: context,
-                            title: AppLocalizations.of(context)!.lblAddNewRoom,
-                            content: TextField(
-                              controller: _controller,
-                            ),
-                            onCancel: () {
-                              _onCancel(context);
-                            },
-                            onOk: () {
-                              _onOk(context);
-                            }),
-                        iosDialog: ActionsIosDialog(
-                            context: context,
-                            title: AppLocalizations.of(context)!.lblAddNewRoom,
-                            content: CupertinoTextField(
-                              controller: _controller,
-                            ),
-                            onCancel: () {
-                              _onCancel(context);
-                            },
-                            onOk: () {
-                              _onOk(context);
-                            }));
-                  },
-                ),
-              ],
-            ),
+            AddOn(
+                label: AppLocalizations.of(context)!.lblAddRooms,
+                onPressed: () {
+                  showOptionsDialog(
+                      context: context,
+                      androidDialog: ActionsAndroidDialog(
+                          context: context,
+                          title: AppLocalizations.of(context)!.lblAddNewRoom,
+                          content: TextField(
+                            controller: _controller,
+                          ),
+                          onCancel: () {
+                            _onCancel(context);
+                          },
+                          onOk: () {
+                            _onOk(context);
+                          }),
+                      iosDialog: ActionsIosDialog(
+                          context: context,
+                          title: AppLocalizations.of(context)!.lblAddNewRoom,
+                          content: CupertinoTextField(
+                            controller: _controller,
+                          ),
+                          onCancel: () {
+                            _onCancel(context);
+                          },
+                          onOk: () {
+                            _onOk(context);
+                          }));
+                }),
             SizedBox(height: 20.h),
             Expanded(
               child: ListView.separated(
                   itemCount: _rooms.length,
-                  separatorBuilder: (context, index) => const Divider(),
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(height: 20.h); // Add padding between items
+                  },
                   itemBuilder: (context, index) {
                     return _rooms[index];
                   }),
