@@ -17,6 +17,7 @@ class WizardPage1 extends StatelessWidget {
       currentStep: 1,
       btnNextLabel: AppLocalizations.of(context)!.btnNext,
       dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard1,
+      onOkDialog: () => Navigator.of(context).pop(),
       btnNextOnPressed: () {}, //() => Navigator.pushNamed(context, '/wizard2'),
       screenContent: const _WizardPage1Body(),
     );

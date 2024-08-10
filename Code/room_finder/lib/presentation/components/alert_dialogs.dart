@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:room_finder/style/color_palette.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// A class that represents an Android dialog with a title and content.
 ///
@@ -39,11 +40,13 @@ class InfoAndroidDialog extends StatelessWidget {
 class ActionsAndroidDialog extends InfoAndroidDialog {
   final void Function()? onOk;
   final void Function()? onCancel;
+  final BuildContext context;
 
   const ActionsAndroidDialog(
       {super.key,
       required super.title,
       required super.content,
+      required this.context,
       this.onOk,
       this.onCancel});
 
@@ -59,7 +62,7 @@ class ActionsAndroidDialog extends InfoAndroidDialog {
     if (onCancel != null) {
       actions.add(TextButton(
         onPressed: onCancel,
-        child: const Text('Cancel'),
+        child: Text(AppLocalizations.of(context)!.btnCancel),
       ));
     }
     return actions;
@@ -104,11 +107,13 @@ class InfoIosDialog extends StatelessWidget {
 class ActionsIosDialog extends InfoIosDialog {
   final void Function()? onOk;
   final void Function()? onCancel;
+  final BuildContext context;
 
   const ActionsIosDialog(
       {super.key,
       required super.title,
       required super.content,
+      required this.context,
       this.onOk,
       this.onCancel});
 
@@ -124,7 +129,7 @@ class ActionsIosDialog extends InfoIosDialog {
     if (onCancel != null) {
       actions.add(CupertinoDialogAction(
         onPressed: onCancel,
-        child: const Text('Cancel'),
+        child: Text(AppLocalizations.of(context)!.btnCancel),
       ));
     }
     return actions;

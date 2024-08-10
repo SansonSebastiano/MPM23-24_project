@@ -33,6 +33,7 @@ class AccountPage extends StatelessWidget {
                 child: LogoutButton(onPressed: () => showOptionsDialog(
                   context: context, 
                   androidDialog: ActionsAndroidDialog(
+                    context: context,
                     title: AppLocalizations.of(context)!.btnLogout, 
                     content: Text(AppLocalizations.of(context)!.logoutAlertMessage),
                     // TODO: handle logout
@@ -43,6 +44,7 @@ class AccountPage extends StatelessWidget {
                     onCancel: () => Navigator.pop(context)
                   ), 
                   iosDialog: ActionsIosDialog(
+                    context: context,
                     title: AppLocalizations.of(context)!.btnLogout, 
                     content: Text(AppLocalizations.of(context)!.logoutAlertMessage),
                     // TODO: handle logout

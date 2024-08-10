@@ -461,5 +461,9 @@
   "lblLoginSecurity": "Use the following form to change your password",
   "@lblLoginSecurity": {
     "description": "The Login & Security label"
+  },
+  "btnCancel": "Cancel",
+  "@btnCancel": {
+    "description": "The button to cancel the action"
   }
 }

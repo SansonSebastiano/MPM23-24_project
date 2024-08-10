@@ -77,11 +77,13 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       SwitchTypeAccountButton(onPressed: () => showOptionsDialog(
                         context: context, 
                         androidDialog: ActionsAndroidDialog(
+                          context: context,
                           title: AppLocalizations.of(context)!.lblAccountType, 
                           content: Text(AppLocalizations.of(context)!.accountTypeAlertMessage),
                           onOk: () => Navigator.pop(context)
                         ), 
                         iosDialog: ActionsIosDialog(
+                          context: context,
                           title: AppLocalizations.of(context)!.lblAccountType, 
                           content: Text(AppLocalizations.of(context)!.accountTypeAlertMessage),
                           onOk: () => Navigator.pop(context)

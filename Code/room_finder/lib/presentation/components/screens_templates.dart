@@ -139,7 +139,6 @@ class SecondaryTemplateScreen extends StatelessWidget {
                 rightWidget: rightHeaderWidget,
                 rightWidgetVisibility: rightHeaderWidgetVisibility,
               ),
-
               content,
             ],
           ),
@@ -205,27 +204,25 @@ class _SecondaryScreenHeader extends StatelessWidget {
 }
 
 /// [WizardTemplateScreen] is a class that represents the wizard template screen.
-/// 
+///
 /// This class is used to create a screen with a wizard stepper.
-/// 
+///
 /// The [leftButton] is the widget placed on the left side of the header.
-/// 
+///
 /// The [rightButton] is the optional widget placed on the right side of the header.
-/// 
+///
 /// The [rightButtonVisibility] is used to determine if the right widget is visible or not, default is false. And in case it is false, the portion of the header where the right widget is placed will not empty.
-/// 
+///
 /// The [screenLabel] is used to set the title of the screen.
-/// 
+///
 /// The [screenContent] is used to set the content of the screen.
-/// 
-/// The [dialogTitle] is used to set the title of the dialog.
-/// 
+///
 /// The [dialogContent] is used to set the content of the dialog.
-/// 
+///
 /// The [currentStep] is used to set the current step of the wizard stepper.
-/// 
+///
 /// The [btnNextLabel] is used to set the label of the next button.
-/// 
+///
 /// The [btnNextOnPressed] is used to set the onPressed method of the next button.
 class WizardTemplateScreen extends StatelessWidget {
   final CustomButton leftButton;
@@ -241,6 +238,8 @@ class WizardTemplateScreen extends StatelessWidget {
 
   final String btnNextLabel;
   final void Function() btnNextOnPressed;
+  
+  final void Function() onOkDialog;
 
   const WizardTemplateScreen(
       {super.key,
@@ -252,8 +251,8 @@ class WizardTemplateScreen extends StatelessWidget {
       required this.dialogContent,
       required this.currentStep,
       required this.btnNextLabel,
-      required this.btnNextOnPressed
-      });
+      required this.btnNextOnPressed,
+      required this.onOkDialog});
 
   @override
   Widget build(BuildContext context) {
@@ -292,21 +291,31 @@ class WizardTemplateScreen extends StatelessWidget {
                       onPressed: () {
                         showOptionsDialog(
                           context: context,
-                          androidDialog: InfoAndroidDialog(
-                              title: AppLocalizations.of(context)!.lblTitleDialogWizard, content: Text(dialogContent)),
-                          iosDialog: InfoIosDialog(
-                              title: AppLocalizations.of(context)!.lblTitleDialogWizard, content: Text(dialogContent)),
+                          androidDialog: ActionsAndroidDialog(
+                            context: context,
+                            title: AppLocalizations.of(context)!
+                                .lblTitleDialogWizard,
+                            content: Text(dialogContent),
+                            onOk: onOkDialog,
+                          ),
+                          iosDialog: ActionsIosDialog(
+                            context: context,
+                            title: AppLocalizations.of(context)!
+                                .lblTitleDialogWizard,
+                            content: Text(dialogContent),
+                            onOk: onOkDialog,
+                          ),
                         );
                       },
                     ),
                   )
                 ],
               ),
-              const Spacer(),
+              // const Spacer(),
 
               screenContent,
 
-              const Spacer(),
+              // const Spacer(),
               Padding(
                 padding: EdgeInsets.only(bottom: 30.h),
                 child: WizardStepper(
