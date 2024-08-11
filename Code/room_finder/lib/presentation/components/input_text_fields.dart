@@ -9,8 +9,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// The class [NameTextField] defines an input field to digit the name of the user.  
 class NameTextField extends StatefulWidget {
   final Function(bool) onNameValidityChanged;
+  final String? initialName; // Optional parameter to load the initial name from backend
 
-  const NameTextField({super.key, required this.onNameValidityChanged});
+  const NameTextField({
+    super.key, 
+    required this.onNameValidityChanged,
+    this.initialName,
+  });
 
   @override
   State<NameTextField> createState() => _NameTextFieldState();
@@ -25,7 +30,7 @@ class _NameTextFieldState extends State<NameTextField> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _controller = TextEditingController(text: widget.initialName ?? '');
     _controller.addListener(_validateName);
   }
 

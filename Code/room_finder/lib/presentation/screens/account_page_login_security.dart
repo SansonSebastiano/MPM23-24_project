@@ -31,7 +31,7 @@ class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
       if (networkStatus == NetworkStatus.off) {
         showErrorSnackBar(context, "No internet connection. Please try again.");
       } else {
-        // Proceed with registration logic
+        // Proceed with changing password logic
         print("changing user password...");
       }
     }

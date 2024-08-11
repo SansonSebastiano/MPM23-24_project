@@ -466,6 +466,14 @@
   "@lblLoginSecurity": {
     "description": "The Login & Security label"
   },
+  "lblPersonalInformation": "Modify here your personal information",
+  "@lblPersonalInformation": {
+    "description": "The Personal Information label"
+  },
+  "lblAccountPhoto": "Account photo",
+  "@lblAccountPhoto": {
+    "description": "The Account photo label"
+  },
   "btnCancel": "Cancel",
   "@btnCancel": {
     "description": "The button to cancel the action"

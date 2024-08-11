@@ -6,6 +6,7 @@ import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/setting_buttons.dart';
 import 'package:room_finder/presentation/screens/account_page_login_security.dart';
+import 'package:room_finder/presentation/screens/account_page_personal_information.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -105,7 +106,11 @@ class AccountPage extends StatelessWidget {
             child: ListView(
               children: [
                 SettingButtons(
-                  onPressed: () => {},
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => const PersonalInformationPage()
+                    )
+                  ),
                   label: AppLocalizations.of(context)!.btnPersonalInfo,
                   icon: Icons.person_outline,
                 ),

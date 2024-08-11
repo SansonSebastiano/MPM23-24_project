@@ -110,5 +110,7 @@
     "logoutAlertMessage": "Sei sicuro di voler disconneterti da RoomFider?",
     "accountTypeAlertMessage": "In RoomFinder puoi trovare due tipologie di account: \n\n• Studente: selezionalo se stai cercando un alloggio nella tua città di studi. \n\n• Host: selezionalo se sei interessato a mettere a disposizione i tuoi spazi, creando proposte di affitto per futuri studenti. \n\nLa tipologia Studente è l'opzione preselezionata, quindi se sei uno Studente non è necessario selezionare nulla, altrimenti seleziona l'opzione Host.",
     "lblLoginSecurity": "Usa il seguente form per cambiare la tua password",
+    "lblPersonalInformation": "Modifica qui le tue informazioni personali",
+    "lblAccountPhoto": "Foto profilo",
     "btnCancel": "Annulla"
 }
