@@ -9,13 +9,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// [ProfilePhotoEditor] is a widget that displays a circular profile photo with an edit button to change the photo.
 class ProfilePhotoEditor extends StatefulWidget {
-  final String? imageUrl; // Optional URL of the existing profile photo
+  final String? imageUrl; 
   final ValueChanged<File?>? onPhotoChanged; // Callback for photo changes
 
   const ProfilePhotoEditor({
     super.key,
     this.imageUrl,
-    this.onPhotoChanged, // Add this parameter
+    this.onPhotoChanged, 
   });
 
   @override
