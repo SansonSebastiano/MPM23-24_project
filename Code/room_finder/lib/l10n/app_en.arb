@@ -442,16 +442,32 @@
   "@lblTitleDialogWizard": {
     "description": "The title of the dialog wizard"
   },
-  "lblContentDialogWizard1": "Choose the address of your facility",
+  "lblContentDialogWizard1": "This page allows you to set the address of your facility.",
   "@lblContentDialogWizard1": {
     "description": "The content of the dialog wizard"
   },
-  "lblContentDialogWizard2": "Set the rooms present in your facility",
+  "lblContentDialogWizard2": "This page allows you to set your facility's rooms. \n\nIn this page you can find some predefined rooms where you can set the number or, if the room is not present in the list, you can add a new room through the add room button. \n\nIf you add a bedroom you will also be asked to set the number of beds for that bedroom.",
   "@lblContentDialogWizard2": {
     "description": "The content of the dialog wizard"
   },
-  "lblContentDialogWizard3": "Set the maximum number of renters and add or edit them.",
+  "lblContentDialogWizard3": "This page allows to set the maximum number of renters and manage the current renters already present in the facility, each one represent by its own box. It is possible to add, edit or remove renters.",
   "@lblContentDialogWizard3": {
+    "description": "The content of the dialog wizard"
+  },
+  "lblContentDialogWizard4": "This page allows you to select all the amenities and services that your facility offers. \n\nIn this page you can find some predefined options that you can select and, if a service that you offer is not present in the list, you can add a new one through the add service button.",
+  "@lblContentDialogWizard4": {
+    "description": "The content of the dialog wizard"
+  },
+  "lblContentDialogWizard5": "This page allows you to set the monthly rent of your facility. \n\nUse the slider component to increase or dimish the price or tap on the box containing the final price to open the keyboard and add it manually.",
+  "@lblContentDialogWizard5": {
+    "description": "The content of the dialog wizard"
+  },
+  "lblContentDialogWizard6": "This page allows you to set the name of your facility by tapping on the input box and digiting the name using the keyboard.",
+  "@lblContentDialogWizard6": {
+    "description": "The content of the dialog wizard"
+  },
+  "lblContentDialogWizard7": "In order to obtain more visibility this page allows you to insert at least five photos of your facility. In this way students can have an idea of your facility just by watching the photos you have posted here. \n\nTo add a new photo use the Add more box and to delete an uploaded photo tap on the top-left cancel button placed near each added photo.",
+  "@lblContentDialogWizard7": {
     "description": "The content of the dialog wizard"
   },
   "logoutAlertMessage": "Are you sure you want to logout from RoomFinder?",
