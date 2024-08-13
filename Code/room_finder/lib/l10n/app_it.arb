@@ -72,6 +72,7 @@
     "lblEnterName": "Inserisci un nome",
     "lblStudies": "Facoltà di studi",
     "lblEnterStudies": "Inserisci la facoltà di studi",
+    "lblEnterAge": "Inserisci l'età",
     "lblInterests": "Interessi",
     "lblEnterInterests": "Inserisci gli interessi",
     "lblContractDeadline": "Scadenza del contratto",

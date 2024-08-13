@@ -31,7 +31,7 @@ abstract class RenterBox extends StatelessWidget {
       required this.interests,
       required this.contractDeadline,
       this.onEditPressed,
-      this.onRemovePressed});
+      this.onRemovePressed,});
 
   bool get hostView;
 
@@ -167,7 +167,9 @@ class StudentRenterBox extends RenterBox {
       required super.age,
       required super.facultyOfStudies,
       required super.interests,
-      required super.contractDeadline});
+      required super.contractDeadline,
+      super.onEditPressed,
+      super.onRemovePressed,});
 
   @override
   bool get hostView => false;
@@ -181,8 +183,8 @@ class HostRenterBox extends RenterBox {
       required super.facultyOfStudies,
       required super.interests,
       required super.contractDeadline,
-      required super.onEditPressed,
-      required super.onRemovePressed});
+      super.onEditPressed,
+      super.onRemovePressed,});
 
   @override
   bool get hostView => true;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 
 class AddOn extends StatelessWidget {
-  final String label;  
+  final String label;
   final void Function()? onPressed;
 
   const AddOn({super.key, required this.label, required this.onPressed});
@@ -13,8 +13,7 @@ class AddOn extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label),
-        AddRemoveButton(
-            isAddButton: true, size: 25, onPressed: onPressed),
+        AddRemoveButton(isAddButton: true, size: 30, onPressed: onPressed),
       ],
     );
   }

@@ -10,8 +10,10 @@ class RenterPanel extends BaseModalPanel {
   final TextEditingController nameController;
   final TextEditingController studiesController;
   final TextEditingController interestsController;
+  final TextEditingController ageController;
   final DateTime selectedDate;
-
+  final Function(DateTime? selectedDate) onDateChanged;
+  
   const RenterPanel(
       {super.key,
       required this.context,
@@ -22,7 +24,10 @@ class RenterPanel extends BaseModalPanel {
       required this.studiesController,
       required this.interestsController,
       required super.onBtnClosed,
-      required this.selectedDate});
+      required this.selectedDate,
+      required this.onDateChanged,
+      required this.ageController,
+      });
 
   @override
   Widget get items => Column(
@@ -31,6 +36,12 @@ class RenterPanel extends BaseModalPanel {
             itemTitle: AppLocalizations.of(context)!.lblRenterName,
             hint: AppLocalizations.of(context)!.lblEnterName,
             controller: nameController,
+          ),
+          _InputFieldItem(
+            itemTitle: AppLocalizations.of(context)!.lblRenterAge,
+            hint: AppLocalizations.of(context)!.lblEnterAge,
+            controller: ageController,
+            keyboardType: TextInputType.number,
           ),
           _InputFieldItem(
             itemTitle: AppLocalizations.of(context)!.lblStudies,
@@ -45,6 +56,7 @@ class RenterPanel extends BaseModalPanel {
           _DatePickerItem(
             itemTitle: AppLocalizations.of(context)!.lblContractDeadline,
             selectedDate: selectedDate,
+            onDateChanged: onDateChanged,
           )
         ],
       );
@@ -53,8 +65,10 @@ class RenterPanel extends BaseModalPanel {
 class _InputField extends StatefulWidget {
   final String hint;
   final TextEditingController controller;
+  final TextInputType keyboardType;
 
-  const _InputField({required this.hint, required this.controller});
+  const _InputField(
+      {required this.hint, required this.controller, required this.keyboardType});
 
   @override
   State<_InputField> createState() => _InputFieldState();
@@ -73,12 +87,12 @@ class _InputFieldState extends State<_InputField> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: TextField(
-            // TODO: on text entered
             controller: widget.controller,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: widget.hint,
             ),
+            keyboardType: widget.keyboardType,
           ),
         ),
       ),
@@ -89,18 +103,29 @@ class _InputFieldState extends State<_InputField> {
 class _InputFieldItem extends PanelItem {
   final String hint;
   final TextEditingController controller;
+  final TextInputType keyboardType;
 
   const _InputFieldItem(
-      {required super.itemTitle, required this.hint, required this.controller});
+      {required super.itemTitle,
+      required this.hint,
+      required this.controller,
+      this.keyboardType = TextInputType.text,
+      });
 
   @override
-  Widget get content => _InputField(hint: hint, controller: controller);
+  Widget get content => _InputField(
+        hint: hint,
+        controller: controller,
+        keyboardType: keyboardType,
+      );
 }
 
 // ignore: must_be_immutable
 class _DatePicker extends StatefulWidget {
-   DateTime selectedDate;
-  _DatePicker({required this.selectedDate});
+  DateTime selectedDate;
+  final Function(DateTime? selectedDate) onDateChanged;
+
+  _DatePicker({required this.selectedDate, required this.onDateChanged});
 
   @override
   State<_DatePicker> createState() => _DatePickerState();
@@ -108,7 +133,6 @@ class _DatePicker extends StatefulWidget {
 
 class _DatePickerState extends State<_DatePicker> {
   final DateFormat _dateFormat = DateFormat('dd/MM/yyyy');
-  late String _dateFormatted = _dateFormat.format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -128,13 +152,13 @@ class _DatePickerState extends State<_DatePicker> {
                   if (value != null) {
                     setState(() {
                       widget.selectedDate = value;
-                      _dateFormatted = _dateFormat.format(widget.selectedDate);
+                      widget.onDateChanged(widget.selectedDate);
                     });
                   }
                 });
               },
               icon: const Icon(Icons.calendar_today),
-              label: Text(_dateFormatted),
+              label: Text(_dateFormat.format(widget.selectedDate)),
             ),
           ),
         ),
@@ -145,9 +169,10 @@ class _DatePickerState extends State<_DatePicker> {
 
 class _DatePickerItem extends PanelItem {
   final DateTime selectedDate;
+  final Function(DateTime? selectedDate) onDateChanged;
 
-  const _DatePickerItem({required super.itemTitle, required this.selectedDate});
+  const _DatePickerItem({required super.itemTitle, required this.selectedDate, required this.onDateChanged});
 
   @override
-  Widget get content => _DatePicker(selectedDate: selectedDate);
+  Widget get content => _DatePicker(selectedDate: selectedDate, onDateChanged: onDateChanged,);
 }

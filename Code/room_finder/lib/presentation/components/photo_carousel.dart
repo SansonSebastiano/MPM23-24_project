@@ -8,22 +8,24 @@ import 'package:room_finder/presentation/components/buttons/circle_buttons.dart'
 /// It is used in the app to display the images of a room or apartment.
 /// It has a [CarouselSlider] widget that displays the images and a [LightBackButton] widget to go back.
 /// In addition to that, it has a [_PhotoCounter] widget that displays the current image number.
-/// 
+///
 /// The [PhotoCarousel] widget is an abstract class that defines the basic structure of the carousel.
 /// It has two subclasses: [HostPhotoCarousel] and [StudentPhotoCarousel].
-/// 
+///
 /// The [HostPhotoCarousel] is used by the host to display the images of the room or apartment, with the following buttons:
 /// - [EditButton], to edit the images;
 /// - [DeleteButton], to delete the images.
-/// 
+///
 /// The [StudentPhotoCarousel] is used by the student to display the images of the room or apartment, with the following buttons:
 /// - [BookmarkButton], to bookmark the room or apartment.
 abstract class PhotoCarousel extends StatefulWidget {
   final List<Image> items;
+  final bool isWizardPage;
 
   const PhotoCarousel({
     super.key,
     required this.items,
+    this.isWizardPage = false,
   });
 
   bool get isStudent;
@@ -87,7 +89,7 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                     _PhotoCounter(current: _current, widget: widget)
                   ],
                 ))
-            : Positioned(
+            : widget.isWizardPage ? Positioned(
                 top: 2,
                 right: 5,
                 height: carouselHeight,
@@ -102,7 +104,8 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                     _PhotoCounter(current: _current, widget: widget),
                   ],
                 ),
-              ),
+              )
+              : const SizedBox.shrink(),
       ],
     );
   }

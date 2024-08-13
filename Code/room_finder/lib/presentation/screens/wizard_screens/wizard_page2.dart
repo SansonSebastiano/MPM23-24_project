@@ -14,6 +14,7 @@ class WizardPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WizardTemplateScreen(
+        // TODO: complete the leftButton and rightButton
         leftButton: DarkBackButton(onPressed: () {}),
         rightButton: CancelButton(onPressed: () {}),
         rightButtonVisibility: true,
@@ -36,6 +37,7 @@ class _WizardPage2Body extends StatefulWidget {
 
 class _WizardPage2BodyState extends State<_WizardPage2Body> {
   late TextEditingController _controller;
+  // TODO: initialize the list of rooms with some predefined values
   final List<RoomOption> _rooms = <RoomOption>[];
 
   @override

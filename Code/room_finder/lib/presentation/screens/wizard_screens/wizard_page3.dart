@@ -15,6 +15,7 @@ class WizardPage3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WizardTemplateScreen(
+        // TODO: complete the leftButton and rightButton
         leftButton: DarkBackButton(onPressed: () {}),
         rightButton: CancelButton(onPressed: () {}),
         rightButtonVisibility: true,
@@ -39,18 +40,25 @@ class _WizardPage3BodyState extends State<_WizardPage3Body> {
   late TextEditingController nameController;
   late TextEditingController studiesController;
   late TextEditingController interestsController;
+  late TextEditingController ageController;
   late DateTime selectedDate;
 
   late int maxRenter;
 
   final List<RenterBox> _renters = <RenterBox>[];
 
+  // TODO: implement the button active logic: when the user has filled all the fields
+  // bool _isButtonActive = false;
+
   @override
   void initState() {
     super.initState();
     nameController = TextEditingController();
     studiesController = TextEditingController();
+    // ..addListener(_checkButtonActive);
     interestsController = TextEditingController();
+    // ..addListener(_checkButtonActive);
+    ageController = TextEditingController();
 
     selectedDate = DateTime.now();
 
@@ -65,6 +73,22 @@ class _WizardPage3BodyState extends State<_WizardPage3Body> {
     super.dispose();
   }
 
+  void _increment() {
+    setState(() {
+      maxRenter++;
+    });
+  }
+
+  void _decrement() {
+    setState(() {
+      if (maxRenter > 0) maxRenter--;
+    });
+  }
+
+  bool _isMaxRenterReached() {
+    return maxRenter == 0 || maxRenter == _renters.length;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -74,53 +98,18 @@ class _WizardPage3BodyState extends State<_WizardPage3Body> {
           children: <Widget>[
             _MaxRenterSetter(
               maxRenter: maxRenter,
+              onAddPressed: _increment,
+              onRemovePressed: _decrement,
             ),
             SizedBox(height: 60.h),
             AddOn(
                 label: AppLocalizations.of(context)!.lblAddRenters,
-                onPressed: () {
-                  print(maxRenter);
-                        showModalPanel(
-                            context: context,
-                            panel: RenterPanel(
-                                context: context,
-                                title: AppLocalizations.of(context)!
-                                    .lblAddEditRenters,
-                                btnLabel:
-                                    AppLocalizations.of(context)!.btnConfirm,
-                                onBtnPressed: () {
-                                  setState(() {
-                                    _renters.add(HostRenterBox(
-                                        name: nameController.text,
-                                        facultyOfStudies:
-                                            studiesController.text,
-                                        interests: interestsController.text,
-                                        contractDeadline: selectedDate,
-                                        // TODO: change this
-                                        age: 0,
-                                        // TODO: complete these methods
-                                        onEditPressed: () {},
-                                        onRemovePressed: () {
-                                          // remove this renter from the list
-                                        }));
-                                  });
-
-                                  nameController.clear();
-                                  studiesController.clear();
-                                  interestsController.clear();
-
-                                  Navigator.of(context).pop();
-                                },
-                                nameController: nameController,
-                                studiesController: studiesController,
-                                interestsController: interestsController,
-                                selectedDate: selectedDate,
-                                onBtnClosed: () {
-                                  nameController.clear();
-                                  studiesController.clear();
-                                  interestsController.clear();
-                                  Navigator.of(context).pop();
-                                }));
+                // disable the button when the maxRenter is reached or when the maxRenter is 0
+                onPressed: _isMaxRenterReached()
+                    ? null
+                    : () {
+                        // show the panel to add a new renter
+                        _addNewRenter(context);
                       }),
             SizedBox(height: 30.h),
             Expanded(
@@ -130,7 +119,30 @@ class _WizardPage3BodyState extends State<_WizardPage3Body> {
                     return SizedBox(height: 20.h); // Add padding between items
                   },
                   itemBuilder: (context, index) {
-                    return _renters[index];
+                    return HostRenterBox(
+                      name: _renters[index].name,
+                      age: _renters[index].age,
+                      facultyOfStudies: _renters[index].facultyOfStudies,
+                      interests: _renters[index].interests,
+                      contractDeadline: _renters[index].contractDeadline,
+                      onEditPressed: () {
+                        // set the text fields with the current values
+                        nameController.text = _renters[index].name;
+                        studiesController.text =
+                            _renters[index].facultyOfStudies;
+                        interestsController.text = _renters[index].interests;
+                        selectedDate = _renters[index].contractDeadline;
+                        ageController.text = _renters[index].age.toString();
+                        // show the panel to edit the fields
+                        _editRenter(context, index);
+                      },
+                      // remove the renter from the list
+                      onRemovePressed: () {
+                        setState(() {
+                          _renters.removeAt(index);
+                        });
+                      },
+                    );
                   }),
             ),
           ],
@@ -138,38 +150,121 @@ class _WizardPage3BodyState extends State<_WizardPage3Body> {
       ),
     );
   }
+
+  Future<dynamic> _editRenter(BuildContext context, int index) {
+    return showModalPanel(
+                          context: context,
+                          panel: RenterPanel(
+                              context: context,
+                              title: AppLocalizations.of(context)!
+                                  .lblAddEditRenters,
+                              btnLabel:
+                                  AppLocalizations.of(context)!.btnConfirm,
+                              onDateChanged: (DateTime? date) {
+                                setState(() {
+                                  selectedDate = date!;
+                                });
+                              },
+                              onBtnPressed: () {
+                                      setState(() {
+                                        _renters[index] = HostRenterBox(
+                                          name: nameController.text,
+                                          facultyOfStudies:
+                                              studiesController.text,
+                                          interests: interestsController.text,
+                                          contractDeadline: selectedDate,
+                                          age: int.parse(ageController.text),
+                                        );
+                                      });
+
+                                      nameController.clear();
+                                      studiesController.clear();
+                                      interestsController.clear();
+                                      ageController.clear();
+
+                                      Navigator.of(context).pop();
+                                    },
+                              nameController: nameController,
+                              studiesController: studiesController,
+                              interestsController: interestsController,
+                              ageController: ageController,
+                              selectedDate: selectedDate,
+                              onBtnClosed: () {
+                                nameController.clear();
+                                studiesController.clear();
+                                interestsController.clear();
+
+                                Navigator.of(context).pop();
+                              }));
+  }
+
+  Future<dynamic> _addNewRenter(BuildContext context) {
+    return showModalPanel(
+                          context: context,
+                          panel: RenterPanel(
+                              context: context,
+                              title: AppLocalizations.of(context)!
+                                  .lblAddEditRenters,
+                              btnLabel:
+                                  AppLocalizations.of(context)!.btnConfirm,
+                              onDateChanged: (DateTime? date) {
+                                setState(() {
+                                  selectedDate = date!;
+                                });
+                              },
+                              onBtnPressed: () {
+                                      setState(() {
+                                        _renters.add(HostRenterBox(
+                                          name: nameController.text,
+                                          facultyOfStudies:
+                                              studiesController.text,
+                                          interests: interestsController.text,
+                                          contractDeadline: selectedDate,
+                                          age: int.parse(ageController.text),
+                                        ));
+                                      });
+
+                                      nameController.clear();
+                                      studiesController.clear();
+                                      interestsController.clear();
+                                      ageController.clear();
+
+                                      Navigator.of(context).pop();
+                                    },
+                              nameController: nameController,
+                              studiesController: studiesController,
+                              interestsController: interestsController,
+                              ageController: ageController,
+                              selectedDate: selectedDate,
+                              onBtnClosed: () {
+                                nameController.clear();
+                                studiesController.clear();
+                                interestsController.clear();
+                                Navigator.of(context).pop();
+                              }));
+  }
 }
 
 // ignore: must_be_immutable
 class _MaxRenterSetter extends StatefulWidget {
   int maxRenter;
-  _MaxRenterSetter({required this.maxRenter});
+  final void Function() onAddPressed;
+  final void Function() onRemovePressed;
+
+  _MaxRenterSetter(
+      {required this.maxRenter,
+      required this.onAddPressed,
+      required this.onRemovePressed});
 
   @override
   State<_MaxRenterSetter> createState() => _MaxRenterSetterState();
 }
 
 class _MaxRenterSetterState extends State<_MaxRenterSetter> {
-  // TODO: move this to the parent widget, because the maxRenters is a state of the parent widget and not of this widget
-  // in order to make disable the add renter's button when the maxRenter is reached
   @override
   void initState() {
     super.initState();
     widget.maxRenter = 0;
-  }
-
-  void _increment() {
-    setState(() {
-      widget.maxRenter++;
-    });
-    print(widget.maxRenter);
-  }
-
-  void _decrement() {
-    setState(() {
-      if (widget.maxRenter > 0) widget.maxRenter--;
-    });
-    print(widget.maxRenter);
   }
 
   @override
@@ -177,7 +272,8 @@ class _MaxRenterSetterState extends State<_MaxRenterSetter> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        AddRemoveButton(isAddButton: false, size: 30, onPressed: _decrement),
+        AddRemoveButton(
+            isAddButton: false, size: 30, onPressed: widget.onRemovePressed),
         Container(
           decoration: BoxDecoration(
             border: Border.all(
@@ -190,7 +286,8 @@ class _MaxRenterSetterState extends State<_MaxRenterSetter> {
             child: Text("${widget.maxRenter}"),
           ),
         ),
-        AddRemoveButton(isAddButton: true, size: 30, onPressed: _increment),
+        AddRemoveButton(
+            isAddButton: true, size: 30, onPressed: widget.onAddPressed),
       ],
     );
   }

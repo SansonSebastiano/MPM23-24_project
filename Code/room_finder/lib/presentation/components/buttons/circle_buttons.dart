@@ -184,44 +184,71 @@ class AddRemoveButton extends StatelessWidget {
   final double size;
   final void Function()? onPressed;
 
-  final Color buttonColor = ColorPalette.aliceBlue;
-  final IconData icon = Icons.add;
-  final Color iconColor = ColorPalette.oxfordBlue;
+  final Color disabledIconColor = Colors.grey;
+  final Color enableIconColor = ColorPalette.oxfordBlue;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return IconButton(
+      onPressed: onPressed,
+      icon: Icon(
+          isAddButton ? Icons.add_circle_outline : Icons.remove_circle_outline),
       style: ButtonStyle(
-        shape: WidgetStateProperty.all<CircleBorder>(
-           CircleBorder(
-            side: BorderSide(
-              color: ColorPalette.oxfordBlue,
-              width: 2.w,
-            ),
-          ),
-        ),
+        iconSize: WidgetStateProperty.all<double>(size.w),
         minimumSize: WidgetStateProperty.all<Size>(Size(size.w, size.h)),
-        backgroundColor: WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+        iconColor: WidgetStateProperty.resolveWith((Set<WidgetState> states) {
           if (states.contains(WidgetState.disabled)) {
-            return buttonColor.withOpacity(0.5);
+            return disabledIconColor;
           }
-          return buttonColor;
+          return enableIconColor;
         }),
       ),
-      // ElevatedButton.styleFrom(
-      //   backgroundColor: buttonColor,
-      //   shape: CircleBorder(
-      //     side: BorderSide(
-      //       color: ColorPalette.oxfordBlue,
-      //       width: 2.w,
-      //     ),
-      //   ),
-      //   minimumSize: Size(size.w, size.h),
-      // ),
-      onPressed: onPressed,
-      child: Icon(isAddButton ? Icons.add : Icons.remove,
-          color: iconColor, size: size.w - 5),
     );
+    // ElevatedButton(
+    //   style: ButtonStyle(
+    //     shape: WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+    //       if (states.contains(WidgetState.disabled)) {
+    //         return CircleBorder(
+    //           side: BorderSide(
+    //             color: Colors.grey,
+    //             width: 2.w,
+    //           ),
+    //         );
+    //       }
+    //       return CircleBorder(
+    //         side: BorderSide(
+    //           color: ColorPalette.oxfordBlue,
+    //           width: 2.w,
+    //         ),
+    //       );
+    //     }),
+    //     // WidgetStateProperty.all<CircleBorder>(
+    //     //    CircleBorder(
+    //     //     side: BorderSide(
+    //     //       color: ColorPalette.oxfordBlue,
+    //     //       width: 2.w,
+    //     //     ),
+    //     //   ),
+    //     // ),
+    //     minimumSize: WidgetStateProperty.all<Size>(Size(size.w, size.h)),
+    //     backgroundColor: WidgetStateProperty.all<Color>(buttonColor),
+    //   ),
+    //   // ElevatedButton.styleFrom(
+    //   //   backgroundColor: buttonColor,
+    //   //   shape: CircleBorder(
+    //   //     side: BorderSide(
+    //   //       color: ColorPalette.oxfordBlue,
+    //   //       width: 2.w,
+    //   //     ),
+    //   //   ),
+    //   //   minimumSize: Size(size.w, size.h),
+    //   // ),
+    //   onPressed: onPressed,
+    //   child: Icon(
+    //     isAddButton ? Icons.add : Icons.remove,
+    //       color: iconColor,
+    //       size: size.w - 5),
+    // );
   }
 }
 
