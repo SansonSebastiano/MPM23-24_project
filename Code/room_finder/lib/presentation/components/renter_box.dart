@@ -16,9 +16,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// - [onEditPressed] to define the editing functionality.
 abstract class RenterBox extends StatelessWidget {
   final String name;
-  final int age;
-  final String facultyOfStudies;
-  final String interests;
+  final int? age;
+  final String? facultyOfStudies;
+  final String? interests;
   final DateTime contractDeadline;
   final void Function()? onEditPressed;
   final void Function()? onRemovePressed;
@@ -26,9 +26,9 @@ abstract class RenterBox extends StatelessWidget {
   const RenterBox(
       {super.key,
       required this.name,
-      required this.age,
-      required this.facultyOfStudies,
-      required this.interests,
+      this.age,
+      this.facultyOfStudies,
+      this.interests,
       required this.contractDeadline,
       this.onEditPressed,
       this.onRemovePressed,});
@@ -53,51 +53,57 @@ abstract class RenterBox extends StatelessWidget {
           children: [
             Text(name, style: Theme.of(context).textTheme.displaySmall),
             SizedBox(height: 10.h),
-            RichText(
-              text: TextSpan(
-                text: AppLocalizations.of(context)!.lblRenterAge,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
+            if(age != null) ...[
+              RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.lblRenterAge,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                  children: [
+                    TextSpan(
+                      text: '$age',
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                children: [
-                  TextSpan(
-                    text: '$age',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 10.h),
-            RichText(
-              text: TextSpan(
-                text: AppLocalizations.of(context)!.lblRenterStudies,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
+            ],
+            if(facultyOfStudies != null) ...[
+              SizedBox(height: 10.h),
+              RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.lblRenterStudies,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                  children: [
+                    TextSpan(
+                      text: facultyOfStudies,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                children: [
-                  TextSpan(
-                    text: facultyOfStudies,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 10.h),
-            RichText(
-              text: TextSpan(
-                text: AppLocalizations.of(context)!.lblRenterInterests,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
+            ],
+            if(interests != null) ...[
+              SizedBox(height: 10.h),
+              RichText(
+                text: TextSpan(
+                  text: AppLocalizations.of(context)!.lblRenterInterests,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                  children: [
+                    TextSpan(
+                      text: interests,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                children: [
-                  TextSpan(
-                    text: interests,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 10.h),
+              SizedBox(height: 10.h),
+            ],
             RichText(
               text: TextSpan(
                 text: AppLocalizations.of(context)!.lblRenterContract,
@@ -188,4 +194,14 @@ class HostRenterBox extends RenterBox {
 
   @override
   bool get hostView => true;
+}
+
+class HostFacilityDetailPageRenterBox extends RenterBox {
+  const HostFacilityDetailPageRenterBox(
+      {super.key,
+      required super.name,
+      required super.contractDeadline});
+
+  @override
+  bool get hostView => false;
 }

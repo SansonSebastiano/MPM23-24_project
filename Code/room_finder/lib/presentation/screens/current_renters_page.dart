@@ -17,7 +17,7 @@ class CurrentRentersPage extends ConsumerWidget {
     bool isOffline = connectivityStatusProvider == NetworkStatus.off;
 
     return SecondaryTemplateScreen(
-      leftHeaderWidget: DarkBackButton(onPressed: () {}),
+      leftHeaderWidget: DarkBackButton(onPressed: () => Navigator.pop(context)),
       centerHeaderWidget: Align(
         alignment: Alignment.center,
         // TODO: Replace with real data
@@ -29,7 +29,7 @@ class CurrentRentersPage extends ConsumerWidget {
                   style: Theme.of(context).textTheme.displaySmall,
                   children: [
                     TextSpan(
-                      text: "\nPadova - Via Roma 1",
+                      text: "\nPadova - Via Roma 12",
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],

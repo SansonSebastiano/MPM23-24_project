@@ -22,7 +22,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
 
     if (seen) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const IntroScreen()),
+        MaterialPageRoute(builder: (context) => const IntroScreen()), // replace with homepage
       );
     } else {
       Navigator.of(context).pushReplacement(
@@ -112,42 +112,6 @@ class IntroScreen extends StatelessWidget {
                       ]),
                 ),
               ),
-              // Text(
-              //   AppLocalizations.of(context)!.lblWelcomeMessage1,
-              //   style: TextStyle(
-              //     fontSize: 16.sp,
-              //     color: ColorPalette.oxfordBlue,
-              //   ),
-              //   textAlign: TextAlign.center,
-              // ),
-              // SizedBox(height: 10.h),
-              // Text(
-              //   AppLocalizations.of(context)!.lblWelcomeMessage2,
-              //   style: TextStyle(
-              //     fontSize: 16.sp,
-              //     color: ColorPalette.oxfordBlue,
-              //   ),
-              //   textAlign: TextAlign.center,
-              // ),
-              // SizedBox(height: 10.h),
-              // RichText(
-              //   textAlign: TextAlign.center,
-              //   text: TextSpan(
-              //     text: AppLocalizations.of(context)!.lblWelcomeMessage3,
-              //     style: TextStyle(
-              //       fontSize: 16.sp,
-              //       color: ColorPalette.oxfordBlue,
-              //     ),
-              //     children: [
-              //       TextSpan(
-              //           text: AppLocalizations.of(context)!.lblWelcomeMessage4,
-              //           style: const TextStyle(fontWeight: FontWeight.bold)),
-              //       TextSpan(
-              //         text: AppLocalizations.of(context)!.lblWelcomeMessage5,
-              //       ),
-              //     ],
-              //   ),
-              // ),
               const Spacer(flex: 2),
               RectangleButton(
                 label: AppLocalizations.of(context)!.btnStart,

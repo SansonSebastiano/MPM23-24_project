@@ -72,8 +72,7 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
         Positioned(
           top: 2,
           child: LightBackButton(
-            // TODO: maybe onPressed is fixed for back button
-            onPressed: () {},
+            onPressed: () => Navigator.pop(context),
           ),
         ),
         widget.isStudent
