@@ -144,7 +144,7 @@
   "@btnMoreDetails": {
     "description": "The label to view more details about the room"
   },
-  "btnRequestInfo": "Request informations",
+  "btnRequestInfo": "Request information",
   "@btnRequestInfo": {
     "description": "The button to request more information about the room"
   },
@@ -493,5 +493,13 @@
   "btnCancel": "Cancel",
   "@btnCancel": {
     "description": "The button to cancel the action"
+  },
+  "lblHostName": "Host name:",
+  "@lblHostName": {
+    "description": "The label that represents host name"
+  },
+  "lblRoomsAmenities": "Rooms and Amenities",
+  "@lblRoomsAmenities": {
+    "description": "The label that represents rooms and amenities"
   }
 }

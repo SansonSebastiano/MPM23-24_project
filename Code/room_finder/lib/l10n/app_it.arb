@@ -116,5 +116,7 @@
     "lblLoginSecurity": "Usa il seguente form per cambiare la tua password",
     "lblPersonalInformation": "Modifica qui le tue informazioni personali",
     "lblAccountPhoto": "Foto profilo",
-    "btnCancel": "Annulla"
+    "btnCancel": "Annulla",
+    "lblHostName": "Nome dell'host:",
+    "lblRoomsAmenities": "Stanze e servizi"
 }
