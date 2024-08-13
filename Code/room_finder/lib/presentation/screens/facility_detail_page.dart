@@ -40,9 +40,11 @@ class FacilityDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final networkStatus = ref.watch(networkAwareProvider);
 
-    final photoCarousel = StudentPhotoCarousel(
-      items: facilityPhotos.map((url) => Image(image: NetworkImage(url))).toList(),
-    );
+    final photoCarousel = isStudent 
+      ? StudentPhotoCarousel(
+        items: facilityPhotos.map((url) => Image(image: NetworkImage(url))).toList()) 
+      : HostPhotoCarousel(
+        items: facilityPhotos.map((url) => Image(image: NetworkImage(url))).toList());
 
     final servicesText = facilityServices.join(' · ');
 
