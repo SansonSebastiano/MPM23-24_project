@@ -44,7 +44,8 @@ class FacilityDetailPage extends ConsumerWidget {
       ? StudentPhotoCarousel(
         items: facilityPhotos.map((url) => Image(image: NetworkImage(url))).toList()) 
       : HostPhotoCarousel(
-        items: facilityPhotos.map((url) => Image(image: NetworkImage(url))).toList());
+        items: facilityPhotos.map((url) => Image(image: NetworkImage(url))).toList(),
+        isWizardPage: isWizardPage,);
 
     final servicesText = facilityServices.join(' · ');
 

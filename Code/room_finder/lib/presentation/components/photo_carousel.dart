@@ -88,7 +88,7 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                     _PhotoCounter(current: _current, widget: widget)
                   ],
                 ))
-            : widget.isWizardPage ? Positioned(
+            : widget.isWizardPage ? const SizedBox.shrink() : Positioned(
                 top: 2,
                 right: 5,
                 height: carouselHeight,
@@ -103,8 +103,7 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                     _PhotoCounter(current: _current, widget: widget),
                   ],
                 ),
-              )
-              : const SizedBox.shrink(),
+              ),
       ],
     );
   }
@@ -139,7 +138,7 @@ class _PhotoCounter extends StatelessWidget {
 
 /// [HostPhotoCarousel] is a widget that displays a carousel of images for the host.
 class HostPhotoCarousel extends PhotoCarousel {
-  const HostPhotoCarousel({super.key, required super.items});
+  const HostPhotoCarousel({super.key, required super.items, required super.isWizardPage});
 
   @override
   bool get isStudent => false;

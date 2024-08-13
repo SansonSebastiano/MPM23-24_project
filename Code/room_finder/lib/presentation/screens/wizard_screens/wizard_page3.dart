@@ -129,8 +129,8 @@ class _WizardPage3BodyState extends State<_WizardPage3Body> {
                         // set the text fields with the current values
                         nameController.text = _renters[index].name;
                         studiesController.text =
-                            _renters[index].facultyOfStudies;
-                        interestsController.text = _renters[index].interests;
+                            _renters[index].facultyOfStudies!;
+                        interestsController.text = _renters[index].interests!;
                         selectedDate = _renters[index].contractDeadline;
                         ageController.text = _renters[index].age.toString();
                         // show the panel to edit the fields
