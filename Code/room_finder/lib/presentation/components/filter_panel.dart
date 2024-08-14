@@ -88,6 +88,7 @@ class _CustomRangeSliderState extends State<_CustomRangeSlider> {
     return Column(
       children: [
         RangeSlider(
+          inactiveColor: Colors.grey,
           values: _currentRangeValues,
           // TODO: it should be taken from the backend, the max value
           max: 1000,

@@ -25,7 +25,8 @@ class WizardPage4 extends StatelessWidget {
         currentStep: 4,
         btnNextLabel: AppLocalizations.of(context)!.btnNext,
         btnNextOnPressed: () {},
-        onOkDialog: () => Navigator.of(context).pop());
+        onOkDialog: () => Navigator.of(context).pop()
+      );
   }
 }
 
