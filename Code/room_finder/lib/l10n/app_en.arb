@@ -338,6 +338,14 @@
   "@lblAmenitieService": {
     "description": "The label to set the amenities and services"
   },
+  "lblAddService": "Add service",
+  "@lblAddService": {
+    "description": "The label to add more services"
+  },
+  "lblAddNewService": "Add a new service",
+  "@lblAddNewService": {
+    "description": "The label to add a new service"
+  },
   "lblSetMonthlyRent": "Set the monthly rent",
   "@lblSetMonthlyRent": {
     "description": "The label to set the monthly rent"

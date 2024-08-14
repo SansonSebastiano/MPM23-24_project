@@ -16,7 +16,9 @@ class WizardPage3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return WizardTemplateScreen(
         // TODO: complete the leftButton and rightButton
-        leftButton: DarkBackButton(onPressed: () {}),
+        leftButton: DarkBackButton(onPressed: () {
+          Navigator.of(context).pop();
+        }),
         rightButton: CancelButton(onPressed: () {}),
         rightButtonVisibility: true,
         screenLabel: AppLocalizations.of(context)!.lblManageRenters,
@@ -24,6 +26,7 @@ class WizardPage3 extends StatelessWidget {
         dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard3,
         currentStep: 3,
         btnNextLabel: AppLocalizations.of(context)!.btnNext,
+        // TODO: complete the onPressed function for the next button
         btnNextOnPressed: () {},
         onOkDialog: () => Navigator.of(context).pop());
   }

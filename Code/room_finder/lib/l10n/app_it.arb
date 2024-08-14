@@ -78,6 +78,8 @@
     "lblContractDeadline": "Scadenza del contratto",
     "btnConfirm": "Conferma",
     "lblAmenitieServices": "Servizi e comfort",
+    "lblAddServices": "Aggiungi un servizio",
+    "lblAddNewService": "Aggiungi un nuovo servizio",
     "lblSetMonthlyRent": "Imposta l'affitto mensile",
     "lblAdsTitle": "Diamo il titolo alla tua casa",
     "lblEnterTitle": "Inserisci un titolo",

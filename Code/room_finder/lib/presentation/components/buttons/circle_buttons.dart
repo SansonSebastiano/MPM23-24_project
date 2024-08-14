@@ -145,25 +145,39 @@ class InfoButton extends StatelessWidget {
   final void Function() onPressed;
 
   final Color buttonColor = ColorPalette.aliceBlue;
-  final IconData icon = Icons.question_mark;
+  final IconData icon = Icons.question_mark_outlined;
   final Color iconColor = ColorPalette.oxfordBlue;
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: buttonColor,
+    return IconButton(
+      onPressed: onPressed,
+      icon: Icon(icon, color: iconColor, size: size - 5),
+      style: IconButton.styleFrom(
+        padding: EdgeInsets.zero,
         shape: CircleBorder(
           side: BorderSide(
-            color: ColorPalette.oxfordBlue,
+            color: iconColor,
             width: 2.w,
           ),
         ),
-        minimumSize: Size(size, size),
+        minimumSize: Size(size.w, size.h),
       ),
-      onPressed: onPressed,
-      child: Icon(icon, color: iconColor, size: size - 5),
     );
+    // ElevatedButton(
+    //   style: ElevatedButton.styleFrom(
+    //     backgroundColor: buttonColor,
+    //     shape: CircleBorder(
+    //       side: BorderSide(
+    //         color: ColorPalette.oxfordBlue,
+    //         width: 2.w,
+    //       ),
+    //     ),
+    //     minimumSize: Size(size, size),
+    //   ),
+    //   onPressed: onPressed,
+    //   child: Icon(icon, color: iconColor, size: size - 5),
+    // );
   }
 }
 
