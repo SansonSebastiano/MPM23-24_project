@@ -470,7 +470,7 @@
   "@lblContentDialogWizard4": {
     "description": "The content of the dialog wizard"
   },
-  "lblContentDialogWizard5": "This page allows you to set the monthly rent of your facility. \n\nUse the slider component to increase or dimish the price.",
+  "lblContentDialogWizard5": "This page allows you to set the monthly rent of your facility. \n\nUse the slider component to increase or dimish the priceimport 'package:flutter_gen/gen_l10n/app_localizations.dart';.",
   "@lblContentDialogWizard5": {
     "description": "The content of the dialog wizard"
   },
