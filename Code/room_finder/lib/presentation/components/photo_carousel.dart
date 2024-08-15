@@ -88,22 +88,37 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                     _PhotoCounter(current: _current, widget: widget)
                   ],
                 ))
-            : widget.isWizardPage ? const SizedBox.shrink() : Positioned(
-                top: 2,
-                right: 5,
-                height: carouselHeight,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    EditButton(
-                      onPressed: () {},
-                    ),
-                    DeleteButton(onPressed: () {}),
-                    _PhotoCounter(current: _current, widget: widget),
-                  ],
+            : widget.isWizardPage 
+              ? Positioned(
+                  top: 2,
+                  right: 5,
+                  height: carouselHeight,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(),
+                      const SizedBox(),
+                      _PhotoCounter(current: _current, widget: widget),
+                    ],
+                  ),
+                )
+              : Positioned(
+                  top: 2,
+                  right: 5,
+                  height: carouselHeight,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      EditButton(
+                        onPressed: () {},
+                      ),
+                      DeleteButton(onPressed: () {}),
+                      _PhotoCounter(current: _current, widget: widget),
+                    ],
+                  ),
                 ),
-              ),
       ],
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
+import 'package:room_finder/presentation/screens/home_page.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -22,7 +23,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
 
     if (seen) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const IntroScreen()), // replace with homepage
+        MaterialPageRoute(builder: (context) => const StudentHomePage()), // replace with homepage
       );
     } else {
       Navigator.of(context).pushReplacement(
@@ -48,7 +49,7 @@ class IntroScreen extends StatelessWidget {
     await prefs.setBool('seen', true);
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-          builder: (context) => const IntroScreen()), // replace with homepage
+          builder: (context) => const StudentHomePage()), // replace with homepage
     );
   }
 
