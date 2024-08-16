@@ -40,8 +40,13 @@ class _WizardPage2Body extends StatefulWidget {
 
 class _WizardPage2BodyState extends State<_WizardPage2Body> {
   late TextEditingController _controller;
-  // TODO: initialize the list of rooms with some predefined values
-  final List<RoomOption> _rooms = <RoomOption>[];
+  // TODO: Get this default values from .arb
+  final List<RoomOption> _rooms = <RoomOption>[
+    const RoomOption(roomName: 'Bedrooms'),
+    const RoomOption(roomName: ' Bathrooms'),
+    const RoomOption(roomName: 'Kitchens'),
+    const RoomOption(roomName: 'Living Room'),
+  ];
 
   @override
   void initState() {

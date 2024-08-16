@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// The class [CustomNavigationBar] represents a navigation destination.
+/// 
 /// This class contains the icon and label of the destination.
+/// 
 /// The icon is displayed on the navigation bar, and the label is displayed below the icon.
+/// 
 /// The label is used to describe the destination.
+/// 
 /// The icon is used to represent the destination.
+/// 
 /// [isHost] is a boolean value that determines if the user is a host, in order to display the correct destinations.
 abstract class CustomNavigationBar extends StatefulWidget {
   const CustomNavigationBar({super.key});

@@ -59,6 +59,7 @@ class _AddPhotoButton extends StatelessWidget {
 
 /// [RoomPhoto] is a stateful widget that allows the user to select a photo from
 /// the gallery or take a photo with the camera.
+/// 
 /// Then it displays the selected photo into a square card of 150x150.
 class RoomPhoto extends StatefulWidget {
   final int photoNumber;

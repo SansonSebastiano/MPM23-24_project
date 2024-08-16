@@ -26,9 +26,14 @@ class WizardPage1 extends StatelessWidget {
   }
 }
 
-class _WizardPage1Body extends StatelessWidget {
+class _WizardPage1Body extends StatefulWidget {
   const _WizardPage1Body();
-  
+
+  @override
+  State<_WizardPage1Body> createState() => _WizardPage1BodyState();
+}
+
+class _WizardPage1BodyState extends State<_WizardPage1Body> {
   @override
   Widget build(BuildContext context) {
     return Padding(

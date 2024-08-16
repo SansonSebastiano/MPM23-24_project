@@ -39,8 +39,14 @@ class _WizardPage4Body extends StatefulWidget {
 
 class _WizardPage4BodyState extends State<_WizardPage4Body> {
   late TextEditingController _controller;
-  // TODO: initialize the list of rooms with some predefined values
-  final List<AmenitiesOption> _amenities = <AmenitiesOption>[];
+  // TODO: Get this default values from .arb
+  final List<AmenitiesOption> _amenities = <AmenitiesOption>[
+    const AmenitiesOption(label: 'Wifi'),
+    const AmenitiesOption(label: 'Dishwasher'),
+    const AmenitiesOption(label: 'Washing Machine'),
+    const AmenitiesOption(label: 'Decicated Parking'),
+    const AmenitiesOption(label: 'Air Conditioning'),
+  ];
 
   @override
   void initState() {
