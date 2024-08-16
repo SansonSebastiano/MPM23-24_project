@@ -17,23 +17,23 @@ class WizardPage5 extends StatelessWidget {
         rightButton: CancelButton(onPressed: () {}),
         rightButtonVisibility: true,
         screenLabel: AppLocalizations.of(context)!.lblSetMonthlyRent,
-        screenContent: const _WizardPage4Body(),
+        screenContent: const _WizardPage5Body(),
         dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard5,
-        currentStep: 4,
+        currentStep: 5,
         btnNextLabel: AppLocalizations.of(context)!.btnNext,
         btnNextOnPressed: () {},
         onOkDialog: () => Navigator.of(context).pop());
   }
 }
 
-class _WizardPage4Body extends StatefulWidget {
-  const _WizardPage4Body();
+class _WizardPage5Body extends StatefulWidget {
+  const _WizardPage5Body();
 
   @override
-  State<_WizardPage4Body> createState() => _WizardPage4BodyState();
+  State<_WizardPage5Body> createState() => _WizardPage5BodyState();
 }
 
-class _WizardPage4BodyState extends State<_WizardPage4Body> {
+class _WizardPage5BodyState extends State<_WizardPage5Body> {
   double _currentSliderValue = 1;
 
   @override

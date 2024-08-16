@@ -358,6 +358,10 @@
   "@lblEnterTitle": {
     "description": "The label to enter the title"
   },
+  "lblTitleWizard7": "Upload photos",
+  "@lblTitleWizard7": {
+    "description": "The label to upload the photos"
+  },
   "lblAddPhoto": "Add photo",
   "@lblAddPhoto": {
     "description": "The label to choose the photos"

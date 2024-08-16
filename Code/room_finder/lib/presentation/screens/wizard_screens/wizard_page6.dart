@@ -17,23 +17,23 @@ class WizardPage6 extends StatelessWidget {
         rightButton: CancelButton(onPressed: () {}),
         rightButtonVisibility: true,
         screenLabel: AppLocalizations.of(context)!.lblAdsTitle,
-        screenContent: const _WizardPage4Body(),
+        screenContent: const _WizardPage6Body(),
         dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard6,
-        currentStep: 4,
+        currentStep: 6,
         btnNextLabel: AppLocalizations.of(context)!.btnNext,
         btnNextOnPressed: () {},
         onOkDialog: () => Navigator.of(context).pop());
   }
 }
 
-class _WizardPage4Body extends StatefulWidget {
-  const _WizardPage4Body();
+class _WizardPage6Body extends StatefulWidget {
+  const _WizardPage6Body();
 
   @override
-  State<_WizardPage4Body> createState() => _WizardPage4BodyState();
+  State<_WizardPage6Body> createState() => _WizardPage6BodyState();
 }
 
-class _WizardPage4BodyState extends State<_WizardPage4Body> {
+class _WizardPage6BodyState extends State<_WizardPage6Body> {
   late TextEditingController _controller;
 
   @override
