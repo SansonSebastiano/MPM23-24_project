@@ -19,14 +19,13 @@ class WizardPage4 extends StatelessWidget {
         }),
         rightButton: CancelButton(onPressed: () {}),
         rightButtonVisibility: true,
-        screenLabel: AppLocalizations.of(context)!.lblAmenitieService,
+        screenTitle: AppLocalizations.of(context)!.lblAmenitieService,
         screenContent: const _WizardPage4Body(),
         dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard4,
         currentStep: 4,
         btnNextLabel: AppLocalizations.of(context)!.btnNext,
-        btnNextOnPressed: () {},
-        onOkDialog: () => Navigator.of(context).pop()
-      );
+        onNextPressed: () {},
+        onOkDialog: () => Navigator.of(context).pop());
   }
 }
 
@@ -96,24 +95,24 @@ class _WizardPage4BodyState extends State<_WizardPage4Body> {
 
   void _addService(BuildContext context) {
     return showOptionsDialog(
-                  context: context,
-                  androidDialog: ActionsAndroidDialog(
-                      title: AppLocalizations.of(context)!.lblAddNewService,
-                      content: TextField(
-                        controller: _controller,
-                      ),
-                      context: context,
-                      onOk: () => _onOk(context),
-                      onCancel: () => _onCancel(context)),
-                  iosDialog: ActionsIosDialog(
-                      title: AppLocalizations.of(context)!.lblAddNewService,
-                      content: CupertinoTextField(
-                        controller: _controller,
-                      ),
-                      context: context,
-                      onOk: () => _onOk(context),
-                      onCancel: () => _onCancel(context)),
-                );
+      context: context,
+      androidDialog: ActionsAndroidDialog(
+          title: AppLocalizations.of(context)!.lblAddNewService,
+          content: TextField(
+            controller: _controller,
+          ),
+          context: context,
+          onOk: () => _onOk(context),
+          onCancel: () => _onCancel(context)),
+      iosDialog: ActionsIosDialog(
+          title: AppLocalizations.of(context)!.lblAddNewService,
+          content: CupertinoTextField(
+            controller: _controller,
+          ),
+          context: context,
+          onOk: () => _onOk(context),
+          onCancel: () => _onCancel(context)),
+    );
   }
 
   void _onOk(BuildContext context) {

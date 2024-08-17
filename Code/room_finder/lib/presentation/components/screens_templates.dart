@@ -213,7 +213,7 @@ class _SecondaryScreenHeader extends StatelessWidget {
 ///
 /// The [rightButtonVisibility] is used to determine if the right widget is visible or not, default is false. And in case it is false, the portion of the header where the right widget is placed will not empty.
 ///
-/// The [screenLabel] is used to set the title of the screen.
+/// The [screenTitle] is used to set the title of the screen.
 ///
 /// The [screenContent] is used to set the content of the screen.
 ///
@@ -223,13 +223,14 @@ class _SecondaryScreenHeader extends StatelessWidget {
 ///
 /// The [btnNextLabel] is used to set the label of the next button.
 ///
-/// The [btnNextOnPressed] is used to set the onPressed method of the next button.
+/// The [onNextPressed] is used to set the onPressed method of the next button.
 class WizardTemplateScreen extends StatelessWidget {
   final CustomButton leftButton;
   final CustomButton? rightButton;
   final bool rightButtonVisibility;
 
-  final String screenLabel;
+  final String screenTitle;
+  final String? screenDesc;
   final Widget screenContent;
 
   final String dialogContent;
@@ -237,8 +238,8 @@ class WizardTemplateScreen extends StatelessWidget {
   final int currentStep;
 
   final String btnNextLabel;
-  final void Function() btnNextOnPressed;
-  
+  final void Function()? onNextPressed;
+
   final void Function() onOkDialog;
 
   const WizardTemplateScreen(
@@ -246,12 +247,13 @@ class WizardTemplateScreen extends StatelessWidget {
       required this.leftButton,
       this.rightButton,
       this.rightButtonVisibility = false,
-      required this.screenLabel,
+      required this.screenTitle,
+      this.screenDesc,
       required this.screenContent,
       required this.dialogContent,
       required this.currentStep,
       required this.btnNextLabel,
-      required this.btnNextOnPressed,
+      required this.onNextPressed,
       required this.onOkDialog});
 
   @override
@@ -282,7 +284,7 @@ class WizardTemplateScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Spacer(),
-                  Text(screenLabel,
+                  Text(screenTitle,
                       style: Theme.of(context).textTheme.displaySmall!.copyWith(
                           fontSize: 24.sp, fontWeight: FontWeight.w600)),
                   Expanded(
@@ -311,6 +313,10 @@ class WizardTemplateScreen extends StatelessWidget {
                   )
                 ],
               ),
+              screenDesc != null
+                  ? Text(screenDesc!,
+                      style: Theme.of(context).textTheme.bodyMedium)
+                  : const SizedBox.shrink(),
               // const Spacer(),
 
               screenContent,
@@ -331,7 +337,7 @@ class WizardTemplateScreen extends StatelessWidget {
       persistentFooterButtons: [
         RectangleButton(
           label: btnNextLabel,
-          onPressed: btnNextOnPressed,
+          onPressed: onNextPressed,
         ),
       ],
     );

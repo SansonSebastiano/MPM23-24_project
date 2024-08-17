@@ -16,12 +16,12 @@ class WizardPage6 extends StatelessWidget {
         // TODO: Implement the onPressed function for the right button
         rightButton: CancelButton(onPressed: () {}),
         rightButtonVisibility: true,
-        screenLabel: AppLocalizations.of(context)!.lblAdsTitle,
+        screenTitle: AppLocalizations.of(context)!.lblAdsTitle,
         screenContent: const _WizardPage6Body(),
         dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard6,
         currentStep: 6,
         btnNextLabel: AppLocalizations.of(context)!.btnNext,
-        btnNextOnPressed: () {},
+        onNextPressed: () {},
         onOkDialog: () => Navigator.of(context).pop());
   }
 }

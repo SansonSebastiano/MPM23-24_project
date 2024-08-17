@@ -4,44 +4,33 @@ import 'package:room_finder/presentation/components/buttons/circle_buttons.dart'
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// TODO: google maps integration
-
-class WizardPage1 extends StatelessWidget {
+class WizardPage1 extends StatefulWidget {
   const WizardPage1({super.key});
 
+  @override
+  State<WizardPage1> createState() => _WizardPage1State();
+}
+
+class _WizardPage1State extends State<WizardPage1> {
   @override
   Widget build(BuildContext context) {
     return WizardTemplateScreen(
       // TODO: complete the leftButton
       leftButton: DarkBackButton(onPressed: () {}),
-      screenLabel: AppLocalizations.of(context)!.lblAddress,
+      screenTitle: AppLocalizations.of(context)!.lblAddress,
       currentStep: 1,
       btnNextLabel: AppLocalizations.of(context)!.btnNext,
       dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard1,
       onOkDialog: () => Navigator.of(context).pop(),
       // TODO: complete the onPressed function for the next button
-      btnNextOnPressed: () {}, //() => Navigator.pushNamed(context, '/wizard2'),
-      screenContent: const _WizardPage1Body(),
-    );
-  }
-}
-
-class _WizardPage1Body extends StatefulWidget {
-  const _WizardPage1Body();
-
-  @override
-  State<_WizardPage1Body> createState() => _WizardPage1BodyState();
-}
-
-class _WizardPage1BodyState extends State<_WizardPage1Body> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.h),
-      child: const Column(
-        children: <Widget>[
-        
-        ],
+      onNextPressed: () {},
+      screenContent: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30.h),
+        child: const Column(
+          children: <Widget>[
+            // form fields
+          ],
+        ),
       ),
     );
   }

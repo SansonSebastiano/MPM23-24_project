@@ -98,6 +98,14 @@ class ImageCard extends StatelessWidget {
                 Icons.remove_circle,
                 color: Theme.of(context).colorScheme.error,
                 size: 30.0.w,
+                shadows: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.5),
+                    blurRadius: 5.0.r,
+                    spreadRadius: 10.0.w,
+                    offset: Offset(2.0.w, 2.0.w),
+                  ),
+                ],
               ),
             ),
           ),

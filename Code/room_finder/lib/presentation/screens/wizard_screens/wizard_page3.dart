@@ -21,13 +21,13 @@ class WizardPage3 extends StatelessWidget {
         }),
         rightButton: CancelButton(onPressed: () {}),
         rightButtonVisibility: true,
-        screenLabel: AppLocalizations.of(context)!.lblManageRenters,
+        screenTitle: AppLocalizations.of(context)!.lblManageRenters,
         screenContent: const _WizardPage3Body(),
         dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard3,
         currentStep: 3,
         btnNextLabel: AppLocalizations.of(context)!.btnNext,
         // TODO: complete the onPressed function for the next button
-        btnNextOnPressed: () {},
+        onNextPressed: () {},
         onOkDialog: () => Navigator.of(context).pop());
   }
 }
@@ -156,95 +156,89 @@ class _WizardPage3BodyState extends State<_WizardPage3Body> {
 
   Future<dynamic> _editRenter(BuildContext context, int index) {
     return showModalPanel(
-                          context: context,
-                          panel: RenterPanel(
-                              context: context,
-                              title: AppLocalizations.of(context)!
-                                  .lblAddEditRenters,
-                              btnLabel:
-                                  AppLocalizations.of(context)!.btnConfirm,
-                              onDateChanged: (DateTime? date) {
-                                setState(() {
-                                  selectedDate = date!;
-                                });
-                              },
-                              onBtnPressed: () {
-                                      setState(() {
-                                        _renters[index] = HostRenterBox(
-                                          name: nameController.text,
-                                          facultyOfStudies:
-                                              studiesController.text,
-                                          interests: interestsController.text,
-                                          contractDeadline: selectedDate,
-                                          age: int.parse(ageController.text),
-                                        );
-                                      });
+        context: context,
+        panel: RenterPanel(
+            context: context,
+            title: AppLocalizations.of(context)!.lblAddEditRenters,
+            btnLabel: AppLocalizations.of(context)!.btnConfirm,
+            onDateChanged: (DateTime? date) {
+              setState(() {
+                selectedDate = date!;
+              });
+            },
+            onBtnPressed: () {
+              setState(() {
+                _renters[index] = HostRenterBox(
+                  name: nameController.text,
+                  facultyOfStudies: studiesController.text,
+                  interests: interestsController.text,
+                  contractDeadline: selectedDate,
+                  age: int.parse(ageController.text),
+                );
+              });
 
-                                      nameController.clear();
-                                      studiesController.clear();
-                                      interestsController.clear();
-                                      ageController.clear();
+              nameController.clear();
+              studiesController.clear();
+              interestsController.clear();
+              ageController.clear();
 
-                                      Navigator.of(context).pop();
-                                    },
-                              nameController: nameController,
-                              studiesController: studiesController,
-                              interestsController: interestsController,
-                              ageController: ageController,
-                              selectedDate: selectedDate,
-                              onBtnClosed: () {
-                                nameController.clear();
-                                studiesController.clear();
-                                interestsController.clear();
+              Navigator.of(context).pop();
+            },
+            nameController: nameController,
+            studiesController: studiesController,
+            interestsController: interestsController,
+            ageController: ageController,
+            selectedDate: selectedDate,
+            onBtnClosed: () {
+              nameController.clear();
+              studiesController.clear();
+              interestsController.clear();
 
-                                Navigator.of(context).pop();
-                              }));
+              Navigator.of(context).pop();
+            }));
   }
 
   Future<dynamic> _addNewRenter(BuildContext context) {
     return showModalPanel(
-                          context: context,
-                          panel: RenterPanel(
-                              context: context,
-                              title: AppLocalizations.of(context)!
-                                  .lblAddEditRenters,
-                              btnLabel:
-                                  AppLocalizations.of(context)!.btnConfirm,
-                              onDateChanged: (DateTime? date) {
-                                setState(() {
-                                  selectedDate = date!;
-                                });
-                              },
-                              onBtnPressed: () {
-                                      setState(() {
-                                        _renters.add(HostRenterBox(
-                                          name: nameController.text,
-                                          facultyOfStudies:
-                                              studiesController.text,
-                                          interests: interestsController.text,
-                                          contractDeadline: selectedDate,
-                                          age: int.parse(ageController.text),
-                                        ));
-                                      });
+        context: context,
+        panel: RenterPanel(
+            context: context,
+            title: AppLocalizations.of(context)!.lblAddEditRenters,
+            btnLabel: AppLocalizations.of(context)!.btnConfirm,
+            onDateChanged: (DateTime? date) {
+              setState(() {
+                selectedDate = date!;
+              });
+            },
+            onBtnPressed: () {
+              setState(() {
+                _renters.add(HostRenterBox(
+                  name: nameController.text,
+                  facultyOfStudies: studiesController.text,
+                  interests: interestsController.text,
+                  contractDeadline: selectedDate,
+                  age: int.parse(ageController.text),
+                ));
+              });
 
-                                      nameController.clear();
-                                      studiesController.clear();
-                                      interestsController.clear();
-                                      ageController.clear();
+              nameController.clear();
+              studiesController.clear();
+              interestsController.clear();
+              ageController.clear();
 
-                                      Navigator.of(context).pop();
-                                    },
-                              nameController: nameController,
-                              studiesController: studiesController,
-                              interestsController: interestsController,
-                              ageController: ageController,
-                              selectedDate: selectedDate,
-                              onBtnClosed: () {
-                                nameController.clear();
-                                studiesController.clear();
-                                interestsController.clear();
-                                Navigator.of(context).pop();
-                              }));
+              Navigator.of(context).pop();
+            },
+            nameController: nameController,
+            studiesController: studiesController,
+            interestsController: interestsController,
+            ageController: ageController,
+            selectedDate: selectedDate,
+            onBtnClosed: () {
+              nameController.clear();
+              studiesController.clear();
+              interestsController.clear();
+              Navigator.of(context).pop();
+            }));
   }
 }
 

@@ -362,6 +362,10 @@
   "@lblTitleWizard7": {
     "description": "The label to upload the photos"
   },
+  "lblDescWizard7": "Add at least 5 photos of your facility",
+  "@lblDescWizard7": {
+    "description": "The description to upload the photos"
+  },
   "lblAddPhoto": "Add photo",
   "@lblAddPhoto": {
     "description": "The label to choose the photos"

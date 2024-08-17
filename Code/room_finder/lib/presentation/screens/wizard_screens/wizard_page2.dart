@@ -20,14 +20,14 @@ class WizardPage2 extends StatelessWidget {
         }),
         rightButton: CancelButton(onPressed: () {}),
         rightButtonVisibility: true,
-        screenLabel: AppLocalizations.of(context)!.lblSetRooms,
+        screenTitle: AppLocalizations.of(context)!.lblSetRooms,
         screenContent: const _WizardPage2Body(),
         dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard2,
         onOkDialog: () => Navigator.of(context).pop(),
         currentStep: 2,
         btnNextLabel: AppLocalizations.of(context)!.btnNext,
         // TODO: complete the onPressed function for the next button
-        btnNextOnPressed: () {});
+        onNextPressed: () {});
   }
 }
 
@@ -91,31 +91,31 @@ class _WizardPage2BodyState extends State<_WizardPage2Body> {
 
   void _addRoom(BuildContext context) {
     return showOptionsDialog(
-                    context: context,
-                    androidDialog: ActionsAndroidDialog(
-                        context: context,
-                        title: AppLocalizations.of(context)!.lblAddNewRoom,
-                        content: TextField(
-                          controller: _controller,
-                        ),
-                        onCancel: () {
-                          _onCancel(context);
-                        },
-                        onOk: () {
-                          _onOk(context);
-                        }),
-                    iosDialog: ActionsIosDialog(
-                        context: context,
-                        title: AppLocalizations.of(context)!.lblAddNewRoom,
-                        content: CupertinoTextField(
-                          controller: _controller,
-                        ),
-                        onCancel: () {
-                          _onCancel(context);
-                        },
-                        onOk: () {
-                          _onOk(context);
-                        }));
+        context: context,
+        androidDialog: ActionsAndroidDialog(
+            context: context,
+            title: AppLocalizations.of(context)!.lblAddNewRoom,
+            content: TextField(
+              controller: _controller,
+            ),
+            onCancel: () {
+              _onCancel(context);
+            },
+            onOk: () {
+              _onOk(context);
+            }),
+        iosDialog: ActionsIosDialog(
+            context: context,
+            title: AppLocalizations.of(context)!.lblAddNewRoom,
+            content: CupertinoTextField(
+              controller: _controller,
+            ),
+            onCancel: () {
+              _onCancel(context);
+            },
+            onOk: () {
+              _onOk(context);
+            }));
   }
 
   void _onOk(BuildContext context) {
