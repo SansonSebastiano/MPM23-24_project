@@ -529,5 +529,13 @@
   "lblRoomsAmenities": "Rooms and Amenities",
   "@lblRoomsAmenities": {
     "description": "The label that represents rooms and amenities"
+  },
+  "lblWarningTitleDialog": "Warning!",
+  "@lblWarningTitleDialog": {
+    "description": "The title of the warning dialog"
+  },
+  "lblCancelWizard": "Are you sure you want to exit? All the data will be lost.",
+  "@lblCancelWizard": {
+    "description": "The message of the exit wizard dialog"
   }
 }

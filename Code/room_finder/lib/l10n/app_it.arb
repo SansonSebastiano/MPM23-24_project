@@ -125,5 +125,7 @@
     "lblAccountPhoto": "Foto profilo",
     "btnCancel": "Annulla",
     "lblHostName": "Nome dell'host:",
-    "lblRoomsAmenities": "Stanze e servizi"
+    "lblRoomsAmenities": "Stanze e servizi",
+    "lblWarningTitleDialog": "Attenzione!",
+    "lblCancelWizard": "Sei sicuro di voler uscire? I dati inseriti verranno persi."
 }

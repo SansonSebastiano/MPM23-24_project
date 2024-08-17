@@ -7,6 +7,7 @@ import 'package:room_finder/presentation/components/buttons/circle_buttons.dart'
 import 'package:room_finder/presentation/components/room_option.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/presentation/screens/wizard_screens/wizard_page3.dart';
 
 class WizardPage2 extends StatelessWidget {
   const WizardPage2({super.key});
@@ -14,11 +15,40 @@ class WizardPage2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WizardTemplateScreen(
-        // TODO: complete the leftButton and rightButton
         leftButton: DarkBackButton(onPressed: () {
           Navigator.of(context).pop();
         }),
-        rightButton: CancelButton(onPressed: () {}),
+        rightButton: CancelButton(onPressed: () {
+          showOptionsDialog(
+            context: context,
+            androidDialog: ActionsAndroidDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
+              context: context,
+              onOk: () {
+                // TODO: Implement the onOk function to come back to the home page (the host version)
+              },
+              onCancel: () {
+                Navigator.of(context).pop();
+              }
+            ),
+            iosDialog: ActionsIosDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
+              context: context,
+              onOk: () {
+                // TODO: Implement the onOk function to come back to the home page (the host version)
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const ()),
+                // );
+              },
+              onCancel: () {
+                Navigator.of(context).pop();
+              }
+            )
+          );
+        }),
         rightButtonVisibility: true,
         screenTitle: AppLocalizations.of(context)!.lblSetRooms,
         screenContent: const _WizardPage2Body(),
@@ -26,8 +56,12 @@ class WizardPage2 extends StatelessWidget {
         onOkDialog: () => Navigator.of(context).pop(),
         currentStep: 2,
         btnNextLabel: AppLocalizations.of(context)!.btnNext,
-        // TODO: complete the onPressed function for the next button
-        onNextPressed: () {});
+        onNextPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const WizardPage3()),
+          );
+        });
   }
 }
 

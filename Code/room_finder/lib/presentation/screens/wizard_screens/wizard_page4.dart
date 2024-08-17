@@ -7,6 +7,7 @@ import 'package:room_finder/presentation/components/amenities_option.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/presentation/screens/wizard_screens/wizard_page5.dart';
 
 class WizardPage4 extends StatefulWidget {
   const WizardPage4({super.key});
@@ -65,14 +66,47 @@ class _WizardPage4State extends State<WizardPage4> {
       leftButton: DarkBackButton(onPressed: () {
         Navigator.of(context).pop();
       }),
-      rightButton: CancelButton(onPressed: () {}),
+      rightButton: CancelButton(onPressed: () {
+        showOptionsDialog(
+            context: context,
+            androidDialog: ActionsAndroidDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
+              context: context,
+              onOk: () {
+                // TODO: Implement the onOk function to come back to the home page (the host version)
+              },
+              onCancel: () {
+                Navigator.of(context).pop();
+              }
+            ),
+            iosDialog: ActionsIosDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
+              context: context,
+              onOk: () {
+                // TODO: Implement the onOk function to come back to the home page (the host version)
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const ()),
+                // );
+              },
+              onCancel: () {
+                Navigator.of(context).pop();
+              }
+            )
+          );
+      }),
       rightButtonVisibility: true,
       screenTitle: AppLocalizations.of(context)!.lblAmenitieService,
       dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard4,
       currentStep: 4,
       btnNextLabel: AppLocalizations.of(context)!.btnNext,
       onNextPressed: _amenitiesSwitches.values.contains(true) ? () {
-        // TODO: Implement this function
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const WizardPage5()),
+          );
       } : null,
       onOkDialog: () => Navigator.of(context).pop(),
       screenContent: Expanded(

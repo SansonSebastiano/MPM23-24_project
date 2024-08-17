@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/presentation/components/add_on.dart';
+import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/base_panel.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:room_finder/presentation/components/renter_panel.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/presentation/screens/wizard_screens/wizard_page4.dart';
 import 'package:room_finder/style/color_palette.dart';
 
 class WizardPage3 extends StatefulWidget {
@@ -76,7 +78,37 @@ class _WizardPage3State extends State<WizardPage3> {
       leftButton: DarkBackButton(onPressed: () {
         Navigator.of(context).pop();
       }),
-      rightButton: CancelButton(onPressed: () {}),
+      rightButton: CancelButton(onPressed: () {
+        showOptionsDialog(
+            context: context,
+            androidDialog: ActionsAndroidDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
+              context: context,
+              onOk: () {
+                // TODO: Implement the onOk function to come back to the home page (the host version)
+              },
+              onCancel: () {
+                Navigator.of(context).pop();
+              }
+            ),
+            iosDialog: ActionsIosDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
+              context: context,
+              onOk: () {
+                // TODO: Implement the onOk function to come back to the home page (the host version)
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const ()),
+                // );
+              },
+              onCancel: () {
+                Navigator.of(context).pop();
+              }
+            )
+          );
+      }),
       rightButtonVisibility: true,
       screenTitle: AppLocalizations.of(context)!.lblManageRenters,
       dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard3,
@@ -85,7 +117,10 @@ class _WizardPage3State extends State<WizardPage3> {
       onNextPressed: maxRenter == 0
           ? null
           : () {
-              // TODO: complete the onPressed function for the next button
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const WizardPage4()),
+              );
             },
       onOkDialog: () => Navigator.of(context).pop(),
       screenContent: Expanded(
