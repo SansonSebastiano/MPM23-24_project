@@ -162,7 +162,7 @@ class _WizardPage3State extends State<WizardPage3> {
                 selectedDate = date!;
               });
             },
-            onBtnPressed: () {
+            onConfirmPressed: () {
               setState(() {
                 _renters[index] = HostRenterBox(
                   name: nameController.text,
@@ -185,7 +185,7 @@ class _WizardPage3State extends State<WizardPage3> {
             interestsController: interestsController,
             ageController: ageController,
             selectedDate: selectedDate,
-            onBtnClosed: () {
+            onClosedPressed: () {
               nameController.clear();
               studiesController.clear();
               interestsController.clear();
@@ -206,7 +206,7 @@ class _WizardPage3State extends State<WizardPage3> {
                 selectedDate = date!;
               });
             },
-            onBtnPressed: () {
+            onConfirmPressed: () {
               setState(() {
                 _renters.add(HostRenterBox(
                   name: nameController.text,
@@ -229,7 +229,7 @@ class _WizardPage3State extends State<WizardPage3> {
             interestsController: interestsController,
             ageController: ageController,
             selectedDate: selectedDate,
-            onBtnClosed: () {
+            onClosedPressed: () {
               nameController.clear();
               studiesController.clear();
               interestsController.clear();

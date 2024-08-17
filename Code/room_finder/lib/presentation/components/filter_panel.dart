@@ -19,54 +19,129 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// - Bathrooms
 ///
 /// - Roommates
-class SearchFilterPanel extends BaseModalPanel {
+class SearchFilterPanel extends StatefulWidget {
   final BuildContext context;
+  final String panelTitle;
+  final String buttonLabel;
+  final void Function()? onConfirmPressed;
+  final void Function() onClosedPressed;
 
   const SearchFilterPanel(
       {super.key,
       required this.context,
-      required super.title,
-      required super.btnLabel,
-      required super.onBtnPressed,
-      required super.onBtnClosed});
+      required this.panelTitle,
+      required this.buttonLabel,
+      required this.onConfirmPressed,
+      required this.onClosedPressed});
 
   @override
-  Widget get items => Column(
-        children: [
-          _PriceRangeItem(
-            context: context,
-            itemTitle: AppLocalizations.of(context)!.lblPriceRange,
-            itemDesc: AppLocalizations.of(context)!.lblPriceDesc,
-          ),
-          _AmenitiesItem(
-            itemTitle: AppLocalizations.of(context)!.lblAmenities,
-            amenitiesOptions: [
-              // AmenitiesOption(label: AppLocalizations.of(context)!.lblWiFi,
-              // ),
-              // AmenitiesOption(
-              //     label: AppLocalizations.of(context)!.lblDishwasher),
-              // AmenitiesOption(
-              //     label: AppLocalizations.of(context)!.lblWashingMachine),
-              // AmenitiesOption(
-              //     label: AppLocalizations.of(context)!.lblDedicatedParking),
-              // AmenitiesOption(
-              //     label: AppLocalizations.of(context)!.lblAirConditioning),
-            ],
-          ),
-          _RoomsItem(
-            itemTitle: AppLocalizations.of(context)!.lblBedrooms,
-          ),
-          _RoomsItem(
-            itemTitle: AppLocalizations.of(context)!.lblBeds,
-          ),
-          _RoomsItem(
-            itemTitle: AppLocalizations.of(context)!.lblBathrooms,
-          ),
-          _RoomsItem(
-            itemTitle: AppLocalizations.of(context)!.lblRoommates,
-          ),
-        ],
+  State<SearchFilterPanel> createState() => _SearchFilterPanelState();
+}
+
+class _SearchFilterPanelState extends State<SearchFilterPanel> {
+  late Map<String, bool> _amenitiesSwitches;
+
+@override
+  void initState() {
+    super.initState();
+    _amenitiesSwitches = {};
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _amenitiesSwitches = {
+      AppLocalizations.of(context)!.lblWiFi: false,
+      AppLocalizations.of(context)!.lblDishwasher: false,
+      AppLocalizations.of(context)!.lblWashingMachine: false,
+      AppLocalizations.of(context)!.lblDedicatedParking: false,
+      AppLocalizations.of(context)!.lblAirConditioning: false,
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseModalPanel(
+        title: widget.panelTitle,
+        btnLabel: widget.buttonLabel,
+        onBtnPressed: widget.onConfirmPressed,
+        onBtnClosed: widget.onClosedPressed,
+        items: Column(
+          children: [
+            _PriceRangeItem(
+              context: widget.context,
+              itemTitle: AppLocalizations.of(widget.context)!.lblPriceRange,
+              itemDesc: AppLocalizations.of(widget.context)!.lblPriceDesc,
+            ),
+            _AmenitiesItem(
+              itemTitle: AppLocalizations.of(widget.context)!.lblAmenities,
+              amenitiesOptions: _amenitiesSwitches.entries
+                .map((entry) => AmenitiesOption(
+                      label: entry.key,
+                      isChecked: entry.value,
+                      onChanged: (value) {
+                        setState(() {
+                          _amenitiesSwitches[entry.key] = value;
+                        });
+                      },
+                    ))
+                .toList(),
+            ),
+            _RoomsItem(
+              itemTitle: AppLocalizations.of(widget.context)!.lblBedrooms,
+            ),
+            _RoomsItem(
+              itemTitle: AppLocalizations.of(widget.context)!.lblBeds,
+            ),
+            _RoomsItem(
+              itemTitle: AppLocalizations.of(widget.context)!.lblBathrooms,
+            ),
+            _RoomsItem(
+              itemTitle: AppLocalizations.of(widget.context)!.lblRoommates,
+            ),
+          ],
+        ),
       );
+  }
+
+  // Widget get items => 
+  // Column(
+  //       children: [
+  //         _PriceRangeItem(
+  //           context: widget.context,
+  //           itemTitle: AppLocalizations.of(widget.context)!.lblPriceRange,
+  //           itemDesc: AppLocalizations.of(widget.context)!.lblPriceDesc,
+  //         ),
+  //         _AmenitiesItem(
+  //           itemTitle: AppLocalizations.of(widget.context)!.lblAmenities,
+  //           amenitiesOptions: [
+  //             // AmenitiesOption(label: AppLocalizations.of(context)!.lblWiFi,
+  //             // ),
+  //             // AmenitiesOption(
+  //             //     label: AppLocalizations.of(context)!.lblDishwasher),
+  //             // AmenitiesOption(
+  //             //     label: AppLocalizations.of(context)!.lblWashingMachine),
+  //             // AmenitiesOption(
+  //             //     label: AppLocalizations.of(context)!.lblDedicatedParking),
+  //             // AmenitiesOption(
+  //             //     label: AppLocalizations.of(context)!.lblAirConditioning),
+  //           ],
+  //         ),
+  //         _RoomsItem(
+  //           itemTitle: AppLocalizations.of(widget.context)!.lblBedrooms,
+  //         ),
+  //         _RoomsItem(
+  //           itemTitle: AppLocalizations.of(widget.context)!.lblBeds,
+  //         ),
+  //         _RoomsItem(
+  //           itemTitle: AppLocalizations.of(widget.context)!.lblBathrooms,
+  //         ),
+  //         _RoomsItem(
+  //           itemTitle: AppLocalizations.of(widget.context)!.lblRoommates,
+  //         ),
+  //       ],
+  //     );
 }
 
 /// Create a custom range slider.

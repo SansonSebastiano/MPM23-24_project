@@ -5,32 +5,45 @@ import 'package:room_finder/presentation/components/base_panel.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class RenterPanel extends BaseModalPanel {
+class RenterPanel extends StatelessWidget {
   final BuildContext context;
+
+  final String title;
+  final String btnLabel;
+  final void Function()? onConfirmPressed;
+  final void Function() onClosedPressed;
+
   final TextEditingController nameController;
   final TextEditingController studiesController;
   final TextEditingController interestsController;
   final TextEditingController ageController;
+
   final DateTime selectedDate;
   final Function(DateTime? selectedDate) onDateChanged;
-  
-  const RenterPanel(
-      {super.key,
-      required this.context,
-      required super.title,
-      required super.btnLabel,
-      required super.onBtnPressed,
-      required this.nameController,
-      required this.studiesController,
-      required this.interestsController,
-      required super.onBtnClosed,
-      required this.selectedDate,
-      required this.onDateChanged,
-      required this.ageController,
-      });
+
+  const RenterPanel({
+    super.key,
+    required this.context,
+    required this.title,
+    required this.btnLabel,
+    required this.onConfirmPressed,
+    required this.nameController,
+    required this.studiesController,
+    required this.interestsController,
+    required this.onClosedPressed,
+    required this.selectedDate,
+    required this.onDateChanged,
+    required this.ageController,
+  });
 
   @override
-  Widget get items => Column(
+  Widget build(BuildContext context) {
+    return BaseModalPanel(
+        title: title,
+        btnLabel: btnLabel,
+        onBtnPressed: onConfirmPressed,
+        onBtnClosed: onClosedPressed,
+        items: Column(
         children: [
           _InputFieldItem(
             itemTitle: AppLocalizations.of(context)!.lblRenterName,
@@ -59,7 +72,9 @@ class RenterPanel extends BaseModalPanel {
             onDateChanged: onDateChanged,
           )
         ],
-      );
+      ),
+    );
+  }
 }
 
 class _InputField extends StatefulWidget {
@@ -68,7 +83,9 @@ class _InputField extends StatefulWidget {
   final TextInputType keyboardType;
 
   const _InputField(
-      {required this.hint, required this.controller, required this.keyboardType});
+      {required this.hint,
+      required this.controller,
+      required this.keyboardType});
 
   @override
   State<_InputField> createState() => _InputFieldState();
@@ -105,12 +122,12 @@ class _InputFieldItem extends PanelItem {
   final TextEditingController controller;
   final TextInputType keyboardType;
 
-  const _InputFieldItem(
-      {required super.itemTitle,
-      required this.hint,
-      required this.controller,
-      this.keyboardType = TextInputType.text,
-      });
+  const _InputFieldItem({
+    required super.itemTitle,
+    required this.hint,
+    required this.controller,
+    this.keyboardType = TextInputType.text,
+  });
 
   @override
   Widget get content => _InputField(
@@ -171,8 +188,14 @@ class _DatePickerItem extends PanelItem {
   final DateTime selectedDate;
   final Function(DateTime? selectedDate) onDateChanged;
 
-  const _DatePickerItem({required super.itemTitle, required this.selectedDate, required this.onDateChanged});
+  const _DatePickerItem(
+      {required super.itemTitle,
+      required this.selectedDate,
+      required this.onDateChanged});
 
   @override
-  Widget get content => _DatePicker(selectedDate: selectedDate, onDateChanged: onDateChanged,);
+  Widget get content => _DatePicker(
+        selectedDate: selectedDate,
+        onDateChanged: onDateChanged,
+      );
 }

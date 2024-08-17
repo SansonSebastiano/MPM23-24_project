@@ -4,21 +4,21 @@ import 'package:room_finder/presentation/components/buttons/rectangle_buttons.da
 import 'package:room_finder/style/color_palette.dart';
 
 /// Create a filter panel implementing the [BaseModalPanel] abstract class.
-/// The filter panel contains a [title] and a list of [items].
-abstract class BaseModalPanel extends StatelessWidget {
+/// The filter panel contains a [panelTitle] and a list of [items].
+class BaseModalPanel extends StatelessWidget {
   final String title;
   final String btnLabel;
   final void Function()? onBtnPressed;
   final void Function() onBtnClosed;
+  final Widget items;
 
   const BaseModalPanel(
       {super.key,
       required this.title,
       required this.btnLabel,
       required this.onBtnPressed,
-      required this.onBtnClosed});
-
-  Widget get items;
+      required this.onBtnClosed,
+      required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ abstract class BaseModalPanel extends StatelessWidget {
 /// The [context] is the context of the app.
 Future showModalPanel(
     {required BuildContext context,
-    required BaseModalPanel panel,
+    required Widget panel,
     bool isScrollControlled = true}) {
   return showModalBottomSheet(
     useSafeArea: true,
