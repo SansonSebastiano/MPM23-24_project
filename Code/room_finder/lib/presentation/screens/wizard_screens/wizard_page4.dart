@@ -8,49 +8,49 @@ import 'package:room_finder/presentation/components/buttons/circle_buttons.dart'
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class WizardPage4 extends StatelessWidget {
+class WizardPage4 extends StatefulWidget {
   const WizardPage4({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return WizardTemplateScreen(
-        leftButton: DarkBackButton(onPressed: () {
-          Navigator.of(context).pop();
-        }),
-        rightButton: CancelButton(onPressed: () {}),
-        rightButtonVisibility: true,
-        screenTitle: AppLocalizations.of(context)!.lblAmenitieService,
-        screenContent: const _WizardPage4Body(),
-        dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard4,
-        currentStep: 4,
-        btnNextLabel: AppLocalizations.of(context)!.btnNext,
-        onNextPressed: () {},
-        onOkDialog: () => Navigator.of(context).pop());
-  }
+  State<WizardPage4> createState() => _WizardPage4State();
 }
 
-class _WizardPage4Body extends StatefulWidget {
-  const _WizardPage4Body();
-
-  @override
-  State<_WizardPage4Body> createState() => _WizardPage4BodyState();
-}
-
-class _WizardPage4BodyState extends State<_WizardPage4Body> {
+class _WizardPage4State extends State<WizardPage4> {
   late TextEditingController _controller;
-  // TODO: Get this default values from .arb
-  final List<AmenitiesOption> _amenities = <AmenitiesOption>[
-    const AmenitiesOption(label: 'Wifi'),
-    const AmenitiesOption(label: 'Dishwasher'),
-    const AmenitiesOption(label: 'Washing Machine'),
-    const AmenitiesOption(label: 'Decicated Parking'),
-    const AmenitiesOption(label: 'Air Conditioning'),
-  ];
+  late List<AmenitiesOption> _amenities;
+  late Map<String, bool> _amenitiesSwitches;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    _amenities = <AmenitiesOption>[];
+    _amenitiesSwitches = {};
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _amenitiesSwitches = {
+      AppLocalizations.of(context)!.lblWiFi: false,
+      AppLocalizations.of(context)!.lblDishwasher: false,
+      AppLocalizations.of(context)!.lblWashingMachine: false,
+      AppLocalizations.of(context)!.lblDedicatedParking: false,
+      AppLocalizations.of(context)!.lblAirConditioning: false,
+    };
+
+    _amenities = _amenitiesSwitches.entries
+        .map((entry) => AmenitiesOption(
+              label: entry.key,
+              isChecked: entry.value,
+              onChanged: (value) {
+                setState(() {
+                  _amenitiesSwitches[entry.key] = value;
+                });
+              },
+            ))
+        .toList();
   }
 
   @override
@@ -61,33 +61,56 @@ class _WizardPage4BodyState extends State<_WizardPage4Body> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20.h),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.h),
-              child: AddOn(
-                label: AppLocalizations.of(context)!.lblAddService,
-                onPressed: () {
-                  _addService(context);
-                },
+    return WizardTemplateScreen(
+      leftButton: DarkBackButton(onPressed: () {
+        Navigator.of(context).pop();
+      }),
+      rightButton: CancelButton(onPressed: () {}),
+      rightButtonVisibility: true,
+      screenTitle: AppLocalizations.of(context)!.lblAmenitieService,
+      dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard4,
+      currentStep: 4,
+      btnNextLabel: AppLocalizations.of(context)!.btnNext,
+      onNextPressed: _amenitiesSwitches.values.contains(true) ? () {
+        // TODO: Implement this function
+      } : null,
+      onOkDialog: () => Navigator.of(context).pop(),
+      screenContent: Expanded(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.h),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.h),
+                child: AddOn(
+                  label: AppLocalizations.of(context)!.lblAddService,
+                  onPressed: () {
+                    _addService(context);
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: 20.h),
-            Expanded(
-              child: ListView.separated(
-                itemCount: _amenities.length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(height: 5.h); // Add padding between items
-                },
-                itemBuilder: (context, index) {
-                  return _amenities[index];
-                },
+              SizedBox(height: 20.h),
+              Expanded(
+                child: ListView.separated(
+                  itemCount: _amenities.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(height: 5.h); // Add padding between items
+                  },
+                  itemBuilder: (context, index) {
+                    return AmenitiesOption(
+                      label: _amenitiesSwitches.keys.elementAt(index),
+                      onChanged: (value) {
+                        setState(() {
+                          _amenitiesSwitches[_amenitiesSwitches.keys.elementAt(index)] = value;
+                        });
+                      },
+                      isChecked: _amenitiesSwitches.values.elementAt(index),
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -117,7 +140,18 @@ class _WizardPage4BodyState extends State<_WizardPage4Body> {
 
   void _onOk(BuildContext context) {
     setState(() {
-      _amenities.add(AmenitiesOption(label: _controller.text));
+      if (_controller.text.isNotEmpty) {
+        _amenitiesSwitches.addEntries({_controller.text: true}.entries);
+        _amenities.add(AmenitiesOption(
+          label: _amenitiesSwitches.keys.last,
+          isChecked: _amenitiesSwitches.values.last,
+          onChanged: (value) {
+            setState(() {
+              _amenitiesSwitches[_amenitiesSwitches.keys.last] = value;
+            });
+          },
+        ));
+      }
     });
     _controller.clear();
     Navigator.of(context).pop();

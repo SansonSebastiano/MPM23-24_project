@@ -4,17 +4,13 @@ import 'package:room_finder/style/color_palette.dart';
 
 /// The class [AmenitiesOption] is a widget that represents an option for the amenities that a room can have.
 /// It contains a label and a checkbox to select the option.
-class AmenitiesOption extends StatefulWidget {
+class AmenitiesOption extends StatelessWidget {
   final String label;
+  final bool isChecked;
+  final ValueChanged<bool> onChanged;
 
-  const AmenitiesOption({super.key, required this.label});
-
-  @override
-  State<AmenitiesOption> createState() => _AmenitiesOptionState();
-}
-
-class _AmenitiesOptionState extends State<AmenitiesOption> {
-  bool isChecked = false;
+  const AmenitiesOption(
+      {super.key, required this.label, required this.onChanged, required this.isChecked});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +20,7 @@ class _AmenitiesOptionState extends State<AmenitiesOption> {
           padding: EdgeInsets.only(left: 33.w, right: 33.w),
           child: Row(
             children: [
-              Text(widget.label),
+              Text(label),
               const Spacer(),
               Checkbox(
                 value: isChecked,
@@ -32,9 +28,7 @@ class _AmenitiesOptionState extends State<AmenitiesOption> {
                   borderRadius: BorderRadius.circular(5.r),
                 ),
                 onChanged: (bool? value) {
-                  setState(() {
-                    isChecked = value!;
-                  });
+                  onChanged(value!);
                 },
               ),
             ],

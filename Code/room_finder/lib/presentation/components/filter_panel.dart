@@ -41,17 +41,16 @@ class SearchFilterPanel extends BaseModalPanel {
           _AmenitiesItem(
             itemTitle: AppLocalizations.of(context)!.lblAmenities,
             amenitiesOptions: [
-              AmenitiesOption(label: AppLocalizations.of(context)!.lblWiFi),
-              AmenitiesOption(
-                  label: AppLocalizations.of(context)!.lblDishwasher),
-              AmenitiesOption(
-                  label: AppLocalizations.of(context)!.lblWashingMachine),
-              AmenitiesOption(label: AppLocalizations.of(context)!.lblDryer),
-              AmenitiesOption(
-                  label: AppLocalizations.of(context)!.lblDedicatedParking),
-              AmenitiesOption(
-                  label: AppLocalizations.of(context)!.lblAirConditioning),
-              AmenitiesOption(label: AppLocalizations.of(context)!.lblHeating),
+              // AmenitiesOption(label: AppLocalizations.of(context)!.lblWiFi,
+              // ),
+              // AmenitiesOption(
+              //     label: AppLocalizations.of(context)!.lblDishwasher),
+              // AmenitiesOption(
+              //     label: AppLocalizations.of(context)!.lblWashingMachine),
+              // AmenitiesOption(
+              //     label: AppLocalizations.of(context)!.lblDedicatedParking),
+              // AmenitiesOption(
+              //     label: AppLocalizations.of(context)!.lblAirConditioning),
             ],
           ),
           _RoomsItem(
