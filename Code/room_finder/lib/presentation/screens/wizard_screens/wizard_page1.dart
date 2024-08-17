@@ -23,13 +23,15 @@ class _WizardPage1State extends State<WizardPage1> {
       dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard1,
       onOkDialog: () => Navigator.of(context).pop(),
       // TODO: complete the onPressed function for the next button
-      onNextPressed: () {},
-      screenContent: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.h),
-        child: const Column(
-          children: <Widget>[
-            // form fields
-          ],
+      onNextPressed: null, // () {},
+      screenContent: Expanded(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
+          child: const Column(
+            children: <Widget>[
+              // form fields
+            ],
+          ),
         ),
       ),
     );

@@ -118,6 +118,14 @@
   "@lblBeds": {
     "description": "The label to set the number of beds"
   },
+  "lblKitchens": "Kitchens",
+  "@lblKitchens": {
+    "description": "The label to set the number of kitchens"
+  },
+  "lblLivingRoom": "Living room",
+  "@lblLivingRoom": {
+    "description": "The label to set the number of living rooms"
+  },
   "lblRoommates": "Roommates",
   "@lblRoommates": {
     "description": "The label to set the number of roommates"

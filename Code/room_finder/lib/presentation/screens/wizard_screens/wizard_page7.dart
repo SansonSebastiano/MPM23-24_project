@@ -79,7 +79,9 @@ class _WizardPage7State extends State<WizardPage7> {
       dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard7,
       currentStep: 7,
       btnNextLabel: AppLocalizations.of(context)!.btnReviewListing,
-      onNextPressed: _gridItems.length < 6 ? null : () {},
+      onNextPressed: _gridItems.length < 6 ? null : () {
+        // TODO: Implement the onPressed function for the next button
+      },
       onOkDialog: () => Navigator.of(context).pop(),
       screenContent: Expanded(
         child: Padding(

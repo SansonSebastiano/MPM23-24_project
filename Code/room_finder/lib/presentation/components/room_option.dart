@@ -11,6 +11,10 @@ class RoomOption extends StatefulWidget {
 
   const RoomOption({super.key, required this.roomName});
 
+  int get counter {
+    return _RoomOptionState().counter;
+  }
+
   @override
   State<RoomOption> createState() => _RoomOptionState();
 }
