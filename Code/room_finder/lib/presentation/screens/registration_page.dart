@@ -90,7 +90,10 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                         ))
                       ),
                       SizedBox(height: 20.h),
-                      NameTextField(onNameValidityChanged: _onNameValidityChanged),
+                      StandardTextField(
+                        label: AppLocalizations.of(context)!.lblName,
+                        onValueValidityChanged: _onNameValidityChanged
+                      ),
                       SizedBox(height: 20.h),
                       EmailTextField(onEmailValidityChanged: _onEmailValidityChanged),
                       SizedBox(height: 20.h),

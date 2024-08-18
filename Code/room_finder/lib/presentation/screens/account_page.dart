@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/presentation/components/account_photo.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
-import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/setting_buttons.dart';
 import 'package:room_finder/presentation/screens/account_page_login_security.dart';

@@ -470,7 +470,7 @@
   "@lblTitleDialogWizard": {
     "description": "The title of the dialog wizard"
   },
-  "lblContentDialogWizard1": "This page allows you to set the address of your facility.",
+  "lblContentDialogWizard1": "This page allows you to set the position of your facility. \n\nUse the following form to add the complete address, digiting the city and the street of your facility.",
   "@lblContentDialogWizard1": {
     "description": "The content of the dialog wizard"
   },
@@ -537,5 +537,13 @@
   "lblCancelWizard": "Are you sure you want to exit? All the data will be lost.",
   "@lblCancelWizard": {
     "description": "The message of the exit wizard dialog"
+  },
+  "lblCity": "City",
+  "@lblCity": {
+    "description": "The label of the city form field"
+  },
+  "lblStreet": "Street",
+  "@lblStreet": {
+    "description": "The label of the address form field"
   }
 }
