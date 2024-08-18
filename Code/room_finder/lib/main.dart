@@ -59,7 +59,7 @@ class MyHomePage extends ConsumerStatefulWidget {
 
 class MyHomePageState extends ConsumerState<MyHomePage> {
   // TODO: handle this value with the user's role, for now it is hardcoded
-  bool isHost = true;
+  bool isHost = false;
   int currentPageIndex = 0;
 
   @override

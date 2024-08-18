@@ -316,8 +316,12 @@ class LogoutButton extends StatelessWidget {
 /// The only parameter that you have to define when you invoke the [BookmarkButton] constructor is the [size] of the button.
 class BookmarkButton extends StatefulWidget {
   final double size;
+  final bool isSaved;
 
-  const BookmarkButton({super.key, required this.size});
+  const BookmarkButton({
+    super.key, 
+    required this.size,
+    required this.isSaved});
 
   @override
   State<BookmarkButton> createState() => _BookmarkButtonState();
@@ -331,9 +335,16 @@ class _BookmarkButtonState extends State<BookmarkButton> {
   IconData icon = Icons.bookmark_border_outlined;
   Color iconColor = ColorPalette.oxfordBlue;
 
+  @override
+  void initState() {
+    super.initState();
+    isSaved = widget.isSaved;
+    icon = isSaved ? Icons.bookmark : Icons.bookmark_border_outlined;
+  }
+
   void _toggleSave() {
     setState(() {
-      isSaved = !isSaved; // Toggle the save state
+      isSaved = !isSaved; 
       icon = isSaved ? Icons.bookmark : Icons.bookmark_border_outlined;
     });
   }

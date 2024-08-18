@@ -76,7 +76,10 @@ class _StudentHomePageBody extends ConsumerWidget {
                           city: "Padova",
                           street: "Via Roma 12",
                           price: 300,
-                          bookmarkButton: const BookmarkButton(size: 50.0),
+                          bookmarkButton: const BookmarkButton(
+                            size: 50.0,
+                            isSaved: false,
+                          ),
                           onPressed: () => {
                                 // TODO: replace with real data
                                 Navigator.push(
