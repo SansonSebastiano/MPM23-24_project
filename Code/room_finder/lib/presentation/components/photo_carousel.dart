@@ -85,7 +85,10 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const BookmarkButton(size: 50),
+                    const BookmarkButton(
+                      size: 50,
+                      isSaved: false,
+                    ),
                     _PhotoCounter(current: _current, widget: widget)
                   ],
                 ))

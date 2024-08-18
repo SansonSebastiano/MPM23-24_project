@@ -47,7 +47,10 @@ class SavedAdsPageBody extends StatelessWidget {
                   city: "Padova", 
                   street: "Via Roma 12", 
                   price: 300, 
-                  bookmarkButton: const BookmarkButton(size: 50.0),
+                  bookmarkButton: const BookmarkButton(
+                    size: 50.0,
+                    isSaved: true,
+                  ),
                   onPressed: () => {
                     // TODO: replace with real data
                     Navigator.push(
