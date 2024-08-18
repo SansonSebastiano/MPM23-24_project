@@ -8,6 +8,8 @@ import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/screens/chat_page.dart';
 import 'package:room_finder/presentation/screens/home_page.dart';
 import 'package:room_finder/presentation/screens/saved_ads_page.dart';
+import 'package:room_finder/presentation/screens/splash_page.dart';
+import 'package:room_finder/provider/splash_provider.dart';
 import 'package:room_finder/style/theme.dart';
 
 void main() {
@@ -47,20 +49,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key});
 
   @override
   MyHomePageState createState() => MyHomePageState();
 }
 
-class MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends ConsumerState<MyHomePage> {
   // TODO: handle this value with the user's role, for now it is hardcoded
   bool isHost = false;
   int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    
     Widget bodyTemplate({required Widget body}) {
       return SafeArea(
           child: Center(
@@ -68,36 +71,55 @@ class MyHomePageState extends State<MyHomePage> {
       ));
     }
 
-    return Scaffold(
-      body: isHost
-          ? <Widget>[
-              bodyTemplate(body: const HostHomePage()),
-              bodyTemplate(body: const ChatPage()),
-              bodyTemplate(body: const Text("Host account")),
-            ][currentPageIndex]
-          : <Widget>[
-              bodyTemplate(body: const StudentHomePage()),
-              bodyTemplate(body: const SavedAdsPage()),
-              bodyTemplate(body: const ChatPage()),
-              bodyTemplate(body: const Text("Student account")),
-            ][currentPageIndex],
-      bottomNavigationBar: isHost
-          ? HostNavigationBar(
-              currentPageIndex: currentPageIndex,
-              onDestinationSelected: (int index) {
-                setState(() {
-                  currentPageIndex = index;
-                });
-              },
-            )
-          : StudentNavigationBar(
-              currentPageIndex: currentPageIndex,
-              onDestinationSelected: (int index) {
-                setState(() {
-                  currentPageIndex = index;
-                });
-              },
+    return FutureBuilder(
+      future: ref.watch(splashStateProvider).value!.isFirstTime(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            if (snapshot.data == true) {
+              return Scaffold(
+                body: isHost
+                    ? <Widget>[
+                        bodyTemplate(body: const HostHomePage()),
+                        bodyTemplate(body: const HostChatPage()),
+                        bodyTemplate(body: const Text("Host account")),
+                      ][currentPageIndex]
+                    : <Widget>[
+                        bodyTemplate(body: const StudentHomePage()),
+                        bodyTemplate(body: const SavedAdsPage()),
+                        bodyTemplate(body: const StudentChatPage()),
+                        bodyTemplate(body: const Text("Student account")),
+                      ][currentPageIndex],
+                bottomNavigationBar: isHost
+                    ? HostNavigationBar(
+                        currentPageIndex: currentPageIndex,
+                        onDestinationSelected: (int index) {
+                          setState(() {
+                            currentPageIndex = index;
+                          });
+                        },
+                      )
+                    : StudentNavigationBar(
+                        currentPageIndex: currentPageIndex,
+                        onDestinationSelected: (int index) {
+                          setState(() {
+                            currentPageIndex = index;
+                          });
+                        },
+                      ),
+              );
+            }
+          }
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
             ),
+          );
+        }
+        ref.watch(splashStateProvider).value!.setFirstTime();
+        return const SplashPage();
+      },
     );
     // const FacilityDetailPage(
     //     isStudent: false,

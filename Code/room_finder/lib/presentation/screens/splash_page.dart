@@ -1,58 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/main.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
-import 'package:room_finder/presentation/screens/home_page.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'dart:async';
-import 'package:after_layout/after_layout.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// class Splash extends StatefulWidget {
+//   const Splash({super.key});
 
-class Splash extends StatefulWidget {
-  const Splash({super.key});
+//   @override
+//   State<Splash> createState() => SplashState();
+// }
 
-  @override
-  State<Splash> createState() => SplashState();
-}
+// class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
+//   Future checkFirstSeen() async {
+//     SharedPreferences prefs = await SharedPreferences.getInstance();
+//     bool seen = (prefs.getBool('seen') ?? false);
 
-class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
-  Future checkFirstSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool seen = (prefs.getBool('seen') ?? false);
+//     if (seen) {
+//       if (mounted) {
+//         Navigator.of(context).pushReplacement(
+//           MaterialPageRoute(
+//               builder: (context) =>
+//                   const StudentHomePage()), // replace with homepage
+//         );
+//       }
+//     } else {
+//       if (mounted) {
+//         Navigator.of(context).pushReplacement(
+//           MaterialPageRoute(builder: (context) => const IntroScreen()),
+//         );
+//         setState(() {});
+//       }
+//     }
+//   }
 
-    if (seen) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-            builder: (context) => const StudentHomePage()), // replace with homepage
-      );
-    } else {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const IntroScreen()),
-      );
-    }
-  }
+//   @override
+//   void afterFirstLayout(BuildContext context) => checkFirstSeen();
 
-  @override
-  void afterFirstLayout(BuildContext context) => checkFirstSeen();
+//   @override
+//   Widget build(BuildContext context) {
+//     return const SizedBox.shrink();
+//   }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
-  }
-}
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
 
-class IntroScreen extends StatelessWidget {
-  const IntroScreen({super.key});
-
-  Future<void> _onStartPressed(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('seen', true);
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-          builder: (context) => const StudentHomePage()), // replace with homepage
-    );
-  }
+  // Future<void> _onStartPressed(BuildContext context) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setBool('seen', true);
+  //   if (context.mounted) {
+  //     Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(
+  //           builder: (context) =>
+  //               const StudentHomePage()), // replace with homepage
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +121,11 @@ class IntroScreen extends StatelessWidget {
               const Spacer(flex: 2),
               RectangleButton(
                 label: AppLocalizations.of(context)!.btnStart,
-                onPressed: () => _onStartPressed(context),
+                onPressed: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const MyHomePage(),
+                  ),
+                ),
               ),
               const Spacer(flex: 2),
             ],
