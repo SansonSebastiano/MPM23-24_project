@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/main.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/wizard_stepper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:room_finder/presentation/screens/home_page.dart';
 
 /// [MainTemplateScreen] is an abstract class that represents the main template screen.
 ///
@@ -287,13 +287,14 @@ class WizardTemplateScreen extends StatelessWidget {
 
 /// Method used to navigate back to the host home page from wizard pages.
 void backToHostHomePage(BuildContext context) {
+  // TODO: fix this: if the host start the wizard in editing mode, it should go back to the corresponding ads details page and not to the home page
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => 
         const Scaffold(
           body: SafeArea(
             child: Center(
-              child: HostHomePage(),
+              child: MyHomePage(),
             ),
           ),
         )
