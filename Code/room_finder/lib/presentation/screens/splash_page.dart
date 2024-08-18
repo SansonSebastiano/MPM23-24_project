@@ -23,7 +23,8 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
 
     if (seen) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const StudentHomePage()), // replace with homepage
+        MaterialPageRoute(
+            builder: (context) => const StudentHomePage()), // replace with homepage
       );
     } else {
       Navigator.of(context).pushReplacement(
@@ -107,8 +108,7 @@ class IntroScreen extends StatelessWidget {
                         TextSpan(
                           text:
                               AppLocalizations.of(context)!.lblWelcomeMessage5,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ]),
                 ),

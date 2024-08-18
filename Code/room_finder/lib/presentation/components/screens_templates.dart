@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
-import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/wizard_stepper.dart';
@@ -11,90 +10,31 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 ///
 /// Implementing this class will create a screen with a bottom navigation bar.
 ///
-/// The [isHost] getter is used to determine if the user is a host or a student, to differentiate the bottom navigation bar accordingly.
+/// * The [screenLabel] getter is used to set the title of the screen.
 ///
-/// The [title] getter is used to set the title of the screen.
-///
-/// The [content] getter is used to set the content of the screen.
-abstract class MainTemplateScreen extends StatelessWidget {
-  const MainTemplateScreen({super.key});
+/// * The [screenContent] getter is used to set the content of the screen.
+class MainTemplateScreen extends StatelessWidget {
+  const MainTemplateScreen({super.key, required this.screenLabel, required this.screenContent});
 
-  bool get isHost;
-  String get title;
-  Widget get content;
+  final String screenLabel;
+  final Widget screenContent;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 20.w, top: 30.h, bottom: 30.h),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(title,
-                      style: Theme.of(context).textTheme.displayMedium),
-                ),
-              ),
-              content,
-            ],
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 20.w, top: 30.h, bottom: 30.h),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(screenLabel,
+                style: Theme.of(context).textTheme.displayMedium),
           ),
         ),
-      ),
-      bottomNavigationBar:
-          isHost ? const HostNavigationBar() : const StudentNavigationBar(),
+        screenContent,
+      ],
     );
   }
-}
-
-/// [StudentTemplateScreen] is a class that represents the student template screen.
-///
-/// This class extends [MainTemplateScreen] and sets the [isHost] getter to false.
-///
-/// The [screenLabel] is used to set the title of the screen.
-///
-/// The [screenContent] is used to set the content of the screen.
-class StudentTemplateScreen extends MainTemplateScreen {
-  final String screenLabel;
-  final Widget screenContent;
-
-  const StudentTemplateScreen(
-      {super.key, required this.screenLabel, required this.screenContent});
-
-  @override
-  bool get isHost => false;
-
-  @override
-  String get title => screenLabel;
-
-  @override
-  Widget get content => screenContent;
-}
-
-/// [HostTemplateScreen] is a class that represents the host template screen.
-///
-/// This class extends [MainTemplateScreen] and sets the [isHost] getter to true.
-///
-/// The [screenLabel] is used to set the title of the screen.
-///
-/// The [screenContent] is used to set the content of the screen.
-class HostTemplateScreen extends MainTemplateScreen {
-  final String screenLabel;
-  final Widget screenContent;
-
-  const HostTemplateScreen(
-      {super.key, required this.screenLabel, required this.screenContent});
-
-  @override
-  bool get isHost => true;
-
-  @override
-  String get title => screenLabel;
-
-  @override
-  Widget get content => screenContent;
 }
 
 /// [SecondaryTemplateScreen] is an abstract class that represents the secondary template screen.

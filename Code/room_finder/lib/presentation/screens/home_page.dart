@@ -15,7 +15,7 @@ class StudentHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StudentTemplateScreen(
+    return MainTemplateScreen(
       // TODO: screenLabel should be adapted to the user's name if logged in or to the default message if not logged in
       screenLabel: AppLocalizations.of(context)!.lblWelcomeNotLogged,
       screenContent: const _StudentHomePageBody(),
@@ -92,7 +92,7 @@ class HostHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HostTemplateScreen(
+    return MainTemplateScreen(
       // TODO: screenLabel should be adapted to the host user's name
       screenLabel: AppLocalizations.of(context)!.lblWelcomeUser("<Name>"),
       screenContent: const _HostHomePageBody(),

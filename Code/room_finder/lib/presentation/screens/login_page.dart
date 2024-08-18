@@ -50,9 +50,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
+    return LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: ConstrainedBox(
@@ -132,9 +130,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               ),
             );
           },
-        ),
-      ),
-      bottomNavigationBar: const StudentNavigationBar(),
-    );
+        );
   }
 }

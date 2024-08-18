@@ -15,7 +15,7 @@ class SavedAdsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final networkStatus = ref.watch(networkAwareProvider);
 
-    return StudentTemplateScreen(
+    return MainTemplateScreen(
       screenLabel: AppLocalizations.of(context)!.lblSavedAds, 
       screenContent: networkStatus == NetworkStatus.off
           ? Center(heightFactor: 6.h, child: NoInternetErrorMessage(context: context)) 

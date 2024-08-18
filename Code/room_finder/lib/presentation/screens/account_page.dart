@@ -15,8 +15,7 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return Column(
         children: [
           Stack(
             clipBehavior: Clip.none, // Allows elements to be positioned outside the container
@@ -127,10 +126,7 @@ class AccountPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      // TODO: check if the current user is host or student
-      bottomNavigationBar: const StudentNavigationBar() 
-    );
+      );
   }
 }
 

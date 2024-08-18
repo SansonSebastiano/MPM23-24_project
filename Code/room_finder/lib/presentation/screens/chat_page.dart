@@ -8,14 +8,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/chat_detail_page.dart';
 import 'package:room_finder/util/network_handler.dart';
 
-class StudentChatPage extends ConsumerWidget {
-  const StudentChatPage({super.key});
+class ChatPage extends ConsumerWidget {
+  const ChatPage({super.key});
   
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final networkStatus = ref.watch(networkAwareProvider);
 
-    return StudentTemplateScreen(
+    return MainTemplateScreen(
       screenLabel: AppLocalizations.of(context)!.lblChatPage, 
       screenContent: networkStatus == NetworkStatus.off
           ? Center(heightFactor: 6.h, child: NoInternetErrorMessage(context: context))
@@ -114,108 +114,108 @@ class StudentChatPage extends ConsumerWidget {
   }
 }
 
-class HostChatPage extends ConsumerWidget {
-  const HostChatPage({super.key});
+// class HostChatPage extends ConsumerWidget {
+//   const HostChatPage({super.key});
   
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final networkStatus = ref.watch(networkAwareProvider);
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final networkStatus = ref.watch(networkAwareProvider);
 
-    return HostTemplateScreen(
-      screenLabel: AppLocalizations.of(context)!.lblChatPage, 
-      screenContent: networkStatus == NetworkStatus.off
-          ? Center(heightFactor: 6.h, child: NoInternetErrorMessage(context: context))
-          : Column(
-              children: [
-                ChatItem(
-                  receiverPhoto: "https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2021/03/people-posing-photography-1003.jpg?w=1264&ssl=1", 
-                  facilityPhoto: "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg", 
-                  receiverName: "Luna Delis", 
-                  facilityName: "Casa Dolce Casa", 
-                  address: "Via Roma 12", 
-                  lastMessage: DateTime(2024,7,1), 
-                  isLastChatItem: false, 
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => ChatDetailPage(
-                        receiverImageUrl: "https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2021/03/people-posing-photography-1003.jpg?w=1264&ssl=1", 
-                        receiverName: "Luna Delis", 
-                        facilityName: "Casa Dolce Casa", 
-                        lastMessage: DateTime(2024,7,1), 
-                        isHost: true,
-                        onTap: () => {}
-                      )
-                    )
-                  )
-                ),
+//     return HostTemplateScreen(
+//       screenLabel: AppLocalizations.of(context)!.lblChatPage, 
+//       screenContent: networkStatus == NetworkStatus.off
+//           ? Center(heightFactor: 6.h, child: NoInternetErrorMessage(context: context))
+//           : Column(
+//               children: [
+//                 ChatItem(
+//                   receiverPhoto: "https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2021/03/people-posing-photography-1003.jpg?w=1264&ssl=1", 
+//                   facilityPhoto: "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg", 
+//                   receiverName: "Luna Delis", 
+//                   facilityName: "Casa Dolce Casa", 
+//                   address: "Via Roma 12", 
+//                   lastMessage: DateTime(2024,7,1), 
+//                   isLastChatItem: false, 
+//                   onPressed: () => Navigator.of(context).push(
+//                     MaterialPageRoute(
+//                         builder: (context) => ChatDetailPage(
+//                         receiverImageUrl: "https://i0.wp.com/digital-photography-school.com/wp-content/uploads/2021/03/people-posing-photography-1003.jpg?w=1264&ssl=1", 
+//                         receiverName: "Luna Delis", 
+//                         facilityName: "Casa Dolce Casa", 
+//                         lastMessage: DateTime(2024,7,1), 
+//                         isHost: true,
+//                         onTap: () => {}
+//                       )
+//                     )
+//                   )
+//                 ),
 
-                ChatItem(
-                  receiverPhoto: "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=", 
-                  facilityPhoto: "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp", 
-                  receiverName: "Mario Rossi", 
-                  facilityName: "Casa Dolce Casa", 
-                  address: "Via Roma 12", 
-                  lastMessage: DateTime(2024,6,28), 
-                  isLastChatItem: false, 
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => ChatDetailPage(
-                        receiverImageUrl: "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=", 
-                        receiverName: "Mario Rossi", 
-                        facilityName: "Casa Dolce Casa", 
-                        lastMessage: DateTime(2024,6,28), 
-                        isHost: true,
-                        onTap: () => {}
-                      )
-                    )
-                  )
-                ),
+//                 ChatItem(
+//                   receiverPhoto: "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=", 
+//                   facilityPhoto: "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp", 
+//                   receiverName: "Mario Rossi", 
+//                   facilityName: "Casa Dolce Casa", 
+//                   address: "Via Roma 12", 
+//                   lastMessage: DateTime(2024,6,28), 
+//                   isLastChatItem: false, 
+//                   onPressed: () => Navigator.of(context).push(
+//                     MaterialPageRoute(
+//                         builder: (context) => ChatDetailPage(
+//                         receiverImageUrl: "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=", 
+//                         receiverName: "Mario Rossi", 
+//                         facilityName: "Casa Dolce Casa", 
+//                         lastMessage: DateTime(2024,6,28), 
+//                         isHost: true,
+//                         onTap: () => {}
+//                       )
+//                     )
+//                   )
+//                 ),
 
-                ChatItem(
-                  receiverPhoto: "https://www.c-and-a.com/image/upload/q_auto:good,ar_4:3,c_fill,g_auto:face,w_637/s/editorial/bewerbungstipps/bewerberknigge-bewerbungsfotos-text-media3.jpg", 
-                  facilityPhoto: "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg", 
-                  receiverName: "Arianna Grandi", 
-                  facilityName: "Casa Dolce Casa", 
-                  address: "Via Roma 12", 
-                  lastMessage: DateTime(2024,6,25), 
-                  isLastChatItem: false, 
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => ChatDetailPage(
-                        receiverImageUrl: "https://www.c-and-a.com/image/upload/q_auto:good,ar_4:3,c_fill,g_auto:face,w_637/s/editorial/bewerbungstipps/bewerberknigge-bewerbungsfotos-text-media3.jpg", 
-                        receiverName: "Arianna Grandi", 
-                        facilityName: "Casa Dolce Casa", 
-                        lastMessage: DateTime(2024,6,25), 
-                        isHost: true,
-                        onTap: () => {}
-                      )
-                    )
-                  )
-                ),
+//                 ChatItem(
+//                   receiverPhoto: "https://www.c-and-a.com/image/upload/q_auto:good,ar_4:3,c_fill,g_auto:face,w_637/s/editorial/bewerbungstipps/bewerberknigge-bewerbungsfotos-text-media3.jpg", 
+//                   facilityPhoto: "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg", 
+//                   receiverName: "Arianna Grandi", 
+//                   facilityName: "Casa Dolce Casa", 
+//                   address: "Via Roma 12", 
+//                   lastMessage: DateTime(2024,6,25), 
+//                   isLastChatItem: false, 
+//                   onPressed: () => Navigator.of(context).push(
+//                     MaterialPageRoute(
+//                         builder: (context) => ChatDetailPage(
+//                         receiverImageUrl: "https://www.c-and-a.com/image/upload/q_auto:good,ar_4:3,c_fill,g_auto:face,w_637/s/editorial/bewerbungstipps/bewerberknigge-bewerbungsfotos-text-media3.jpg", 
+//                         receiverName: "Arianna Grandi", 
+//                         facilityName: "Casa Dolce Casa", 
+//                         lastMessage: DateTime(2024,6,25), 
+//                         isHost: true,
+//                         onTap: () => {}
+//                       )
+//                     )
+//                   )
+//                 ),
 
-                ChatItem(
-                  receiverPhoto: "https://cdn.create.vista.com/api/media/medium/153585546/stock-photo-smiling-young-african-american-woman?token=", 
-                  facilityPhoto: "https://www.fiorenzointeriordesign.com/images/galcms/850x635c50q80/galleryone/gallery-prodotto-test/zoom/img_6206_65721.jpg", 
-                  receiverName: "Serena Pizzoli", 
-                  facilityName: "Casa Dolce Casa", 
-                  address: "Via Roma 12", 
-                  lastMessage: DateTime(2024,6,20), 
-                  isLastChatItem: true, 
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => ChatDetailPage(
-                        receiverImageUrl: "https://cdn.create.vista.com/api/media/medium/153585546/stock-photo-smiling-young-african-american-woman?token=", 
-                        receiverName: "Serena Pizzoli", 
-                        facilityName: "Casa Dolce Casa",  
-                        lastMessage: DateTime(2024,6,20), 
-                        isHost: true,
-                        onTap: () => {}
-                      )
-                    )
-                  )
-                )
-              ]
-        )
-    );
-  }
-}
+//                 ChatItem(
+//                   receiverPhoto: "https://cdn.create.vista.com/api/media/medium/153585546/stock-photo-smiling-young-african-american-woman?token=", 
+//                   facilityPhoto: "https://www.fiorenzointeriordesign.com/images/galcms/850x635c50q80/galleryone/gallery-prodotto-test/zoom/img_6206_65721.jpg", 
+//                   receiverName: "Serena Pizzoli", 
+//                   facilityName: "Casa Dolce Casa", 
+//                   address: "Via Roma 12", 
+//                   lastMessage: DateTime(2024,6,20), 
+//                   isLastChatItem: true, 
+//                   onPressed: () => Navigator.of(context).push(
+//                     MaterialPageRoute(
+//                         builder: (context) => ChatDetailPage(
+//                         receiverImageUrl: "https://cdn.create.vista.com/api/media/medium/153585546/stock-photo-smiling-young-african-american-woman?token=", 
+//                         receiverName: "Serena Pizzoli", 
+//                         facilityName: "Casa Dolce Casa",  
+//                         lastMessage: DateTime(2024,6,20), 
+//                         isHost: true,
+//                         onTap: () => {}
+//                       )
+//                     )
+//                   )
+//                 )
+//               ]
+//         )
+//     );
+//   }
+// }
