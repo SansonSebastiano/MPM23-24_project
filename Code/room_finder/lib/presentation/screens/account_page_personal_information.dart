@@ -86,9 +86,10 @@ class _PersonalInformationPageState extends ConsumerState<PersonalInformationPag
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      NameTextField(
-                        onNameValidityChanged: _onNameValidityChanged,
-                        initialName: "Francesco"
+                      StandardTextField(
+                        label: AppLocalizations.of(context)!.lblName,
+                        onValueValidityChanged: _onNameValidityChanged,
+                        initialValue: "Francesco"  // to retrieve from backend
                       ),
                       SizedBox(height: 40.h),
                       Center(

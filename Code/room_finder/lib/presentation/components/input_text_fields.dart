@@ -6,39 +6,41 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// This file contains the implementation of all input fields belonging to the app forms.
 
 
-/// The class [NameTextField] defines an input field to digit the name of the user.  
-class NameTextField extends StatefulWidget {
-  final Function(bool) onNameValidityChanged;
-  final String? initialName; // Optional parameter to load the initial name from backend
+/// The class [StandardTextField] defines an input field, used to digit a value that cannot be null.  
+class StandardTextField extends StatefulWidget {
+  final String label;
+  final Function(bool) onValueValidityChanged;
+  final String? initialValue; // Optional parameter to load the initial name from backend
 
-  const NameTextField({
+  const StandardTextField({
     super.key, 
-    required this.onNameValidityChanged,
-    this.initialName,
+    required this.label,
+    required this.onValueValidityChanged,
+    this.initialValue, 
   });
 
   @override
-  State<NameTextField> createState() => _NameTextFieldState();
+  State<StandardTextField> createState() => _StandardTextFieldState();
 }
 
-class _NameTextFieldState extends State<NameTextField> {
+class _StandardTextFieldState extends State<StandardTextField> {
   late TextEditingController _controller;
   
   // Widget state
-  bool _isNameEmpty = false;
+  bool _isValueEmpty = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.initialName ?? '');
-    _controller.addListener(_validateName);
+    _controller = TextEditingController(text: widget.initialValue ?? '');
+    _controller.addListener(_validateValue);
   }
 
-  void _validateName() {
+  void _validateValue() {
     final name = _controller.text;
 
     final isValid = name.isNotEmpty;
-    widget.onNameValidityChanged(isValid);
+    widget.onValueValidityChanged(isValid);
   }
 
   @override
@@ -53,15 +55,15 @@ class _NameTextFieldState extends State<NameTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppLocalizations.of(context)!.lblName,
+          widget.label,
           style: Theme.of(context).textTheme.displaySmall,
         ),
         SizedBox(height: 8.h),
-        if (_isNameEmpty)
+        if (_isValueEmpty)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              'Name field cannot be empty',
+              '${widget.label} field cannot be empty',
               style: TextStyle(
                 color: Colors.red,
                 fontSize: 14.w,
@@ -87,11 +89,11 @@ class _NameTextFieldState extends State<NameTextField> {
             style: const TextStyle(color: ColorPalette.oxfordBlue),
             onSubmitted: (String value) {
               setState(() {
-                _isNameEmpty = value.isEmpty;
+                _isValueEmpty = value.isEmpty;
               });
-              widget.onNameValidityChanged(!_isNameEmpty);
+              widget.onValueValidityChanged(!_isValueEmpty);
 
-              if (!_isNameEmpty) {
+              if (!_isValueEmpty) {
                 print('Submitted text: $value');
               }
             },

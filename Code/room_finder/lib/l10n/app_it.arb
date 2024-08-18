@@ -111,7 +111,7 @@
     "lblLoading": "Caricamento...",
     "lblChatPage": "Messaggi",
     "lblTitleDialogWizard": "Aiuto",
-    "lblContentDialogWizard1": "Questa pagina consente di selezionare l'indirizzo della tua struttura.",
+    "lblContentDialogWizard1": "Questa pagina consente di selezionare la posizione della tua struttura. \n\nUtilizza il seguente form per inserire l'indirizzo completo, digitando la città e la via della tua struttura.",
     "lblContentDialogWizard2": "Questa pagina consente di impostare le stanze presenti nella tua struttura. \n\nIn questa pagina puoi trovare alcune stanze predefinite di cui puoi impostare il numero oppure, se la stanza non è presente nell'elenco, puoi aggiungerne una nuova tramite il pulsante aggiungi stanza. \n\nSe aggiungi una camera da letto, ti verrà chiesto anche di impostare il numero di letti per quella stanza.",
     "lblContentDialogWizard3": "Questa pagina consente di impostare il numero massimo di affittuari e di gestire gli affittuari correnti già presenti nella struttura, ognuno rappresentato da un proprio box. È possibile aggiungere, modificare o rimuovere gli affittuari.",
     "lblContentDialogWizard4": "Questa pagina ti consente di selezionare tutti i comfort e i servizi offerti dalla tua struttura. \n\nIn questa pagina puoi trovare alcune opzioni predefinite che puoi selezionare e, se un servizio da te offerto non è presente nell'elenco, puoi aggiungerne uno nuovo tramite il pulsante Aggiungi servizio.",
@@ -127,5 +127,7 @@
     "lblHostName": "Nome dell'host:",
     "lblRoomsAmenities": "Stanze e servizi",
     "lblWarningTitleDialog": "Attenzione!",
-    "lblCancelWizard": "Sei sicuro di voler uscire? I dati inseriti verranno persi."
+    "lblCancelWizard": "Sei sicuro di voler uscire? I dati inseriti verranno persi.",
+    "lblCity": "Città",
+    "lblStreet": "Via"
 }
