@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/presentation/components/bottom_bar.dart';
+import 'package:room_finder/presentation/screens/account_page.dart';
 import 'package:room_finder/presentation/screens/chat_page.dart';
 import 'package:room_finder/presentation/screens/home_page.dart';
 import 'package:room_finder/presentation/screens/saved_ads_page.dart';
@@ -58,12 +59,11 @@ class MyHomePage extends ConsumerStatefulWidget {
 
 class MyHomePageState extends ConsumerState<MyHomePage> {
   // TODO: handle this value with the user's role, for now it is hardcoded
-  bool isHost = false;
+  bool isHost = true;
   int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    
     Widget bodyTemplate({required Widget body}) {
       return SafeArea(
           child: Center(
@@ -82,13 +82,13 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
                     ? <Widget>[
                         bodyTemplate(body: const HostHomePage()),
                         bodyTemplate(body: const HostChatPage()),
-                        bodyTemplate(body: const Text("Host account")),
+                        bodyTemplate(body: const AccountPage()),
                       ][currentPageIndex]
                     : <Widget>[
                         bodyTemplate(body: const StudentHomePage()),
                         bodyTemplate(body: const SavedAdsPage()),
                         bodyTemplate(body: const StudentChatPage()),
-                        bodyTemplate(body: const Text("Student account")),
+                        bodyTemplate(body: const AccountPage()),
                       ][currentPageIndex],
                 bottomNavigationBar: isHost
                     ? HostNavigationBar(
@@ -121,64 +121,5 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
         return const SplashPage();
       },
     );
-    // const FacilityDetailPage(
-    //     isStudent: false,
-    //     isWizardPage: true,
-    //     facilityPhotos: [
-    //       "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-    //       "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-    //       "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-    //     ],
-    //     facilityName: "Casa Dolce Casa",
-    //     facilityAddress: "Padova - Via Roma 12",
-    //     facilityPrice: 300,
-    //     facilityHostName: "Mario Rossi",
-    //     hostUrlImage:
-    //         "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-    //     facilityServices: ["2 bedrooms", "3 beds", "1 bathroom", "WiFi"]);
-
-    // WizardTemplateScreen(
-    //   leftButton: DarkBackButton(onPressed: () {}),
-    //   rightButton: CancelButton(onPressed: () {}),
-    //   rightButtonVisibility: true,
-    //   screenLabel: "Screen Title",
-    //   screenContent: const Text("Screen Content"),
-    //   dialogTitle: "Dialog Title",
-    //   dialogContent: "Dialog Content",
-    //   currentStep: 1,
-    //   btnNextLabel: "Next",
-    //   btnNextOnPressed: () {},
-    // );
-    // SecondaryTemplateScreen(
-    //   leftHeaderWidget: DarkBackButton(onPressed: () {}),
-    //   centerHeaderWidget: const CustomSearchBar(
-    //     hintText: "Search",
-    //   ),
-    //   rightHeaderWidget: FilterButton(onPressed: () {}),
-    //   rightHeaderWidgetVisibility: true,
-    // );
-
-    // StudentTemplateScreen(
-    //   screenLabel: AppLocalizations.of(context)!.lblWelcomeUser("John"),
-    //   screenContent: Column(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: <Widget>[
-    //     ],
-    //   ),
-    // );
-
-    // Scaffold(
-    //   body: Center(
-    //     child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       children: <Widget>[
-    //         connectivityStatusProvider == NetworkStatus.off
-    //             ? NoInternetErrorMessage(context: context)
-    //             : const CircularProgressIndicator(),
-    //       ],
-    //     ),
-    //   ),
-    //   bottomNavigationBar: const StudentNavigationBar(),
-    // );
   }
 }

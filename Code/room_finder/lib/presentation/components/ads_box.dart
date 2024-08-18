@@ -30,13 +30,13 @@ class AdsBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(8.r),
-      decoration: BoxDecoration(
-        color: ColorPalette.lavenderBlue.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Material(
+    return Material(
+      child: Container(
+        margin: EdgeInsets.all(8.r),
+        decoration: BoxDecoration(
+          color: ColorPalette.lavenderBlue.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(12.r),
+        ),
         child: InkWell(
           onTap: onPressed,
           child: Column(

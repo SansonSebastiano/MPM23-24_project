@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/presentation/screens/search_results_page.dart';
 import 'package:room_finder/style/color_palette.dart';
 
 /// This class contains the [CustomSearchBar] widget, which is a custom search bar that can be used in the app.
@@ -35,7 +36,10 @@ class CustomSearchBar extends StatelessWidget {
           trailing: [
             IconButton(
               onPressed: () {
-                // TODO: Implement search functionality
+                // TODO: Replace with real data
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const SearchResultsPage();
+                }));
               },
               icon: const Icon(Icons.search),
             )

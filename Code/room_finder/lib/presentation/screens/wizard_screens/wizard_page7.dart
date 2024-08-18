@@ -81,11 +81,8 @@ class _WizardPage7State extends State<WizardPage7> {
                 content: Text(AppLocalizations.of(context)!.lblCancelWizard),
                 context: context,
                 onOk: () {
-                  // TODO: Implement the onOk function to come back to the home page (the host version)
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const ()),
-                  // );
+                  // TODO: Replace with the real data
+                  backToHostHomePage(context);
                 },
                 onCancel: () {
                   Navigator.of(context).pop();
@@ -95,11 +92,8 @@ class _WizardPage7State extends State<WizardPage7> {
                 content: Text(AppLocalizations.of(context)!.lblCancelWizard),
                 context: context,
                 onOk: () {
-                  // TODO: Implement the onOk function to come back to the home page (the host version)
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const ()),
-                  // );
+                  // TODO: Replace with the real data
+                   backToHostHomePage(context);
                 },
                 onCancel: () {
                   Navigator.of(context).pop();

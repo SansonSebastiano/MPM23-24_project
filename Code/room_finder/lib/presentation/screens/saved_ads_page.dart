@@ -6,6 +6,7 @@ import 'package:room_finder/presentation/components/buttons/circle_buttons.dart'
 import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/presentation/screens/facility_detail_page.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class SavedAdsPage extends ConsumerWidget {
@@ -47,7 +48,36 @@ class SavedAdsPageBody extends StatelessWidget {
                   street: "Via Roma 12", 
                   price: 300, 
                   bookmarkButton: const BookmarkButton(size: 50.0),
-                  onPressed: () => {} 
+                  onPressed: () => {
+                    // TODO: replace with real data
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const FacilityDetailPage(
+                                isStudent: true,
+                                isWizardPage: false,
+                                facilityPhotos: [
+                                  "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
+                                  "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
+                                  "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
+                                ],
+                                facilityName: "Casa Dolce Casa",
+                                facilityAddress:
+                                    "Padova - Via Roma 12",
+                                facilityPrice: 300,
+                                facilityHostName: "Mario Rossi",
+                                hostUrlImage:
+                                    "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
+                                facilityServices: [
+                                  "2 bedrooms",
+                                  "3 beds",
+                                  "1 bathroom",
+                                  "WiFi"
+                                ]),
+                      ),
+                    ),
+                  } 
                 );
               },
               separatorBuilder: (BuildContext context, int index) {

@@ -5,59 +5,8 @@ import 'package:room_finder/presentation/components/buttons/rectangle_buttons.da
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// class Splash extends StatefulWidget {
-//   const Splash({super.key});
-
-//   @override
-//   State<Splash> createState() => SplashState();
-// }
-
-// class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
-//   Future checkFirstSeen() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     bool seen = (prefs.getBool('seen') ?? false);
-
-//     if (seen) {
-//       if (mounted) {
-//         Navigator.of(context).pushReplacement(
-//           MaterialPageRoute(
-//               builder: (context) =>
-//                   const StudentHomePage()), // replace with homepage
-//         );
-//       }
-//     } else {
-//       if (mounted) {
-//         Navigator.of(context).pushReplacement(
-//           MaterialPageRoute(builder: (context) => const IntroScreen()),
-//         );
-//         setState(() {});
-//       }
-//     }
-//   }
-
-//   @override
-//   void afterFirstLayout(BuildContext context) => checkFirstSeen();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const SizedBox.shrink();
-//   }
-// }
-
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
-
-  // Future<void> _onStartPressed(BuildContext context) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.setBool('seen', true);
-  //   if (context.mounted) {
-  //     Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(
-  //           builder: (context) =>
-  //               const StudentHomePage()), // replace with homepage
-  //     );
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

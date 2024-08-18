@@ -5,6 +5,7 @@ import 'package:room_finder/presentation/components/buttons/circle_buttons.dart'
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/wizard_stepper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/presentation/screens/home_page.dart';
 
 /// [MainTemplateScreen] is an abstract class that represents the main template screen.
 ///
@@ -283,3 +284,19 @@ class WizardTemplateScreen extends StatelessWidget {
     );
   }
 }
+
+/// Method used to navigate back to the host home page from wizard pages.
+void backToHostHomePage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => 
+        const Scaffold(
+          body: SafeArea(
+            child: Center(
+              child: HostHomePage(),
+            ),
+          ),
+        )
+      ),
+    );
+  }
