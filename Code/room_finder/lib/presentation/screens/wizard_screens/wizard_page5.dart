@@ -17,32 +17,29 @@ class WizardPage5 extends StatelessWidget {
         }),
         rightButton: CancelButton(onPressed: () {
           showOptionsDialog(
-            context: context,
-            androidDialog: ActionsAndroidDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
               context: context,
-              onOk: () {
-                // TODO: Replace with the real data
-                  backToHostHomePage(context);
-              },
-              onCancel: () {
-                Navigator.of(context).pop();
-              }
-            ),
-            iosDialog: ActionsIosDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
-              context: context,
-              onOk: () {
-                // TODO: Replace with the real data
-                  backToHostHomePage(context);
-              },
-              onCancel: () {
-                Navigator.of(context).pop();
-              }
-            )
-          );
+              androidDialog: ActionsAndroidDialog(
+                  title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                  content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                  context: context,
+                  onOk: () {
+                    // TODO: Replace with the real data
+                    backToHostHomePage(context);
+                  },
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  }),
+              iosDialog: ActionsIosDialog(
+                  title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                  content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                  context: context,
+                  onOk: () {
+                    // TODO: Replace with the real data
+                    backToHostHomePage(context);
+                  },
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  }));
         }),
         rightButtonVisibility: true,
         screenTitle: AppLocalizations.of(context)!.lblSetMonthlyRent,
@@ -94,17 +91,20 @@ class _WizardPage5BodyState extends State<_WizardPage5Body> {
             ),
           ),
           const SizedBox(height: 20),
-          Slider(
-            inactiveColor: Colors.grey,
-            value: _currentSliderValue,
-            max: 1000,
-            divisions: 100,
-            label: _currentSliderValue.round().toString(),
-            onChanged: (double value) {
-              setState(() {
-                _currentSliderValue = value;
-              });
-            },
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Slider(
+              inactiveColor: Colors.grey,
+              value: _currentSliderValue,
+              max: 1000,
+              divisions: 100,
+              label: _currentSliderValue.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _currentSliderValue = value;
+                });
+              },
+            ),
           ),
         ],
       ),
