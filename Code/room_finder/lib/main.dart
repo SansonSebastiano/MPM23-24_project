@@ -9,12 +9,18 @@ import 'package:room_finder/presentation/screens/account_page.dart';
 import 'package:room_finder/presentation/screens/chat_page.dart';
 import 'package:room_finder/presentation/screens/home_page.dart';
 import 'package:room_finder/presentation/screens/saved_ads_page.dart';
-import 'package:room_finder/presentation/screens/splash_page.dart';
-import 'package:room_finder/provider/splash_provider.dart';
+import 'package:room_finder/presentation/screens/onboarding_page.dart';
 import 'package:room_finder/style/theme.dart';
+import 'package:room_finder/util/shared_preferences.dart';
 
-void main() {
+// Variable to store whether the on boarding screen has been shown
+bool _isShown = true;
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Check if the user has seen the on boarding screen before
+  // WARNING: if this is set to false, means that the user cannot be an existing user => isHost must be false
+  _isShown = await OnBoardingScreenPreferences.getWasShown();
   // Set the device orientation to portrait
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) => runApp(const ProviderScope(
@@ -50,16 +56,16 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends ConsumerStatefulWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  MyHomePageState createState() => MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
 
-class MyHomePageState extends ConsumerState<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   // TODO: handle this value with the user's role, for now it is hardcoded
-  bool isHost = true;
+  bool isHost = false;
   int currentPageIndex = 0;
 
   @override
@@ -71,55 +77,41 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
       ));
     }
 
-    return FutureBuilder(
-      future: ref.watch(splashStateProvider).value!.isFirstTime(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasData) {
-            if (snapshot.data == true) {
-              return Scaffold(
-                body: isHost
-                    ? <Widget>[
-                        bodyTemplate(body: const HostHomePage()),
-                        bodyTemplate(body: const HostChatPage()),
-                        bodyTemplate(body: const AccountPage()),
-                      ][currentPageIndex]
-                    : <Widget>[
-                        bodyTemplate(body: const StudentHomePage()),
-                        bodyTemplate(body: const SavedAdsPage()),
-                        bodyTemplate(body: const StudentChatPage()),
-                        bodyTemplate(body: const AccountPage()),
-                      ][currentPageIndex],
-                bottomNavigationBar: isHost
-                    ? HostNavigationBar(
-                        currentPageIndex: currentPageIndex,
-                        onDestinationSelected: (int index) {
-                          setState(() {
-                            currentPageIndex = index;
-                          });
-                        },
-                      )
-                    : StudentNavigationBar(
-                        currentPageIndex: currentPageIndex,
-                        onDestinationSelected: (int index) {
-                          setState(() {
-                            currentPageIndex = index;
-                          });
-                        },
-                      ),
-              );
-            }
-          }
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
+    if (!_isShown) {
+      _isShown = true;
+      return const OnBoardingPage();
+    }
+
+    return Scaffold(
+      body: isHost
+          ? <Widget>[
+              bodyTemplate(body: const HostHomePage()),
+              bodyTemplate(body: const HostChatPage()),
+              bodyTemplate(body: const AccountPage()),
+            ][currentPageIndex]
+          : <Widget>[
+              bodyTemplate(body: const StudentHomePage()),
+              bodyTemplate(body: const SavedAdsPage()),
+              bodyTemplate(body: const StudentChatPage()),
+              bodyTemplate(body: const AccountPage()),
+            ][currentPageIndex],
+      bottomNavigationBar: isHost
+          ? HostNavigationBar(
+              currentPageIndex: currentPageIndex,
+              onDestinationSelected: (int index) {
+                setState(() {
+                  currentPageIndex = index;
+                });
+              },
+            )
+          : StudentNavigationBar(
+              currentPageIndex: currentPageIndex,
+              onDestinationSelected: (int index) {
+                setState(() {
+                  currentPageIndex = index;
+                });
+              },
             ),
-          );
-        }
-        ref.watch(splashStateProvider).value!.setFirstTime();
-        return const SplashPage();
-      },
     );
   }
 }

@@ -4,9 +4,17 @@ import 'package:room_finder/main.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/util/shared_preferences.dart';
 
-class SplashPage extends StatelessWidget {
-  const SplashPage({super.key});
+/// The on boarding page of the application
+///
+/// This page is shown to the user when they first open the application.
+///
+/// The user is shown a welcome message and an image.
+///
+/// The user is also shown a message about the application and a button to start using the application.
+class OnBoardingPage extends StatelessWidget {
+  const OnBoardingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +77,19 @@ class SplashPage extends StatelessWidget {
               ),
               const Spacer(flex: 2),
               RectangleButton(
-                label: AppLocalizations.of(context)!.btnStart,
-                onPressed: () => Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => const MyHomePage(),
-                  ),
-                ),
-              ),
+                  label: AppLocalizations.of(context)!.btnStart,
+                  onPressed: () async {
+                    // Set the on boarding screen as shown
+                    await OnBoardingScreenPreferences.setWasShown();
+
+                    if (context.mounted) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const MyHomePage(),
+                        ),
+                      );
+                    }
+                  }),
               const Spacer(flex: 2),
             ],
           ),
