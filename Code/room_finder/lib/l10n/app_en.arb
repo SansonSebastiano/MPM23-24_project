@@ -280,7 +280,7 @@
   "@lblManageRenters": {
     "description": "The label to manage the renters"
   },
-  "lblAddRenters": "Add renters",
+  "lblAddCurrentRenters": "Add current renters",
   "@lblAddRenters": {
     "description": "The label to add more renters"
   },
