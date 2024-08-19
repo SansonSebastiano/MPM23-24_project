@@ -313,7 +313,9 @@ class LogoutButton extends StatelessWidget {
 }
 
 /// The class [BookmarkButton] defines a button that allows to save ads in the app. The button is a Stateful widget, charactherized by the state "isSaved" to understand if the rental proposal has been saved by the user or not.
-/// The only parameter that you have to define when you invoke the [BookmarkButton] constructor is the [size] of the button.
+/// To correctly invoke this widget you have to define these parameters: 
+/// - [size] of the button;
+/// - [isSaved], inital state value of the button depending whether is saved or not.
 class BookmarkButton extends StatefulWidget {
   final double size;
   final bool isSaved;
