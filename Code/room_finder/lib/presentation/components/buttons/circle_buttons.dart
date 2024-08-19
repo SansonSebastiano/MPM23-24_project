@@ -293,8 +293,8 @@ class LogoutButton extends StatelessWidget {
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: buttonColor,
-            minimumSize: Size(127.w, 42.h),
-            maximumSize: Size(127.w, 42.h),
+            // minimumSize: Size(127.w, 42.h),
+            // maximumSize: Size(127.w, 42.h),
           ),
           onPressed: onPressed,
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -318,10 +318,7 @@ class BookmarkButton extends StatefulWidget {
   final double size;
   final bool isSaved;
 
-  const BookmarkButton({
-    super.key, 
-    required this.size,
-    required this.isSaved});
+  const BookmarkButton({super.key, required this.size, required this.isSaved});
 
   @override
   State<BookmarkButton> createState() => _BookmarkButtonState();
@@ -344,7 +341,7 @@ class _BookmarkButtonState extends State<BookmarkButton> {
 
   void _toggleSave() {
     setState(() {
-      isSaved = !isSaved; 
+      isSaved = !isSaved;
       icon = isSaved ? Icons.bookmark : Icons.bookmark_border_outlined;
     });
   }

@@ -15,117 +15,117 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        children: [
-          Stack(
-            clipBehavior: Clip.none, // Allows elements to be positioned outside the container
-            children: [
-              ClipPath(
-                clipper: EllipseClipper(), 
-                child: Container(
-                  height: 300.h, // Adjust height to control how much of the image is inside the blue box
-                  color: ColorPalette.darkConflowerBlue,
-                ),
+      children: [
+        Stack(
+          clipBehavior: Clip
+              .none, // Allows elements to be positioned outside the container
+          children: [
+            ClipPath(
+              clipper: EllipseClipper(),
+              child: Container(
+                height: 300
+                    .h, // Adjust height to control how much of the image is inside the blue box
+                color: ColorPalette.darkConflowerBlue,
               ),
-              Positioned(
-                top: 60.h,
-                right: 20.w,
-                child: LogoutButton(onPressed: () => showOptionsDialog(
-                  context: context, 
-                  androidDialog: ActionsAndroidDialog(
-                    context: context,
-                    title: AppLocalizations.of(context)!.btnLogout, 
-                    content: Text(AppLocalizations.of(context)!.logoutAlertMessage),
-                    // TODO: handle logout
-                    onOk: () => {
-                      print("logout from RoomFinder..."),
-                      Navigator.pop(context)
-                    },
-                    onCancel: () => Navigator.pop(context)
-                  ), 
-                  iosDialog: ActionsIosDialog(
-                    context: context,
-                    title: AppLocalizations.of(context)!.btnLogout, 
-                    content: Text(AppLocalizations.of(context)!.logoutAlertMessage),
-                    // TODO: handle logout
-                    onOk: () => {
-                      print("logout from RoomFinder..."),
-                      Navigator.pop(context)
-                    },
-                    onCancel: () => Navigator.pop(context)
-                  ))
-                ),
+            ),
+            Positioned(
+              top: 60.h,
+              right: 20.w,
+              child: LogoutButton(
+                  onPressed: () => showOptionsDialog(
+                      context: context,
+                      androidDialog: ActionsAndroidDialog(
+                          context: context,
+                          title: AppLocalizations.of(context)!.btnLogout,
+                          content: Text(
+                              AppLocalizations.of(context)!.logoutAlertMessage),
+                          // TODO: handle logout
+                          onOk: () => {
+                                print("logout from RoomFinder..."),
+                                Navigator.pop(context)
+                              },
+                          onCancel: () => Navigator.pop(context)),
+                      iosDialog: ActionsIosDialog(
+                          context: context,
+                          title: AppLocalizations.of(context)!.btnLogout,
+                          content: Text(
+                              AppLocalizations.of(context)!.logoutAlertMessage),
+                          // TODO: handle logout
+                          onOk: () => {
+                                print("logout from RoomFinder..."),
+                                Navigator.pop(context)
+                              },
+                          onCancel: () => Navigator.pop(context)))),
+            ),
+            Positioned(
+              top: 120
+                  .h, // This controls how much of the image is outside the top blue box
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  AccountPhoto(
+                    size: 180.r,
+                    imageUrl:
+                        "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg",
+                  ),
+                  SizedBox(height: 10.h),
+                  Text('Francesco',
+                      style: Theme.of(context).textTheme.displayMedium),
+                  SizedBox(height: 10.h),
+                  Text('francescoo@gmail.com',
+                      style: Theme.of(context).textTheme.bodyMedium),
+                ],
               ),
-              Positioned(
-                top: 120.h, // This controls how much of the image is outside the top blue box
-                left: 0,
-                right: 0,
-                child: Column(
-                  children: [
-                    AccountPhoto(
-                      size: 180.r, 
-                      imageUrl: "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg",
-                    ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      'Francesco',
-                      style: Theme.of(context).textTheme.displayMedium
-                    ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      'francescoo@gmail.com',
-                      style: Theme.of(context).textTheme.bodyMedium
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 100.h), // Space the body of the page from the top container
-          Divider(
-            color: ColorPalette.blueberry,
-            indent: 25.w,
-            endIndent: 25.w,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 35.w, top: 15.h), 
-            child: Align(
-              alignment: Alignment.centerLeft, 
-              child: Text(
-                AppLocalizations.of(context)!.lblSettings,
-                style: TextStyle(
-                  color: ColorPalette.oxfordBlue,
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+            ),
+          ],
+        ),
+        SizedBox(
+            height: 100.h), // Space the body of the page from the top container
+        Divider(
+          color: ColorPalette.blueberry,
+          indent: 25.w,
+          endIndent: 25.w,
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 25.w, top: 15.h),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              AppLocalizations.of(context)!.lblSettings,
+              style: TextStyle(
+                color: ColorPalette.oxfordBlue,
+                fontSize: 24.sp,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          Expanded(
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 10.w,
+            ),
             child: ListView(
               children: [
                 SettingButtons(
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const PersonalInformationPage()
-                    )
-                  ),
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PersonalInformationPage())),
                   label: AppLocalizations.of(context)!.btnPersonalInfo,
                   icon: Icons.person_outline,
                 ),
                 SettingButtons(
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const LoginSecurityPage()
-                    )
-                  ),
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const LoginSecurityPage())),
                   label: AppLocalizations.of(context)!.btnLoginSecurity,
                   icon: Icons.login,
                 ),
               ],
             ),
           ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 }
 
@@ -140,8 +140,10 @@ class EllipseClipper extends CustomClipper<Path> {
     // The first point is the control point for the curve
     // The second point is the end point of the curve on the right edge
     path.quadraticBezierTo(
-        size.width / 2, size.height * 0.8,  // This makes the curve flatter
-        size.width, size.height * 0.6);    // End point at the same level as the start point
+        size.width / 2,
+        size.height * 0.8, // This makes the curve flatter
+        size.width,
+        size.height * 0.6); // End point at the same level as the start point
 
     // Draw lines to close the shape
     path.lineTo(size.width, 0);

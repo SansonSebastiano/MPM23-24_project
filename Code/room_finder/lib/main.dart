@@ -71,10 +71,9 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     Widget bodyTemplate({required Widget body}) {
-      return SafeArea(
-          child: Center(
-        child: body,
-      ));
+      return Center(
+              child: body,
+            );
     }
 
     if (!_isShown) {
@@ -85,14 +84,14 @@ class MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: isHost
           ? <Widget>[
-              bodyTemplate(body: const HostHomePage()),
-              bodyTemplate(body: const HostChatPage()),
+              bodyTemplate(body: const SafeArea(child: HostHomePage())),
+              bodyTemplate(body: const SafeArea(child: HostChatPage())),
               bodyTemplate(body: const AccountPage()),
             ][currentPageIndex]
           : <Widget>[
-              bodyTemplate(body: const StudentHomePage()),
-              bodyTemplate(body: const SavedAdsPage()),
-              bodyTemplate(body: const StudentChatPage()),
+              bodyTemplate(body: const SafeArea(child: StudentHomePage())),
+              bodyTemplate(body: const SafeArea(child: SavedAdsPage())),
+              bodyTemplate(body: const SafeArea(child: StudentChatPage())),
               bodyTemplate(body: const AccountPage()),
             ][currentPageIndex],
       bottomNavigationBar: isHost

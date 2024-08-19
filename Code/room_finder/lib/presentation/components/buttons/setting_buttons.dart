@@ -19,30 +19,27 @@ class SettingButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.only(left: 30.w, right: 30.w),
-          child: TextButton(
-            onPressed: onPressed,
-            child: Row(
-              children: [
-                Icon(icon),
-                SizedBox(width: 10.w),
-                Text(
-                  label,
-                  style: TextStyle(
+        TextButton(
+          onPressed: onPressed,
+          child: Row(
+            children: [
+              Icon(icon),
+              SizedBox(width: 10.w),
+              Text(
+                label,
+                style: TextStyle(
                   color: ColorPalette.oxfordBlue,
                   fontSize: 18.sp,
                 ),
-                ),
-                const Spacer(),
-                const Icon(Icons.arrow_forward_ios),
-              ],
-            ),
+              ),
+              const Spacer(),
+              const Icon(Icons.arrow_forward_ios),
+            ],
           ),
         ),
         Divider(
-          indent: 30.w,
-          endIndent: 30.w,
+          indent: 5.w,
+          endIndent: 5.w,
           color: ColorPalette.blueberry,
         ),
       ],
