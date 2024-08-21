@@ -14,7 +14,7 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
         Stack(
           clipBehavior: Clip.none,
@@ -26,17 +26,16 @@ class AccountPage extends StatelessWidget {
                 color: ColorPalette.darkConflowerBlue,
               ),
             ),
-            Positioned(
-              top: 60.h,
-              right: 20.w,
+            Padding(
+              padding: EdgeInsets.only(top: 55.h, left: 235.w, right: 15.w),
               child: LogoutButton(
                   onPressed: () => showOptionsDialog(
                       context: context,
                       androidDialog: ActionsAndroidDialog(
                           context: context,
                           title: AppLocalizations.of(context)!.btnLogout,
-                          content: Text(AppLocalizations.of(context)!
-                              .logoutAlertMessage),
+                          content: Text(
+                              AppLocalizations.of(context)!.logoutAlertMessage),
                           onOk: () => {
                                 print("logout from RoomFinder..."),
                                 Navigator.pop(context)
@@ -45,41 +44,44 @@ class AccountPage extends StatelessWidget {
                       iosDialog: ActionsIosDialog(
                           context: context,
                           title: AppLocalizations.of(context)!.btnLogout,
-                          content: Text(AppLocalizations.of(context)!
-                              .logoutAlertMessage),
+                          content: Text(
+                              AppLocalizations.of(context)!.logoutAlertMessage),
                           onOk: () => {
                                 print("logout from RoomFinder..."),
                                 Navigator.pop(context)
                               },
                           onCancel: () => Navigator.pop(context)))),
             ),
-            Positioned(
-              top: 120.h,
-              left: 0,
-              right: 0,
-              child: Column(
-                children: [
-                  AccountPhoto(
-                    size: 180.r,
-                    imageUrl:
-                        "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg",
-                  ),
-                  SizedBox(height: 10.h),
-                  Text('Francesco',
-                      style: Theme.of(context).textTheme.displayMedium),
-                  SizedBox(height: 10.h),
-                  Text('francescoo@gmail.com',
-                      style: Theme.of(context).textTheme.bodyMedium),
-                ],
+            Padding(
+              padding: EdgeInsets.only(top: 100.h),
+              child: Align(
+                alignment: Alignment.center,
+                child: Column(
+                  children: [
+                    AccountPhoto(
+                      size: 180.r,
+                      imageUrl:
+                          "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg",
+                    ),
+                    SizedBox(height: 10.h),
+                    Text('Francesco',
+                        style: Theme.of(context).textTheme.displayMedium),
+                    SizedBox(height: 10.h),
+                    Text('francescoo@gmail.com',
+                        style: Theme.of(context).textTheme.bodyMedium),
+                  ],
+                ),
               ),
             ),
           ],
         ),
-        SizedBox(height: 100.h),
-        Divider(
-          color: ColorPalette.blueberry,
-          indent: 25.w,
-          endIndent: 25.w,
+        Padding(
+          padding: EdgeInsets.only(top: 20.h),
+          child: Divider(
+            color: ColorPalette.blueberry,
+            indent: 25.w,
+            endIndent: 25.w,
+          ),
         ),
         Padding(
           padding: EdgeInsets.only(left: 25.w, top: 15.h, bottom: 15.h),
@@ -95,28 +97,29 @@ class AccountPage extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 10.w,
-          ),
-          child: Column(
-            children: [
-              SettingButtons(
-                onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            const PersonalInformationPage())),
-                label: AppLocalizations.of(context)!.btnPersonalInfo,
-                icon: Icons.person_outline,
-              ),
-              SettingButtons(
-                onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const LoginSecurityPage())),
-                label: AppLocalizations.of(context)!.btnLoginSecurity,
-                icon: Icons.login,
-              ),
-            ],
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 10.w,
+            ),
+            child: ListView(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              children: [
+                SettingButtons(
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PersonalInformationPage())),
+                  label: AppLocalizations.of(context)!.btnPersonalInfo,
+                  icon: Icons.person_outline,
+                ),
+                SettingButtons(
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const LoginSecurityPage())),
+                  label: AppLocalizations.of(context)!.btnLoginSecurity,
+                  icon: Icons.login,
+                ),
+              ],
+            ),
           ),
         ),
       ],

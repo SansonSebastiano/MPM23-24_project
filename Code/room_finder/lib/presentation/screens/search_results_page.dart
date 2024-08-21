@@ -59,6 +59,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                               onPressed: () {
                                 print("remove filters pressed");
                                 // TODO: implement areFiltersApplied logic
+                                
                                 // setState(() {
                                 //   areFiltersApplied = false;
                                 // });

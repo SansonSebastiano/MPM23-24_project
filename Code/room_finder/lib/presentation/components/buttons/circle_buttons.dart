@@ -278,7 +278,6 @@ class LogoutButton extends StatelessWidget {
 
   final Color buttonColor = Colors.white;
   final IconData icon = Icons.logout_outlined;
-  final Color iconColor = Colors.red;
 
   @override
   Widget build(BuildContext context) {
@@ -298,22 +297,19 @@ class LogoutButton extends StatelessWidget {
           ),
           onPressed: onPressed,
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Text(
-              'Logout',
-              style: TextStyle(
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text('Logout',
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                    fontSize: 16.sp,
+                    color: Theme.of(context).colorScheme.error)),
             SizedBox(width: 8.w),
-            Icon(icon, color: iconColor, size: 24.w),
+            Icon(icon, color: Theme.of(context).colorScheme.error),
           ])),
     );
   }
 }
 
 /// The class [BookmarkButton] defines a button that allows to save ads in the app. The button is a Stateful widget, charactherized by the state "isSaved" to understand if the rental proposal has been saved by the user or not.
-/// To correctly invoke this widget you have to define these parameters: 
+/// To correctly invoke this widget you have to define these parameters:
 /// - [size] of the button;
 /// - [isSaved], inital state value of the button depending whether is saved or not.
 class BookmarkButton extends StatefulWidget {
