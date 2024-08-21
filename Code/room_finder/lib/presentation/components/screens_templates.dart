@@ -15,7 +15,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 ///
 /// * The [screenContent] getter is used to set the content of the screen.
 class MainTemplateScreen extends StatelessWidget {
-  const MainTemplateScreen({super.key, required this.screenLabel, required this.screenContent});
+  const MainTemplateScreen(
+      {super.key, required this.screenLabel, required this.screenContent});
 
   final String screenLabel;
   final Widget screenContent;
@@ -288,16 +289,15 @@ class WizardTemplateScreen extends StatelessWidget {
 /// Method used to navigate back to the host home page from wizard pages.
 void backToHostHomePage(BuildContext context) {
   // TODO: fix this: if the host start the wizard in editing mode, it should go back to the corresponding ads details page and not to the home page
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => 
-        const Scaffold(
-          body: SafeArea(
-            child: Center(
-              child: MyHomePage(),
-            ),
-          ),
-        )
-      ),
-    );
-  }
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => const Scaffold(
+              body: SafeArea(
+                child: Center(
+                  child: MyHomePage(),
+                ),
+              ),
+            )),
+  );
+}

@@ -72,8 +72,8 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     Widget bodyTemplate({required Widget body}) {
       return Center(
-              child: body,
-            );
+        child: body,
+      );
     }
 
     if (!_isShown) {

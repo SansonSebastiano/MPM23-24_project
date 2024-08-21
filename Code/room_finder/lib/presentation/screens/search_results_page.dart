@@ -30,13 +30,20 @@ class SearchResultsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final networkStatus = ref.watch(networkAwareProvider);
+    // TODO: Implement the logic to check if filters are applied
+    final bool areFiltersApplied = true;
 
     return SecondaryTemplateScreen(
         leftHeaderWidget:
             DarkBackButton(onPressed: () => Navigator.pop(context)),
         centerHeaderWidget: const CustomSearchBar(hintText: "Padova"),
-        rightHeaderWidget:
-            FilterButton(onPressed: () => _showSearchFilterPanel(context)),
+        rightHeaderWidget: areFiltersApplied
+            ? Badge(
+                alignment: Alignment.topLeft,
+                backgroundColor: Colors.red,
+                child: FilterButton(
+                    onPressed: () => _showSearchFilterPanel(context)))
+            : FilterButton(onPressed: () => _showSearchFilterPanel(context)),
         rightHeaderWidgetVisibility: true,
         content: networkStatus == NetworkStatus.off
             ? Center(
@@ -67,12 +74,11 @@ class SearchResultsPageBody extends StatelessWidget {
                 isSaved: false,
               ),
               onPressed: () => {
-                // TODO: replace with real data
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        const FacilityDetailPage(
+                    // TODO: replace with real data
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const FacilityDetailPage(
                             isStudent: true,
                             isWizardPage: false,
                             facilityPhotos: [
@@ -81,8 +87,7 @@ class SearchResultsPageBody extends StatelessWidget {
                               "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
                             ],
                             facilityName: "Casa Dolce Casa",
-                            facilityAddress:
-                                "Padova - Via Roma 12",
+                            facilityAddress: "Padova - Via Roma 12",
                             facilityPrice: 300,
                             facilityHostName: "Mario Rossi",
                             hostUrlImage:
@@ -93,9 +98,9 @@ class SearchResultsPageBody extends StatelessWidget {
                               "1 bathroom",
                               "WiFi"
                             ]),
-                  ),
-                ),
-              });
+                      ),
+                    ),
+                  });
         },
         separatorBuilder: (BuildContext context, int index) {
           return SizedBox(height: 20.h); // Add padding between items

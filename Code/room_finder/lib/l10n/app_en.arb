@@ -312,7 +312,7 @@
   "@lblEnterStudies": {
     "description": "The label to enter the faculty of studies"
   },
-  "lblEnterAge": "Enter an age",
+  "lblEnterAge": "Enter the age",
   "@lblEnterAge": {
     "description": "The label to enter the age"
   },
