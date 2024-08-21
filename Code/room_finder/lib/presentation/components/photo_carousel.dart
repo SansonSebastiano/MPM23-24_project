@@ -70,66 +70,73 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
             );
           }).toList(),
         ),
-        Positioned(
-          top: 2,
-          child: LightBackButton(
-            onPressed: () => Navigator.pop(context),
+        Align(
+          alignment: Alignment.topLeft,
+          child: SafeArea(
+            child: LightBackButton(
+              onPressed: () => Navigator.pop(context),
+            ),
           ),
         ),
         widget.isStudent
             ? Positioned(
                 height: carouselHeight,
-                top: 2,
                 right: 5,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const BookmarkButton(
-                      size: 50,
-                      isSaved: false,
-                    ),
-                    _PhotoCounter(current: _current, widget: widget)
-                  ],
-                ))
-            : widget.isWizardPage 
-              ? Positioned(
-                  top: 2,
-                  right: 5,
-                  height: carouselHeight,
+                child: SafeArea(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(),
-                      const SizedBox(),
-                      _PhotoCounter(current: _current, widget: widget),
-                    ],
-                  ),
-                )
-              : Positioned(
-                  top: 2,
-                  right: 5,
-                  height: carouselHeight,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      EditButton(
-                        onPressed: () {
-                          // TODO: Replace with real data
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return const WizardPage1();
-                          }));
-                        },
+                      const BookmarkButton(
+                        size: 50,
+                        isSaved: false,
                       ),
-                      DeleteButton(onPressed: () {
-                        // TODO: Implement delete functionality
-                      }),
-                      _PhotoCounter(current: _current, widget: widget),
+                      _PhotoCounter(current: _current, widget: widget)
                     ],
                   ),
                 ),
+              )
+            : widget.isWizardPage
+                ? Positioned(
+                    right: 5,
+                    height: carouselHeight,
+                    child: SafeArea(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(),
+                          const SizedBox(),
+                          _PhotoCounter(current: _current, widget: widget),
+                        ],
+                      ),
+                    ),
+                  )
+                : Positioned(
+                    right: 5,
+                    height: carouselHeight,
+                    child: SafeArea(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          EditButton(
+                            onPressed: () {
+                              // TODO: Replace with real data
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const WizardPage1();
+                              }));
+                            },
+                          ),
+                          DeleteButton(onPressed: () {
+                            // TODO: Implement delete functionality
+                          }),
+                          _PhotoCounter(current: _current, widget: widget),
+                        ],
+                      ),
+                    ),
+                  ),
       ],
     );
   }
@@ -164,7 +171,8 @@ class _PhotoCounter extends StatelessWidget {
 
 /// [HostPhotoCarousel] is a widget that displays a carousel of images for the host.
 class HostPhotoCarousel extends PhotoCarousel {
-  const HostPhotoCarousel({super.key, required super.items, required super.isWizardPage});
+  const HostPhotoCarousel(
+      {super.key, required super.items, required super.isWizardPage});
 
   @override
   bool get isStudent => false;

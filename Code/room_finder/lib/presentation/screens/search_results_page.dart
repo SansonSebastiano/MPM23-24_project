@@ -6,6 +6,7 @@ import 'package:room_finder/presentation/components/base_panel.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/filter_panel.dart';
+import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:room_finder/presentation/components/search_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -97,10 +98,10 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const FacilityDetailPage(
+                                            FacilityDetailPage(
                                                 isStudent: true,
                                                 isWizardPage: false,
-                                                facilityPhotos: [
+                                                facilityPhotos: const [
                                                   "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
                                                   "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
                                                   "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
@@ -112,12 +113,23 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                                                 facilityHostName: "Mario Rossi",
                                                 hostUrlImage:
                                                     "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-                                                facilityServices: [
+                                                facilityServices: const [
                                                   "2 bedrooms",
                                                   "3 beds",
                                                   "1 bathroom",
                                                   "WiFi"
-                                                ]),
+                                                ],
+                                                facilityRenters: [
+                                                  HostFacilityDetailPageRenterBox(
+                                                    name: 'Francesco Dal Maso',
+                                                    contractDeadline: DateTime(2025, 1, 1),
+                                                  ),
+                                                  HostFacilityDetailPageRenterBox(
+                                                    name: 'Antonio Principe',
+                                                    contractDeadline: DateTime(2025, 3, 1),
+                                                  ),
+                                                ],
+                                                ),
                                       ),
                                     ),
                                   });

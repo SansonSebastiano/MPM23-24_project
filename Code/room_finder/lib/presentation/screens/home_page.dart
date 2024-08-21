@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
+import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/search_bar.dart';
@@ -67,7 +68,7 @@ class _StudentHomePageBody extends ConsumerWidget {
                 )
               : Expanded(
                   child: ListView.separated(
-                    padding: EdgeInsets.all(20.w),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     itemCount: 4,
                     itemBuilder: (BuildContext context, int index) {
                       return AdsBox(
@@ -85,28 +86,41 @@ class _StudentHomePageBody extends ConsumerWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const FacilityDetailPage(
-                                            isStudent: true,
-                                            isWizardPage: false,
-                                            facilityPhotos: [
-                                              "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                                              "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-                                              "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-                                            ],
-                                            facilityName: "Casa Dolce Casa",
-                                            facilityAddress:
-                                                "Padova - Via Roma 12",
-                                            facilityPrice: 300,
-                                            facilityHostName: "Mario Rossi",
-                                            hostUrlImage:
-                                                "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-                                            facilityServices: [
-                                              "2 bedrooms",
-                                              "3 beds",
-                                              "1 bathroom",
-                                              "WiFi"
-                                            ]),
+                                    builder: (context) => FacilityDetailPage(
+                                      isStudent: true,
+                                      isWizardPage: false,
+                                      facilityPhotos: const [
+                                        "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
+                                        "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
+                                        "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
+                                      ],
+                                      facilityName: "Casa Dolce Casa",
+                                      facilityAddress: "Padova - Via Roma 12",
+                                      facilityPrice: 300,
+                                      facilityHostName: "Mario Rossi",
+                                      hostUrlImage:
+                                          "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
+                                      facilityServices: const [
+                                        "2 bedrooms",
+                                        "3 beds",
+                                        "1 bathroom",
+                                        "WiFi",
+                                        "Dedicated parking",
+                                        "Air condition"
+                                      ],
+                                      facilityRenters: [
+                                        HostFacilityDetailPageRenterBox(
+                                          name: 'Francesco Dal Maso',
+                                          contractDeadline:
+                                              DateTime(2025, 1, 1),
+                                        ),
+                                        HostFacilityDetailPageRenterBox(
+                                          name: 'Antonio Principe',
+                                          contractDeadline:
+                                              DateTime(2025, 3, 1),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               });
@@ -194,28 +208,39 @@ class _HostHomePageBody extends ConsumerWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const FacilityDetailPage(
-                                            isStudent: false,
-                                            isWizardPage: false,
-                                            facilityPhotos: [
-                                              "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                                              "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-                                              "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-                                            ],
-                                            facilityName: "Casa Dolce Casa",
-                                            facilityAddress:
-                                                "Padova - Via Roma 12",
-                                            facilityPrice: 300,
-                                            facilityHostName: "Mario Rossi",
-                                            hostUrlImage:
-                                                "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-                                            facilityServices: [
-                                              "2 bedrooms",
-                                              "3 beds",
-                                              "1 bathroom",
-                                              "WiFi"
-                                            ]),
+                                    builder: (context) => FacilityDetailPage(
+                                      isStudent: false,
+                                      isWizardPage: false,
+                                      facilityPhotos: const [
+                                        "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
+                                        "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
+                                        "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
+                                      ],
+                                      facilityName: "Casa Dolce Casa",
+                                      facilityAddress: "Padova - Via Roma 12",
+                                      facilityPrice: 300,
+                                      facilityHostName: "Mario Rossi",
+                                      hostUrlImage:
+                                          "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
+                                      facilityServices: const [
+                                        "2 bedrooms",
+                                        "3 beds",
+                                        "1 bathroom",
+                                        "WiFi"
+                                      ],
+                                      facilityRenters: [
+                                        HostFacilityDetailPageRenterBox(
+                                          name: 'Francesco Dal Maso',
+                                          contractDeadline:
+                                              DateTime(2025, 1, 1),
+                                        ),
+                                        HostFacilityDetailPageRenterBox(
+                                          name: 'Antonio Principe',
+                                          contractDeadline:
+                                              DateTime(2025, 3, 1),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               });

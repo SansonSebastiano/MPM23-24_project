@@ -549,5 +549,9 @@
   "btnRemoveFilters": "Remove filters",
   "@btnRemoveFilters": {
     "description": "The button for filters removal"
+  },
+  "lblPricePerMonth": "per month",
+  "@lblPricePerMonth": {
+    "description": "label for rental price per month"
   }
 }

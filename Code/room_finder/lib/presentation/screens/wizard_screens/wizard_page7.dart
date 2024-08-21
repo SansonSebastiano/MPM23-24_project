@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
+import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:room_finder/presentation/components/room_photo.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -93,7 +94,7 @@ class _WizardPage7State extends State<WizardPage7> {
                 context: context,
                 onOk: () {
                   // TODO: Replace with the real data
-                   backToHostHomePage(context);
+                  backToHostHomePage(context);
                 },
                 onCancel: () {
                   Navigator.of(context).pop();
@@ -160,27 +161,38 @@ class _WizardPage7State extends State<WizardPage7> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            // TODO: modify with the real data
-            builder: (context) => const FacilityDetailPage(
-                isStudent: false,
-                isWizardPage: true,
-                facilityPhotos: [
-                  "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                  "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-                  "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-                ],
-                facilityName: "Casa Dolce Casa",
-                facilityAddress: "Padova - Via Roma 12",
-                facilityPrice: 300,
-                facilityHostName: "Mario Rossi",
-                hostUrlImage:
-                    "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-                facilityServices: [
-                  "2 bedrooms",
-                  "3 beds",
-                  "1 bathroom",
-                  "WiFi"
-                ])));
+            // TODO: modify with the real data and add an alert dialog to ask confirm
+            builder: (context) => FacilityDetailPage(
+                  isStudent: false,
+                  isWizardPage: true,
+                  facilityPhotos: const [
+                    "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
+                    "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
+                    "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
+                  ],
+                  facilityName: "Casa Dolce Casa",
+                  facilityAddress: "Padova - Via Roma 12",
+                  facilityPrice: 300,
+                  facilityHostName: "Mario Rossi",
+                  hostUrlImage:
+                      "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
+                  facilityServices: const [
+                    "2 bedrooms",
+                    "3 beds",
+                    "1 bathroom",
+                    "WiFi"
+                  ],
+                  facilityRenters: [
+                    HostFacilityDetailPageRenterBox(
+                      name: 'Francesco Dal Maso',
+                      contractDeadline: DateTime(2025, 1, 1),
+                    ),
+                    HostFacilityDetailPageRenterBox(
+                      name: 'Antonio Principe',
+                      contractDeadline: DateTime(2025, 3, 1),
+                    ),
+                  ],
+                )));
   }
 
   /// Show dialog for android, with options to choose from gallery or camera

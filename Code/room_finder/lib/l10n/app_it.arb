@@ -130,5 +130,6 @@
     "lblCancelWizard": "Sei sicuro di voler uscire? I dati inseriti verranno persi.",
     "lblCity": "Città",
     "lblStreet": "Via",
-    "btnRemoveFilters": "Rimuovi filtri"
+    "btnRemoveFilters": "Rimuovi filtri",
+    "lblPricePerMonth": "al mese"
 }
