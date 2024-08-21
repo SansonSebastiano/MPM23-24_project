@@ -66,7 +66,7 @@
     "lblAddNewRoom": "Aggiungi una nuova stanza",
     "lblEnterRoomName": "Inserisci il nome della stanza",
     "lblManageRenters": "Gestisci i coinquilini",
-    "lblAddRenters": "Aggiungi coinquilini",
+    "lblAddCurrentRenters": "Aggiungi attuali affittuari",
     "btnRemove": "Rimuovi",
     "btnEdit": "Modifica",
     "lblAddEditRenters": "Aggiungi o modifica i coinquilini",

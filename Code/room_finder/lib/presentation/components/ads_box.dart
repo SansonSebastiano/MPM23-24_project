@@ -4,13 +4,13 @@ import 'package:room_finder/presentation/components/buttons/circle_buttons.dart'
 import 'package:room_finder/style/color_palette.dart';
 
 /// The class [AdsBox] defines all the rental proposals box that you can find in the app.
-/// To correctly invoke an [AccountPhoto] component you need to specify the following parameters:
+/// To correctly invoke an [AdsBox] component you need to specify the following parameters:
 /// - [imageUrl], one stored photo for a specific proposal;
 /// - [city], facility city;
 /// - [street], facility address;
 /// - [price], montly price;
 /// - [bookmarkButton], if specified it provides a way to save preferred ads;
-/// - [onTap], specifies the redirect to the apartment page.
+/// - [onPressed], specifies the redirect to the apartment page.
 class AdsBox extends StatelessWidget {
   final String imageUrl;
   final String city;

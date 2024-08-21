@@ -133,7 +133,7 @@ class _WizardPage3State extends State<WizardPage3> {
               ),
               SizedBox(height: 60.h),
               AddOn(
-                  label: AppLocalizations.of(context)!.lblAddRenters,
+                  label: AppLocalizations.of(context)!.lblAddCurrentRenters,
                   // disable the button when the maxRenter is reached or when the maxRenter is 0
                   onPressed: _isMaxRenterReached()
                       ? null

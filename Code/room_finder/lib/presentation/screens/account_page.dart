@@ -14,17 +14,15 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         Stack(
-          clipBehavior: Clip
-              .none, // Allows elements to be positioned outside the container
+          clipBehavior: Clip.none,
           children: [
             ClipPath(
               clipper: EllipseClipper(),
               child: Container(
-                height: 300
-                    .h, // Adjust height to control how much of the image is inside the blue box
+                height: 300.h,
                 color: ColorPalette.darkConflowerBlue,
               ),
             ),
@@ -37,9 +35,8 @@ class AccountPage extends StatelessWidget {
                       androidDialog: ActionsAndroidDialog(
                           context: context,
                           title: AppLocalizations.of(context)!.btnLogout,
-                          content: Text(
-                              AppLocalizations.of(context)!.logoutAlertMessage),
-                          // TODO: handle logout
+                          content: Text(AppLocalizations.of(context)!
+                              .logoutAlertMessage),
                           onOk: () => {
                                 print("logout from RoomFinder..."),
                                 Navigator.pop(context)
@@ -48,9 +45,8 @@ class AccountPage extends StatelessWidget {
                       iosDialog: ActionsIosDialog(
                           context: context,
                           title: AppLocalizations.of(context)!.btnLogout,
-                          content: Text(
-                              AppLocalizations.of(context)!.logoutAlertMessage),
-                          // TODO: handle logout
+                          content: Text(AppLocalizations.of(context)!
+                              .logoutAlertMessage),
                           onOk: () => {
                                 print("logout from RoomFinder..."),
                                 Navigator.pop(context)
@@ -58,8 +54,7 @@ class AccountPage extends StatelessWidget {
                           onCancel: () => Navigator.pop(context)))),
             ),
             Positioned(
-              top: 120
-                  .h, // This controls how much of the image is outside the top blue box
+              top: 120.h,
               left: 0,
               right: 0,
               child: Column(
@@ -80,15 +75,14 @@ class AccountPage extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
-            height: 100.h), // Space the body of the page from the top container
+        SizedBox(height: 100.h),
         Divider(
           color: ColorPalette.blueberry,
           indent: 25.w,
           endIndent: 25.w,
         ),
         Padding(
-          padding: EdgeInsets.only(left: 25.w, top: 15.h),
+          padding: EdgeInsets.only(left: 25.w, top: 15.h, bottom: 15.h),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -101,27 +95,28 @@ class AccountPage extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 10.w,
-            ),
-            child: ListView(
-              children: [
-                SettingButtons(
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PersonalInformationPage())),
-                  label: AppLocalizations.of(context)!.btnPersonalInfo,
-                  icon: Icons.person_outline,
-                ),
-                SettingButtons(
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LoginSecurityPage())),
-                  label: AppLocalizations.of(context)!.btnLoginSecurity,
-                  icon: Icons.login,
-                ),
-              ],
-            ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 10.w,
+          ),
+          child: Column(
+            children: [
+              SettingButtons(
+                onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const PersonalInformationPage())),
+                label: AppLocalizations.of(context)!.btnPersonalInfo,
+                icon: Icons.person_outline,
+              ),
+              SettingButtons(
+                onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => const LoginSecurityPage())),
+                label: AppLocalizations.of(context)!.btnLoginSecurity,
+                icon: Icons.login,
+              ),
+            ],
           ),
         ),
       ],
