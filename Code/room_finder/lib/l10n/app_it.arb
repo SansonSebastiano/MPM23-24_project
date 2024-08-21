@@ -129,5 +129,6 @@
     "lblWarningTitleDialog": "Attenzione!",
     "lblCancelWizard": "Sei sicuro di voler uscire? I dati inseriti verranno persi.",
     "lblCity": "Città",
-    "lblStreet": "Via"
+    "lblStreet": "Via",
+    "btnRemoveFilters": "Rimuovi filtri"
 }

@@ -545,5 +545,9 @@
   "lblStreet": "Street",
   "@lblStreet": {
     "description": "The label of the address form field"
+  },
+  "btnRemoveFilters": "Remove filters",
+  "@btnRemoveFilters": {
+    "description": "The button for filters removal"
   }
 }
