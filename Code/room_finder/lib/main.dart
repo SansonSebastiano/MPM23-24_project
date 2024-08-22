@@ -1,13 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/firebase_options.dart';
 import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/screens/account_page.dart';
 import 'package:room_finder/presentation/screens/chat_page.dart';
 import 'package:room_finder/presentation/screens/home_page.dart';
+import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/presentation/screens/saved_ads_page.dart';
 import 'package:room_finder/presentation/screens/onboarding_page.dart';
 import 'package:room_finder/style/theme.dart';
@@ -18,6 +21,8 @@ bool _isShown = true;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Firebase initialization
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Check if the user has seen the on boarding screen before
   // WARNING: if this is set to false, means that the user cannot be an existing user => isHost must be false
   _isShown = await OnBoardingScreenPreferences.getWasShown();
@@ -92,7 +97,7 @@ class MyHomePageState extends State<MyHomePage> {
               bodyTemplate(body: const SafeArea(child: StudentHomePage())),
               bodyTemplate(body: const SafeArea(child: SavedAdsPage())),
               bodyTemplate(body: const SafeArea(child: StudentChatPage())),
-              bodyTemplate(body: const AccountPage()),
+              bodyTemplate(body: const LoginPage()),
             ][currentPageIndex],
       bottomNavigationBar: isHost
           ? HostNavigationBar(

@@ -131,5 +131,9 @@
     "lblCity": "Città",
     "lblStreet": "Via",
     "btnRemoveFilters": "Rimuovi filtri",
-    "lblPricePerMonth": "al mese"
+    "lblPricePerMonth": "al mese",
+    "lblSuccessfulLogin": "Login avvenuto con successo",
+    "lblFailedLogin": "Errore di accesso: credenziali errate",
+    "lblSuccessfulSignup": "Registrazione avvenuta con successo",
+    "lblFailedSignup": "Errore nella registrazione: credenziali errate"
 }

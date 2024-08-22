@@ -553,5 +553,21 @@
   "lblPricePerMonth": "per month",
   "@lblPricePerMonth": {
     "description": "label for rental price per month"
+  },
+  "lblSuccessfulLogin": "Login successful",
+  "@lblSuccessfulLogin": {
+    "description": "label for successful snackbar"
+  },
+  "lblFailedLogin": "Login error: incorrect credentials",
+  "@lblFailedLogin": {
+    "description": "label for error snackbar"
+  },
+  "lblSuccessfulSignup": "Signup successful",
+  "@lblSuccessfulSignup": {
+    "description": "label for successful snackbar"
+  },
+  "lblFailedSignup": "Signup error: incorrect credentials",
+  "@lblFailedSignup": {
+    "description": "label for error snackbar"
   }
 }

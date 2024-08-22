@@ -5,18 +5,18 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// This file contains the implementation of all input fields belonging to the app forms.
 
-
-/// The class [StandardTextField] defines an input field, used to digit a value that cannot be null.  
+/// The class [StandardTextField] defines an input field, used to digit a value that cannot be null.
 class StandardTextField extends StatefulWidget {
   final String label;
   final Function(bool) onValueValidityChanged;
-  final String? initialValue; // Optional parameter to load the initial name from backend
+  final String?
+      initialValue; // Optional parameter to load the initial name from backend
 
   const StandardTextField({
-    super.key, 
+    super.key,
     required this.label,
     required this.onValueValidityChanged,
-    this.initialValue, 
+    this.initialValue,
   });
 
   @override
@@ -25,7 +25,7 @@ class StandardTextField extends StatefulWidget {
 
 class _StandardTextFieldState extends State<StandardTextField> {
   late TextEditingController _controller;
-  
+
   // Widget state
   bool _isValueEmpty = false;
 
@@ -63,6 +63,7 @@ class _StandardTextFieldState extends State<StandardTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               '${widget.label} field cannot be empty',
               style: TextStyle(
                 color: Colors.red,
@@ -104,25 +105,22 @@ class _StandardTextFieldState extends State<StandardTextField> {
   }
 }
 
-
-
-/// The class [EmailTextField] defines an input field to digit the email of the user.  
+/// The class [EmailTextField] defines an input field to digit the email of the user.
 class EmailTextField extends StatefulWidget {
-  const EmailTextField({
-    super.key,
-    required this.onEmailValidityChanged,
-  });
+  const EmailTextField(
+      {super.key,
+      required this.onEmailValidityChanged,
+      required this.controller});
 
   // Callback function that will notify the parent widget when the email validity changes
   final ValueChanged<bool> onEmailValidityChanged;
+  final TextEditingController controller;
 
   @override
   State<EmailTextField> createState() => _EmailTextFieldState();
 }
 
 class _EmailTextFieldState extends State<EmailTextField> {
-  late TextEditingController _controller;
-
   bool _isEmailEmpty = false;
   bool _userInteraction = false;
 
@@ -130,7 +128,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
       r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
 
   void _validateEmail() {
-    final email = _controller.text;
+    final email = widget.controller.text;
     final isValid = email.isNotEmpty && _emailRegExp.hasMatch(email);
     widget.onEmailValidityChanged(isValid);
   }
@@ -138,14 +136,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
-    _controller.addListener(_validateEmail);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    widget.controller.addListener(_validateEmail);
   }
 
   @override
@@ -153,110 +144,104 @@ class _EmailTextFieldState extends State<EmailTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          AppLocalizations.of(context)!.lblEmail,
-          style: Theme.of(context).textTheme.displaySmall
+        Text(AppLocalizations.of(context)!.lblEmail,
+            style: Theme.of(context).textTheme.displaySmall),
+        SizedBox(
+          height: 8.h,
         ),
-        SizedBox(height: 8.h,),
         if (_isEmailEmpty)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               'Email field cannot be empty',
               style: TextStyle(
-                color: Colors.red,
-                fontSize: 14.w,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.red,
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.w500),
             ),
           ),
-        if (_userInteraction && !_isEmailEmpty && !_emailRegExp.hasMatch(_controller.text))
+        if (_userInteraction &&
+            !_isEmailEmpty &&
+            !_emailRegExp.hasMatch(widget.controller.text))
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               'Email format is not valid',
               style: TextStyle(
-                color: Colors.red,
-                fontSize: 14.w,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.red,
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.w500),
             ),
           ),
         Container(
-          width: 335.w,
-          height: 52.h,
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(198, 208, 250, 50),
-            borderRadius: BorderRadius.all(Radius.circular(8.0),
+            width: 335.w,
+            height: 52.h,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(198, 208, 250, 50),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.0),
+              ),
             ),
-          ),
-          alignment: Alignment.centerLeft,
-          child: TextField(
-            controller: _controller,
-            decoration: InputDecoration (
-              border: InputBorder.none,
-              hintText: '',
-              contentPadding: EdgeInsets.only(left: 10.w),
-            ),
-            style: const TextStyle(color: ColorPalette.oxfordBlue),
-            keyboardType: TextInputType.emailAddress,
-            onSubmitted: (String value) {
-              setState(() {
-                _isEmailEmpty = value.isEmpty;
-                _userInteraction = true;
-              });
+            alignment: Alignment.centerLeft,
+            child: TextField(
+              controller: widget.controller,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '',
+                contentPadding: EdgeInsets.only(left: 10.w),
+              ),
+              style: const TextStyle(color: ColorPalette.oxfordBlue),
+              keyboardType: TextInputType.emailAddress,
+              onSubmitted: (String value) {
+                setState(() {
+                  _isEmailEmpty = value.isEmpty;
+                  _userInteraction = true;
+                });
 
-              if (!_isEmailEmpty) {
-                print('Submitted text: $value');
-              }
-            },
-          )
-        ),
+                if (!_isEmailEmpty) {
+                  print('Submitted text: $value');
+                }
+              },
+            )),
       ],
     );
   }
 }
 
-
-/// The class [LoginPswdTextField] defines an input field to digit the password during login process. 
+/// The class [LoginPswdTextField] defines an input field to digit the password during login process.
 class LoginPswdTextField extends StatefulWidget {
   const LoginPswdTextField({
     super.key,
     required this.onPasswordValidityChanged,
+    required this.controller,
   });
 
   // Callback function that will notify the parent widget when the password validity changes
   final ValueChanged<bool> onPasswordValidityChanged;
+  final TextEditingController controller;
 
   @override
   State<LoginPswdTextField> createState() => _LoginPswdTextFieldState();
 }
 
 class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
-  late TextEditingController _controller;
-
   bool _isPswdEmpty = false;
   bool _userInteraction = false;
   bool _showPswd = true;
 
   void _validatePassword() {
-    final password = _controller.text;
+    final password = widget.controller.text;
 
-    final isValid = password.isNotEmpty && _controller.text.length >= 6;
+    final isValid = password.isNotEmpty && widget.controller.text.length >= 6;
     widget.onPasswordValidityChanged(isValid);
   }
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
-    _controller.addListener(_validatePassword);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    widget.controller.addListener(_validatePassword);
   }
 
   @override
@@ -264,93 +249,98 @@ class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          AppLocalizations.of(context)!.lblPassword,
-          style: Theme.of(context).textTheme.displaySmall
+        Text(AppLocalizations.of(context)!.lblPassword,
+            style: Theme.of(context).textTheme.displaySmall),
+        SizedBox(
+          height: 8.h,
         ),
-        SizedBox(height: 8.h,),
         if (_isPswdEmpty)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               'Password field cannot be empty',
               style: TextStyle(
-                color: Colors.red,
-                fontSize: 14.w,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.red,
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.w500),
             ),
           ),
-        if (_userInteraction && !_isPswdEmpty && _controller.text.length<6)
+        if (_userInteraction &&
+            !_isPswdEmpty &&
+            widget.controller.text.length < 6)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               'Password must be at least 6 characters long',
               style: TextStyle(
-                color: Colors.red,
-                fontSize: 14.w,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.red,
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.w500),
             ),
           ),
         Container(
-          width: 335.w,
-          height: 52.h,
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(198, 208, 250, 50),
-            borderRadius: BorderRadius.all(Radius.circular(8.0),
-            ),
-          ),
-          alignment: Alignment.centerLeft,
-          child: TextField(
-            controller: _controller,
-            decoration: InputDecoration (
-              border: InputBorder.none,
-              hintText: '',
-              contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _showPswd ? Icons.visibility_off : Icons.visibility,
-                ),
-                onPressed: () => setState(() => _showPswd = !_showPswd),
+            width: 335.w,
+            height: 52.h,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(198, 208, 250, 50),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.0),
               ),
             ),
-            style: const TextStyle(color: ColorPalette.oxfordBlue),
-            obscureText: _showPswd,
-            enableSuggestions: false,
-            autocorrect: false,
-            onSubmitted: (String value) {
-              setState(() {
-                _isPswdEmpty = value.isEmpty;
-                _userInteraction = true;
-              });
+            alignment: Alignment.centerLeft,
+            child: TextField(
+              controller: widget.controller,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '',
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _showPswd ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () => setState(() => _showPswd = !_showPswd),
+                ),
+              ),
+              style: const TextStyle(color: ColorPalette.oxfordBlue),
+              obscureText: _showPswd,
+              enableSuggestions: false,
+              autocorrect: false,
+              onSubmitted: (String value) {
+                setState(() {
+                  _isPswdEmpty = value.isEmpty;
+                  _userInteraction = true;
+                });
 
-              if (!_isPswdEmpty) {
-                print('Submitted text: $value');
-              }
-            },
-          )
-        ),
+                if (!_isPswdEmpty) {
+                  print('Submitted text: $value');
+                }
+              },
+            )),
       ],
     );
   }
 }
 
-
-/// The class [RegistrationPswdTextField] defines an input field to digit and confirm the password during registration process. 
+/// The class [RegistrationPswdTextField] defines an input field to digit and confirm the password during registration process.
 class RegistrationPswdTextField extends StatefulWidget {
   final Function(bool) onPswdValidationChanged;
+  final TextEditingController pswdController;
+  final TextEditingController confirmPswdController;
 
-  const RegistrationPswdTextField({super.key, required this.onPswdValidationChanged});
+  const RegistrationPswdTextField(
+      {super.key, required this.onPswdValidationChanged,
+      required this.pswdController,
+      required this.confirmPswdController});
 
   @override
-  State<RegistrationPswdTextField> createState() => _RegistrationPswdTextFieldState();
+  State<RegistrationPswdTextField> createState() =>
+      _RegistrationPswdTextFieldState();
 }
 
 class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
-  late TextEditingController _controllerChoosePswd;
-  late TextEditingController _controllerConfirmPswd;
-  
   // Widget state
   bool _isChoosePswdEmpty = false;
   bool _userChooseInteraction = false;
@@ -364,14 +354,14 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
   bool _showConfirmPswd = true;
 
   void _validateFields() {
-    final chosenPassword = _controllerChoosePswd.text;
-    final confirmedPassword = _controllerConfirmPswd.text;
+    final chosenPassword = widget.pswdController.text;
+    final confirmedPassword = widget.confirmPswdController.text;
 
     bool isValid = chosenPassword.isNotEmpty &&
-                    chosenPassword.length >= 6 &&
-                    confirmedPassword.isNotEmpty &&
-                    confirmedPassword.length >= 6 &&
-                    chosenPassword == confirmedPassword;
+        chosenPassword.length >= 6 &&
+        confirmedPassword.isNotEmpty &&
+        confirmedPassword.length >= 6 &&
+        chosenPassword == confirmedPassword;
 
     widget.onPswdValidationChanged(isValid);
   }
@@ -379,175 +369,174 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
   @override
   void initState() {
     super.initState();
-    _controllerChoosePswd = TextEditingController();
-    _controllerConfirmPswd = TextEditingController();
 
-    _controllerChoosePswd.addListener(_validateFields);
+    widget.pswdController.addListener(_validateFields);
   }
-
-  @override
-  void dispose() {
-    _controllerChoosePswd.dispose();
-    _controllerConfirmPswd.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Choose a password
-        Text(
-          AppLocalizations.of(context)!.lblChoosePswd,
-          style: Theme.of(context).textTheme.displaySmall
+        Text(AppLocalizations.of(context)!.lblChoosePswd,
+            style: Theme.of(context).textTheme.displaySmall),
+        SizedBox(
+          height: 8.h,
         ),
-        SizedBox(height: 8.h,),
         if (_isChoosePswdEmpty)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               'Password field cannot be empty',
               style: TextStyle(
-                color: Colors.red,
-                fontSize: 14.w,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.red,
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.w500),
             ),
           ),
-        if (_userChooseInteraction && !_isChoosePswdEmpty && _controllerChoosePswd.text.length < 6)
+        if (_userChooseInteraction &&
+            !_isChoosePswdEmpty &&
+            widget.pswdController.text.length < 6)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               'Password must be at least 6 characters long',
               style: TextStyle(
-                color: Colors.red,
-                fontSize: 14.w,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.red,
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.w500),
             ),
           ),
         Container(
-          width: 335.w,
-          height: 52.h,
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(198, 208, 250, 50),
-            borderRadius: BorderRadius.all(Radius.circular(8.0),
-            ),
-          ),
-          alignment: Alignment.centerLeft,
-          child: TextField(
-            controller: _controllerChoosePswd,
-            decoration: InputDecoration (
-              border: InputBorder.none,
-              hintText: '',
-              contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _showChoosePswd ? Icons.visibility_off : Icons.visibility,
-                ),
-                onPressed: () => setState(() => _showChoosePswd = !_showChoosePswd),
+            width: 335.w,
+            height: 52.h,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(198, 208, 250, 50),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.0),
               ),
             ),
-            style: const TextStyle(color: ColorPalette.oxfordBlue),
-            obscureText: _showChoosePswd,
-            enableSuggestions: false,
-            autocorrect: false,
-            onSubmitted: (String value) {
-              setState(() {
-                _isChoosePswdEmpty = value.isEmpty;
-                _userChooseInteraction = true;
-              });
-              _validateFields();
-            },
-          )
-        ),
+            alignment: Alignment.centerLeft,
+            child: TextField(
+              controller: widget.pswdController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '',
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _showChoosePswd ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () =>
+                      setState(() => _showChoosePswd = !_showChoosePswd),
+                ),
+              ),
+              style: const TextStyle(color: ColorPalette.oxfordBlue),
+              obscureText: _showChoosePswd,
+              enableSuggestions: false,
+              autocorrect: false,
+              onSubmitted: (String value) {
+                setState(() {
+                  _isChoosePswdEmpty = value.isEmpty;
+                  _userChooseInteraction = true;
+                });
+                _validateFields();
+              },
+            )),
 
-        SizedBox(height: 20.w,),
+        SizedBox(
+          height: 20.w,
+        ),
 
         // Confirm password
-        Text(
-          AppLocalizations.of(context)!.lblConfirmPswd,
-          style: Theme.of(context).textTheme.displaySmall
+        Text(AppLocalizations.of(context)!.lblConfirmPswd,
+            style: Theme.of(context).textTheme.displaySmall),
+        SizedBox(
+          height: 8.h,
         ),
-        SizedBox(height: 8.h,),
         if (_isConfirmPswdEmpty)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               'Password field cannot be empty',
               style: TextStyle(
-                color: Colors.red,
-                fontSize: 14.w,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.red,
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.w500),
             ),
           ),
-        if (_userConfirmInteraction && !_isConfirmPswdEmpty && _controllerConfirmPswd.text.length < 6)
+        if (_userConfirmInteraction &&
+            !_isConfirmPswdEmpty &&
+            widget.confirmPswdController.text.length < 6)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               'Password must be at least 6 characters long',
               style: TextStyle(
-                color: Colors.red,
-                fontSize: 14.w,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.red,
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.w500),
             ),
           ),
         if (_userConfirmInteraction && !_isConfirmPswdEmpty && !_passwordsMatch)
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
+              // TODO: see issue #35
               'Password does not match with the previous one',
               style: TextStyle(
-                color: Colors.red,
-                fontSize: 14.w,
-                fontWeight: FontWeight.w500
-              ),
+                  color: Colors.red,
+                  fontSize: 14.w,
+                  fontWeight: FontWeight.w500),
             ),
           ),
         Container(
-          width: 335.w,
-          height: 52.h,
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(198, 208, 250, 50),
-            borderRadius: BorderRadius.all(Radius.circular(8.0),
-            ),
-          ),
-          alignment: Alignment.centerLeft,
-          child: TextField(
-            controller: _controllerConfirmPswd,
-            decoration: InputDecoration (
-              border: InputBorder.none,
-              hintText: '',
-              contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _showConfirmPswd ? Icons.visibility_off : Icons.visibility,
-                ),
-                onPressed: () => setState(() => _showConfirmPswd = !_showConfirmPswd),
+            width: 335.w,
+            height: 52.h,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(198, 208, 250, 50),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.0),
               ),
             ),
-            style: const TextStyle(color: ColorPalette.oxfordBlue),
-            obscureText: _showConfirmPswd,
-            enableSuggestions: false,
-            autocorrect: false,
-            onSubmitted: (String value) {
-              setState(() {
-                _isConfirmPswdEmpty = value.isEmpty;
-                _passwordsMatch = _controllerChoosePswd.text == value;
-                _userConfirmInteraction = true;
-              });
-              _validateFields();
-            },
-          )
-        ),
+            alignment: Alignment.centerLeft,
+            child: TextField(
+              controller: widget.confirmPswdController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: '',
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 14.h),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _showConfirmPswd ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: () =>
+                      setState(() => _showConfirmPswd = !_showConfirmPswd),
+                ),
+              ),
+              style: const TextStyle(color: ColorPalette.oxfordBlue),
+              obscureText: _showConfirmPswd,
+              enableSuggestions: false,
+              autocorrect: false,
+              onSubmitted: (String value) {
+                setState(() {
+                  _isConfirmPswdEmpty = value.isEmpty;
+                  _passwordsMatch = widget.pswdController.text == value;
+                  _userConfirmInteraction = true;
+                });
+                _validateFields();
+              },
+            )),
       ],
     );
   }
 }
-
 
 /// The class [MessageInputField] defines the input text field to digit and send a new message in a chat page.
 class MessageInputField extends StatefulWidget {
@@ -564,7 +553,7 @@ class MessageInputField extends StatefulWidget {
 
 class _MessageInputFieldState extends State<MessageInputField> {
   late TextEditingController _controller;
-  
+
   // Widget state
   bool _isButtonActive = false;
 
@@ -596,6 +585,7 @@ class _MessageInputFieldState extends State<MessageInputField> {
             minLines: 1,
             maxLines: 6,
             decoration: InputDecoration(
+              // TODO: see issue #35
               hintText: 'Write a message',
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25.r),
@@ -613,7 +603,9 @@ class _MessageInputFieldState extends State<MessageInputField> {
               ),
               suffixIcon: IconButton(
                 icon: const Icon(Icons.send),
-                color: _isButtonActive ? ColorPalette.oxfordBlue : ColorPalette.lavenderBlue,
+                color: _isButtonActive
+                    ? ColorPalette.oxfordBlue
+                    : ColorPalette.lavenderBlue,
                 onPressed: _isButtonActive ? widget.onTap : null,
                 padding: EdgeInsets.all(8.w),
                 iconSize: 20.w,
