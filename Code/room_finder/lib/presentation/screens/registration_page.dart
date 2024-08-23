@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/model/authentication_model.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
@@ -10,6 +10,7 @@ import 'package:room_finder/presentation/components/buttons/switch_type_account_
 import 'package:room_finder/presentation/components/input_text_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/snackbar.dart';
+import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/provider/authentication_provider.dart';
 import 'package:room_finder/util/network_handler.dart';
 
@@ -21,6 +22,7 @@ class RegistrationPage extends ConsumerStatefulWidget {
 }
 
 class _RegistrationPageState extends ConsumerState<RegistrationPage> {
+  late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _pswdController;
   late TextEditingController _confirmPswdController;
@@ -29,9 +31,12 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
   bool _isPasswordValid = false;
   bool _isNameValid = false;
 
+  bool _isStudentSelected = true;
+
   @override
   void initState() {
     super.initState();
+    _nameController = TextEditingController();
     _emailController = TextEditingController();
     _pswdController = TextEditingController();
     _confirmPswdController = TextEditingController();
@@ -39,6 +44,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _pswdController.dispose();
     _confirmPswdController.dispose();
@@ -74,7 +80,8 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
         // Proceed with registration logic
         ref.read(authNotifierProvider.notifier).signup(
             userCredential: AuthArgs(
-                email: _emailController.text, password: _pswdController.text));
+                email: _emailController.text, password: _pswdController.text),
+            user: UserData(name: _nameController.text, isHost: _isStudentSelected));
       }
     }
   }
@@ -85,82 +92,90 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
       next.maybeWhen(
           orElse: () => null,
           authenticated: (user) {
-            // TODO: Navigate to any screen
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const LoginPage()));
+            // FIXME: bug on showing the correct snackbar, currently is shown, after clicked signup button, the snackbar with login message
             showSuccessSnackBar(
                 context, AppLocalizations.of(context)!.lblSuccessfulSignup);
           },
           unauthenticated: (message) => showErrorSnackBar(
               context, AppLocalizations.of(context)!.lblFailedSignup));
     });
-    
+
     return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DarkBackButton(onPressed: () => Navigator.pop(context)),
                       SizedBox(height: 40.h),
-                      Text(AppLocalizations.of(context)!.lblRegistration,
-                          style: Theme.of(context).textTheme.displayMedium),
-                      SizedBox(height: 20.h),
-                      SwitchTypeAccountButton(
-                          onPressed: () => showOptionsDialog(
-                              context: context,
-                              androidDialog: ActionsAndroidDialog(
-                                  context: context,
-                                  title: AppLocalizations.of(context)!
-                                      .lblAccountType,
-                                  content: Text(AppLocalizations.of(context)!
-                                      .accountTypeAlertMessage),
-                                  onOk: () => Navigator.pop(context)),
-                              iosDialog: ActionsIosDialog(
-                                  context: context,
-                                  title: AppLocalizations.of(context)!
-                                      .lblAccountType,
-                                  content: Text(AppLocalizations.of(context)!
-                                      .accountTypeAlertMessage),
-                                  onOk: () => Navigator.pop(context)))),
-                      SizedBox(height: 20.h),
-                      StandardTextField(
-                          label: AppLocalizations.of(context)!.lblName,
-                          onValueValidityChanged: _onNameValidityChanged),
-                      SizedBox(height: 20.h),
-                      EmailTextField(
-                          onEmailValidityChanged: _onEmailValidityChanged,
-                          controller: _emailController,
-                          ),
-                      SizedBox(height: 20.h),
-                      RegistrationPswdTextField(
-                          onPswdValidationChanged: _onPasswordValidityChanged,
-                          pswdController: _pswdController,
-                          confirmPswdController: _confirmPswdController,
-                          ),
-                      SizedBox(height: 30.h),
-                      Center(
-                        child: Stack(
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30.w, vertical: 20.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RectangleButton(
-                              label: "Sign up",
-                              onPressed: _handleRegistration,
+                            Text(AppLocalizations.of(context)!.lblRegistration,
+                                style:
+                                    Theme.of(context).textTheme.displayMedium),
+                            SizedBox(height: 20.h),
+                            SwitchTypeAccountButton(
+                              onInfo: () => showOptionsDialog(
+                                  context: context,
+                                  androidDialog: ActionsAndroidDialog(
+                                      context: context,
+                                      title: AppLocalizations.of(context)!
+                                          .lblAccountType,
+                                      content: Text(
+                                          AppLocalizations.of(context)!
+                                              .accountTypeAlertMessage),
+                                      onOk: () => Navigator.pop(context)),
+                                  iosDialog: ActionsIosDialog(
+                                      context: context,
+                                      title: AppLocalizations.of(context)!
+                                          .lblAccountType,
+                                      content: Text(
+                                          AppLocalizations.of(context)!
+                                              .accountTypeAlertMessage),
+                                      onOk: () => Navigator.pop(context))),
+                              onStudent: () {
+                                setState(() {
+                                  _isStudentSelected = true;
+                                });
+                              },
+                              onHost: () {
+                                setState(() {
+                                  _isStudentSelected = false;
+                                });
+                              },
+                              isStudentSelected: _isStudentSelected,
                             ),
-                            if (!_isNameValid ||
-                                !_isEmailValid ||
-                                !_isPasswordValid)
-                              Positioned.fill(
-                                child: Container(
-                                  color: Colors.white.withOpacity(0.5),
-                                ),
-                              ),
+                            SizedBox(height: 20.h),
+                            StandardTextField(
+                                label: AppLocalizations.of(context)!.lblName,
+                                onValueValidityChanged: _onNameValidityChanged,
+                                controller: _nameController,
+                            ),
+                            SizedBox(height: 20.h),
+                            EmailTextField(
+                              onEmailValidityChanged: _onEmailValidityChanged,
+                              controller: _emailController,
+                            ),
+                            SizedBox(height: 20.h),
+                            RegistrationPswdTextField(
+                              onPswdValidationChanged:
+                                  _onPasswordValidityChanged,
+                              pswdController: _pswdController,
+                              confirmPswdController: _confirmPswdController,
+                            ),
+                            SizedBox(height: 30.h),
                           ],
                         ),
                       ),
@@ -168,11 +183,27 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                     ],
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
-      ),
-    );
+        persistentFooterButtons: [
+          Center(
+            child: Stack(
+              children: [
+                RectangleButton(
+                  label: "Sign up",
+                  onPressed: _handleRegistration,
+                ),
+                if (!_isNameValid || !_isEmailValid || !_isPasswordValid)
+                  Positioned.fill(
+                    child: Container(
+                      color: Colors.white.withOpacity(0.5),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ]);
   }
 }

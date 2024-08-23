@@ -11,12 +11,14 @@ class StandardTextField extends StatefulWidget {
   final Function(bool) onValueValidityChanged;
   final String?
       initialValue; // Optional parameter to load the initial name from backend
+  final TextEditingController controller;
 
   const StandardTextField({
     super.key,
     required this.label,
     required this.onValueValidityChanged,
     this.initialValue,
+    required this.controller
   });
 
   @override
@@ -24,7 +26,7 @@ class StandardTextField extends StatefulWidget {
 }
 
 class _StandardTextFieldState extends State<StandardTextField> {
-  late TextEditingController _controller;
+  // late TextEditingController _controller;
 
   // Widget state
   bool _isValueEmpty = false;
@@ -32,21 +34,15 @@ class _StandardTextFieldState extends State<StandardTextField> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.initialValue ?? '');
-    _controller.addListener(_validateValue);
+    // controller = TextEditingController(text: widget.initialValue ?? '');
+    widget.controller.addListener(_validateValue);
   }
 
   void _validateValue() {
-    final name = _controller.text;
+    final name = widget.controller.text;
 
     final isValid = name.isNotEmpty;
     widget.onValueValidityChanged(isValid);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -81,7 +77,7 @@ class _StandardTextFieldState extends State<StandardTextField> {
           ),
           alignment: Alignment.centerLeft,
           child: TextField(
-            controller: _controller,
+            controller: widget.controller,
             decoration: InputDecoration(
               border: InputBorder.none,
               hintText: '',

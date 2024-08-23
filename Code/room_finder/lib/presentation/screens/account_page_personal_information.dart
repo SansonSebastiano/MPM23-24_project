@@ -13,14 +13,31 @@ import 'package:room_finder/util/network_handler.dart';
 
 class PersonalInformationPage extends ConsumerStatefulWidget {
   const PersonalInformationPage({super.key});
-  
+
   @override
-  ConsumerState<PersonalInformationPage> createState() => _PersonalInformationPageState();
+  ConsumerState<PersonalInformationPage> createState() =>
+      _PersonalInformationPageState();
 }
 
-class _PersonalInformationPageState extends ConsumerState<PersonalInformationPage> {
+class _PersonalInformationPageState
+    extends ConsumerState<PersonalInformationPage> {
+  late TextEditingController _nameController;
+
   bool _isNameChanged = false;
   bool _isPhotoChanged = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // FIXME: see below FIXME for the initial value
+    _nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
 
   void _onNameValidityChanged(bool isValid) {
     setState(() {
@@ -59,7 +76,8 @@ class _PersonalInformationPageState extends ConsumerState<PersonalInformationPag
                   minHeight: constraints.maxHeight,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -81,16 +99,19 @@ class _PersonalInformationPageState extends ConsumerState<PersonalInformationPag
                       SizedBox(height: 20.h),
                       Center(
                         child: ProfilePhotoEditor(
-                          imageUrl: "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg",
-                          onPhotoChanged: _onPhotoChanged, 
+                          imageUrl:
+                              "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg",
+                          onPhotoChanged: _onPhotoChanged,
                         ),
                       ),
                       SizedBox(height: 20.h),
                       StandardTextField(
-                        label: AppLocalizations.of(context)!.lblName,
-                        onValueValidityChanged: _onNameValidityChanged,
-                        initialValue: "Francesco"  // to retrieve from backend
-                      ),
+                          label: AppLocalizations.of(context)!.lblName,
+                          onValueValidityChanged: _onNameValidityChanged,
+                          controller: _nameController,
+                          // FIXME: fix the initial value in the initState of the current page
+                          initialValue: "Francesco" // to retrieve from backend
+                          ),
                       SizedBox(height: 40.h),
                       Center(
                         child: Stack(

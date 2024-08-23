@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,7 @@ import 'package:room_finder/presentation/screens/home_page.dart';
 import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/presentation/screens/saved_ads_page.dart';
 import 'package:room_finder/presentation/screens/onboarding_page.dart';
+import 'package:room_finder/provider/authentication_provider.dart';
 import 'package:room_finder/style/theme.dart';
 import 'package:room_finder/util/shared_preferences.dart';
 
@@ -61,17 +63,43 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => MyHomePageState();
+  ConsumerState<MyHomePage> createState() => MyHomePageState();
 }
 
-class MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends ConsumerState<MyHomePage> {
   // TODO: handle this value with the user's role, for now it is hardcoded
   bool isHost = false;
   int currentPageIndex = 0;
+  late bool isLogged;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      isLogged = ref.read(authNotifierProvider.notifier).isLogged();
+      if (!isLogged) {
+        if (mounted) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const LoginPage()));
+        }
+      } else {
+        User user = ref.read(authNotifierProvider.notifier).currentUser!;
+        print("User uid: ${user.uid}");
+        print("User email: ${user.email}");
+        print("User name: ${user.displayName}");
+        print("User photo URL: ${user.photoURL}");
+
+        await ref.read(authNotifierProvider.notifier).logout();
+        bool flag = ref.read(authNotifierProvider.notifier).isLogged();
+        print("is still logged in? $flag");
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +125,7 @@ class MyHomePageState extends State<MyHomePage> {
               bodyTemplate(body: const SafeArea(child: StudentHomePage())),
               bodyTemplate(body: const SafeArea(child: SavedAdsPage())),
               bodyTemplate(body: const SafeArea(child: StudentChatPage())),
-              bodyTemplate(body: const LoginPage()),
+              bodyTemplate(body: const AccountPage()),
             ][currentPageIndex],
       bottomNavigationBar: isHost
           ? HostNavigationBar(

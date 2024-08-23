@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/model/authentication_model.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/provider/firebase_providers.dart';
 
 class AuthDataSource {
@@ -10,13 +11,19 @@ class AuthDataSource {
 
   AuthDataSource(this._auth, this._ref);
 
-  Stream<User?> get authStateChange => _auth.authStateChanges();
+  User? get currentUser => _auth.currentUser;
 
   Future<Either<String, User>> signup(
-      {required AuthArgs userCredential}) async {
+      {required AuthArgs userCredential, required UserData user}) async {
     try {
+      // create a new user 
       final response = await _auth.createUserWithEmailAndPassword(
           email: userCredential.email, password: userCredential.password);
+      // setting its name
+      response.user!.updateDisplayName(user.name);
+      // setting its photo
+      // TODO: integrate with Cloud Storage (in authentication_provider.dart )
+      response.user!.updatePhotoURL(user.photoUrl);
       return right(response.user!);
     } on FirebaseAuthException catch (e) {
       return left(e.message ?? 'Failed to Signup');

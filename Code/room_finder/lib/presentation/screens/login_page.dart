@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/main.dart';
 import 'package:room_finder/model/authentication_model.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
@@ -75,6 +76,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           orElse: () => null,
           authenticated: (user) {
             // TODO: Navigate to any screen
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        const MyHomePage()));
             showSuccessSnackBar(
                 context, AppLocalizations.of(context)!.lblSuccessfulLogin);
           },
@@ -82,94 +88,106 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               context, AppLocalizations.of(context)!.lblFailedLogin));
     });
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight,
-            ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SafeArea(
-                      child: CancelButton(
-                          onPressed: () => Navigator.pop(context))),
-                  Center(
-                    child: Image(
-                      image:
-                          const AssetImage('assets/images/RoomFinder-logo.png'),
-                      width: 257.5.w,
-                      height: 127.h,
+    return Scaffold(
+      body: Center(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SafeArea(
+                        child: CancelButton(
+                            onPressed: () => Navigator.pop(context))),
+                    Center(
+                      child: Image(
+                        image: const AssetImage(
+                            'assets/images/RoomFinder-logo.png'),
+                        width: 257.5.w,
+                        height: 127.h,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 40.h),
-                  Text(AppLocalizations.of(context)!.lblLogin,
-                      style: Theme.of(context).textTheme.displayMedium),
-                  SizedBox(height: 20.h),
-                  Text(AppLocalizations.of(context)!.lblLoginDesc,
-                      style: Theme.of(context).textTheme.bodyLarge),
-                  SizedBox(height: 20.h),
-                  EmailTextField(
-                    onEmailValidityChanged: _onEmailValidityChanged,
-                    controller: _emailController,
-                  ),
-                  SizedBox(height: 20.h),
-                  LoginPswdTextField(
-                    onPasswordValidityChanged: _onPasswordValidityChanged,
-                    controller: _pswdController,
-                  ),
-                  SizedBox(height: 30.h),
-                  Center(
-                    child: Stack(
-                      children: [
-                        RectangleButton(
-                          label: "Log in",
-                          onPressed: _handleLogin,
-                        ),
-                        if (!_isEmailValid || !_isPasswordValid)
-                          Positioned.fill(
-                            child: Container(
-                              color: Colors.white.withOpacity(0.5),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 30.w, vertical: 20.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 40.h),
+                          Text(AppLocalizations.of(context)!.lblLogin,
+                              style: Theme.of(context).textTheme.displayMedium),
+                          SizedBox(height: 20.h),
+                          Text(AppLocalizations.of(context)!.lblLoginDesc,
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          SizedBox(height: 20.h),
+                          EmailTextField(
+                            onEmailValidityChanged: _onEmailValidityChanged,
+                            controller: _emailController,
+                          ),
+                          SizedBox(height: 20.h),
+                          LoginPswdTextField(
+                            onPasswordValidityChanged:
+                                _onPasswordValidityChanged,
+                            controller: _pswdController,
+                          ),
+                          SizedBox(height: 30.h),
+                          Center(
+                            child: Stack(
+                              children: [
+                                RectangleButton(
+                                  label: "Log in",
+                                  onPressed: _handleLogin,
+                                ),
+                                if (!_isEmailValid || !_isPasswordValid)
+                                  Positioned.fill(
+                                    child: Container(
+                                      color: Colors.white.withOpacity(0.5),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20.h),
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                        text: AppLocalizations.of(context)!.lblNoAccount,
-                        style: TextStyle(
-                          color: ColorPalette.oxfordBlue,
-                          fontSize: 18.sp,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Sign up',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: ColorPalette.oxfordBlue,
-                                decoration: TextDecoration.underline),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegistrationPage())),
+                          SizedBox(height: 20.h),
+                          Center(
+                            child: RichText(
+                              text: TextSpan(
+                                text:
+                                    AppLocalizations.of(context)!.lblNoAccount,
+                                style: TextStyle(
+                                  color: ColorPalette.oxfordBlue,
+                                  fontSize: 18.sp,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: 'Sign up',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: ColorPalette.oxfordBlue,
+                                        decoration: TextDecoration.underline),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const RegistrationPage())),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
-        );
-      },
+            );
+          },
+        ),
+      ),
     );
   }
 }
