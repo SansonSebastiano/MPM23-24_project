@@ -14,4 +14,10 @@ class AuthenticationState with _$AuthenticationState {
 
   const factory AuthenticationState.authenticated({required User user}) =
       _Authenticated;
+
+  const factory AuthenticationState.registered({required User user}) =
+      _Registrered;
+    
+  const factory AuthenticationState.unregistered({String? message}) =
+      _Unregistrered;
 }

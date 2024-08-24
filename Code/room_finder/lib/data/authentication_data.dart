@@ -16,13 +16,12 @@ class AuthDataSource {
   Future<Either<String, User>> signup(
       {required AuthArgs userCredential, required UserData user}) async {
     try {
-      // create a new user 
+      // create a new user
       final response = await _auth.createUserWithEmailAndPassword(
           email: userCredential.email, password: userCredential.password);
       // setting its name
       response.user!.updateDisplayName(user.name);
       // setting its photo
-      // TODO: integrate with Cloud Storage (in authentication_provider.dart )
       response.user!.updatePhotoURL(user.photoUrl);
       return right(response.user!);
     } on FirebaseAuthException catch (e) {
@@ -39,6 +38,17 @@ class AuthDataSource {
       return left(e.message ?? 'Failed to Login');
     }
   }
+
+  // test an alternative logout implementation
+
+  // Future<Either<String, void>> test() async {
+  //   try {
+  //     await _auth.signOut();
+  //     return right(null);
+  //   } on FirebaseAuthException catch (e) {
+  //     return left(e.message ?? 'Failed to logout');
+  //   }
+  // }
 
   Future<void> logout() async {
     await _auth.signOut();

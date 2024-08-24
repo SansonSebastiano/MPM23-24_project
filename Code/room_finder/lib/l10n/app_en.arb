@@ -562,7 +562,7 @@
   "@lblFailedLogin": {
     "description": "label for error snackbar"
   },
-  "lblSuccessfulSignup": "Signup successful",
+  "lblSuccessfulSignup": "Signup successful: log in now",
   "@lblSuccessfulSignup": {
     "description": "label for successful snackbar"
   },

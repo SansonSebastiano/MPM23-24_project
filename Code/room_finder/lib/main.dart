@@ -87,17 +87,20 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const LoginPage()));
         }
-      } else {
-        User user = ref.read(authNotifierProvider.notifier).currentUser!;
-        print("User uid: ${user.uid}");
-        print("User email: ${user.email}");
-        print("User name: ${user.displayName}");
-        print("User photo URL: ${user.photoURL}");
+      } 
+      // just for testing
+      
+      // else {
+      //   User user = ref.read(authNotifierProvider.notifier).currentUser!;
+      //   print("User uid: ${user.uid}");
+      //   print("User email: ${user.email}");
+      //   print("User name: ${user.displayName}");
+      //   print("User photo URL: ${user.photoURL}");
 
-        await ref.read(authNotifierProvider.notifier).logout();
-        bool flag = ref.read(authNotifierProvider.notifier).isLogged();
-        print("is still logged in? $flag");
-      }
+      //   await ref.read(authNotifierProvider.notifier).logout();
+      //   bool flag = ref.read(authNotifierProvider.notifier).isLogged();
+      //   print("is still logged in? $flag");
+      // }
     });
   }
 

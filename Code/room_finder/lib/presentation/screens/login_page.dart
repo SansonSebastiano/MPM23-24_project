@@ -80,6 +80,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
+                        // TODO: or in other pages?
                         const MyHomePage()));
             showSuccessSnackBar(
                 context, AppLocalizations.of(context)!.lblSuccessfulLogin);

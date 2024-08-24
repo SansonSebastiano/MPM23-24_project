@@ -81,7 +81,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
         ref.read(authNotifierProvider.notifier).signup(
             userCredential: AuthArgs(
                 email: _emailController.text, password: _pswdController.text),
-            user: UserData(name: _nameController.text, isHost: _isStudentSelected));
+            user: UserData(name: _nameController.text, isHost: !_isStudentSelected));
       }
     }
   }
@@ -91,14 +91,14 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
     ref.listen(authNotifierProvider, (previous, next) {
       next.maybeWhen(
           orElse: () => null,
-          authenticated: (user) {
+          registered: (user) {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const LoginPage()));
             // FIXME: bug on showing the correct snackbar, currently is shown, after clicked signup button, the snackbar with login message
             showSuccessSnackBar(
                 context, AppLocalizations.of(context)!.lblSuccessfulSignup);
           },
-          unauthenticated: (message) => showErrorSnackBar(
+          unregistered: (message) => showErrorSnackBar(
               context, AppLocalizations.of(context)!.lblFailedSignup));
     });
 

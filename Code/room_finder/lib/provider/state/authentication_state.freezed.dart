@@ -22,6 +22,8 @@ mixin _$AuthenticationState {
     required TResult Function() loading,
     required TResult Function(String? message) unauthenticated,
     required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function(String? message) unregistered,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +32,8 @@ mixin _$AuthenticationState {
     TResult? Function()? loading,
     TResult? Function(String? message)? unauthenticated,
     TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function(String? message)? unregistered,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +42,8 @@ mixin _$AuthenticationState {
     TResult Function()? loading,
     TResult Function(String? message)? unauthenticated,
     TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function(String? message)? unregistered,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +53,8 @@ mixin _$AuthenticationState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +63,8 @@ mixin _$AuthenticationState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +73,8 @@ mixin _$AuthenticationState {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -128,6 +140,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function() loading,
     required TResult Function(String? message) unauthenticated,
     required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function(String? message) unregistered,
   }) {
     return initial();
   }
@@ -139,6 +153,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? loading,
     TResult? Function(String? message)? unauthenticated,
     TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function(String? message)? unregistered,
   }) {
     return initial?.call();
   }
@@ -150,6 +166,8 @@ class _$InitialImpl implements _Initial {
     TResult Function()? loading,
     TResult Function(String? message)? unauthenticated,
     TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function(String? message)? unregistered,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -165,6 +183,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
   }) {
     return initial(this);
   }
@@ -176,6 +196,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
   }) {
     return initial?.call(this);
   }
@@ -187,6 +209,8 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -242,6 +266,8 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() loading,
     required TResult Function(String? message) unauthenticated,
     required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function(String? message) unregistered,
   }) {
     return loading();
   }
@@ -253,6 +279,8 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? loading,
     TResult? Function(String? message)? unauthenticated,
     TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function(String? message)? unregistered,
   }) {
     return loading?.call();
   }
@@ -264,6 +292,8 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? loading,
     TResult Function(String? message)? unauthenticated,
     TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function(String? message)? unregistered,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -279,6 +309,8 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
   }) {
     return loading(this);
   }
@@ -290,6 +322,8 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
   }) {
     return loading?.call(this);
   }
@@ -301,6 +335,8 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -383,6 +419,8 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     required TResult Function() loading,
     required TResult Function(String? message) unauthenticated,
     required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function(String? message) unregistered,
   }) {
     return unauthenticated(message);
   }
@@ -394,6 +432,8 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult? Function()? loading,
     TResult? Function(String? message)? unauthenticated,
     TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function(String? message)? unregistered,
   }) {
     return unauthenticated?.call(message);
   }
@@ -405,6 +445,8 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult Function()? loading,
     TResult Function(String? message)? unauthenticated,
     TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function(String? message)? unregistered,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -420,6 +462,8 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
   }) {
     return unauthenticated(this);
   }
@@ -431,6 +475,8 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
   }) {
     return unauthenticated?.call(this);
   }
@@ -442,6 +488,8 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -529,6 +577,8 @@ class _$AuthenticatedImpl implements _Authenticated {
     required TResult Function() loading,
     required TResult Function(String? message) unauthenticated,
     required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function(String? message) unregistered,
   }) {
     return authenticated(user);
   }
@@ -540,6 +590,8 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult? Function()? loading,
     TResult? Function(String? message)? unauthenticated,
     TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function(String? message)? unregistered,
   }) {
     return authenticated?.call(user);
   }
@@ -551,6 +603,8 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult Function()? loading,
     TResult Function(String? message)? unauthenticated,
     TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function(String? message)? unregistered,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -566,6 +620,8 @@ class _$AuthenticatedImpl implements _Authenticated {
     required TResult Function(_Loading value) loading,
     required TResult Function(_UnAuthentication value) unauthenticated,
     required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
   }) {
     return authenticated(this);
   }
@@ -577,6 +633,8 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_UnAuthentication value)? unauthenticated,
     TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
   }) {
     return authenticated?.call(this);
   }
@@ -588,6 +646,8 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult Function(_Loading value)? loading,
     TResult Function(_UnAuthentication value)? unauthenticated,
     TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -604,5 +664,319 @@ abstract class _Authenticated implements AuthenticationState {
   User get user;
   @JsonKey(ignore: true)
   _$$AuthenticatedImplCopyWith<_$AuthenticatedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$RegistreredImplCopyWith<$Res> {
+  factory _$$RegistreredImplCopyWith(
+          _$RegistreredImpl value, $Res Function(_$RegistreredImpl) then) =
+      __$$RegistreredImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({User user});
+}
+
+/// @nodoc
+class __$$RegistreredImplCopyWithImpl<$Res>
+    extends _$AuthenticationStateCopyWithImpl<$Res, _$RegistreredImpl>
+    implements _$$RegistreredImplCopyWith<$Res> {
+  __$$RegistreredImplCopyWithImpl(
+      _$RegistreredImpl _value, $Res Function(_$RegistreredImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$RegistreredImpl(
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RegistreredImpl implements _Registrered {
+  const _$RegistreredImpl({required this.user});
+
+  @override
+  final User user;
+
+  @override
+  String toString() {
+    return 'AuthenticationState.registered(user: $user)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$RegistreredImpl &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$RegistreredImplCopyWith<_$RegistreredImpl> get copyWith =>
+      __$$RegistreredImplCopyWithImpl<_$RegistreredImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String? message) unauthenticated,
+    required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function(String? message) unregistered,
+  }) {
+    return registered(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? unauthenticated,
+    TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function(String? message)? unregistered,
+  }) {
+    return registered?.call(user);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String? message)? unauthenticated,
+    TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function(String? message)? unregistered,
+    required TResult orElse(),
+  }) {
+    if (registered != null) {
+      return registered(user);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_UnAuthentication value) unauthenticated,
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
+  }) {
+    return registered(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_UnAuthentication value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
+  }) {
+    return registered?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_UnAuthentication value)? unauthenticated,
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
+    required TResult orElse(),
+  }) {
+    if (registered != null) {
+      return registered(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Registrered implements AuthenticationState {
+  const factory _Registrered({required final User user}) = _$RegistreredImpl;
+
+  User get user;
+  @JsonKey(ignore: true)
+  _$$RegistreredImplCopyWith<_$RegistreredImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$UnregistreredImplCopyWith<$Res> {
+  factory _$$UnregistreredImplCopyWith(
+          _$UnregistreredImpl value, $Res Function(_$UnregistreredImpl) then) =
+      __$$UnregistreredImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? message});
+}
+
+/// @nodoc
+class __$$UnregistreredImplCopyWithImpl<$Res>
+    extends _$AuthenticationStateCopyWithImpl<$Res, _$UnregistreredImpl>
+    implements _$$UnregistreredImplCopyWith<$Res> {
+  __$$UnregistreredImplCopyWithImpl(
+      _$UnregistreredImpl _value, $Res Function(_$UnregistreredImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$UnregistreredImpl(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$UnregistreredImpl implements _Unregistrered {
+  const _$UnregistreredImpl({this.message});
+
+  @override
+  final String? message;
+
+  @override
+  String toString() {
+    return 'AuthenticationState.unregistered(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$UnregistreredImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UnregistreredImplCopyWith<_$UnregistreredImpl> get copyWith =>
+      __$$UnregistreredImplCopyWithImpl<_$UnregistreredImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String? message) unauthenticated,
+    required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function(String? message) unregistered,
+  }) {
+    return unregistered(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String? message)? unauthenticated,
+    TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function(String? message)? unregistered,
+  }) {
+    return unregistered?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String? message)? unauthenticated,
+    TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function(String? message)? unregistered,
+    required TResult orElse(),
+  }) {
+    if (unregistered != null) {
+      return unregistered(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_UnAuthentication value) unauthenticated,
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
+  }) {
+    return unregistered(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_UnAuthentication value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
+  }) {
+    return unregistered?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_UnAuthentication value)? unauthenticated,
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
+    required TResult orElse(),
+  }) {
+    if (unregistered != null) {
+      return unregistered(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Unregistrered implements AuthenticationState {
+  const factory _Unregistrered({final String? message}) = _$UnregistreredImpl;
+
+  String? get message;
+  @JsonKey(ignore: true)
+  _$$UnregistreredImplCopyWith<_$UnregistreredImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
