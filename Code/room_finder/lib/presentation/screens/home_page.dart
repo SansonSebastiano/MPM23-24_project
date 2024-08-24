@@ -9,27 +9,110 @@ import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/search_bar.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
+import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/presentation/screens/wizard_screens/wizard_page1.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class StudentHomePage extends StatelessWidget {
-  const StudentHomePage({super.key});
+  final bool isLogged;
+
+  const StudentHomePage({super.key, required this.isLogged});
 
   @override
   Widget build(BuildContext context) {
     return MainTemplateScreen(
       // TODO: screenLabel should be adapted to the user's name if logged in or to the default message if not logged in
       screenLabel: AppLocalizations.of(context)!.lblWelcomeUser("<Name>"),
-      screenContent: const _StudentHomePageBody(),
+      screenContent: _StudentHomePageBody(isLogged: isLogged),
     );
   }
 }
 
-class _StudentHomePageBody extends ConsumerWidget {
-  const _StudentHomePageBody();
+class _StudentHomePageBody extends ConsumerStatefulWidget {
+  final bool isLogged;
+
+  const _StudentHomePageBody({required this.isLogged});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_StudentHomePageBody> createState() =>
+      _StudentHomePageBodyState();
+}
+
+class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
+  late List<bool> isSaved;
+  late List<AdsBox> adsList;
+
+  @override
+  void initState() {
+    super.initState();
+    isSaved = List.generate(4, (index) => false);
+    adsList = List<AdsBox>.generate(
+        4,
+        (index) => AdsBox(
+            imageUrl:
+                "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
+            city: "Padova",
+            street: "Via Roma 12",
+            price: 300,
+            bookmarkButton: BookmarkButton(
+              size: 50.0,
+              isSaved: isSaved[index],
+              onPressed: () => toggleSave(index),
+            ),
+            onPressed: () => {
+                  // TODO: replace with real data
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FacilityDetailPage(
+                        isStudent: true,
+                        isWizardPage: false,
+                        facilityPhotos: const [
+                          "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
+                          "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
+                          "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
+                        ],
+                        facilityName: "Casa Dolce Casa",
+                        facilityAddress: "Padova - Via Roma 12",
+                        facilityPrice: 300,
+                        facilityHostName: "Mario Rossi",
+                        hostUrlImage:
+                            "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
+                        facilityServices: const [
+                          "2 bedrooms",
+                          "3 beds",
+                          "1 bathroom",
+                          "WiFi",
+                          "Dedicated parking",
+                          "Air condition"
+                        ],
+                        facilityRenters: [
+                          HostFacilityDetailPageRenterBox(
+                            name: 'Francesco Dal Maso',
+                            contractDeadline: DateTime(2025, 1, 1),
+                          ),
+                          HostFacilityDetailPageRenterBox(
+                            name: 'Antonio Principe',
+                            contractDeadline: DateTime(2025, 3, 1),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                }));
+  }
+
+  void toggleSave(int index) {
+    if (widget.isLogged == false) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+    } else {}
+    setState(() {
+      isSaved[index] = !isSaved[index];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     var connectivityStatusProvider = ref.watch(networkAwareProvider);
 
     return Expanded(
@@ -46,6 +129,7 @@ class _StudentHomePageBody extends ConsumerWidget {
                 SizedBox(height: 30.h),
                 CustomSearchBar(
                   hintText: AppLocalizations.of(context)!.lblEnterCity,
+                  isLogged: widget.isLogged,
                 ),
                 SizedBox(height: 60.h),
                 Align(
@@ -69,7 +153,7 @@ class _StudentHomePageBody extends ConsumerWidget {
               : Expanded(
                   child: ListView.separated(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    itemCount: 4,
+                    itemCount: adsList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return AdsBox(
                           imageUrl:
@@ -77,9 +161,10 @@ class _StudentHomePageBody extends ConsumerWidget {
                           city: "Padova",
                           street: "Via Roma 12",
                           price: 300,
-                          bookmarkButton: const BookmarkButton(
+                          bookmarkButton: BookmarkButton(
                             size: 50.0,
-                            isSaved: false,
+                            isSaved: isSaved[index],
+                            onPressed: () => toggleSave(index),
                           ),
                           onPressed: () => {
                                 // TODO: replace with real data

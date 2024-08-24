@@ -8,10 +8,11 @@ import 'package:room_finder/style/color_palette.dart';
 /// - [hintText] is the text that appears as a hint in the search bar.
 class CustomSearchBar extends StatelessWidget {
   final String? hintText;
+  final bool isLogged;
   // TODO: check eventually if other parameters are needed
   // TODO: cities autocomplete
   // TODO: In the searched results page, once invoked, the search bar, initially, has not a hint text, but the searched text
-  const CustomSearchBar({super.key, this.hintText});
+  const CustomSearchBar({super.key, this.hintText, required this.isLogged});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,9 @@ class CustomSearchBar extends StatelessWidget {
               onPressed: () {
                 // TODO: Replace with real data
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const SearchResultsPage();
+                  return SearchResultsPage(
+                    isLogged: isLogged,
+                  );
                 }));
               },
               icon: const Icon(Icons.search),

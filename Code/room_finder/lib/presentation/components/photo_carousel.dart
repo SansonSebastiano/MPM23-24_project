@@ -39,6 +39,20 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
   int _current = 0;
   final CarouselController _controller = CarouselController();
 
+  late bool isSaved;
+
+  @override
+  void initState() {
+    super.initState();
+    isSaved = false;
+  }
+
+  void toggleSave() {
+    setState(() {
+      isSaved = !isSaved;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     double carouselHeight = 348.0.h;
@@ -87,9 +101,10 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const BookmarkButton(
+                      BookmarkButton(
                         size: 50,
-                        isSaved: false,
+                        isSaved: isSaved,
+                        onPressed: toggleSave,
                       ),
                       _PhotoCounter(current: _current, widget: widget)
                     ],

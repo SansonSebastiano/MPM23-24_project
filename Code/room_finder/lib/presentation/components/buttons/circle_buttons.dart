@@ -314,18 +314,17 @@ class LogoutButton extends StatelessWidget {
 /// - [isSaved], inital state value of the button depending whether is saved or not.
 class BookmarkButton extends StatefulWidget {
   final double size;
+  final void Function()? onPressed;
+  // widget state
   final bool isSaved;
 
-  const BookmarkButton({super.key, required this.size, required this.isSaved});
+  const BookmarkButton({super.key, required this.size, required this.isSaved, required this.onPressed});
 
   @override
   State<BookmarkButton> createState() => _BookmarkButtonState();
 }
 
 class _BookmarkButtonState extends State<BookmarkButton> {
-  // Widget state
-  bool isSaved = false;
-
   Color buttonColor = ColorPalette.aliceBlue;
   IconData icon = Icons.bookmark_border_outlined;
   Color iconColor = ColorPalette.oxfordBlue;
@@ -333,15 +332,7 @@ class _BookmarkButtonState extends State<BookmarkButton> {
   @override
   void initState() {
     super.initState();
-    isSaved = widget.isSaved;
-    icon = isSaved ? Icons.bookmark : Icons.bookmark_border_outlined;
-  }
-
-  void _toggleSave() {
-    setState(() {
-      isSaved = !isSaved;
-      icon = isSaved ? Icons.bookmark : Icons.bookmark_border_outlined;
-    });
+    icon = widget.isSaved ? Icons.bookmark : Icons.bookmark_border_outlined;
   }
 
   @override
@@ -360,8 +351,11 @@ class _BookmarkButtonState extends State<BookmarkButton> {
           shape: const CircleBorder(),
           minimumSize: Size(widget.size.w, widget.size.h),
         ),
-        onPressed: _toggleSave,
-        child: Icon(icon, color: iconColor, size: widget.size - 20.w),
+        onPressed: widget.onPressed,
+        child: Icon(
+            widget.isSaved ? Icons.bookmark : Icons.bookmark_border_outlined,
+            color: iconColor,
+            size: widget.size - 20.w),
       ),
     );
   }

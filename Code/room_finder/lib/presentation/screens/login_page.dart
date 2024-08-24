@@ -102,7 +102,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   children: [
                     SafeArea(
                         child: CancelButton(
-                            onPressed: () => Navigator.pop(context))),
+                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const MyHomePage())))),
                     Center(
                       child: Image(
                         image: const AssetImage(

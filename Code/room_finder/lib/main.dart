@@ -72,9 +72,9 @@ class MyHomePage extends ConsumerStatefulWidget {
 
 class MyHomePageState extends ConsumerState<MyHomePage> {
   // TODO: handle this value with the user's role, for now it is hardcoded
-  bool isHost = false;
+  bool isHost = false;  // if this is false
   int currentPageIndex = 0;
-  late bool isLogged;
+  bool isLogged = false;
 
   @override
   void initState() {
@@ -89,15 +89,19 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
         //       MaterialPageRoute(builder: (context) => const LoginPage()));
         // }
       }
-      // just for testing
       else {
+        // just for testing
         User user = ref.read(authNotifierProvider.notifier).currentUser!;
         print("User uid: ${user.uid}");
         print("User email: ${user.email}");
         print("User name: ${user.displayName}");
         print("User photo URL: ${user.photoURL}");
+
+        // TODO: create UserData instance
       }
     });
+
+    setState(() {});
   }
 
   @override
@@ -118,13 +122,13 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
           ? <Widget>[
               bodyTemplate(body: const SafeArea(child: HostHomePage())),
               bodyTemplate(body: const SafeArea(child: HostChatPage())),
-              bodyTemplate(body: const AccountPage()),
+              bodyTemplate(body: isLogged ? const AccountPage() : const LoginPage()),
             ][currentPageIndex]
           : <Widget>[
-              bodyTemplate(body: const SafeArea(child: StudentHomePage())),
-              bodyTemplate(body: const SafeArea(child: SavedAdsPage())),
-              bodyTemplate(body: const SafeArea(child: StudentChatPage())),
-              bodyTemplate(body: const AccountPage()),
+              bodyTemplate(body: SafeArea(child: StudentHomePage(isLogged: isLogged,))),
+              bodyTemplate(body: isLogged ? const SafeArea(child: SavedAdsPage()) : const LoginPage()),
+              bodyTemplate(body: isLogged ? const SafeArea(child: StudentChatPage()) : const LoginPage()),
+              bodyTemplate(body: isLogged ? const AccountPage() : const LoginPage()),
             ][currentPageIndex],
       bottomNavigationBar: isHost
           ? HostNavigationBar(
