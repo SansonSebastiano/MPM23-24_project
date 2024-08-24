@@ -94,11 +94,10 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
           registered: (user) {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const LoginPage()));
-            // FIXME: bug on showing the correct snackbar, currently is shown, after clicked signup button, the snackbar with login message
             showSuccessSnackBar(
                 context, AppLocalizations.of(context)!.lblSuccessfulSignup);
           },
-          unregistered: (message) => showErrorSnackBar(
+          unregistered: () => showErrorSnackBar(
               context, AppLocalizations.of(context)!.lblFailedSignup));
     });
 

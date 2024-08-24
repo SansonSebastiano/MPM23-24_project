@@ -135,5 +135,6 @@
     "lblSuccessfulLogin": "Login avvenuto con successo",
     "lblFailedLogin": "Errore di accesso: credenziali errate",
     "lblSuccessfulSignup": "Registrazione avvenuta con successo: ora effettua il log in",
-    "lblFailedSignup": "Errore nella registrazione: credenziali errate"
+    "lblFailedSignup": "Errore nella registrazione: credenziali errate",
+    "lblFailedLogout": "Errore nel logout: riprova"
 }

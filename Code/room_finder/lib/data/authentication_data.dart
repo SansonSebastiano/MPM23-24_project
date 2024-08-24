@@ -5,14 +5,21 @@ import 'package:room_finder/model/authentication_model.dart';
 import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/provider/firebase_providers.dart';
 
+/// This class allow to handle the user account in Authentication
 class AuthDataSource {
   final FirebaseAuth _auth;
   final Ref _ref;
 
   AuthDataSource(this._auth, this._ref);
 
+  /// This method allow to get the current logged user's info 
   User? get currentUser => _auth.currentUser;
 
+  /// This method allow the user to signup into the application
+  ///
+  /// [AuthArgs] the user's credential to store in Authentication
+  ///
+  /// [UserData] the user's data to store in Firestore
   Future<Either<String, User>> signup(
       {required AuthArgs userCredential, required UserData user}) async {
     try {
@@ -29,6 +36,9 @@ class AuthDataSource {
     }
   }
 
+  /// This method allow the user to login into the application
+  /// 
+  /// [AuthArgs] is required to check the user's credential
   Future<Either<String, User>> login({required AuthArgs userCredential}) async {
     try {
       final response = await _auth.signInWithEmailAndPassword(
@@ -39,19 +49,14 @@ class AuthDataSource {
     }
   }
 
-  // test an alternative logout implementation
-
-  // Future<Either<String, void>> test() async {
-  //   try {
-  //     await _auth.signOut();
-  //     return right(null);
-  //   } on FirebaseAuthException catch (e) {
-  //     return left(e.message ?? 'Failed to logout');
-  //   }
-  // }
-
-  Future<void> logout() async {
-    await _auth.signOut();
+  /// This method allow the user to logout from the application
+  Future<Either<String, void>> logout() async {
+    try {
+      await _auth.signOut();
+      return right(null);
+    } on FirebaseAuthException catch (e) {
+      return left(e.message ?? 'Failed to logout');
+    }
   }
 }
 

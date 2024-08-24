@@ -569,5 +569,9 @@
   "lblFailedSignup": "Signup error: incorrect credentials",
   "@lblFailedSignup": {
     "description": "label for error snackbar"
+  },
+  "lblFailedLogout": "Logout error: try again",
+  "@lblFailedLogout": {
+    "description": "label for error snackbar"
   }
 }

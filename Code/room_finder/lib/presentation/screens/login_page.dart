@@ -75,7 +75,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       next.maybeWhen(
           orElse: () => null,
           authenticated: (user) {
-            // TODO: Navigate to any screen
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -85,7 +84,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             showSuccessSnackBar(
                 context, AppLocalizations.of(context)!.lblSuccessfulLogin);
           },
-          unauthenticated: (message) => showErrorSnackBar(
+          unauthenticated: () => showErrorSnackBar(
               context, AppLocalizations.of(context)!.lblFailedLogin));
     });
 

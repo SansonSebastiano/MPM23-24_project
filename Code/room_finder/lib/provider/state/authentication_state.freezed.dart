@@ -20,30 +20,36 @@ mixin _$AuthenticationState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message) unauthenticated,
+    required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function(User user) registered,
-    required TResult Function(String? message) unregistered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message)? unauthenticated,
+    TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function(User user)? registered,
-    TResult? Function(String? message)? unregistered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message)? unauthenticated,
+    TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function(User user)? registered,
-    TResult Function(String? message)? unregistered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +61,8 @@ mixin _$AuthenticationState {
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Registrered value) registered,
     required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,6 +73,8 @@ mixin _$AuthenticationState {
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Registrered value)? registered,
     TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +85,8 @@ mixin _$AuthenticationState {
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Registrered value)? registered,
     TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -116,12 +128,18 @@ class __$$InitialImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$InitialImpl implements _Initial {
+class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   const _$InitialImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AuthenticationState.initial'));
   }
 
   @override
@@ -138,10 +156,12 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message) unauthenticated,
+    required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function(User user) registered,
-    required TResult Function(String? message) unregistered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
   }) {
     return initial();
   }
@@ -151,10 +171,12 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message)? unauthenticated,
+    TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function(User user)? registered,
-    TResult? Function(String? message)? unregistered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
   }) {
     return initial?.call();
   }
@@ -164,10 +186,12 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message)? unauthenticated,
+    TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function(User user)? registered,
-    TResult Function(String? message)? unregistered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -185,6 +209,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Registrered value) registered,
     required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
   }) {
     return initial(this);
   }
@@ -198,6 +224,8 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Registrered value)? registered,
     TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
   }) {
     return initial?.call(this);
   }
@@ -211,6 +239,8 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Registrered value)? registered,
     TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -242,12 +272,18 @@ class __$$LoadingImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadingImpl implements _Loading {
+class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
   const _$LoadingImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'AuthenticationState.loading'));
   }
 
   @override
@@ -264,10 +300,12 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message) unauthenticated,
+    required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function(User user) registered,
-    required TResult Function(String? message) unregistered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
   }) {
     return loading();
   }
@@ -277,10 +315,12 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message)? unauthenticated,
+    TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function(User user)? registered,
-    TResult? Function(String? message)? unregistered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
   }) {
     return loading?.call();
   }
@@ -290,10 +330,12 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message)? unauthenticated,
+    TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function(User user)? registered,
-    TResult Function(String? message)? unregistered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -311,6 +353,8 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Registrered value) registered,
     required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
   }) {
     return loading(this);
   }
@@ -324,6 +368,8 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Registrered value)? registered,
     TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
   }) {
     return loading?.call(this);
   }
@@ -337,6 +383,8 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Registrered value)? registered,
     TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -355,8 +403,6 @@ abstract class _$$UnAuthenticationImplCopyWith<$Res> {
   factory _$$UnAuthenticationImplCopyWith(_$UnAuthenticationImpl value,
           $Res Function(_$UnAuthenticationImpl) then) =
       __$$UnAuthenticationImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String? message});
 }
 
 /// @nodoc
@@ -366,63 +412,49 @@ class __$$UnAuthenticationImplCopyWithImpl<$Res>
   __$$UnAuthenticationImplCopyWithImpl(_$UnAuthenticationImpl _value,
       $Res Function(_$UnAuthenticationImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = freezed,
-  }) {
-    return _then(_$UnAuthenticationImpl(
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$UnAuthenticationImpl implements _UnAuthentication {
-  const _$UnAuthenticationImpl({this.message});
+class _$UnAuthenticationImpl
+    with DiagnosticableTreeMixin
+    implements _UnAuthentication {
+  const _$UnAuthenticationImpl();
 
   @override
-  final String? message;
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthenticationState.unauthenticated()';
+  }
 
   @override
-  String toString() {
-    return 'AuthenticationState.unauthenticated(message: $message)';
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'AuthenticationState.unauthenticated'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UnAuthenticationImpl &&
-            (identical(other.message, message) || other.message == message));
+        (other.runtimeType == runtimeType && other is _$UnAuthenticationImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UnAuthenticationImplCopyWith<_$UnAuthenticationImpl> get copyWith =>
-      __$$UnAuthenticationImplCopyWithImpl<_$UnAuthenticationImpl>(
-          this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message) unauthenticated,
+    required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function(User user) registered,
-    required TResult Function(String? message) unregistered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
   }) {
-    return unauthenticated(message);
+    return unauthenticated();
   }
 
   @override
@@ -430,12 +462,14 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message)? unauthenticated,
+    TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function(User user)? registered,
-    TResult? Function(String? message)? unregistered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
   }) {
-    return unauthenticated?.call(message);
+    return unauthenticated?.call();
   }
 
   @override
@@ -443,14 +477,16 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message)? unauthenticated,
+    TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function(User user)? registered,
-    TResult Function(String? message)? unregistered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
-      return unauthenticated(message);
+      return unauthenticated();
     }
     return orElse();
   }
@@ -464,6 +500,8 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Registrered value) registered,
     required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
   }) {
     return unauthenticated(this);
   }
@@ -477,6 +515,8 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Registrered value)? registered,
     TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
   }) {
     return unauthenticated?.call(this);
   }
@@ -490,6 +530,8 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Registrered value)? registered,
     TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -500,13 +542,7 @@ class _$UnAuthenticationImpl implements _UnAuthentication {
 }
 
 abstract class _UnAuthentication implements AuthenticationState {
-  const factory _UnAuthentication({final String? message}) =
-      _$UnAuthenticationImpl;
-
-  String? get message;
-  @JsonKey(ignore: true)
-  _$$UnAuthenticationImplCopyWith<_$UnAuthenticationImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _UnAuthentication() = _$UnAuthenticationImpl;
 }
 
 /// @nodoc
@@ -542,15 +578,25 @@ class __$$AuthenticatedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AuthenticatedImpl implements _Authenticated {
+class _$AuthenticatedImpl
+    with DiagnosticableTreeMixin
+    implements _Authenticated {
   const _$AuthenticatedImpl({required this.user});
 
   @override
   final User user;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationState.authenticated(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationState.authenticated'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -575,10 +621,12 @@ class _$AuthenticatedImpl implements _Authenticated {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message) unauthenticated,
+    required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function(User user) registered,
-    required TResult Function(String? message) unregistered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
   }) {
     return authenticated(user);
   }
@@ -588,10 +636,12 @@ class _$AuthenticatedImpl implements _Authenticated {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message)? unauthenticated,
+    TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function(User user)? registered,
-    TResult? Function(String? message)? unregistered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
   }) {
     return authenticated?.call(user);
   }
@@ -601,10 +651,12 @@ class _$AuthenticatedImpl implements _Authenticated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message)? unauthenticated,
+    TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function(User user)? registered,
-    TResult Function(String? message)? unregistered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -622,6 +674,8 @@ class _$AuthenticatedImpl implements _Authenticated {
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Registrered value) registered,
     required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
   }) {
     return authenticated(this);
   }
@@ -635,6 +689,8 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Registrered value)? registered,
     TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
   }) {
     return authenticated?.call(this);
   }
@@ -648,6 +704,8 @@ class _$AuthenticatedImpl implements _Authenticated {
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Registrered value)? registered,
     TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -700,15 +758,23 @@ class __$$RegistreredImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RegistreredImpl implements _Registrered {
+class _$RegistreredImpl with DiagnosticableTreeMixin implements _Registrered {
   const _$RegistreredImpl({required this.user});
 
   @override
   final User user;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AuthenticationState.registered(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthenticationState.registered'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -733,10 +799,12 @@ class _$RegistreredImpl implements _Registrered {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message) unauthenticated,
+    required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function(User user) registered,
-    required TResult Function(String? message) unregistered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
   }) {
     return registered(user);
   }
@@ -746,10 +814,12 @@ class _$RegistreredImpl implements _Registrered {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message)? unauthenticated,
+    TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function(User user)? registered,
-    TResult? Function(String? message)? unregistered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
   }) {
     return registered?.call(user);
   }
@@ -759,10 +829,12 @@ class _$RegistreredImpl implements _Registrered {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message)? unauthenticated,
+    TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function(User user)? registered,
-    TResult Function(String? message)? unregistered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
     required TResult orElse(),
   }) {
     if (registered != null) {
@@ -780,6 +852,8 @@ class _$RegistreredImpl implements _Registrered {
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Registrered value) registered,
     required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
   }) {
     return registered(this);
   }
@@ -793,6 +867,8 @@ class _$RegistreredImpl implements _Registrered {
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Registrered value)? registered,
     TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
   }) {
     return registered?.call(this);
   }
@@ -806,6 +882,8 @@ class _$RegistreredImpl implements _Registrered {
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Registrered value)? registered,
     TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
     required TResult orElse(),
   }) {
     if (registered != null) {
@@ -829,8 +907,6 @@ abstract class _$$UnregistreredImplCopyWith<$Res> {
   factory _$$UnregistreredImplCopyWith(
           _$UnregistreredImpl value, $Res Function(_$UnregistreredImpl) then) =
       __$$UnregistreredImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String? message});
 }
 
 /// @nodoc
@@ -840,62 +916,49 @@ class __$$UnregistreredImplCopyWithImpl<$Res>
   __$$UnregistreredImplCopyWithImpl(
       _$UnregistreredImpl _value, $Res Function(_$UnregistreredImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = freezed,
-  }) {
-    return _then(_$UnregistreredImpl(
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$UnregistreredImpl implements _Unregistrered {
-  const _$UnregistreredImpl({this.message});
+class _$UnregistreredImpl
+    with DiagnosticableTreeMixin
+    implements _Unregistrered {
+  const _$UnregistreredImpl();
 
   @override
-  final String? message;
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthenticationState.unregistered()';
+  }
 
   @override
-  String toString() {
-    return 'AuthenticationState.unregistered(message: $message)';
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'AuthenticationState.unregistered'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UnregistreredImpl &&
-            (identical(other.message, message) || other.message == message));
+        (other.runtimeType == runtimeType && other is _$UnregistreredImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$UnregistreredImplCopyWith<_$UnregistreredImpl> get copyWith =>
-      __$$UnregistreredImplCopyWithImpl<_$UnregistreredImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String? message) unauthenticated,
+    required TResult Function() unauthenticated,
     required TResult Function(User user) authenticated,
     required TResult Function(User user) registered,
-    required TResult Function(String? message) unregistered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
   }) {
-    return unregistered(message);
+    return unregistered();
   }
 
   @override
@@ -903,12 +966,14 @@ class _$UnregistreredImpl implements _Unregistrered {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String? message)? unauthenticated,
+    TResult? Function()? unauthenticated,
     TResult? Function(User user)? authenticated,
     TResult? Function(User user)? registered,
-    TResult? Function(String? message)? unregistered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
   }) {
-    return unregistered?.call(message);
+    return unregistered?.call();
   }
 
   @override
@@ -916,14 +981,16 @@ class _$UnregistreredImpl implements _Unregistrered {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String? message)? unauthenticated,
+    TResult Function()? unauthenticated,
     TResult Function(User user)? authenticated,
     TResult Function(User user)? registered,
-    TResult Function(String? message)? unregistered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
     required TResult orElse(),
   }) {
     if (unregistered != null) {
-      return unregistered(message);
+      return unregistered();
     }
     return orElse();
   }
@@ -937,6 +1004,8 @@ class _$UnregistreredImpl implements _Unregistrered {
     required TResult Function(_Authenticated value) authenticated,
     required TResult Function(_Registrered value) registered,
     required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
   }) {
     return unregistered(this);
   }
@@ -950,6 +1019,8 @@ class _$UnregistreredImpl implements _Unregistrered {
     TResult? Function(_Authenticated value)? authenticated,
     TResult? Function(_Registrered value)? registered,
     TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
   }) {
     return unregistered?.call(this);
   }
@@ -963,6 +1034,8 @@ class _$UnregistreredImpl implements _Unregistrered {
     TResult Function(_Authenticated value)? authenticated,
     TResult Function(_Registrered value)? registered,
     TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
     required TResult orElse(),
   }) {
     if (unregistered != null) {
@@ -973,10 +1046,295 @@ class _$UnregistreredImpl implements _Unregistrered {
 }
 
 abstract class _Unregistrered implements AuthenticationState {
-  const factory _Unregistrered({final String? message}) = _$UnregistreredImpl;
+  const factory _Unregistrered() = _$UnregistreredImpl;
+}
 
-  String? get message;
-  @JsonKey(ignore: true)
-  _$$UnregistreredImplCopyWith<_$UnregistreredImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+/// @nodoc
+abstract class _$$LogoutImplCopyWith<$Res> {
+  factory _$$LogoutImplCopyWith(
+          _$LogoutImpl value, $Res Function(_$LogoutImpl) then) =
+      __$$LogoutImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LogoutImplCopyWithImpl<$Res>
+    extends _$AuthenticationStateCopyWithImpl<$Res, _$LogoutImpl>
+    implements _$$LogoutImplCopyWith<$Res> {
+  __$$LogoutImplCopyWithImpl(
+      _$LogoutImpl _value, $Res Function(_$LogoutImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LogoutImpl with DiagnosticableTreeMixin implements _Logout {
+  const _$LogoutImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthenticationState.successfulLogout()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'AuthenticationState.successfulLogout'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LogoutImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() unauthenticated,
+    required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
+  }) {
+    return successfulLogout();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
+  }) {
+    return successfulLogout?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? unauthenticated,
+    TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
+    required TResult orElse(),
+  }) {
+    if (successfulLogout != null) {
+      return successfulLogout();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_UnAuthentication value) unauthenticated,
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
+  }) {
+    return successfulLogout(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_UnAuthentication value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
+  }) {
+    return successfulLogout?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_UnAuthentication value)? unauthenticated,
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
+    required TResult orElse(),
+  }) {
+    if (successfulLogout != null) {
+      return successfulLogout(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Logout implements AuthenticationState {
+  const factory _Logout() = _$LogoutImpl;
+}
+
+/// @nodoc
+abstract class _$$notLogoutImplCopyWith<$Res> {
+  factory _$$notLogoutImplCopyWith(
+          _$notLogoutImpl value, $Res Function(_$notLogoutImpl) then) =
+      __$$notLogoutImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$notLogoutImplCopyWithImpl<$Res>
+    extends _$AuthenticationStateCopyWithImpl<$Res, _$notLogoutImpl>
+    implements _$$notLogoutImplCopyWith<$Res> {
+  __$$notLogoutImplCopyWithImpl(
+      _$notLogoutImpl _value, $Res Function(_$notLogoutImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$notLogoutImpl with DiagnosticableTreeMixin implements _notLogout {
+  const _$notLogoutImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthenticationState.failedLogout()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'AuthenticationState.failedLogout'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$notLogoutImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() unauthenticated,
+    required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
+  }) {
+    return failedLogout();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
+  }) {
+    return failedLogout?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? unauthenticated,
+    TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
+    required TResult orElse(),
+  }) {
+    if (failedLogout != null) {
+      return failedLogout();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_UnAuthentication value) unauthenticated,
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
+  }) {
+    return failedLogout(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_UnAuthentication value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
+  }) {
+    return failedLogout?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_UnAuthentication value)? unauthenticated,
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
+    required TResult orElse(),
+  }) {
+    if (failedLogout != null) {
+      return failedLogout(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _notLogout implements AuthenticationState {
+  const factory _notLogout() = _$notLogoutImpl;
 }

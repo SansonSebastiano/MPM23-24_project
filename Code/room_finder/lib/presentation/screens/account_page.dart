@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/main.dart';
 import 'package:room_finder/presentation/components/account_photo.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/setting_buttons.dart';
+import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/presentation/screens/account_page_login_security.dart';
 import 'package:room_finder/presentation/screens/account_page_personal_information.dart';
+import 'package:room_finder/provider/authentication_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends ConsumerWidget {
   const AccountPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(authNotifierProvider, (previous, next) {
+      next.maybeWhen(
+          orElse: () => null,
+          successfulLogout: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MyHomePage()));
+          },
+          failedLogout: () => showErrorSnackBar(
+              context, AppLocalizations.of(context)!.lblFailedLogout));
+    });
+
     return Column(
       children: [
         Stack(
@@ -37,7 +52,7 @@ class AccountPage extends StatelessWidget {
                           content: Text(
                               AppLocalizations.of(context)!.logoutAlertMessage),
                           onOk: () => {
-                                print("logout from RoomFinder..."),
+                                ref.read(authNotifierProvider.notifier).logout(),
                                 Navigator.pop(context)
                               },
                           onCancel: () => Navigator.pop(context)),
@@ -47,7 +62,7 @@ class AccountPage extends StatelessWidget {
                           content: Text(
                               AppLocalizations.of(context)!.logoutAlertMessage),
                           onOk: () => {
-                                print("logout from RoomFinder..."),
+                                ref.read(authNotifierProvider.notifier).logout(),
                                 Navigator.pop(context)
                               },
                           onCancel: () => Navigator.pop(context)))),

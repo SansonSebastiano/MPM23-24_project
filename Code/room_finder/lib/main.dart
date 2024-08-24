@@ -83,24 +83,20 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       isLogged = ref.read(authNotifierProvider.notifier).isLogged();
       if (!isLogged) {
-        if (mounted) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const LoginPage()));
-        }
-      } 
+        print("not logged");
+        // if (mounted) {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => const LoginPage()));
+        // }
+      }
       // just for testing
-      
-      // else {
-      //   User user = ref.read(authNotifierProvider.notifier).currentUser!;
-      //   print("User uid: ${user.uid}");
-      //   print("User email: ${user.email}");
-      //   print("User name: ${user.displayName}");
-      //   print("User photo URL: ${user.photoURL}");
-
-      //   await ref.read(authNotifierProvider.notifier).logout();
-      //   bool flag = ref.read(authNotifierProvider.notifier).isLogged();
-      //   print("is still logged in? $flag");
-      // }
+      else {
+        User user = ref.read(authNotifierProvider.notifier).currentUser!;
+        print("User uid: ${user.uid}");
+        print("User email: ${user.email}");
+        print("User name: ${user.displayName}");
+        print("User photo URL: ${user.photoURL}");
+      }
     });
   }
 
