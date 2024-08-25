@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/firebase_options.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/screens/account_page.dart';
 import 'package:room_finder/presentation/screens/chat_page.dart';
@@ -15,6 +16,7 @@ import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/presentation/screens/saved_ads_page.dart';
 import 'package:room_finder/presentation/screens/onboarding_page.dart';
 import 'package:room_finder/provider/authentication_provider.dart';
+import 'package:room_finder/provider/user_provider.dart';
 import 'package:room_finder/style/theme.dart';
 import 'package:room_finder/util/shared_preferences.dart';
 
@@ -71,41 +73,66 @@ class MyHomePage extends ConsumerStatefulWidget {
 }
 
 class MyHomePageState extends ConsumerState<MyHomePage> {
-  // TODO: handle this value with the user's role, for now it is hardcoded
-  bool isHost = false;  // if this is false
-  int currentPageIndex = 0;
+  int currentStudentPageIndex = 0;
+  int currentHostPageIndex = 0;
+
+  bool isHost = false;
+  // Check if a user is logged
   bool isLogged = false;
+  // Get the information about the logged user from Authentication
+  late User? userAuthenticated = ref.read(authNotifierProvider.notifier).currentUser;
+  // Get the data about the logged user from Firestore
+  late UserData user = UserData(isHost: isHost);
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Get the login user state
       isLogged = ref.read(authNotifierProvider.notifier).isLogged();
-      if (!isLogged) {
-        print("not logged");
-        // if (mounted) {
-        //   Navigator.push(context,
-        //       MaterialPageRoute(builder: (context) => const LoginPage()));
-        // }
-      }
-      else {
-        // just for testing
-        User user = ref.read(authNotifierProvider.notifier).currentUser!;
-        print("User uid: ${user.uid}");
-        print("User email: ${user.email}");
-        print("User name: ${user.displayName}");
-        print("User photo URL: ${user.photoURL}");
-
-        // TODO: create UserData instance
+      // if logged, then
+      if (isLogged) {
+        // get the infos
+        userAuthenticated =
+            ref.read(authNotifierProvider.notifier).currentUser!;
+        // get the data
+        await ref
+            .read(userNotifierProvider.notifier)
+            .getUser(userUid: userAuthenticated!.uid);
       }
     });
-
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(userNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        // on successful getting data
+        successfulRead: (userData) {
+          // create the user instance
+          user = UserData(
+              uid: userAuthenticated!.uid,
+              name: userAuthenticated!.displayName,
+              photoUrl: userAuthenticated!.photoURL,
+              isHost: userData.isHost);
+          // setting the user role to display the correct screens
+          setState(() {
+            isHost = userData.isHost;            
+          });
+
+          print("User uid: ${user.uid}");
+          print("User name: ${user.name}");
+          print("User photo URL: ${user.photoUrl}");
+          print("Is user a host: ${user.isHost}");
+        },
+        // TODO: decide this, on failed getting data
+        failedRead: () => null,
+      );
+    });
+
     Widget bodyTemplate({required Widget body}) {
       return Center(
         child: body,
@@ -119,31 +146,45 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
 
     return Scaffold(
       body: isHost
+          // Host's screens
           ? <Widget>[
               bodyTemplate(body: const SafeArea(child: HostHomePage())),
               bodyTemplate(body: const SafeArea(child: HostChatPage())),
-              bodyTemplate(body: isLogged ? const AccountPage() : const LoginPage()),
-            ][currentPageIndex]
+              bodyTemplate(
+                  body: isLogged ? const AccountPage() : const LoginPage()),
+            ][currentHostPageIndex]
+          // Student's screens
           : <Widget>[
-              bodyTemplate(body: SafeArea(child: StudentHomePage(isLogged: isLogged,))),
-              bodyTemplate(body: isLogged ? const SafeArea(child: SavedAdsPage()) : const LoginPage()),
-              bodyTemplate(body: isLogged ? const SafeArea(child: StudentChatPage()) : const LoginPage()),
-              bodyTemplate(body: isLogged ? const AccountPage() : const LoginPage()),
-            ][currentPageIndex],
+              bodyTemplate(
+                  body: SafeArea(
+                      child: StudentHomePage(
+                isLogged: isLogged,
+              ))),
+              bodyTemplate(
+                  body: isLogged
+                      ? const SafeArea(child: SavedAdsPage())
+                      : const LoginPage()),
+              bodyTemplate(
+                  body: isLogged
+                      ? const SafeArea(child: StudentChatPage())
+                      : const LoginPage()),
+              bodyTemplate(
+                  body: isLogged ? const AccountPage() : const LoginPage()),
+            ][currentStudentPageIndex],
       bottomNavigationBar: isHost
           ? HostNavigationBar(
-              currentPageIndex: currentPageIndex,
+              currentPageIndex: currentHostPageIndex,
               onDestinationSelected: (int index) {
                 setState(() {
-                  currentPageIndex = index;
+                  currentHostPageIndex = index;
                 });
               },
             )
           : StudentNavigationBar(
-              currentPageIndex: currentPageIndex,
+              currentPageIndex: currentStudentPageIndex,
               onDestinationSelected: (int index) {
                 setState(() {
-                  currentPageIndex = index;
+                  currentStudentPageIndex = index;
                 });
               },
             ),

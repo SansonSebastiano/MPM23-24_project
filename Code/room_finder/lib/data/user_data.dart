@@ -6,6 +6,7 @@ import 'package:room_finder/provider/firebase_providers.dart';
 
 /// List of fields for users' documents
 const String _isHostField = 'isHost';
+const String _userCollectionName = 'users';
 
 /// This class allow to handle the 'users' collection in Firestore
 class UserDataSource {
@@ -39,25 +40,4 @@ class UserDataSource {
 }
 
 final userDataSourceProvider = Provider<UserDataSource>((ref) => UserDataSource(
-    ref, ref.read(firebaseFirestoreProvider).collection('users')));
-
-/*
-  SIGNUP'S PROCESS:
-  1 - User enters:
-    - name
-    - email
-    - password
-  2 - User click signup
-  3 - Then on Authentication the new account is created with:
-    - uid (automatically)
-    - name
-    - email
-    - password
-    - (photoUrl is null)
-  4 - Then on Firestore add the new user in the 'users' collection setting the 'isHost'
-  5 - Redirect to login page and entering:
-    - mail
-    - password
-  6 - get uid and then:
-    - get the UserData(uid, name, mail, photoUrl, isHost)
-*/
+    ref, ref.read(firebaseFirestoreProvider).collection(_userCollectionName)));
