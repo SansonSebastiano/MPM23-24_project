@@ -573,5 +573,39 @@
   "lblFailedLogout": "Logout error: try again",
   "@lblFailedLogout": {
     "description": "label for error snackbar"
+  },
+  "lblStandardTextFieldError": "{name} field cannot be empty",
+  "@lblStandardTextFieldError": {
+    "description": "The client error shown when the user digits a wrong input",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Name"
+      }
+    }
+  },
+  "lblVoidEmailTextFieldError": "Email field cannot be empty",
+  "@lblVoidEmailTextFieldError": {
+    "description": "The client error shown when the user does not digit an email"
+  },
+  "lblWrongEmailTextFieldError": "Email format is not valid",
+  "@lblWrongEmailTextFieldError": {
+    "description": "The client error shown when the user digits a wrong email"
+  },
+  "lblVoidPswdTextFieldError": "Password field cannot be empty",
+  "@lblPswdTextFieldError": {
+    "description": "The client error shown when the user does not digit a password"
+  },
+  "lblWrongPswdTextFieldError": "Password must be at least 6 characters long",
+  "@lblWrongPswdTextFieldError": {
+    "description": "The client error shown when the password is not long enough"
+  },
+  "lblConfirmPswdMatchError": "Password does not match with the previous one",
+  "@lblConfirmPswdMatchError": {
+    "description": "The client error shown when the confirm password field does not match with choose password field"
+  },
+  "lblWriteMessage": "Write a message",
+  "@lblWriteMessage": {
+    "description": "The send message text field placeholder"
   }
 }

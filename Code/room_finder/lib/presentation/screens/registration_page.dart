@@ -74,8 +74,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
       final networkStatus = ref.read(networkAwareProvider);
 
       if (networkStatus == NetworkStatus.off) {
-        // TODO: see issue #35
-        showErrorSnackBar(context, "No internet connection. Please try again.");
+        showErrorSnackBar(context, AppLocalizations.of(context)!.lblConnectionErrorDesc);
       } else {
         // Proceed with registration logic
         ref.read(authNotifierProvider.notifier).signup(

@@ -9,8 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class StandardTextField extends StatefulWidget {
   final String label;
   final Function(bool) onValueValidityChanged;
-  final String?
-      initialValue; // Optional parameter to load the initial name from backend
+  final String? initialValue; // Optional parameter to load the initial name from backend
   final TextEditingController controller;
 
   const StandardTextField({
@@ -59,8 +58,7 @@ class _StandardTextFieldState extends State<StandardTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              '${widget.label} field cannot be empty',
+              AppLocalizations.of(context)!.lblStandardTextFieldError(widget.label),
               style: TextStyle(
                 color: Colors.red,
                 fontSize: 14.w,
@@ -149,8 +147,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              'Email field cannot be empty',
+              AppLocalizations.of(context)!.lblVoidEmailTextFieldError,
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 14.w,
@@ -163,8 +160,7 @@ class _EmailTextFieldState extends State<EmailTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              'Email format is not valid',
+              AppLocalizations.of(context)!.lblWrongEmailTextFieldError,
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 14.w,
@@ -254,8 +250,7 @@ class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              'Password field cannot be empty',
+              AppLocalizations.of(context)!.lblVoidPswdTextFieldError,
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 14.w,
@@ -268,8 +263,7 @@ class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              'Password must be at least 6 characters long',
+              AppLocalizations.of(context)!.lblWrongPswdTextFieldError,
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 14.w,
@@ -385,8 +379,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              'Password field cannot be empty',
+              AppLocalizations.of(context)!.lblVoidPswdTextFieldError,
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 14.w,
@@ -399,8 +392,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              'Password must be at least 6 characters long',
+              AppLocalizations.of(context)!.lblWrongPswdTextFieldError,
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 14.w,
@@ -458,8 +450,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              'Password field cannot be empty',
+              AppLocalizations.of(context)!.lblVoidPswdTextFieldError,
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 14.w,
@@ -472,8 +463,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              'Password must be at least 6 characters long',
+              AppLocalizations.of(context)!.lblWrongPswdTextFieldError,
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 14.w,
@@ -484,8 +474,7 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
           Padding(
             padding: EdgeInsets.only(bottom: 10.h),
             child: Text(
-              // TODO: see issue #35
-              'Password does not match with the previous one',
+              AppLocalizations.of(context)!.lblConfirmPswdMatchError,
               style: TextStyle(
                   color: Colors.red,
                   fontSize: 14.w,
@@ -581,8 +570,7 @@ class _MessageInputFieldState extends State<MessageInputField> {
             minLines: 1,
             maxLines: 6,
             decoration: InputDecoration(
-              // TODO: see issue #35
-              hintText: 'Write a message',
+              hintText: AppLocalizations.of(context)!.lblWriteMessage,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(25.r),
                 borderSide: BorderSide(

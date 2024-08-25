@@ -136,5 +136,12 @@
     "lblFailedLogin": "Errore di accesso: credenziali errate",
     "lblSuccessfulSignup": "Registrazione avvenuta con successo: ora effettua il log in",
     "lblFailedSignup": "Errore nella registrazione: credenziali errate",
-    "lblFailedLogout": "Errore nel logout: riprova"
+    "lblFailedLogout": "Errore nel logout: riprova",
+    "lblStandardTextFieldError": "{name} non può essere vuoto",
+    "lblVoidEmailTextFieldError": "Il campo email non può essere vuoto",
+    "lblWrongEmailTextFieldError": "Il formato dell'email non è valido",
+    "lblVoidPswdTextFieldError": "Il campo password non può essere vuoto",
+    "lblWrongPswdTextFieldError": "La password deve essere lunga almeno 6 caratteri",
+    "lblConfirmPswdMatchError": "La password non coincide con la precedente",
+    "lblWriteMessage": "Digita un messaggio"
 }
