@@ -353,7 +353,8 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
     final chosenPassword = widget.pswdController.text;
     final confirmedPassword = widget.confirmPswdController.text;
 
-    bool isValid = chosenPassword.isNotEmpty &&
+    final bool isValid = 
+        chosenPassword.isNotEmpty &&
         chosenPassword.length >= 6 &&
         confirmedPassword.isNotEmpty &&
         confirmedPassword.length >= 6 &&
@@ -365,9 +366,10 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
   @override
   void initState() {
     super.initState();
-
     widget.pswdController.addListener(_validateFields);
+    widget.confirmPswdController.addListener(_validateFields);
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -439,7 +441,6 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
                   _isChoosePswdEmpty = value.isEmpty;
                   _userChooseInteraction = true;
                 });
-                _validateFields();
               },
             )),
 
@@ -526,7 +527,6 @@ class _RegistrationPswdTextFieldState extends State<RegistrationPswdTextField> {
                   _passwordsMatch = widget.pswdController.text == value;
                   _userConfirmInteraction = true;
                 });
-                _validateFields();
               },
             )),
       ],

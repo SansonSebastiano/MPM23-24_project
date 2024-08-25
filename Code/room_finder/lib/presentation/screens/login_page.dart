@@ -24,6 +24,7 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   late TextEditingController _emailController;
   late TextEditingController _pswdController;
+  
   bool _isEmailValid = false;
   bool _isPasswordValid = false;
 
