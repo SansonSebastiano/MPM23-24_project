@@ -7,12 +7,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 /// - [imageUrl], the profile image.
 class AccountPhoto extends StatelessWidget {
   final double size;
-  final String imageUrl;
+  final String? imageUrl;
 
   const AccountPhoto({
     super.key,
     required this.size,
-    required this.imageUrl,
+    this.imageUrl,
   });
 
   @override
@@ -24,7 +24,7 @@ class AccountPhoto extends StatelessWidget {
         shape: BoxShape.circle,
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: NetworkImage(imageUrl),
+          image: (imageUrl != null) ? NetworkImage(imageUrl!) : const AssetImage('assets/images/Standard-avatar.png')
         ),
         boxShadow: [
           BoxShadow(
