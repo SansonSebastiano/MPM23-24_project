@@ -211,8 +211,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                               });
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                          height: 20.h); // Add padding between items
+                      return SizedBox(height: 20.h); 
                     },
                   ),
                 ),
