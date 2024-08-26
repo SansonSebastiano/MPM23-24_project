@@ -32,28 +32,26 @@ class _ProfilePhotoEditorState extends State<ProfilePhotoEditor> {
   Future<void> getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        widget.onPhotoSetted(File(pickedFile.path));
-        // widget.image = File(pickedFile.path);
-        widget.onPhotoChanged
-            ?.call(widget.image); // Notify parent about the change
-      }
-    });
+    if (pickedFile != null) {
+      final newImage = File(pickedFile.path);
+      setState(() {
+        widget.onPhotoSetted(newImage);  // Set the new image in the parent widget
+      });
+      widget.onPhotoChanged?.call(newImage);  // Notify parent about the change
+    }
   }
 
   // Getting image from camera
   Future<void> getImageFromCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
-    setState(() {
-      if (pickedFile != null) {
-        widget.onPhotoSetted(File(pickedFile.path));
-        // widget.image = File(pickedFile.path);
-        widget.onPhotoChanged
-            ?.call(widget.image); // Notify parent about the change
-      }
-    });
+    if (pickedFile != null) {
+      final newImage = File(pickedFile.path);
+      setState(() {
+        widget.onPhotoSetted(newImage);  // Set the new image in the parent widget
+      });
+      widget.onPhotoChanged?.call(newImage);  // Notify parent about the change
+    }
   }
 
   // Show dialog for android

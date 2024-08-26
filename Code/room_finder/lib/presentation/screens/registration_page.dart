@@ -85,6 +85,12 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
     }
   }
 
+  bool get _hasUnsavedChanges =>
+      _nameController.text.isNotEmpty ||
+      _emailController.text.isNotEmpty ||
+      _pswdController.text.isNotEmpty ||
+      _confirmPswdController.text.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
     ref.listen(authNotifierProvider, (previous, next) {
@@ -100,7 +106,38 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
               context, AppLocalizations.of(context)!.lblFailedSignup));
     });
 
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (_hasUnsavedChanges) {
+          showOptionsDialog(
+            context: context,
+            androidDialog: ActionsAndroidDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+              context: context,
+              onOk: () { 
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              onCancel: () => Navigator.of(context).pop(),
+            ),
+            iosDialog: ActionsIosDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+              context: context,
+              onOk: () { 
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              onCancel: () => Navigator.of(context).pop(),
+            ),
+          );
+        } else {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
         body: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -112,7 +149,36 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      DarkBackButton(onPressed: () => Navigator.pop(context)),
+                      DarkBackButton(
+                        onPressed: (_hasUnsavedChanges) 
+                        ? () { showOptionsDialog(
+                          context: context,
+                          androidDialog: ActionsAndroidDialog(
+                              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                              context: context,
+                              onOk: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              },
+                              onCancel: () {
+                                Navigator.of(context).pop();
+                              }),
+                          iosDialog: ActionsIosDialog(
+                              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                              context: context,
+                              onOk: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const LoginPage())
+                                );
+                              },
+                              onCancel: () {
+                                Navigator.of(context).pop();
+                              }));
+                          } 
+                        : () => Navigator.of(context).pop()
+                      ),
                       SizedBox(height: 40.h),
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -201,6 +267,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
               ],
             ),
           ),
-        ]);
+        ])
+    );
   }
 }

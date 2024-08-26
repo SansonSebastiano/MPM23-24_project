@@ -144,7 +144,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                 ),
                 SettingButtons(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LoginSecurityPage())),
+                      builder: (context) => LoginSecurityPage(user: widget.user))),
                   label: AppLocalizations.of(context)!.btnLoginSecurity,
                   icon: Icons.login,
                 ),
