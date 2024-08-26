@@ -9,6 +9,7 @@ import 'package:room_finder/presentation/screens/chat_detail_page.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class StudentChatPage extends ConsumerWidget {
+  
   const StudentChatPage({super.key});
 
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
@@ -15,14 +16,17 @@ import 'package:room_finder/util/network_handler.dart';
 
 class StudentHomePage extends StatelessWidget {
   final bool isLogged;
+  final UserData studentUser;
 
-  const StudentHomePage({super.key, required this.isLogged});
+  const StudentHomePage(
+      {super.key, required this.isLogged, required this.studentUser});
 
   @override
   Widget build(BuildContext context) {
     return MainTemplateScreen(
-      // TODO: screenLabel should be adapted to the user's name if logged in or to the default message if not logged in
-      screenLabel: AppLocalizations.of(context)!.lblWelcomeUser("<Name>"),
+      screenLabel: isLogged
+          ? AppLocalizations.of(context)!.lblWelcomeUser(studentUser.name!)
+          : AppLocalizations.of(context)!.lblWelcomeNotLogged,
       screenContent: _StudentHomePageBody(isLogged: isLogged),
     );
   }
@@ -104,7 +108,8 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
 
   void toggleSave(int index) {
     if (widget.isLogged == false) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
     } else {}
     setState(() {
       isSaved[index] = !isSaved[index];
@@ -211,7 +216,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                               });
                     },
                     separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(height: 20.h); 
+                      return SizedBox(height: 20.h);
                     },
                   ),
                 ),
@@ -222,13 +227,14 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
 }
 
 class HostHomePage extends StatelessWidget {
-  const HostHomePage({super.key});
+  final UserData hostUser;
+  const HostHomePage({super.key, required this.hostUser});
 
   @override
   Widget build(BuildContext context) {
     return MainTemplateScreen(
       // TODO: screenLabel should be adapted to the host user's name
-      screenLabel: AppLocalizations.of(context)!.lblWelcomeUser("<Name>"),
+      screenLabel: AppLocalizations.of(context)!.lblWelcomeUser(hostUser.name!),
       screenContent: const _HostHomePageBody(),
     );
   }

@@ -3,16 +3,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/input_text_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/profile_photo_editor.dart';
 import 'package:room_finder/presentation/components/snackbar.dart';
+import 'package:room_finder/provider/authentication_provider.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class PersonalInformationPage extends ConsumerStatefulWidget {
-  const PersonalInformationPage({super.key});
+  final UserData user;
+
+  const PersonalInformationPage({super.key, required this.user});
 
   @override
   ConsumerState<PersonalInformationPage> createState() =>
@@ -26,11 +30,12 @@ class _PersonalInformationPageState
   bool _isNameChanged = false;
   bool _isPhotoChanged = false;
 
+  File? _image;
+
   @override
   void initState() {
     super.initState();
-    // FIXME: see below FIXME for the initial value
-    _nameController = TextEditingController();
+    _nameController = TextEditingController(text: widget.user.name);
   }
 
   @override
@@ -51,21 +56,43 @@ class _PersonalInformationPageState
     });
   }
 
-  void _handleSubmitChanges() {
+  void _handleSubmitChanges() async {
     if (_isNameChanged || _isPhotoChanged) {
-      final networkStatus = ref.read(networkAwareProvider);
+      var networkStatus = ref.read(networkAwareProvider);
 
       if (networkStatus == NetworkStatus.off) {
+        // TODO: see issue #35
         showErrorSnackBar(context, "No internet connection. Please try again.");
       } else {
         // Proceed submitting changes
-        print("changing user information...");
+        // TODO: to be tested
+        if (_nameController.text.isNotEmpty) {
+          ref
+              .read(authNotifierProvider.notifier)
+              .updateName(newUserName: _nameController.text);
+        }
+        if (_image != null) {
+          ref
+              .read(authNotifierProvider.notifier)
+              .updatePhoto(imageName: widget.user.uid!, imageFile: _image!);
+        }
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    // TODO: to be tested
+    ref.listen(authNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        nameNotUpdated: () {},
+        nameUpdated: () {},
+        photoNotUpdated: () {},
+        photoUpdated: (photoURL) {},
+      );
+    });
+
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(
@@ -99,24 +126,28 @@ class _PersonalInformationPageState
                       SizedBox(height: 20.h),
                       Center(
                         child: ProfilePhotoEditor(
-                          imageUrl:
-                              "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg",
+                          imageUrl: widget.user.photoUrl,
                           onPhotoChanged: _onPhotoChanged,
+                          image: _image,
+                          onPhotoSetted: (newPhoto) {
+                            setState(() {
+                              _image = newPhoto;
+                            });
+                          },
                         ),
                       ),
                       SizedBox(height: 20.h),
                       StandardTextField(
-                          label: AppLocalizations.of(context)!.lblName,
-                          onValueValidityChanged: _onNameValidityChanged,
-                          controller: _nameController,
-                          // FIXME: fix the initial value in the initState of the current page
-                          initialValue: "Francesco" // to retrieve from backend
-                          ),
+                        label: AppLocalizations.of(context)!.lblName,
+                        onValueValidityChanged: _onNameValidityChanged,
+                        controller: _nameController,
+                      ),
                       SizedBox(height: 40.h),
                       Center(
                         child: Stack(
                           children: [
                             RectangleButton(
+                              // TODO: see issue #35
                               label: "Submit changes",
                               onPressed: _handleSubmitChanges,
                             ),

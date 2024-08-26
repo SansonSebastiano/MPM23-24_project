@@ -75,6 +75,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       next.maybeWhen(
           orElse: () => null,
           authenticated: (user) {
+            // Navigator.pop(context);
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -102,7 +103,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   children: [
                     SafeArea(
                         child: CancelButton(
-                            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const MyHomePage())))),
+                          // TODO: NAvigator.pop
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MyHomePage())))),
                     Center(
                       child: Image(
                         image: const AssetImage(

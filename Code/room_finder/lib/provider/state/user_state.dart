@@ -8,6 +8,8 @@ part "user_state.freezed.dart";
 class UserState with _$UserState {
   const factory UserState.initial() = _Initial;
 
+  const factory UserState.loading() = _Loading;
+
   const factory UserState.failedRead() = _FailedRead;
 
   const factory UserState.successfulRead({required UserData userData}) = _SuccessfulRead;

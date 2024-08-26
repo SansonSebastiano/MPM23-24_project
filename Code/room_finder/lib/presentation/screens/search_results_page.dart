@@ -152,7 +152,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                                           Theme.of(context).colorScheme.error)),
                             ),
                           )
-                        : SizedBox.shrink(),
+                        : const SizedBox.shrink(),
                     Expanded(
                       child: ListView.separated(
                         padding: EdgeInsets.all(20.w),

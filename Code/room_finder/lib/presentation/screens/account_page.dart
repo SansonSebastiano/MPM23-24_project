@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/main.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/account_photo.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
@@ -14,7 +15,9 @@ import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AccountPage extends ConsumerWidget {
-  const AccountPage({super.key});
+  final UserData user;
+
+  const AccountPage({super.key, required this.user});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,7 +55,9 @@ class AccountPage extends ConsumerWidget {
                           content: Text(
                               AppLocalizations.of(context)!.logoutAlertMessage),
                           onOk: () => {
-                                ref.read(authNotifierProvider.notifier).logout(),
+                                ref
+                                    .read(authNotifierProvider.notifier)
+                                    .logout(),
                                 Navigator.pop(context)
                               },
                           onCancel: () => Navigator.pop(context)),
@@ -62,7 +67,9 @@ class AccountPage extends ConsumerWidget {
                           content: Text(
                               AppLocalizations.of(context)!.logoutAlertMessage),
                           onOk: () => {
-                                ref.read(authNotifierProvider.notifier).logout(),
+                                ref
+                                    .read(authNotifierProvider.notifier)
+                                    .logout(),
                                 Navigator.pop(context)
                               },
                           onCancel: () => Navigator.pop(context)))),
@@ -75,14 +82,13 @@ class AccountPage extends ConsumerWidget {
                   children: [
                     AccountPhoto(
                       size: 180.r,
-                      imageUrl:
-                          "https://www.fotografareperstupire.com/wp-content/uploads/2023/03/pose-per-foto-uomo-selfie.jpg",
+                      imageUrl: user.photoUrl,
                     ),
                     SizedBox(height: 10.h),
-                    Text('Francesco',
+                    Text(user.name!,
                         style: Theme.of(context).textTheme.displayMedium),
                     SizedBox(height: 10.h),
-                    Text('francescoo@gmail.com',
+                    Text(user.email!,
                         style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ),
@@ -123,7 +129,7 @@ class AccountPage extends ConsumerWidget {
               children: [
                 SettingButtons(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PersonalInformationPage())),
+                      builder: (context) => PersonalInformationPage(user: user,))),
                   label: AppLocalizations.of(context)!.btnPersonalInfo,
                   icon: Icons.person_outline,
                 ),

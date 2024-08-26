@@ -19,6 +19,7 @@ mixin _$UserState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() loading,
     required TResult Function() failedRead,
     required TResult Function(UserData userData) successfulRead,
   }) =>
@@ -26,6 +27,7 @@ mixin _$UserState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
+    TResult? Function()? loading,
     TResult? Function()? failedRead,
     TResult? Function(UserData userData)? successfulRead,
   }) =>
@@ -33,6 +35,7 @@ mixin _$UserState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? loading,
     TResult Function()? failedRead,
     TResult Function(UserData userData)? successfulRead,
     required TResult orElse(),
@@ -41,6 +44,7 @@ mixin _$UserState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_FailedRead value) failedRead,
     required TResult Function(_SuccessfulRead value) successfulRead,
   }) =>
@@ -48,6 +52,7 @@ mixin _$UserState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_FailedRead value)? failedRead,
     TResult? Function(_SuccessfulRead value)? successfulRead,
   }) =>
@@ -55,6 +60,7 @@ mixin _$UserState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
     TResult Function(_FailedRead value)? failedRead,
     TResult Function(_SuccessfulRead value)? successfulRead,
     required TResult orElse(),
@@ -124,6 +130,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() loading,
     required TResult Function() failedRead,
     required TResult Function(UserData userData) successfulRead,
   }) {
@@ -134,6 +141,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
+    TResult? Function()? loading,
     TResult? Function()? failedRead,
     TResult? Function(UserData userData)? successfulRead,
   }) {
@@ -144,6 +152,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? loading,
     TResult Function()? failedRead,
     TResult Function(UserData userData)? successfulRead,
     required TResult orElse(),
@@ -158,6 +167,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_FailedRead value) failedRead,
     required TResult Function(_SuccessfulRead value) successfulRead,
   }) {
@@ -168,6 +178,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_FailedRead value)? failedRead,
     TResult? Function(_SuccessfulRead value)? successfulRead,
   }) {
@@ -178,6 +189,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
     TResult Function(_FailedRead value)? failedRead,
     TResult Function(_SuccessfulRead value)? successfulRead,
     required TResult orElse(),
@@ -191,6 +203,126 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
 
 abstract class _Initial implements UserState {
   const factory _Initial() = _$InitialImpl;
+}
+
+/// @nodoc
+abstract class _$$LoadingImplCopyWith<$Res> {
+  factory _$$LoadingImplCopyWith(
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LoadingImplCopyWithImpl<$Res>
+    extends _$UserStateCopyWithImpl<$Res, _$LoadingImpl>
+    implements _$$LoadingImplCopyWith<$Res> {
+  __$$LoadingImplCopyWithImpl(
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
+  const _$LoadingImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'UserState.loading'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() failedRead,
+    required TResult Function(UserData userData) successfulRead,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? failedRead,
+    TResult? Function(UserData userData)? successfulRead,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? failedRead,
+    TResult Function(UserData userData)? successfulRead,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_FailedRead value) failedRead,
+    required TResult Function(_SuccessfulRead value) successfulRead,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_FailedRead value)? failedRead,
+    TResult? Function(_SuccessfulRead value)? successfulRead,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_FailedRead value)? failedRead,
+    TResult Function(_SuccessfulRead value)? successfulRead,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loading implements UserState {
+  const factory _Loading() = _$LoadingImpl;
 }
 
 /// @nodoc
@@ -238,6 +370,7 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() loading,
     required TResult Function() failedRead,
     required TResult Function(UserData userData) successfulRead,
   }) {
@@ -248,6 +381,7 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
+    TResult? Function()? loading,
     TResult? Function()? failedRead,
     TResult? Function(UserData userData)? successfulRead,
   }) {
@@ -258,6 +392,7 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? loading,
     TResult Function()? failedRead,
     TResult Function(UserData userData)? successfulRead,
     required TResult orElse(),
@@ -272,6 +407,7 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_FailedRead value) failedRead,
     required TResult Function(_SuccessfulRead value) successfulRead,
   }) {
@@ -282,6 +418,7 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_FailedRead value)? failedRead,
     TResult? Function(_SuccessfulRead value)? successfulRead,
   }) {
@@ -292,6 +429,7 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
     TResult Function(_FailedRead value)? failedRead,
     TResult Function(_SuccessfulRead value)? successfulRead,
     required TResult orElse(),
@@ -384,6 +522,7 @@ class _$SuccessfulReadImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
+    required TResult Function() loading,
     required TResult Function() failedRead,
     required TResult Function(UserData userData) successfulRead,
   }) {
@@ -394,6 +533,7 @@ class _$SuccessfulReadImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
+    TResult? Function()? loading,
     TResult? Function()? failedRead,
     TResult? Function(UserData userData)? successfulRead,
   }) {
@@ -404,6 +544,7 @@ class _$SuccessfulReadImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
+    TResult Function()? loading,
     TResult Function()? failedRead,
     TResult Function(UserData userData)? successfulRead,
     required TResult orElse(),
@@ -418,6 +559,7 @@ class _$SuccessfulReadImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
     required TResult Function(_FailedRead value) failedRead,
     required TResult Function(_SuccessfulRead value) successfulRead,
   }) {
@@ -428,6 +570,7 @@ class _$SuccessfulReadImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
     TResult? Function(_FailedRead value)? failedRead,
     TResult? Function(_SuccessfulRead value)? successfulRead,
   }) {
@@ -438,6 +581,7 @@ class _$SuccessfulReadImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
     TResult Function(_FailedRead value)? failedRead,
     TResult Function(_SuccessfulRead value)? successfulRead,
     required TResult orElse(),

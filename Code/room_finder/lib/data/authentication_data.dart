@@ -12,7 +12,7 @@ class AuthDataSource {
 
   AuthDataSource(this._auth, this._ref);
 
-  /// This method allow to get the current logged user's info 
+  /// This method allow to get the current logged user's info
   User? get currentUser => _auth.currentUser;
 
   /// This method allow the user to signup into the application
@@ -26,10 +26,8 @@ class AuthDataSource {
       // create a new user
       final response = await _auth.createUserWithEmailAndPassword(
           email: userCredential.email, password: userCredential.password);
-      // setting its name
+      // setting the name
       response.user!.updateDisplayName(user.name);
-      // setting its photo
-      response.user!.updatePhotoURL(user.photoUrl);
       return right(response.user!);
     } on FirebaseAuthException catch (e) {
       return left(e.message ?? 'Failed to Signup');
@@ -37,7 +35,7 @@ class AuthDataSource {
   }
 
   /// This method allow the user to login into the application
-  /// 
+  ///
   /// [AuthArgs] is required to check the user's credential
   Future<Either<String, User>> login({required AuthArgs userCredential}) async {
     try {
@@ -56,6 +54,24 @@ class AuthDataSource {
       return right(null);
     } on FirebaseAuthException catch (e) {
       return left(e.message ?? 'Failed to logout');
+    }
+  }
+
+  Future<Either<String, void>> updateName({required String newUserName}) async {
+    try {
+      await currentUser!.updateDisplayName(newUserName);
+      return right(null);
+    } on FirebaseAuthException catch (e) {
+      return left(e.message ?? 'Failed to update the name');
+    }
+  }
+
+  Future<Either<String, String>> updatePhotoURL({required String newPhotoURL}) async {
+    try {
+      await currentUser!.updatePhotoURL(newPhotoURL);
+      return right(newPhotoURL);
+    } on FirebaseAuthException catch (e) {
+      return left(e.message ?? 'Failed to update the photo URL');
     }
   }
 }

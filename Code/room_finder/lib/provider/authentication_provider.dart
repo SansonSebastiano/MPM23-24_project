@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/data/authentication_data.dart';
@@ -33,9 +36,8 @@ class AuthNotifier extends StateNotifier<AuthenticationState> {
     final response = await _authDataSource.signup(
         userCredential: userCredential, user: user);
 
-    state = response
-        .fold((error) => const AuthenticationState.unregistered(),
-            (response) {
+    state = response.fold((error) => const AuthenticationState.unregistered(),
+        (response) {
       // on success, then
       // add the new user registered to the Firestore db
       Future.delayed(const Duration(seconds: 0), () async {
@@ -66,9 +68,41 @@ class AuthNotifier extends StateNotifier<AuthenticationState> {
 
     final response = await _authDataSource.logout();
 
+    state = response.fold((error) => const AuthenticationState.failedLogout(),
+        (response) => const AuthenticationState.successfulLogout());
+  }
+
+  Future<void> updateName({required String newUserName}) async {
+    state = const AuthenticationState.loading();
+
+    final response = await _authDataSource.updateName(newUserName: newUserName);
+
+    state = response.fold((error) => const AuthenticationState.nameNotUpdated(),
+        (response) => const AuthenticationState.nameUpdated());
+  }
+
+  Future<void> updatePhoto(
+      {required String imageName, required File imageFile}) async {
+    state = const AuthenticationState.loading();
+
+    final photoResponse = await _userDataSource.updatePhoto(
+        imageFile: imageFile, imageName: imageName);
+
+    Either<String, String> response = left('Error on uploading');
+
+    if (photoResponse.isRight()) {
+      // (MAYBE) if the response is a success
+      response = await _authDataSource.updatePhotoURL(
+          newPhotoURL: photoResponse.getOrElse(() {
+        return '';
+      }));
+    } else {
+      // (MAYBE) otherwise the response is a fail
+    }
+
     state = response.fold(
-      (error) => const AuthenticationState.failedLogout(), 
-      (response) => const AuthenticationState.successfulLogout());
+        (error) => const AuthenticationState.photoNotUpdated(),
+        (response) => AuthenticationState.photoUpdated(photoURL: response));
   }
 }
 

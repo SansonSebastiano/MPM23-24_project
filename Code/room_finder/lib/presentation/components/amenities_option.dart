@@ -18,20 +18,15 @@ class AmenitiesOption extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(left: 33.w, right: 33.w),
-          child: Row(
-            children: [
-              Text(label),
-              const Spacer(),
-              Checkbox(
-                value: isChecked,
+          child: CheckboxListTile(
+            title: Text(label),
+            value: isChecked,
+            onChanged: (bool? value) {
+              onChanged(value!);
+            },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.r),
                 ),
-                onChanged: (bool? value) {
-                  onChanged(value!);
-                },
-              ),
-            ],
           ),
         ),
         Divider(

@@ -1,23 +1,38 @@
 /// [UserData] is the object that encapsulate the following data:
-/// 
+///
 /// *[uid] the ID of the user account
-/// 
+///
 /// *[name] the name of the user
-/// 
+///
 /// *[photoUrl] the profile photo of the user
-/// 
+///
 /// *[isHost] represent the user's role {true if 'host', false if 'student'}
 class UserData {
   final String? uid;
-  final String? name;
-  final String? photoUrl;
+  String? name;
+  final String? email;
+  String? photoUrl;
   final bool isHost;
+  // final List<String>? savedAds;
 
   UserData(
       {this.uid = '',
       this.name = '',
+      this.email = '',
       this.photoUrl = '',
       required this.isHost});
+
+  void setPhotoUrl({required String value}) {
+    if (value.isNotEmpty) {
+      photoUrl = value;
+    }
+  }
+
+  void setName({required String value}) {
+    if (value.isNotEmpty) {
+      name = value;
+    }
+  }
 
   // USE THESE WHEN THE OBJECT IS MORE COMPLEX, IN ORDER TO A EASIER CONVERSION
 

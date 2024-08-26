@@ -9,21 +9,23 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// [ProfilePhotoEditor] is a widget that displays a circular profile photo with an edit button to change the photo.
 class ProfilePhotoEditor extends StatefulWidget {
-  final String? imageUrl; 
+  final String? imageUrl;
+  final File? image;
   final ValueChanged<File?>? onPhotoChanged; // Callback for photo changes
+  final void Function(File) onPhotoSetted;
 
-  const ProfilePhotoEditor({
-    super.key,
-    this.imageUrl,
-    this.onPhotoChanged, 
-  });
+  const ProfilePhotoEditor(
+      {super.key,
+      this.imageUrl,
+      this.onPhotoChanged,
+      this.image,
+      required this.onPhotoSetted});
 
   @override
   State<ProfilePhotoEditor> createState() => _ProfilePhotoEditorState();
 }
 
 class _ProfilePhotoEditorState extends State<ProfilePhotoEditor> {
-  File? _image; 
   final picker = ImagePicker();
 
   // Getting image from gallery
@@ -32,8 +34,10 @@ class _ProfilePhotoEditorState extends State<ProfilePhotoEditor> {
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        widget.onPhotoChanged?.call(_image); // Notify parent about the change
+        widget.onPhotoSetted(File(pickedFile.path));
+        // widget.image = File(pickedFile.path);
+        widget.onPhotoChanged
+            ?.call(widget.image); // Notify parent about the change
       }
     });
   }
@@ -44,8 +48,10 @@ class _ProfilePhotoEditorState extends State<ProfilePhotoEditor> {
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        widget.onPhotoChanged?.call(_image); // Notify parent about the change
+        widget.onPhotoSetted(File(pickedFile.path));
+        // widget.image = File(pickedFile.path);
+        widget.onPhotoChanged
+            ?.call(widget.image); // Notify parent about the change
       }
     });
   }
@@ -167,11 +173,13 @@ class _ProfilePhotoEditorState extends State<ProfilePhotoEditor> {
             width: 200.r,
             height: 200.r,
             child: Image(
-              image: _image != null
-                  ? FileImage(_image!)
+              image: widget.image != null
+                  ? FileImage(widget.image!)
                   : (widget.imageUrl != null
-                      ? NetworkImage(widget.imageUrl!)
-                      : const AssetImage('assets/images/Standard-avatar.png')) as ImageProvider,
+                          ? NetworkImage(widget.imageUrl!)
+                          : const AssetImage(
+                              'assets/images/Standard-avatar.png'))
+                      as ImageProvider,
               fit: BoxFit.cover,
             ),
           ),

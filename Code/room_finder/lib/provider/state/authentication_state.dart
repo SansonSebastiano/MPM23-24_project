@@ -25,4 +25,16 @@ class AuthenticationState with _$AuthenticationState {
   const factory AuthenticationState.successfulLogout() = _Logout;
 
   const factory AuthenticationState.failedLogout() = _notLogout;
+
+  const factory AuthenticationState.nameUpdated() = _nameUpdated;
+
+  const factory AuthenticationState.nameNotUpdated() = _nameNotUpdated;
+
+  const factory AuthenticationState.photoUpdated({required String photoURL}) = _photoUpdated;
+
+  const factory AuthenticationState.photoNotUpdated() = _photoNotUpdated;
+
+   const factory AuthenticationState.personalInfoUpdated() = _personalInfoUpdated;
+
+   const factory AuthenticationState.personalInfoNotUpdated() = _personalInfoNotUpdated;
 }
