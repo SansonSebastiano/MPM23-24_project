@@ -135,7 +135,7 @@ class AccountPage extends ConsumerWidget {
                 ),
                 SettingButtons(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const LoginSecurityPage())),
+                      builder: (context) => LoginSecurityPage(user: user))),
                   label: AppLocalizations.of(context)!.btnLoginSecurity,
                   icon: Icons.login,
                 ),
