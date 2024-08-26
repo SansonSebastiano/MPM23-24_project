@@ -106,38 +106,39 @@ class _PersonalInformationPageState
       );
     });
 
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) async {
-        if (_isNameChanged || _isPhotoChanged) {
-          showOptionsDialog(
-            context: context,
-            androidDialog: ActionsAndroidDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-              context: context,
-              onOk: () { 
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              onCancel: () => Navigator.of(context).pop(),
-            ),
-            iosDialog: ActionsIosDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-              context: context,
-              onOk: () { 
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              onCancel: () => Navigator.of(context).pop(),
-            ),
-          );
-        } else {
-          Navigator.of(context).pop();
-        }
-      },
-      child: Scaffold(
+    return // FIXME: PopScope(
+      // canPop: false,
+      // onPopInvoked: (didPop) async {
+      //   if (_isNameChanged || _isPhotoChanged) {
+      //     showOptionsDialog(
+      //       context: context,
+      //       androidDialog: ActionsAndroidDialog(
+      //         title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+      //         content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+      //         context: context,
+      //         onOk: () { 
+      //           Navigator.of(context).pop();
+      //           Navigator.of(context).pop();
+      //         },
+      //         onCancel: () => Navigator.of(context).pop(),
+      //       ),
+      //       iosDialog: ActionsIosDialog(
+      //         title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+      //         content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+      //         context: context,
+      //         onOk: () { 
+      //           Navigator.of(context).pop();
+      //           Navigator.of(context).pop();
+      //         },
+      //         onCancel: () => Navigator.of(context).pop(),
+      //       ),
+      //     );
+      //   } else {
+      //     Navigator.of(context).pop();
+      //   }
+      // },
+      // child: 
+      Scaffold(
         body: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -246,7 +247,7 @@ class _PersonalInformationPageState
             },
           ),
         ),
-      )
-    );
+      );
+    //)
   }
 }
