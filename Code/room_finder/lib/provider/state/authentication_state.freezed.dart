@@ -26,11 +26,11 @@ mixin _$AuthenticationState {
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,11 +43,11 @@ mixin _$AuthenticationState {
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,11 +60,11 @@ mixin _$AuthenticationState {
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -78,11 +78,11 @@ mixin _$AuthenticationState {
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -95,11 +95,11 @@ mixin _$AuthenticationState {
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -112,11 +112,11 @@ mixin _$AuthenticationState {
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -192,11 +192,11 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return initial();
   }
@@ -212,11 +212,11 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return initial?.call();
   }
@@ -232,11 +232,11 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -256,11 +256,11 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return initial(this);
   }
@@ -276,11 +276,11 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return initial?.call(this);
   }
@@ -296,11 +296,11 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -366,11 +366,11 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return loading();
   }
@@ -386,11 +386,11 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return loading?.call();
   }
@@ -406,11 +406,11 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -430,11 +430,11 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return loading(this);
   }
@@ -450,11 +450,11 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return loading?.call(this);
   }
@@ -470,11 +470,11 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -543,11 +543,11 @@ class _$UnAuthenticationImpl
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return unauthenticated();
   }
@@ -563,11 +563,11 @@ class _$UnAuthenticationImpl
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return unauthenticated?.call();
   }
@@ -583,11 +583,11 @@ class _$UnAuthenticationImpl
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -607,11 +607,11 @@ class _$UnAuthenticationImpl
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return unauthenticated(this);
   }
@@ -627,11 +627,11 @@ class _$UnAuthenticationImpl
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return unauthenticated?.call(this);
   }
@@ -647,11 +647,11 @@ class _$UnAuthenticationImpl
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -747,11 +747,11 @@ class _$AuthenticatedImpl
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return authenticated(user);
   }
@@ -767,11 +767,11 @@ class _$AuthenticatedImpl
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return authenticated?.call(user);
   }
@@ -787,11 +787,11 @@ class _$AuthenticatedImpl
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -811,11 +811,11 @@ class _$AuthenticatedImpl
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return authenticated(this);
   }
@@ -831,11 +831,11 @@ class _$AuthenticatedImpl
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return authenticated?.call(this);
   }
@@ -851,11 +851,11 @@ class _$AuthenticatedImpl
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -955,11 +955,11 @@ class _$RegistreredImpl with DiagnosticableTreeMixin implements _Registrered {
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return registered(user);
   }
@@ -975,11 +975,11 @@ class _$RegistreredImpl with DiagnosticableTreeMixin implements _Registrered {
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return registered?.call(user);
   }
@@ -995,11 +995,11 @@ class _$RegistreredImpl with DiagnosticableTreeMixin implements _Registrered {
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (registered != null) {
@@ -1019,11 +1019,11 @@ class _$RegistreredImpl with DiagnosticableTreeMixin implements _Registrered {
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return registered(this);
   }
@@ -1039,11 +1039,11 @@ class _$RegistreredImpl with DiagnosticableTreeMixin implements _Registrered {
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return registered?.call(this);
   }
@@ -1059,11 +1059,11 @@ class _$RegistreredImpl with DiagnosticableTreeMixin implements _Registrered {
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (registered != null) {
@@ -1137,11 +1137,11 @@ class _$UnregistreredImpl
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return unregistered();
   }
@@ -1157,11 +1157,11 @@ class _$UnregistreredImpl
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return unregistered?.call();
   }
@@ -1177,11 +1177,11 @@ class _$UnregistreredImpl
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (unregistered != null) {
@@ -1201,11 +1201,11 @@ class _$UnregistreredImpl
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return unregistered(this);
   }
@@ -1221,11 +1221,11 @@ class _$UnregistreredImpl
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return unregistered?.call(this);
   }
@@ -1241,11 +1241,11 @@ class _$UnregistreredImpl
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (unregistered != null) {
@@ -1312,11 +1312,11 @@ class _$LogoutImpl with DiagnosticableTreeMixin implements _Logout {
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return successfulLogout();
   }
@@ -1332,11 +1332,11 @@ class _$LogoutImpl with DiagnosticableTreeMixin implements _Logout {
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return successfulLogout?.call();
   }
@@ -1352,11 +1352,11 @@ class _$LogoutImpl with DiagnosticableTreeMixin implements _Logout {
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (successfulLogout != null) {
@@ -1376,11 +1376,11 @@ class _$LogoutImpl with DiagnosticableTreeMixin implements _Logout {
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return successfulLogout(this);
   }
@@ -1396,11 +1396,11 @@ class _$LogoutImpl with DiagnosticableTreeMixin implements _Logout {
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return successfulLogout?.call(this);
   }
@@ -1416,11 +1416,11 @@ class _$LogoutImpl with DiagnosticableTreeMixin implements _Logout {
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (successfulLogout != null) {
@@ -1487,11 +1487,11 @@ class _$notLogoutImpl with DiagnosticableTreeMixin implements _notLogout {
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return failedLogout();
   }
@@ -1507,11 +1507,11 @@ class _$notLogoutImpl with DiagnosticableTreeMixin implements _notLogout {
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return failedLogout?.call();
   }
@@ -1527,11 +1527,11 @@ class _$notLogoutImpl with DiagnosticableTreeMixin implements _notLogout {
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (failedLogout != null) {
@@ -1551,11 +1551,11 @@ class _$notLogoutImpl with DiagnosticableTreeMixin implements _notLogout {
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return failedLogout(this);
   }
@@ -1571,11 +1571,11 @@ class _$notLogoutImpl with DiagnosticableTreeMixin implements _notLogout {
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return failedLogout?.call(this);
   }
@@ -1591,11 +1591,11 @@ class _$notLogoutImpl with DiagnosticableTreeMixin implements _notLogout {
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (failedLogout != null) {
@@ -1607,213 +1607,6 @@ class _$notLogoutImpl with DiagnosticableTreeMixin implements _notLogout {
 
 abstract class _notLogout implements AuthenticationState {
   const factory _notLogout() = _$notLogoutImpl;
-}
-
-/// @nodoc
-abstract class _$$nameUpdatedImplCopyWith<$Res> {
-  factory _$$nameUpdatedImplCopyWith(
-          _$nameUpdatedImpl value, $Res Function(_$nameUpdatedImpl) then) =
-      __$$nameUpdatedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String name});
-}
-
-/// @nodoc
-class __$$nameUpdatedImplCopyWithImpl<$Res>
-    extends _$AuthenticationStateCopyWithImpl<$Res, _$nameUpdatedImpl>
-    implements _$$nameUpdatedImplCopyWith<$Res> {
-  __$$nameUpdatedImplCopyWithImpl(
-      _$nameUpdatedImpl _value, $Res Function(_$nameUpdatedImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? name = null,
-  }) {
-    return _then(_$nameUpdatedImpl(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$nameUpdatedImpl with DiagnosticableTreeMixin implements _nameUpdated {
-  const _$nameUpdatedImpl({required this.name});
-
-  @override
-  final String name;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthenticationState.nameUpdated(name: $name)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthenticationState.nameUpdated'))
-      ..add(DiagnosticsProperty('name', name));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$nameUpdatedImpl &&
-            (identical(other.name, name) || other.name == name));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, name);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$nameUpdatedImplCopyWith<_$nameUpdatedImpl> get copyWith =>
-      __$$nameUpdatedImplCopyWithImpl<_$nameUpdatedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() unauthenticated,
-    required TResult Function(User user) authenticated,
-    required TResult Function(User user) registered,
-    required TResult Function() unregistered,
-    required TResult Function() successfulLogout,
-    required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
-    required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
-    required TResult Function() photoNotUpdated,
-    required TResult Function(String name, String photoURL) personalInfoUpdated,
-  }) {
-    return nameUpdated(name);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? unauthenticated,
-    TResult? Function(User user)? authenticated,
-    TResult? Function(User user)? registered,
-    TResult? Function()? unregistered,
-    TResult? Function()? successfulLogout,
-    TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
-    TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
-    TResult? Function()? photoNotUpdated,
-    TResult? Function(String name, String photoURL)? personalInfoUpdated,
-  }) {
-    return nameUpdated?.call(name);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? unauthenticated,
-    TResult Function(User user)? authenticated,
-    TResult Function(User user)? registered,
-    TResult Function()? unregistered,
-    TResult Function()? successfulLogout,
-    TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
-    TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
-    TResult Function()? photoNotUpdated,
-    TResult Function(String name, String photoURL)? personalInfoUpdated,
-    required TResult orElse(),
-  }) {
-    if (nameUpdated != null) {
-      return nameUpdated(name);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_UnAuthentication value) unauthenticated,
-    required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_Registrered value) registered,
-    required TResult Function(_Unregistrered value) unregistered,
-    required TResult Function(_Logout value) successfulLogout,
-    required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
-    required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
-    required TResult Function(_photoNotUpdated value) photoNotUpdated,
-    required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
-  }) {
-    return nameUpdated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_UnAuthentication value)? unauthenticated,
-    TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_Registrered value)? registered,
-    TResult? Function(_Unregistrered value)? unregistered,
-    TResult? Function(_Logout value)? successfulLogout,
-    TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
-    TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
-    TResult? Function(_photoNotUpdated value)? photoNotUpdated,
-    TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
-  }) {
-    return nameUpdated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_UnAuthentication value)? unauthenticated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Registrered value)? registered,
-    TResult Function(_Unregistrered value)? unregistered,
-    TResult Function(_Logout value)? successfulLogout,
-    TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
-    TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
-    TResult Function(_photoNotUpdated value)? photoNotUpdated,
-    TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
-    required TResult orElse(),
-  }) {
-    if (nameUpdated != null) {
-      return nameUpdated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _nameUpdated implements AuthenticationState {
-  const factory _nameUpdated({required final String name}) = _$nameUpdatedImpl;
-
-  String get name;
-  @JsonKey(ignore: true)
-  _$$nameUpdatedImplCopyWith<_$nameUpdatedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1871,11 +1664,11 @@ class _$nameNotUpdatedImpl
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return nameNotUpdated();
   }
@@ -1891,11 +1684,11 @@ class _$nameNotUpdatedImpl
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return nameNotUpdated?.call();
   }
@@ -1911,11 +1704,11 @@ class _$nameNotUpdatedImpl
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (nameNotUpdated != null) {
@@ -1935,11 +1728,11 @@ class _$nameNotUpdatedImpl
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return nameNotUpdated(this);
   }
@@ -1955,11 +1748,11 @@ class _$nameNotUpdatedImpl
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return nameNotUpdated?.call(this);
   }
@@ -1975,11 +1768,11 @@ class _$nameNotUpdatedImpl
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (nameNotUpdated != null) {
@@ -1991,215 +1784,6 @@ class _$nameNotUpdatedImpl
 
 abstract class _nameNotUpdated implements AuthenticationState {
   const factory _nameNotUpdated() = _$nameNotUpdatedImpl;
-}
-
-/// @nodoc
-abstract class _$$photoUpdatedImplCopyWith<$Res> {
-  factory _$$photoUpdatedImplCopyWith(
-          _$photoUpdatedImpl value, $Res Function(_$photoUpdatedImpl) then) =
-      __$$photoUpdatedImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String photoURL});
-}
-
-/// @nodoc
-class __$$photoUpdatedImplCopyWithImpl<$Res>
-    extends _$AuthenticationStateCopyWithImpl<$Res, _$photoUpdatedImpl>
-    implements _$$photoUpdatedImplCopyWith<$Res> {
-  __$$photoUpdatedImplCopyWithImpl(
-      _$photoUpdatedImpl _value, $Res Function(_$photoUpdatedImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? photoURL = null,
-  }) {
-    return _then(_$photoUpdatedImpl(
-      photoURL: null == photoURL
-          ? _value.photoURL
-          : photoURL // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$photoUpdatedImpl with DiagnosticableTreeMixin implements _photoUpdated {
-  const _$photoUpdatedImpl({required this.photoURL});
-
-  @override
-  final String photoURL;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthenticationState.photoUpdated(photoURL: $photoURL)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'AuthenticationState.photoUpdated'))
-      ..add(DiagnosticsProperty('photoURL', photoURL));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$photoUpdatedImpl &&
-            (identical(other.photoURL, photoURL) ||
-                other.photoURL == photoURL));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, photoURL);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$photoUpdatedImplCopyWith<_$photoUpdatedImpl> get copyWith =>
-      __$$photoUpdatedImplCopyWithImpl<_$photoUpdatedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() unauthenticated,
-    required TResult Function(User user) authenticated,
-    required TResult Function(User user) registered,
-    required TResult Function() unregistered,
-    required TResult Function() successfulLogout,
-    required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
-    required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
-    required TResult Function() photoNotUpdated,
-    required TResult Function(String name, String photoURL) personalInfoUpdated,
-  }) {
-    return photoUpdated(photoURL);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? unauthenticated,
-    TResult? Function(User user)? authenticated,
-    TResult? Function(User user)? registered,
-    TResult? Function()? unregistered,
-    TResult? Function()? successfulLogout,
-    TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
-    TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
-    TResult? Function()? photoNotUpdated,
-    TResult? Function(String name, String photoURL)? personalInfoUpdated,
-  }) {
-    return photoUpdated?.call(photoURL);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? unauthenticated,
-    TResult Function(User user)? authenticated,
-    TResult Function(User user)? registered,
-    TResult Function()? unregistered,
-    TResult Function()? successfulLogout,
-    TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
-    TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
-    TResult Function()? photoNotUpdated,
-    TResult Function(String name, String photoURL)? personalInfoUpdated,
-    required TResult orElse(),
-  }) {
-    if (photoUpdated != null) {
-      return photoUpdated(photoURL);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_UnAuthentication value) unauthenticated,
-    required TResult Function(_Authenticated value) authenticated,
-    required TResult Function(_Registrered value) registered,
-    required TResult Function(_Unregistrered value) unregistered,
-    required TResult Function(_Logout value) successfulLogout,
-    required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
-    required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
-    required TResult Function(_photoNotUpdated value) photoNotUpdated,
-    required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
-  }) {
-    return photoUpdated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_UnAuthentication value)? unauthenticated,
-    TResult? Function(_Authenticated value)? authenticated,
-    TResult? Function(_Registrered value)? registered,
-    TResult? Function(_Unregistrered value)? unregistered,
-    TResult? Function(_Logout value)? successfulLogout,
-    TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
-    TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
-    TResult? Function(_photoNotUpdated value)? photoNotUpdated,
-    TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
-  }) {
-    return photoUpdated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_UnAuthentication value)? unauthenticated,
-    TResult Function(_Authenticated value)? authenticated,
-    TResult Function(_Registrered value)? registered,
-    TResult Function(_Unregistrered value)? unregistered,
-    TResult Function(_Logout value)? successfulLogout,
-    TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
-    TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
-    TResult Function(_photoNotUpdated value)? photoNotUpdated,
-    TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
-    required TResult orElse(),
-  }) {
-    if (photoUpdated != null) {
-      return photoUpdated(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _photoUpdated implements AuthenticationState {
-  const factory _photoUpdated({required final String photoURL}) =
-      _$photoUpdatedImpl;
-
-  String get photoURL;
-  @JsonKey(ignore: true)
-  _$$photoUpdatedImplCopyWith<_$photoUpdatedImpl> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -2257,11 +1841,11 @@ class _$photoNotUpdatedImpl
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return photoNotUpdated();
   }
@@ -2277,11 +1861,11 @@ class _$photoNotUpdatedImpl
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return photoNotUpdated?.call();
   }
@@ -2297,11 +1881,11 @@ class _$photoNotUpdatedImpl
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (photoNotUpdated != null) {
@@ -2321,11 +1905,11 @@ class _$photoNotUpdatedImpl
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return photoNotUpdated(this);
   }
@@ -2341,11 +1925,11 @@ class _$photoNotUpdatedImpl
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return photoNotUpdated?.call(this);
   }
@@ -2361,11 +1945,11 @@ class _$photoNotUpdatedImpl
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (photoNotUpdated != null) {
@@ -2473,11 +2057,11 @@ class _$personalInfoUpdatedImpl
     required TResult Function() unregistered,
     required TResult Function() successfulLogout,
     required TResult Function() failedLogout,
-    required TResult Function(String name) nameUpdated,
     required TResult Function() nameNotUpdated,
-    required TResult Function(String photoURL) photoUpdated,
     required TResult Function() photoNotUpdated,
     required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
   }) {
     return personalInfoUpdated(name, photoURL);
   }
@@ -2493,11 +2077,11 @@ class _$personalInfoUpdatedImpl
     TResult? Function()? unregistered,
     TResult? Function()? successfulLogout,
     TResult? Function()? failedLogout,
-    TResult? Function(String name)? nameUpdated,
     TResult? Function()? nameNotUpdated,
-    TResult? Function(String photoURL)? photoUpdated,
     TResult? Function()? photoNotUpdated,
     TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
   }) {
     return personalInfoUpdated?.call(name, photoURL);
   }
@@ -2513,11 +2097,11 @@ class _$personalInfoUpdatedImpl
     TResult Function()? unregistered,
     TResult Function()? successfulLogout,
     TResult Function()? failedLogout,
-    TResult Function(String name)? nameUpdated,
     TResult Function()? nameNotUpdated,
-    TResult Function(String photoURL)? photoUpdated,
     TResult Function()? photoNotUpdated,
     TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
     required TResult orElse(),
   }) {
     if (personalInfoUpdated != null) {
@@ -2537,11 +2121,11 @@ class _$personalInfoUpdatedImpl
     required TResult Function(_Unregistrered value) unregistered,
     required TResult Function(_Logout value) successfulLogout,
     required TResult Function(_notLogout value) failedLogout,
-    required TResult Function(_nameUpdated value) nameUpdated,
     required TResult Function(_nameNotUpdated value) nameNotUpdated,
-    required TResult Function(_photoUpdated value) photoUpdated,
     required TResult Function(_photoNotUpdated value) photoNotUpdated,
     required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
   }) {
     return personalInfoUpdated(this);
   }
@@ -2557,11 +2141,11 @@ class _$personalInfoUpdatedImpl
     TResult? Function(_Unregistrered value)? unregistered,
     TResult? Function(_Logout value)? successfulLogout,
     TResult? Function(_notLogout value)? failedLogout,
-    TResult? Function(_nameUpdated value)? nameUpdated,
     TResult? Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult? Function(_photoUpdated value)? photoUpdated,
     TResult? Function(_photoNotUpdated value)? photoNotUpdated,
     TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
   }) {
     return personalInfoUpdated?.call(this);
   }
@@ -2577,11 +2161,11 @@ class _$personalInfoUpdatedImpl
     TResult Function(_Unregistrered value)? unregistered,
     TResult Function(_Logout value)? successfulLogout,
     TResult Function(_notLogout value)? failedLogout,
-    TResult Function(_nameUpdated value)? nameUpdated,
     TResult Function(_nameNotUpdated value)? nameNotUpdated,
-    TResult Function(_photoUpdated value)? photoUpdated,
     TResult Function(_photoNotUpdated value)? photoNotUpdated,
     TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
     required TResult orElse(),
   }) {
     if (personalInfoUpdated != null) {
@@ -2601,4 +2185,358 @@ abstract class _personalInfoUpdated implements AuthenticationState {
   @JsonKey(ignore: true)
   _$$personalInfoUpdatedImplCopyWith<_$personalInfoUpdatedImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$passwordNotUpdatedImplCopyWith<$Res> {
+  factory _$$passwordNotUpdatedImplCopyWith(_$passwordNotUpdatedImpl value,
+          $Res Function(_$passwordNotUpdatedImpl) then) =
+      __$$passwordNotUpdatedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$passwordNotUpdatedImplCopyWithImpl<$Res>
+    extends _$AuthenticationStateCopyWithImpl<$Res, _$passwordNotUpdatedImpl>
+    implements _$$passwordNotUpdatedImplCopyWith<$Res> {
+  __$$passwordNotUpdatedImplCopyWithImpl(_$passwordNotUpdatedImpl _value,
+      $Res Function(_$passwordNotUpdatedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$passwordNotUpdatedImpl
+    with DiagnosticableTreeMixin
+    implements _passwordNotUpdated {
+  const _$passwordNotUpdatedImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthenticationState.passwordNotUpdated()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'AuthenticationState.passwordNotUpdated'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$passwordNotUpdatedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() unauthenticated,
+    required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
+    required TResult Function() nameNotUpdated,
+    required TResult Function() photoNotUpdated,
+    required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
+  }) {
+    return passwordNotUpdated();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
+    TResult? Function()? nameNotUpdated,
+    TResult? Function()? photoNotUpdated,
+    TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
+  }) {
+    return passwordNotUpdated?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? unauthenticated,
+    TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
+    TResult Function()? nameNotUpdated,
+    TResult Function()? photoNotUpdated,
+    TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
+    required TResult orElse(),
+  }) {
+    if (passwordNotUpdated != null) {
+      return passwordNotUpdated();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_UnAuthentication value) unauthenticated,
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
+    required TResult Function(_nameNotUpdated value) nameNotUpdated,
+    required TResult Function(_photoNotUpdated value) photoNotUpdated,
+    required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
+  }) {
+    return passwordNotUpdated(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_UnAuthentication value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
+    TResult? Function(_nameNotUpdated value)? nameNotUpdated,
+    TResult? Function(_photoNotUpdated value)? photoNotUpdated,
+    TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
+  }) {
+    return passwordNotUpdated?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_UnAuthentication value)? unauthenticated,
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
+    TResult Function(_nameNotUpdated value)? nameNotUpdated,
+    TResult Function(_photoNotUpdated value)? photoNotUpdated,
+    TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
+    required TResult orElse(),
+  }) {
+    if (passwordNotUpdated != null) {
+      return passwordNotUpdated(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _passwordNotUpdated implements AuthenticationState {
+  const factory _passwordNotUpdated() = _$passwordNotUpdatedImpl;
+}
+
+/// @nodoc
+abstract class _$$passwordUpdatedImplCopyWith<$Res> {
+  factory _$$passwordUpdatedImplCopyWith(_$passwordUpdatedImpl value,
+          $Res Function(_$passwordUpdatedImpl) then) =
+      __$$passwordUpdatedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$passwordUpdatedImplCopyWithImpl<$Res>
+    extends _$AuthenticationStateCopyWithImpl<$Res, _$passwordUpdatedImpl>
+    implements _$$passwordUpdatedImplCopyWith<$Res> {
+  __$$passwordUpdatedImplCopyWithImpl(
+      _$passwordUpdatedImpl _value, $Res Function(_$passwordUpdatedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$passwordUpdatedImpl
+    with DiagnosticableTreeMixin
+    implements _passwordUpdated {
+  const _$passwordUpdatedImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthenticationState.passwordUpdated()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'AuthenticationState.passwordUpdated'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$passwordUpdatedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() unauthenticated,
+    required TResult Function(User user) authenticated,
+    required TResult Function(User user) registered,
+    required TResult Function() unregistered,
+    required TResult Function() successfulLogout,
+    required TResult Function() failedLogout,
+    required TResult Function() nameNotUpdated,
+    required TResult Function() photoNotUpdated,
+    required TResult Function(String name, String photoURL) personalInfoUpdated,
+    required TResult Function() passwordNotUpdated,
+    required TResult Function() passwordUpdated,
+  }) {
+    return passwordUpdated();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? unauthenticated,
+    TResult? Function(User user)? authenticated,
+    TResult? Function(User user)? registered,
+    TResult? Function()? unregistered,
+    TResult? Function()? successfulLogout,
+    TResult? Function()? failedLogout,
+    TResult? Function()? nameNotUpdated,
+    TResult? Function()? photoNotUpdated,
+    TResult? Function(String name, String photoURL)? personalInfoUpdated,
+    TResult? Function()? passwordNotUpdated,
+    TResult? Function()? passwordUpdated,
+  }) {
+    return passwordUpdated?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? unauthenticated,
+    TResult Function(User user)? authenticated,
+    TResult Function(User user)? registered,
+    TResult Function()? unregistered,
+    TResult Function()? successfulLogout,
+    TResult Function()? failedLogout,
+    TResult Function()? nameNotUpdated,
+    TResult Function()? photoNotUpdated,
+    TResult Function(String name, String photoURL)? personalInfoUpdated,
+    TResult Function()? passwordNotUpdated,
+    TResult Function()? passwordUpdated,
+    required TResult orElse(),
+  }) {
+    if (passwordUpdated != null) {
+      return passwordUpdated();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_UnAuthentication value) unauthenticated,
+    required TResult Function(_Authenticated value) authenticated,
+    required TResult Function(_Registrered value) registered,
+    required TResult Function(_Unregistrered value) unregistered,
+    required TResult Function(_Logout value) successfulLogout,
+    required TResult Function(_notLogout value) failedLogout,
+    required TResult Function(_nameNotUpdated value) nameNotUpdated,
+    required TResult Function(_photoNotUpdated value) photoNotUpdated,
+    required TResult Function(_personalInfoUpdated value) personalInfoUpdated,
+    required TResult Function(_passwordNotUpdated value) passwordNotUpdated,
+    required TResult Function(_passwordUpdated value) passwordUpdated,
+  }) {
+    return passwordUpdated(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_UnAuthentication value)? unauthenticated,
+    TResult? Function(_Authenticated value)? authenticated,
+    TResult? Function(_Registrered value)? registered,
+    TResult? Function(_Unregistrered value)? unregistered,
+    TResult? Function(_Logout value)? successfulLogout,
+    TResult? Function(_notLogout value)? failedLogout,
+    TResult? Function(_nameNotUpdated value)? nameNotUpdated,
+    TResult? Function(_photoNotUpdated value)? photoNotUpdated,
+    TResult? Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult? Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult? Function(_passwordUpdated value)? passwordUpdated,
+  }) {
+    return passwordUpdated?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_UnAuthentication value)? unauthenticated,
+    TResult Function(_Authenticated value)? authenticated,
+    TResult Function(_Registrered value)? registered,
+    TResult Function(_Unregistrered value)? unregistered,
+    TResult Function(_Logout value)? successfulLogout,
+    TResult Function(_notLogout value)? failedLogout,
+    TResult Function(_nameNotUpdated value)? nameNotUpdated,
+    TResult Function(_photoNotUpdated value)? photoNotUpdated,
+    TResult Function(_personalInfoUpdated value)? personalInfoUpdated,
+    TResult Function(_passwordNotUpdated value)? passwordNotUpdated,
+    TResult Function(_passwordUpdated value)? passwordUpdated,
+    required TResult orElse(),
+  }) {
+    if (passwordUpdated != null) {
+      return passwordUpdated(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _passwordUpdated implements AuthenticationState {
+  const factory _passwordUpdated() = _$passwordUpdatedImpl;
 }

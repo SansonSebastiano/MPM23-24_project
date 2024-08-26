@@ -124,12 +124,6 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
           setState(() {
             isHost = userData.isHost;
           });
-          // TODO: remove these prints
-          print("User uid: ${user.uid}");
-          print("User name: ${user.name}");
-          print("User email: ${user.email}");
-          print("User photo URL: ${user.photoUrl}");
-          print("Is user a host: ${user.isHost}");
         },
         // TODO: decide this, on failed getting data
         failedRead: () => null,

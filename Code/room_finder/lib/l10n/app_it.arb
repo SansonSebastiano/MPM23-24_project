@@ -146,5 +146,7 @@
     "lblWriteMessage": "Digita un messaggio",
     "lblFailedUpdatePhoto": "Errore durante l'aggiornamento della foto: riprova.",
     "lblFailedUpdateName": "Errore durante l'aggiornamento del nome: riprova.",
-    "lblSuccessfulPersInfoUpdate": "Informazioni personali aggiornate correttamente"
+    "lblSuccessfulPersInfoUpdate": "Informazioni personali aggiornate correttamente",
+    "lblSuccessfulPasswordUpdate": "Password aggiornata correttamente",
+    "lblFailedPasswordUpdate": "Errore durante l'aggiornamento della password: riprova"
 }

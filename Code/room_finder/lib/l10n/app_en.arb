@@ -619,5 +619,13 @@
   "lblSuccessfulPersInfoUpdate": "Personal informations update successfully.",
   "@lblSuccessfulPersInfoUpdate": {
     "description": "label for error snackbar"
+  },
+  "lblSuccessfulPasswordUpdate": "Password update successfully",
+  "@lblSuccessfulPasswordUpdate": {
+    "description": "label for error snackbar"
+  },
+  "lblFailedPasswordUpdate": "Error on password update: try again",
+  "@lblFailedPasswordUpdate": {
+    "description": "label for error snackbar"
   }
 }

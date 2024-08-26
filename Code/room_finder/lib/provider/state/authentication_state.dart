@@ -26,14 +26,13 @@ class AuthenticationState with _$AuthenticationState {
 
   const factory AuthenticationState.failedLogout() = _notLogout;
 
-  const factory AuthenticationState.nameUpdated({required String name}) = _nameUpdated;
-
   const factory AuthenticationState.nameNotUpdated() = _nameNotUpdated;
-
-  const factory AuthenticationState.photoUpdated({required String photoURL}) = _photoUpdated;
 
   const factory AuthenticationState.photoNotUpdated() = _photoNotUpdated;
 
    const factory AuthenticationState.personalInfoUpdated({required String name, required String photoURL}) = _personalInfoUpdated;
 
+  const factory AuthenticationState.passwordNotUpdated() = _passwordNotUpdated;
+
+  const factory AuthenticationState.passwordUpdated() = _passwordUpdated;
 }

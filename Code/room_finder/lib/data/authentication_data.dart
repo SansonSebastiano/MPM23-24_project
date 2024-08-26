@@ -57,7 +57,8 @@ class AuthDataSource {
     }
   }
 
-  Future<Either<String, String>> updateName({required String newUserName}) async {
+  Future<Either<String, String>> updateName(
+      {required String newUserName}) async {
     try {
       await currentUser!.updateDisplayName(newUserName);
       return right(newUserName);
@@ -66,12 +67,24 @@ class AuthDataSource {
     }
   }
 
-  Future<Either<String, String>> updatePhotoURL({required String newPhotoURL}) async {
+  Future<Either<String, String>> updatePhotoURL(
+      {required String newPhotoURL}) async {
     try {
       await currentUser!.updatePhotoURL(newPhotoURL);
       return right(newPhotoURL);
     } on FirebaseAuthException catch (e) {
       return left(e.message ?? 'Failed to update the photo URL');
+    }
+  }
+
+  Future<Either<String, void>> updatePassword(
+      {required String newPassword}) async {
+    try {
+      await currentUser!.updatePassword(newPassword);
+
+      return right(null);
+    } on FirebaseAuthException catch (e) {
+      return left(e.message ?? "Failed to update the password");
     }
   }
 }

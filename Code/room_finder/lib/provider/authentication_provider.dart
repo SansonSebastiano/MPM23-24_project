@@ -77,8 +77,10 @@ class AuthNotifier extends StateNotifier<AuthenticationState> {
 
     final response = await _authDataSource.updateName(newUserName: newUserName);
 
-    state = response.fold((error) => const AuthenticationState.nameNotUpdated(),
-        (response) => AuthenticationState.personalInfoUpdated(name: response, photoURL: ''));
+    state = response.fold(
+        (error) => const AuthenticationState.nameNotUpdated(),
+        (response) => AuthenticationState.personalInfoUpdated(
+            name: response, photoURL: ''));
   }
 
   Future<void> updatePhoto(
@@ -89,9 +91,9 @@ class AuthNotifier extends StateNotifier<AuthenticationState> {
         imageFile: imageFile, imageName: imageName);
 
     state = photoResponse.fold(
-      (error) => const AuthenticationState.photoNotUpdated(),
-      (response) => AuthenticationState.photoUpdated(photoURL: response)
-    );
+        (error) => const AuthenticationState.photoNotUpdated(),
+        (response) => AuthenticationState.personalInfoUpdated(
+            name: '', photoURL: response));
 
     Either<String, String> response = left('Error on uploading');
 
@@ -102,7 +104,19 @@ class AuthNotifier extends StateNotifier<AuthenticationState> {
 
     state = response.fold(
         (error) => const AuthenticationState.photoNotUpdated(),
-        (response) => AuthenticationState.personalInfoUpdated(name: '', photoURL: response));
+        (response) => AuthenticationState.personalInfoUpdated(
+            name: '', photoURL: response));
+  }
+
+  Future<void> updatePassword({required String newPassword}) async {
+    state = const AuthenticationState.loading();
+
+    final response =
+        await _authDataSource.updatePassword(newPassword: newPassword);
+
+    state = response.fold(
+        (error) => const AuthenticationState.passwordNotUpdated(), 
+        (response) => const AuthenticationState.passwordUpdated());
   }
 }
 

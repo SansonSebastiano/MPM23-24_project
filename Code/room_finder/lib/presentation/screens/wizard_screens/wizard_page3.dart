@@ -195,6 +195,7 @@ class _WizardPage3State extends State<WizardPage3> {
                 selectedDate = date!;
               });
             },
+            // FIXME: the enable of the button doesn't work properly
             onConfirmPressed: () {
               setState(() {
                 _renters[index] = HostRenterBox(
@@ -239,6 +240,7 @@ class _WizardPage3State extends State<WizardPage3> {
                 selectedDate = date!;
               });
             },
+            // FIXME: the enable of the button doesn't work properly
             onConfirmPressed: () {
               setState(() {
                 _renters.add(HostRenterBox(
