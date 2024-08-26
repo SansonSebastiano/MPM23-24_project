@@ -24,6 +24,7 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   late TextEditingController _emailController;
   late TextEditingController _pswdController;
+  
   bool _isEmailValid = false;
   bool _isPasswordValid = false;
 
@@ -58,8 +59,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       final networkStatus = ref.read(networkAwareProvider);
 
       if (networkStatus == NetworkStatus.off) {
-        // TODO: see issue #35
-        showErrorSnackBar(context, "No internet connection. Please try again.");
+        showErrorSnackBar(context, AppLocalizations.of(context)!.lblConnectionErrorDesc);
       } else {
         // Proceed with login logic
         ref.read(authNotifierProvider.notifier).login(

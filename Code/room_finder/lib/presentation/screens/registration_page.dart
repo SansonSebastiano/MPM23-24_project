@@ -27,9 +27,9 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
   late TextEditingController _pswdController;
   late TextEditingController _confirmPswdController;
 
+  bool _isNameValid = false;
   bool _isEmailValid = false;
   bool _isPasswordValid = false;
-  bool _isNameValid = false;
 
   bool _isStudentSelected = true;
 
@@ -51,6 +51,12 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
     super.dispose();
   }
 
+  void _onNameValidityChanged(bool isValid) {
+    setState(() {
+      _isNameValid = isValid;
+    });
+  }
+
   void _onEmailValidityChanged(bool isValid) {
     setState(() {
       _isEmailValid = isValid;
@@ -63,19 +69,12 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
     });
   }
 
-  void _onNameValidityChanged(bool isValid) {
-    setState(() {
-      _isNameValid = isValid;
-    });
-  }
-
   void _handleRegistration() {
-    if (_isEmailValid && _isPasswordValid) {
+    if (_isNameValid && _isEmailValid && _isPasswordValid) {
       final networkStatus = ref.read(networkAwareProvider);
 
       if (networkStatus == NetworkStatus.off) {
-        // TODO: see issue #35
-        showErrorSnackBar(context, "No internet connection. Please try again.");
+        showErrorSnackBar(context, AppLocalizations.of(context)!.lblConnectionErrorDesc);
       } else {
         // Proceed with registration logic
         ref.read(authNotifierProvider.notifier).signup(
@@ -169,8 +168,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                             ),
                             SizedBox(height: 20.h),
                             RegistrationPswdTextField(
-                              onPswdValidationChanged:
-                                  _onPasswordValidityChanged,
+                              onPswdValidationChanged: _onPasswordValidityChanged,
                               pswdController: _pswdController,
                               confirmPswdController: _confirmPswdController,
                             ),
