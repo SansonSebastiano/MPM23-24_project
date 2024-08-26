@@ -607,5 +607,17 @@
   "lblWriteMessage": "Write a message",
   "@lblWriteMessage": {
     "description": "The send message text field placeholder"
+  },
+  "lblFailedUpdatePhoto": "Error on photo update: try again.",
+  "@lblFailedUpdatePhoto": {
+    "description": "label for error snackbar"
+  },
+  "lblFailedUpdateName": "Error on name update: try again.",
+  "@lblFailedUpdateName": {
+    "description": "label for error snackbar"
+  },
+  "lblSuccessfulPersInfoUpdate": "Personal informations update successfully.",
+  "@lblSuccessfulPersInfoUpdate": {
+    "description": "label for error snackbar"
   }
 }

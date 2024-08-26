@@ -14,13 +14,19 @@ import 'package:room_finder/provider/authentication_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class AccountPage extends ConsumerWidget {
+class AccountPage extends ConsumerStatefulWidget {
   final UserData user;
 
   const AccountPage({super.key, required this.user});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AccountPage> createState() => _AccountPageState();
+}
+
+class _AccountPageState extends ConsumerState<AccountPage> {
+
+  @override
+  Widget build(BuildContext context) {
     ref.listen(authNotifierProvider, (previous, next) {
       next.maybeWhen(
           orElse: () => null,
@@ -80,15 +86,16 @@ class AccountPage extends ConsumerWidget {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
+                    // FIXME: the photo is not updated after come back from personal info page
                     AccountPhoto(
                       size: 180.r,
-                      imageUrl: user.photoUrl,
+                      imageUrl: widget.user.photoUrl,
                     ),
                     SizedBox(height: 10.h),
-                    Text(user.name!,
+                    Text(widget.user.name!,
                         style: Theme.of(context).textTheme.displayMedium),
                     SizedBox(height: 10.h),
-                    Text(user.email!,
+                    Text(widget.user.email!,
                         style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ),
@@ -129,7 +136,9 @@ class AccountPage extends ConsumerWidget {
               children: [
                 SettingButtons(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PersonalInformationPage(user: user,))),
+                      builder: (context) => PersonalInformationPage(
+                            user: widget.user,
+                          ))).then((_) => setState(() {})),
                   label: AppLocalizations.of(context)!.btnPersonalInfo,
                   icon: Icons.person_outline,
                 ),

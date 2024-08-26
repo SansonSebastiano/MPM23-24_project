@@ -26,7 +26,7 @@ class AuthenticationState with _$AuthenticationState {
 
   const factory AuthenticationState.failedLogout() = _notLogout;
 
-  const factory AuthenticationState.nameUpdated() = _nameUpdated;
+  const factory AuthenticationState.nameUpdated({required String name}) = _nameUpdated;
 
   const factory AuthenticationState.nameNotUpdated() = _nameNotUpdated;
 
@@ -34,7 +34,6 @@ class AuthenticationState with _$AuthenticationState {
 
   const factory AuthenticationState.photoNotUpdated() = _photoNotUpdated;
 
-   const factory AuthenticationState.personalInfoUpdated() = _personalInfoUpdated;
+   const factory AuthenticationState.personalInfoUpdated({required String name, required String photoURL}) = _personalInfoUpdated;
 
-   const factory AuthenticationState.personalInfoNotUpdated() = _personalInfoNotUpdated;
 }

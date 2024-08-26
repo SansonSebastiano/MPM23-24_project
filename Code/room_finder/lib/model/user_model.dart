@@ -11,6 +11,7 @@ class UserData {
   final String? uid;
   String? name;
   final String? email;
+  // observation: actually photoURL is always <uid>.jpg, the change is not in the name but only in the file uploaded in Storage
   String? photoUrl;
   final bool isHost;
   // final List<String>? savedAds;

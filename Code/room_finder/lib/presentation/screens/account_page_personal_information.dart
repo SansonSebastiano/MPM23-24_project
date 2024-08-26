@@ -86,10 +86,23 @@ class _PersonalInformationPageState
     ref.listen(authNotifierProvider, (previous, next) {
       next.maybeWhen(
         orElse: () => null,
-        nameNotUpdated: () {},
-        nameUpdated: () {},
-        photoNotUpdated: () {},
-        photoUpdated: (photoURL) {},
+        nameNotUpdated: () => showErrorSnackBar(
+            context, AppLocalizations.of(context)!.lblFailedUpdateName),
+        personalInfoUpdated: (newName, photoURL) {
+          if (newName != '') {
+            widget.user.setName(value: newName);
+          }
+          if (photoURL != '') {
+            widget.user.setPhotoUrl(value: photoURL);
+          }
+
+          showSuccessSnackBar(context,
+              AppLocalizations.of(context)!.lblSuccessfulPersInfoUpdate);
+
+          Navigator.pop(context);
+        },
+        photoNotUpdated: () => showErrorSnackBar(
+            context, AppLocalizations.of(context)!.lblFailedUpdatePhoto),
       );
     });
 
@@ -102,67 +115,73 @@ class _PersonalInformationPageState
                 constraints: BoxConstraints(
                   minHeight: constraints.maxHeight,
                 ),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DarkBackButton(onPressed: () => Navigator.pop(context)),
-                      SizedBox(height: 20.h),
-                      SizedBox(height: 20.h),
-                      Text(AppLocalizations.of(context)!.btnPersonalInfo,
-                          style: Theme.of(context).textTheme.displayMedium),
-                      SizedBox(height: 20.h),
-                      Text(AppLocalizations.of(context)!.lblPersonalInformation,
-                          style: Theme.of(context).textTheme.bodyLarge),
-                      SizedBox(height: 40.h),
-                      Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.lblAccountPhoto,
-                          style: Theme.of(context).textTheme.displaySmall,
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      Center(
-                        child: ProfilePhotoEditor(
-                          imageUrl: widget.user.photoUrl,
-                          onPhotoChanged: _onPhotoChanged,
-                          image: _image,
-                          onPhotoSetted: (newPhoto) {
-                            setState(() {
-                              _image = newPhoto;
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      StandardTextField(
-                        label: AppLocalizations.of(context)!.lblName,
-                        onValueValidityChanged: _onNameValidityChanged,
-                        controller: _nameController,
-                      ),
-                      SizedBox(height: 40.h),
-                      Center(
-                        child: Stack(
-                          children: [
-                            RectangleButton(
-                              // TODO: see issue #35
-                              label: "Submit changes",
-                              onPressed: _handleSubmitChanges,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DarkBackButton(onPressed: () => Navigator.pop(context)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 30.w, vertical: 20.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 40.h),
+                          Text(AppLocalizations.of(context)!.btnPersonalInfo,
+                              style: Theme.of(context).textTheme.displayMedium),
+                          SizedBox(height: 20.h),
+                          Text(
+                              AppLocalizations.of(context)!
+                                  .lblPersonalInformation,
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          SizedBox(height: 40.h),
+                          Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.lblAccountPhoto,
+                              style: Theme.of(context).textTheme.displaySmall,
                             ),
-                            if (!_isNameChanged && !_isPhotoChanged)
-                              Positioned.fill(
-                                child: Container(
-                                  color: Colors.white.withOpacity(0.5),
+                          ),
+                          SizedBox(height: 20.h),
+                          Center(
+                            child: ProfilePhotoEditor(
+                              imageUrl: widget.user.photoUrl,
+                              onPhotoChanged: _onPhotoChanged,
+                              image: _image,
+                              onPhotoSetted: (newPhoto) {
+                                setState(() {
+                                  _image = newPhoto;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          StandardTextField(
+                            label: AppLocalizations.of(context)!.lblName,
+                            onValueValidityChanged: _onNameValidityChanged,
+                            controller: _nameController,
+                          ),
+                          SizedBox(height: 40.h),
+                          Center(
+                            child: Stack(
+                              children: [
+                                RectangleButton(
+                                  // TODO: see issue #35
+                                  label: "Submit changes",
+                                  onPressed: _handleSubmitChanges,
                                 ),
-                              ),
-                          ],
-                        ),
+                                if (!_isNameChanged && !_isPhotoChanged)
+                                  Positioned.fill(
+                                    child: Container(
+                                      color: Colors.white.withOpacity(0.5),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                        ],
                       ),
-                      SizedBox(height: 20.h),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );

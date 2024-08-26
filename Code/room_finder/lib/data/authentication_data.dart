@@ -27,7 +27,7 @@ class AuthDataSource {
       final response = await _auth.createUserWithEmailAndPassword(
           email: userCredential.email, password: userCredential.password);
       // setting the name
-      response.user!.updateDisplayName(user.name);
+      await response.user!.updateDisplayName(user.name);
       return right(response.user!);
     } on FirebaseAuthException catch (e) {
       return left(e.message ?? 'Failed to Signup');
@@ -57,10 +57,10 @@ class AuthDataSource {
     }
   }
 
-  Future<Either<String, void>> updateName({required String newUserName}) async {
+  Future<Either<String, String>> updateName({required String newUserName}) async {
     try {
       await currentUser!.updateDisplayName(newUserName);
-      return right(null);
+      return right(newUserName);
     } on FirebaseAuthException catch (e) {
       return left(e.message ?? 'Failed to update the name');
     }

@@ -143,5 +143,8 @@
     "lblVoidPswdTextFieldError": "Il campo password non può essere vuoto",
     "lblWrongPswdTextFieldError": "La password deve essere lunga almeno 6 caratteri",
     "lblConfirmPswdMatchError": "La password non coincide con la precedente",
-    "lblWriteMessage": "Digita un messaggio"
+    "lblWriteMessage": "Digita un messaggio",
+    "lblFailedUpdatePhoto": "Errore durante l'aggiornamento della foto: riprova.",
+    "lblFailedUpdateName": "Errore durante l'aggiornamento del nome: riprova.",
+    "lblSuccessfulPersInfoUpdate": "Informazioni personali aggiornate correttamente"
 }

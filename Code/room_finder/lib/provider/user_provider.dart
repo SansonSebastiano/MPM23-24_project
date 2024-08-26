@@ -10,6 +10,8 @@ class UserNotifier extends StateNotifier<UserState> {
   UserNotifier(this._userDataSource) : super(const UserState.initial());
 
   Future<void> getUser({required String userUid}) async {
+    state = const UserState.loading(); 
+    
     final response = await _userDataSource.getUser(userUid: userUid);
 
     state = response.fold((error) => const UserState.failedRead(),

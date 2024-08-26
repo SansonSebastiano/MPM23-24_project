@@ -10,7 +10,7 @@ import 'package:room_finder/util/network_handler.dart';
 
 class LoginSecurityPage extends ConsumerStatefulWidget {
   const LoginSecurityPage({super.key});
-  
+
   @override
   ConsumerState<LoginSecurityPage> createState() => _LoginSecurityPageState();
 }
@@ -65,51 +65,59 @@ class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
                 constraints: BoxConstraints(
                   minHeight: constraints.maxHeight,
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DarkBackButton(onPressed: () => Navigator.pop(context)),
-                      SizedBox(height: 20.h),
-                      Center(
-                        child: Image(
-                          image: const AssetImage('assets/images/Change-password.png'),
-                          width: 200.w,
-                          height: 200.h,
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      Text(AppLocalizations.of(context)!.btnLoginSecurity,
-                          style: Theme.of(context).textTheme.displayMedium),
-                      SizedBox(height: 20.h),
-                      Text(AppLocalizations.of(context)!.lblLoginSecurity,
-                          style: Theme.of(context).textTheme.bodyLarge),
-                      SizedBox(height: 20.h),
-                      RegistrationPswdTextField(onPswdValidationChanged: _onPasswordValidityChanged,
-                      pswdController: _pswdController,
-                      confirmPswdController: _confirmPswdController,
-                      ),
-                      SizedBox(height: 40.h),
-                      Center(
-                        child: Stack(
-                          children: [
-                            RectangleButton(
-                              label: "Change password",
-                              onPressed: _handleChangePassword,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DarkBackButton(onPressed: () => Navigator.pop(context)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 30.w, vertical: 20.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 20.h),
+                          Center(
+                            child: Image(
+                              image: const AssetImage(
+                                  'assets/images/Change-password.png'),
+                              width: 200.w,
+                              height: 200.h,
                             ),
-                            if (!_isPasswordValid)
-                              Positioned.fill(
-                                child: Container(
-                                  color: Colors.white.withOpacity(0.5),
+                          ),
+                          SizedBox(height: 20.h),
+                          Text(AppLocalizations.of(context)!.btnLoginSecurity,
+                              style: Theme.of(context).textTheme.displayMedium),
+                          SizedBox(height: 20.h),
+                          Text(AppLocalizations.of(context)!.lblLoginSecurity,
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          SizedBox(height: 20.h),
+                          RegistrationPswdTextField(
+                            onPswdValidationChanged: _onPasswordValidityChanged,
+                            pswdController: _pswdController,
+                            confirmPswdController: _confirmPswdController,
+                          ),
+                          SizedBox(height: 40.h),
+                          Center(
+                            child: Stack(
+                              children: [
+                                RectangleButton(
+                                  label: "Change password",
+                                  onPressed: _handleChangePassword,
                                 ),
-                              ),
-                          ],
-                        ),
+                                if (!_isPasswordValid)
+                                  Positioned.fill(
+                                    child: Container(
+                                      color: Colors.white.withOpacity(0.5),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                        ],
                       ),
-                      SizedBox(height: 20.h),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );

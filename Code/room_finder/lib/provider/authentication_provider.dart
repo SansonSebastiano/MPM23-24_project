@@ -78,31 +78,31 @@ class AuthNotifier extends StateNotifier<AuthenticationState> {
     final response = await _authDataSource.updateName(newUserName: newUserName);
 
     state = response.fold((error) => const AuthenticationState.nameNotUpdated(),
-        (response) => const AuthenticationState.nameUpdated());
+        (response) => AuthenticationState.personalInfoUpdated(name: response, photoURL: ''));
   }
 
   Future<void> updatePhoto(
       {required String imageName, required File imageFile}) async {
     state = const AuthenticationState.loading();
-
+    // upload the photo to Storage
     final photoResponse = await _userDataSource.updatePhoto(
         imageFile: imageFile, imageName: imageName);
+
+    state = photoResponse.fold(
+      (error) => const AuthenticationState.photoNotUpdated(),
+      (response) => AuthenticationState.photoUpdated(photoURL: response)
+    );
 
     Either<String, String> response = left('Error on uploading');
 
     if (photoResponse.isRight()) {
-      // (MAYBE) if the response is a success
       response = await _authDataSource.updatePhotoURL(
-          newPhotoURL: photoResponse.getOrElse(() {
-        return '';
-      }));
-    } else {
-      // (MAYBE) otherwise the response is a fail
+          newPhotoURL: photoResponse.getOrElse(() => ''));
     }
 
     state = response.fold(
         (error) => const AuthenticationState.photoNotUpdated(),
-        (response) => AuthenticationState.photoUpdated(photoURL: response));
+        (response) => AuthenticationState.personalInfoUpdated(name: '', photoURL: response));
   }
 }
 
