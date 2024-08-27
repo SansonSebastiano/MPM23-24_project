@@ -18,7 +18,7 @@
 /// 
 /// *[monthlyRent] the montly rent
 /// 
-/// *[photosURL] a gallery of facility's photos
+/// *[photosURLs] a gallery of facility's photos
 class AdData {
   final String? uid;
   final String hostUid;
@@ -29,7 +29,7 @@ class AdData {
   final List<Renter> renters;
   final List<String> services;
   final int monthlyRent;
-  final List<String>? photosURL;
+  final List<String>? photosURLs;
 
   AdData({
     this.uid = '',
@@ -41,7 +41,7 @@ class AdData {
     required this.renters,
     required this.services,
     required this.monthlyRent,
-    this.photosURL,
+    this.photosURLs,
   });
 }
 
