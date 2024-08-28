@@ -13,8 +13,8 @@ const String _nameField = 'name';
 const String _rentersCapacityField = 'rentersCapacity';
 const String _monthlyRentField = 'monthlyRent';
 const String _servicesField = 'services';
-const String _addressSubcolletionName = 'address';
-const String _roomsSubcolletionName = 'rooms';
+const String _addressSubcollectionName = 'address';
+const String _roomsSubcollectionName = 'rooms';
 const String _rentersSubcollectionName = 'renters';
 const String _adsCollectionName = 'ads'; 
 const String _photosAdsRef = "photos/ads"; 
@@ -30,19 +30,20 @@ class AdDataSource {
 
   AdDataSource(this._adCollection, this._adRef);
 
+  /// The method [getAd] returns an individual ad passing as parameter its unique identifier [adUid]
   Future<Either<String, AdData>> getAd({required String adUid}) async {
     try {
       final docSnap = await _adCollection.doc(adUid).get();
       
       // Fetch address subcollection
-      final addressSnap = await docSnap.reference.collection(_addressSubcolletionName).get();
+      final addressSnap = await docSnap.reference.collection(_addressSubcollectionName).get();
       final address = Address(
         street: addressSnap.docs.first['street'],
         city: addressSnap.docs.first['city'],
       );
 
       // Fetch rooms subcollection
-      final roomsSnap = await docSnap.reference.collection(_roomsSubcolletionName).get();
+      final roomsSnap = await docSnap.reference.collection(_roomsSubcollectionName).get();
       final List<Room> rooms = roomsSnap.docs.map((roomDoc) {
         final roomData = roomDoc.data();
         if (roomData.containsKey('numBeds')) {
@@ -99,6 +100,7 @@ class AdDataSource {
     }
   }
 
+  /// The method [addNewAd] allows to add a new ad that respects the passed parameters
   Future<void> addNewAd({
     required String hostUid,
     required String name,
@@ -121,7 +123,7 @@ class AdDataSource {
       });
 
       // 2. Add sub-collections
-      await adDocRef.collection(_addressSubcolletionName).add({
+      await adDocRef.collection(_addressSubcollectionName).add({
         'street': address.street,
         'city': address.city,
       });
@@ -137,7 +139,7 @@ class AdDataSource {
           roomData['numBeds'] = room.numBeds;
         }
 
-        await adDocRef.collection(_roomsSubcolletionName).add(roomData);
+        await adDocRef.collection(_roomsSubcollectionName).add(roomData);
       }
 
       for (Renter renter in renters) {
@@ -164,6 +166,7 @@ class AdDataSource {
     }
   }
 
+  /// The method [deleteAd] allows to delete an ad passing as parameter its unique identifier [adUid]
   Future<void> deleteAd({required String adUid}) async {
     try {
       // 1. Delete photos from Firebase Storage
@@ -177,8 +180,8 @@ class AdDataSource {
       final adDocRef = _adCollection.doc(adUid);
 
       final subcollections = [
-        _addressSubcolletionName,
-        _roomsSubcolletionName,
+        _addressSubcollectionName,
+        _roomsSubcollectionName,
         _rentersSubcollectionName,
       ];
 
@@ -199,6 +202,7 @@ class AdDataSource {
     }
   }
 
+  /// The method [updateAd] allows to update an ad represented by its unique identifier [adUid] and that meets the passed parameters
   Future<void> updateAd({
     required String adUid,
     required String name,
@@ -218,13 +222,13 @@ class AdDataSource {
         _nameField: name,
         _rentersCapacityField: rentersCapacity,
         _monthlyRentField: monthlyRent,
-        _servicesField: services, // Update services as a list of strings
+        _servicesField: services,
       });
 
       // 2. Update subcollections
 
       // Update Address
-      final addressSnapshot = await adDocRef.collection(_addressSubcolletionName).get();
+      final addressSnapshot = await adDocRef.collection(_addressSubcollectionName).get();
 
       await addressSnapshot.docs.first.reference.update({
         'street': address.street,
@@ -232,7 +236,7 @@ class AdDataSource {
       });
 
       // Update Rooms
-      final roomsSnapshot = await adDocRef.collection(_roomsSubcolletionName).get();
+      final roomsSnapshot = await adDocRef.collection(_roomsSubcollectionName).get();
       for (final doc in roomsSnapshot.docs) {
         await doc.reference.delete();
       }
@@ -245,7 +249,7 @@ class AdDataSource {
         if (room is Bedroom) {
           roomData['numBeds'] = room.numBeds;
         }
-        await adDocRef.collection(_roomsSubcolletionName).add(roomData);
+        await adDocRef.collection(_roomsSubcollectionName).add(roomData);
       }
 
       // Update Renters
@@ -285,6 +289,7 @@ class AdDataSource {
     }
   }
 
+  /// The method [getLatestAdsForRandomCity] returns a list of [n] ads located in a random city
   Future<Either<String, List<AdData>>> getLatestAdsForRandomCity({required int n}) async {
     try {
       // 1. Fetch all ads
@@ -295,9 +300,12 @@ class AdDataSource {
       if (ads.isEmpty) {
         return right([]);
       }
-      final randomCity = (ads..shuffle()).first[_addressSubcolletionName]['city'];
+      final DocumentSnapshot randomAdDoc = (ads..shuffle()).first;
+      final addressSnapshot = await randomAdDoc.reference.collection(_addressSubcollectionName).get();
+      final randomCity = addressSnapshot.docs.first['city'];
+
       final cityAdsSnapshot = await _adCollection
-          .where('$_addressSubcolletionName.city', isEqualTo: randomCity)
+          .where('$_addressSubcollectionName.city', isEqualTo: randomCity)
           .orderBy('createdAt', descending: true)
           .limit(n)
           .get();
@@ -313,7 +321,7 @@ class AdDataSource {
         );
 
         // Fetch rooms
-        final roomsSnapshot = await doc.reference.collection(_roomsSubcolletionName).get();
+        final roomsSnapshot = await doc.reference.collection(_roomsSubcollectionName).get();
         List<Room> roomsList = roomsSnapshot.docs.map((roomDoc) {
           final roomData = roomDoc.data();
           if (roomData.containsKey('numBeds')) {
@@ -351,8 +359,8 @@ class AdDataSource {
           hostUid: doc[_hostUidField],
           name: doc[_nameField],
           address: Address(
-            street: doc[_addressSubcolletionName]['street'],
-            city: doc[_addressSubcolletionName]['city'],
+            street: doc[_addressSubcollectionName]['street'],
+            city: doc[_addressSubcollectionName]['city'],
           ),
           rooms: roomsList,
           rentersCapacity: doc[_rentersCapacityField],
@@ -369,6 +377,7 @@ class AdDataSource {
     }
   }
 
+  /// The method [getAdsByHostUid] returns a host ads list searching for the host unique identifier [hostUid]
   Future<Either<String, List<AdData>>> getAdsByHostUid({required String hostUid}) async {
     try {
       // Fetch ads by hostUid
@@ -380,10 +389,10 @@ class AdDataSource {
         final adUid = doc.id;
 
         // Retrieve subcollection data
-        final addressSnap = await doc.reference.collection(_addressSubcolletionName).get();
+        final addressSnap = await doc.reference.collection(_addressSubcollectionName).get();
         final addressData = addressSnap.docs.first.data();
 
-        final roomsSnap = await doc.reference.collection(_roomsSubcolletionName).get();
+        final roomsSnap = await doc.reference.collection(_roomsSubcollectionName).get();
         final rooms = roomsSnap.docs.map((roomDoc) {
           final roomData = roomDoc.data();
           if (roomData.containsKey('numBeds')) {
@@ -441,17 +450,140 @@ class AdDataSource {
     }
   }
 
-  // TODO: implementare metodo che scarica una lista filtrata di Ad per 
-  // - range di prezzo (esempio: tra 200 e 330)
-  // - List<String> services - every ad needs to match the services contained in this list
-  // - number of bedrooms
-  // - number of beds
-  // - number of bathrooms - check the value for "Bathrooms" string with B in capslock exactly
-  // - number of renters
-  // ALL THESE PARAMETERS CAN BE NULL, IN CASE OF NULL PARAMETER RETURN NOTHING
+  /// The method [getFilteredAds] returns a list of filtered ads following the passed filters:
+  /// - [city], used to fetch the digited city in the search bar in the moment user wants to apply filters on the uploaded results
+  /// - [minRent] and [maxRent] to determine the ideal rent
+  /// - [requiredServices], to search only for facilities that offer the searched services
+  /// - at least [minBedrooms] bedrooms
+  /// - at least [minBeds] bedrooms
+  /// - at least [minBathrooms] bedrooms
+  /// - with exactly [roommates] roomates
+  Future<Either<String, List<AdData>>> getFilteredAds({
+    String? city, 
+    int? minRent,
+    int? maxRent,
+    List<String>? requiredServices,
+    int? minBedrooms,
+    int? minBeds,
+    int? minBathrooms,
+    int? roommates,
+  }) async {
+    try {
+      Query query = _adCollection;
+
+      // Apply city filter
+      if (city != null) {
+        final cityDocs = await _adCollection
+            .where('$_addressSubcollectionName.city', isEqualTo: city)
+            .get();
+        final cityAdIds = cityDocs.docs.map((doc) => doc.id).toList();
+        query = query.where(FieldPath.documentId, whereIn: cityAdIds);
+      }
+
+      // Apply price range filter
+      if (minRent != null) {
+        query = query.where(_monthlyRentField, isGreaterThanOrEqualTo: minRent);
+      }
+      if (maxRent != null) {
+        query = query.where(_monthlyRentField, isLessThanOrEqualTo: maxRent);
+      }
+
+      // Execute the query
+      final adsSnapshot = await query.get();
+
+      List<AdData> filteredAds = [];
+
+      for (final doc in adsSnapshot.docs) {
+        final adUid = doc.id;
+
+        // Fetch address subcollection
+        final addressSnap = await doc.reference.collection(_addressSubcollectionName).get();
+        final address = Address(
+          street: addressSnap.docs.first['street'],
+          city: addressSnap.docs.first['city'],
+        );
+
+        // Fetch rooms subcollection
+        final roomsSnap = await doc.reference.collection(_roomsSubcollectionName).get();
+        List<Room> roomsList = roomsSnap.docs.map((roomDoc) {
+          final roomData = roomDoc.data();
+          if (roomData.containsKey('numBeds')) {
+            return Bedroom(
+              name: roomData['name'],
+              quantity: roomData['quantity'],
+              numBeds: List<int>.from(roomData['numBeds']),
+            );
+          } else {
+            return Room(
+              name: roomData['name'],
+              quantity: roomData['quantity'],
+            );
+          }
+        }).toList();
+
+        // Apply room filters (skip the rest of the code if any of these conditions is not respected)
+        if (minBedrooms != null && roomsList.whereType<Bedroom>().length < minBedrooms) {
+          continue;
+        }
+        if (minBeds != null && roomsList.whereType<Bedroom>().fold(0, (bedsSum, b) => bedsSum + b.numBeds.reduce((a, b) => a + b)) < minBeds) {
+          continue;
+        }
+        if (minBathrooms != null && roomsList.where((r) => r.name == "Bathrooms").length < minBathrooms) {
+          continue;
+        }
+
+        // Fetch renters subcollection
+        final rentersSnap = await doc.reference.collection(_rentersSubcollectionName).get();
+        List<Renter> rentersList = rentersSnap.docs.map((renterDoc) {
+          final renterData = renterDoc.data();
+          return Renter(
+            name: renterData['name'],
+            age: renterData['age'],
+            facultyOfStudies: renterData['facultyOfStudies'],
+            interests: renterData['interests'],
+            contractDeadline: DateTime.parse(renterData['contractDeadline']),
+          );
+        }).toList();
+
+        // Apply renter filters
+        if (roommates != null && rentersList.length != roommates) {
+          continue;
+        }
+
+        // Fetch services field
+        final services = List<String>.from(doc[_servicesField] ?? []);
+        if (requiredServices != null && !requiredServices.every((service) => services.contains(service))) {
+          continue;
+        }
+
+        // Fetch photos from Firebase Storage
+        final adPhotos = await _adRef.child(adUid).listAll();
+        final List<String> adPhotosURLs = await Future.wait(
+          adPhotos.items.map((item) => item.getDownloadURL())
+        );
+
+        // Add filtered ad data to final list
+        filteredAds.add(AdData(
+          uid: adUid,
+          hostUid: doc[_hostUidField],
+          name: doc[_nameField],
+          address: address,
+          rooms: roomsList,
+          rentersCapacity: doc[_rentersCapacityField],
+          renters: rentersList,
+          services: services,
+          monthlyRent: doc[_monthlyRentField],
+          photosURLs: adPhotosURLs,
+        ));
+      }
+
+      return right(filteredAds);
+    } on FirebaseException catch (e) {
+      return left(e.message ?? "Failed to fetch filtered ads");
+    }
+  }
 }
 
 final adDataSourceProvider = Provider<AdDataSource>((ref) => AdDataSource(
     ref.read(firebaseFirestoreProvider).collection(_adsCollectionName),
-    ref.read(firebaseStorageProvider).ref().child(_photosAdsRef)
-));
+    ref.read(firebaseStorageProvider).ref().child(_photosAdsRef)));
