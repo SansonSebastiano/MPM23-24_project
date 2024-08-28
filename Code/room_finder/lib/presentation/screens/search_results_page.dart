@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
-import 'package:room_finder/presentation/components/base_panel.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/filter_panel.dart';
@@ -12,6 +11,7 @@ import 'package:room_finder/presentation/components/search_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
 import 'package:room_finder/presentation/screens/login_page.dart';
+import 'package:room_finder/style/color_palette.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class SearchResultsPage extends ConsumerStatefulWidget {
@@ -27,14 +27,22 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
   late List<bool> isSaved;
   late List<AdsBox> adsList;
 
+  late RangeValues _currentRangeValues;
+  late Map<String, bool> _amenitiesSwitches;
+  late Map<String, int> _selectedRoomIndex;
+
   @override
   void initState() {
     super.initState();
+    // TODO: the end should be the max value from the backend
+    _currentRangeValues = const RangeValues(0, 1000);
+    _amenitiesSwitches = {};
+    _selectedRoomIndex = {};
+
     isSaved = List.generate(4, (index) => false);
     adsList = List<AdsBox>.generate(
         4,
-        (index) => 
-         AdsBox(
+        (index) => AdsBox(
             imageUrl:
                 "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
             city: "Padova",
@@ -88,25 +96,97 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                 }));
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _amenitiesSwitches = {
+      AppLocalizations.of(context)!.lblWiFi: false,
+      AppLocalizations.of(context)!.lblDishwasher: false,
+      AppLocalizations.of(context)!.lblWashingMachine: false,
+      AppLocalizations.of(context)!.lblDedicatedParking: false,
+      AppLocalizations.of(context)!.lblAirConditioning: false,
+    };
+
+    _selectedRoomIndex = {
+      AppLocalizations.of(context)!.lblBedrooms: 0,
+      AppLocalizations.of(context)!.lblBeds: 0,
+      AppLocalizations.of(context)!.lblBathrooms: 0,
+      AppLocalizations.of(context)!.lblRoommates: 0
+    };
+  }
+
   void toggleSave(int index) {
     if (widget.isLogged == false) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
     } else {}
     setState(() {
       isSaved[index] = !isSaved[index];
     });
   }
 
-  void _showSearchFilterPanel(BuildContext context) {
-    showModalPanel(
-        context: context,
-        panel: SearchFilterPanel(
+  void _showSearchFilterPanel() {
+    _showFilterPanel();
+    // showModalPanel(
+    //     context: context,
+    //     panel: SearchFilterPanel(
+    //       context: context,
+    //       panelTitle: AppLocalizations.of(context)!.lblFilters,
+    //       buttonLabel: AppLocalizations.of(context)!.btnApplyFilters,
+    //       // TODO: Implement the onConfirm function
+    //       onConfirmPressed: () {},
+    //       onClosedPressed: () => Navigator.pop(context),
+    //       currentRangeValues: _currentRangeValues,
+    //       onPriceChanged: (values) {
+    //         setState(() {
+    //           _currentRangeValues = values;
+    //         });
+    //       },
+    //     ));
+  }
+
+  Future _showFilterPanel() {
+    return showModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
+      backgroundColor: ColorPalette.lavenderBlue,
+      builder: (context) {
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setModalState) {
+          return SearchFilterPanel(
             context: context,
             panelTitle: AppLocalizations.of(context)!.lblFilters,
             buttonLabel: AppLocalizations.of(context)!.btnApplyFilters,
             // TODO: Implement the onConfirm function
             onConfirmPressed: () {},
-            onClosedPressed: () => Navigator.pop(context)));
+            onClosedPressed: () => Navigator.pop(context),
+            currentRangeValues: _currentRangeValues,
+            onPriceChanged: (values) {
+              setModalState(() {
+                _currentRangeValues = values;
+              });
+              print("price: $_currentRangeValues");
+            },
+            amenitiesSwitches: _amenitiesSwitches,
+            onServiceChanged: (key, value) {
+              setModalState(() {
+                _amenitiesSwitches[key] = value;
+              });
+              print("$key: ${_amenitiesSwitches[key]}");
+            },
+            selectedRoomIndex: _selectedRoomIndex,
+            onRoomIndexSelected: (key, value, entry) {
+              setModalState(() {
+                _selectedRoomIndex[key] = value ? entry : 0;
+              });
+              print("$key: ${_selectedRoomIndex[key]}");
+            },
+          );
+        });
+      },
+    );
   }
 
   @override
@@ -118,9 +198,12 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
     return SecondaryTemplateScreen(
         leftHeaderWidget:
             DarkBackButton(onPressed: () => Navigator.pop(context)),
-        centerHeaderWidget: CustomSearchBar(hintText: "Padova", isLogged: widget.isLogged,),
+        centerHeaderWidget: CustomSearchBar(
+          hintText: "Padova",
+          isLogged: widget.isLogged,
+        ),
         rightHeaderWidget:
-            FilterButton(onPressed: () => _showSearchFilterPanel(context)),
+            FilterButton(onPressed: () => _showSearchFilterPanel()),
         rightHeaderWidgetVisibility: true,
         content: networkStatus == NetworkStatus.off
             ? Center(
@@ -136,7 +219,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                               onPressed: () {
                                 print("remove filters pressed");
                                 // TODO: implement areFiltersApplied logic
-                                
+
                                 // setState(() {
                                 //   areFiltersApplied = false;
                                 // });
@@ -167,7 +250,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                               bookmarkButton: BookmarkButton(
                                 size: 50.0,
                                 isSaved: isSaved[index],
-                                onPressed:() => toggleSave(index),
+                                onPressed: () => toggleSave(index),
                               ),
                               onPressed: () => {
                                     // TODO: replace with real data
@@ -176,37 +259,39 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             FacilityDetailPage(
-                                                isStudent: true,
-                                                isWizardPage: false,
-                                                facilityPhotos: const [
-                                                  "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                                                  "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-                                                  "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-                                                ],
-                                                facilityName: "Casa Dolce Casa",
-                                                facilityAddress:
-                                                    "Padova - Via Roma 12",
-                                                facilityPrice: 300,
-                                                facilityHostName: "Mario Rossi",
-                                                hostUrlImage:
-                                                    "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-                                                facilityServices: const [
-                                                  "2 bedrooms",
-                                                  "3 beds",
-                                                  "1 bathroom",
-                                                  "WiFi"
-                                                ],
-                                                facilityRenters: [
-                                                  HostFacilityDetailPageRenterBox(
-                                                    name: 'Francesco Dal Maso',
-                                                    contractDeadline: DateTime(2025, 1, 1),
-                                                  ),
-                                                  HostFacilityDetailPageRenterBox(
-                                                    name: 'Antonio Principe',
-                                                    contractDeadline: DateTime(2025, 3, 1),
-                                                  ),
-                                                ],
-                                                ),
+                                          isStudent: true,
+                                          isWizardPage: false,
+                                          facilityPhotos: const [
+                                            "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
+                                            "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
+                                            "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
+                                          ],
+                                          facilityName: "Casa Dolce Casa",
+                                          facilityAddress:
+                                              "Padova - Via Roma 12",
+                                          facilityPrice: 300,
+                                          facilityHostName: "Mario Rossi",
+                                          hostUrlImage:
+                                              "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
+                                          facilityServices: const [
+                                            "2 bedrooms",
+                                            "3 beds",
+                                            "1 bathroom",
+                                            "WiFi"
+                                          ],
+                                          facilityRenters: [
+                                            HostFacilityDetailPageRenterBox(
+                                              name: 'Francesco Dal Maso',
+                                              contractDeadline:
+                                                  DateTime(2025, 1, 1),
+                                            ),
+                                            HostFacilityDetailPageRenterBox(
+                                              name: 'Antonio Principe',
+                                              contractDeadline:
+                                                  DateTime(2025, 3, 1),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   });

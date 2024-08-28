@@ -59,14 +59,16 @@ Future showModalPanel(
     required Widget panel,
     bool isScrollControlled = true}) {
   return showModalBottomSheet(
-    useSafeArea: true,
-    isScrollControlled: isScrollControlled,
-    context: context,
-    backgroundColor: ColorPalette.lavenderBlue,
-    builder: (BuildContext context) {
-      return panel;
-    },
-  );
+      useSafeArea: true,
+      isScrollControlled: isScrollControlled,
+      context: context,
+      backgroundColor: ColorPalette.lavenderBlue,
+      builder: (context) {
+        return StatefulBuilder(
+            builder: (BuildContext context, StateSetter setModalState) {
+          return panel;
+        });
+      });
 }
 
 /// Create a [title] for the filter panel.

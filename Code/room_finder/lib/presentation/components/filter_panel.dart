@@ -23,6 +23,14 @@ class SearchFilterPanel extends StatefulWidget {
   final BuildContext context;
   final String panelTitle;
   final String buttonLabel;
+
+  final RangeValues currentRangeValues;
+  final Map<String, bool> amenitiesSwitches;
+  final Map<String, int> selectedRoomIndex;
+
+  final void Function(RangeValues) onPriceChanged;
+  final void Function(String, bool) onServiceChanged;
+  final void Function(String, bool, int) onRoomIndexSelected;
   final void Function()? onConfirmPressed;
   final void Function() onClosedPressed;
 
@@ -31,161 +39,116 @@ class SearchFilterPanel extends StatefulWidget {
       required this.context,
       required this.panelTitle,
       required this.buttonLabel,
+      required this.currentRangeValues,
+      required this.amenitiesSwitches,
+      required this.selectedRoomIndex,
       required this.onConfirmPressed,
-      required this.onClosedPressed});
+      required this.onClosedPressed,
+      required this.onPriceChanged,
+      required this.onServiceChanged,
+      required this.onRoomIndexSelected});
 
   @override
   State<SearchFilterPanel> createState() => _SearchFilterPanelState();
 }
 
 class _SearchFilterPanelState extends State<SearchFilterPanel> {
-  late Map<String, bool> _amenitiesSwitches;
-
-@override
-  void initState() {
-    super.initState();
-    _amenitiesSwitches = {};
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    _amenitiesSwitches = {
-      AppLocalizations.of(context)!.lblWiFi: false,
-      AppLocalizations.of(context)!.lblDishwasher: false,
-      AppLocalizations.of(context)!.lblWashingMachine: false,
-      AppLocalizations.of(context)!.lblDedicatedParking: false,
-      AppLocalizations.of(context)!.lblAirConditioning: false,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     return BaseModalPanel(
-        title: widget.panelTitle,
-        btnLabel: widget.buttonLabel,
-        onBtnPressed: widget.onConfirmPressed,
-        onBtnClosed: widget.onClosedPressed,
-        items: Column(
-          children: [
-            _PriceRangeItem(
-              context: widget.context,
-              itemTitle: AppLocalizations.of(widget.context)!.lblPriceRange,
-              itemDesc: AppLocalizations.of(widget.context)!.lblPriceDesc,
-            ),
-            _AmenitiesItem(
-              itemTitle: AppLocalizations.of(widget.context)!.lblAmenities,
-              amenitiesOptions: _amenitiesSwitches.entries
+      title: widget.panelTitle,
+      btnLabel: widget.buttonLabel,
+      onBtnPressed: widget.onConfirmPressed,
+      onBtnClosed: widget.onClosedPressed,
+      items: Column(
+        children: [
+          _PriceRangeItem(
+            context: widget.context,
+            itemTitle: AppLocalizations.of(widget.context)!.lblPriceRange,
+            itemDesc: AppLocalizations.of(widget.context)!.lblPriceDesc,
+            currentRangeValues: widget.currentRangeValues,
+            onChanged: widget.onPriceChanged,
+          ),
+          _AmenitiesItem(
+            itemTitle: AppLocalizations.of(widget.context)!.lblAmenities,
+            amenitiesOptions: widget.amenitiesSwitches.entries
                 .map((entry) => AmenitiesOption(
                       label: entry.key,
                       isChecked: entry.value,
                       onChanged: (value) {
-                        setState(() {
-                          _amenitiesSwitches[entry.key] = value;
-                        });
+                        widget.onServiceChanged(entry.key, value);
                       },
                     ))
                 .toList(),
-            ),
-            _RoomsItem(
-              itemTitle: AppLocalizations.of(widget.context)!.lblBedrooms,
-            ),
-            _RoomsItem(
-              itemTitle: AppLocalizations.of(widget.context)!.lblBeds,
-            ),
-            _RoomsItem(
-              itemTitle: AppLocalizations.of(widget.context)!.lblBathrooms,
-            ),
-            _RoomsItem(
-              itemTitle: AppLocalizations.of(widget.context)!.lblRoommates,
-            ),
-          ],
-        ),
-      );
+          ),
+          _RoomsItem(
+            itemTitle: AppLocalizations.of(widget.context)!.lblBedrooms,
+            selectedIndex: widget.selectedRoomIndex[
+                AppLocalizations.of(widget.context)!.lblBedrooms]!,
+            onSelected: widget.onRoomIndexSelected,
+          ),
+          _RoomsItem(
+            itemTitle: AppLocalizations.of(widget.context)!.lblBeds,
+            selectedIndex: widget.selectedRoomIndex[
+                AppLocalizations.of(widget.context)!.lblBeds]!,
+            onSelected: widget.onRoomIndexSelected,
+          ),
+          _RoomsItem(
+            itemTitle: AppLocalizations.of(widget.context)!.lblBathrooms,
+            selectedIndex: widget.selectedRoomIndex[
+                AppLocalizations.of(widget.context)!.lblBathrooms]!,
+            onSelected: widget.onRoomIndexSelected,
+          ),
+          _RoomsItem(
+            itemTitle: AppLocalizations.of(widget.context)!.lblRoommates,
+            selectedIndex: widget.selectedRoomIndex[
+                AppLocalizations.of(widget.context)!.lblRoommates]!,
+            onSelected: widget.onRoomIndexSelected,
+          ),
+        ],
+      ),
+    );
   }
-
-  // Widget get items => 
-  // Column(
-  //       children: [
-  //         _PriceRangeItem(
-  //           context: widget.context,
-  //           itemTitle: AppLocalizations.of(widget.context)!.lblPriceRange,
-  //           itemDesc: AppLocalizations.of(widget.context)!.lblPriceDesc,
-  //         ),
-  //         _AmenitiesItem(
-  //           itemTitle: AppLocalizations.of(widget.context)!.lblAmenities,
-  //           amenitiesOptions: [
-  //             // AmenitiesOption(label: AppLocalizations.of(context)!.lblWiFi,
-  //             // ),
-  //             // AmenitiesOption(
-  //             //     label: AppLocalizations.of(context)!.lblDishwasher),
-  //             // AmenitiesOption(
-  //             //     label: AppLocalizations.of(context)!.lblWashingMachine),
-  //             // AmenitiesOption(
-  //             //     label: AppLocalizations.of(context)!.lblDedicatedParking),
-  //             // AmenitiesOption(
-  //             //     label: AppLocalizations.of(context)!.lblAirConditioning),
-  //           ],
-  //         ),
-  //         _RoomsItem(
-  //           itemTitle: AppLocalizations.of(widget.context)!.lblBedrooms,
-  //         ),
-  //         _RoomsItem(
-  //           itemTitle: AppLocalizations.of(widget.context)!.lblBeds,
-  //         ),
-  //         _RoomsItem(
-  //           itemTitle: AppLocalizations.of(widget.context)!.lblBathrooms,
-  //         ),
-  //         _RoomsItem(
-  //           itemTitle: AppLocalizations.of(widget.context)!.lblRoommates,
-  //         ),
-  //       ],
-  //     );
 }
 
 /// Create a custom range slider.
 /// The range slider has a minimum value of 0 and a maximum value of <TO BE DEFINED STATICALLY/DINAMICALLY>.
 class _CustomRangeSlider extends StatefulWidget {
-  const _CustomRangeSlider();
+  final RangeValues currentRangeValues;
+  final void Function(RangeValues) onChanged;
+
+  const _CustomRangeSlider(
+      {required this.currentRangeValues, required this.onChanged});
 
   @override
   State<_CustomRangeSlider> createState() => _CustomRangeSliderState();
 }
 
 class _CustomRangeSliderState extends State<_CustomRangeSlider> {
-  // TODO: the end should be the max value from the backend
-  RangeValues _currentRangeValues = const RangeValues(0, 1000);
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         RangeSlider(
           inactiveColor: Colors.grey,
-          values: _currentRangeValues,
-          // TODO: it should be taken from the backend, the max value
+          values: widget.currentRangeValues,
           max: 1000,
           divisions: 100,
           labels: RangeLabels(
-            _currentRangeValues.start.round().toString(),
-            _currentRangeValues.end.round().toString(),
+            widget.currentRangeValues.start.round().toString(),
+            widget.currentRangeValues.end.round().toString(),
           ),
-          onChanged: (RangeValues values) {
-            setState(() {
-              _currentRangeValues = values;
-            });
-          },
+          onChanged: widget.onChanged,
         ),
         Row(
           children: [
             Text(
-              _currentRangeValues.start.round().toString(),
+              widget.currentRangeValues.start.round().toString(),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             const Spacer(),
             Text(
-              _currentRangeValues.end.round().toString(),
+              widget.currentRangeValues.end.round().toString(),
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
@@ -198,15 +161,24 @@ class _CustomRangeSliderState extends State<_CustomRangeSlider> {
 /// Create a price range filter item.
 class _PriceRangeItem extends PanelItem {
   final BuildContext context;
+  final RangeValues currentRangeValues;
+  final void Function(RangeValues) onChanged;
 
   const _PriceRangeItem(
-      {required this.context, required super.itemTitle, super.itemDesc});
+      {required this.context,
+      required super.itemTitle,
+      super.itemDesc,
+      required this.currentRangeValues,
+      required this.onChanged});
 
   @override
   Widget get content {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: const _CustomRangeSlider());
+        child: _CustomRangeSlider(
+          currentRangeValues: currentRangeValues,
+          onChanged: onChanged,
+        ));
   }
 }
 
@@ -235,14 +207,17 @@ class _AmenitiesItem extends PanelItem {
 ///
 /// It allows to select only one option at a time from a list of options [any, 1, 2, 3, 4, 5].
 class _CustomChoiceChip extends StatefulWidget {
-  const _CustomChoiceChip();
+  final int selectedIndex;
+  final void Function(bool, int) onSelected;
+
+  const _CustomChoiceChip(
+      {required this.selectedIndex, required this.onSelected});
 
   @override
   State<_CustomChoiceChip> createState() => _CustomChoiceChipState();
 }
 
 class _CustomChoiceChipState extends State<_CustomChoiceChip> {
-  int _selectedIndex = 0;
   final List<String> _options = <String>['Any', '1', '2', '3', '4'];
 
   @override
@@ -252,12 +227,15 @@ class _CustomChoiceChipState extends State<_CustomChoiceChip> {
       children: _options.asMap().entries.map((MapEntry<int, String> entry) {
         return ChoiceChip(
           label: Text(entry.value),
-          selected: _selectedIndex == entry.key,
-          onSelected: (bool selected) {
-            setState(() {
-              _selectedIndex = selected ? entry.key : 0;
-            });
+          selected: widget.selectedIndex == entry.key,
+          onSelected: (value) {
+            widget.onSelected(value, entry.key);
           },
+          // (bool selected) {
+          //   setState(() {
+          //     _selectedIndex = selected ? entry.key : 0;
+          //   });
+          // },
         );
       }).toList(),
     );
@@ -270,10 +248,21 @@ class _CustomChoiceChipState extends State<_CustomChoiceChip> {
 ///
 /// The [content] is a [_CustomChoiceChip] widget.
 class _RoomsItem extends PanelItem {
-  const _RoomsItem({required super.itemTitle});
+  final int selectedIndex;
+  final void Function(String, bool, int) onSelected;
+
+  const _RoomsItem(
+      {required super.itemTitle,
+      required this.selectedIndex,
+      required this.onSelected});
 
   @override
   Widget get content {
-    return const _CustomChoiceChip();
+    return _CustomChoiceChip(
+      selectedIndex: selectedIndex,
+      onSelected: (value, entry) {
+        onSelected(itemTitle, value, entry);
+      },
+    );
   }
 }
