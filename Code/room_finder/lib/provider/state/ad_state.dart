@@ -10,9 +10,23 @@ class AdState with _$AdState {
 
   const factory AdState.loading() = _Loading;
 
-  const factory AdState.failedRead() = _FailedRead;
+  const factory AdState.singleFailedRead() = _SingleFailedRead;
 
-  const factory AdState.successfulRead({required AdData adData}) = _SuccessfulRead;
+  const factory AdState.singleSuccessfulRead({required AdData adData}) = _SingleSuccessfulRead;
 
-  // TODO: add all other useful states
+  const factory AdState.multipleFailedReads() = _MultipleFailedRead;
+
+  const factory AdState.multipleSuccessfulReads({required List<AdData> adsData}) = _MultipleSuccessfulRead;
+
+  const factory AdState.failedAddNewAd() = _FailedAddNewAd;
+
+  const factory AdState.successfulAddNewAd() = _SuccessfulAddNewAd;
+
+  const factory AdState.failedDeleteAd() = _FailedDeleteAd;
+
+  const factory AdState.successfulDeleteAd() = _SuccessfulDeleteAd;
+
+  const factory AdState.failedUpdateAd() = _FailedUpdateAd;
+
+  const factory AdState.successfulUpdateAd() = _SuccessfulUpdateAd;
 }
