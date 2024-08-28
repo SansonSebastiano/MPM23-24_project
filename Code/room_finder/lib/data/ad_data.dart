@@ -101,7 +101,7 @@ class AdDataSource {
   }
 
   /// The method [addNewAd] allows to add a new ad that respects the passed parameters
-  Future<void> addNewAd({
+  Future<Either<String, void>> addNewAd({
     required String hostUid,
     required String name,
     required Address address,
@@ -160,14 +160,14 @@ class AdDataSource {
         await photoRef.putFile(photo);
       }
       
+      return right(null);
     } on FirebaseException catch (e) {
-      print('Failed to add ad: $e');
-      throw Exception(e.message);
+      return left(e.message ?? 'Failed to add ad');
     }
   }
 
   /// The method [deleteAd] allows to delete an ad passing as parameter its unique identifier [adUid]
-  Future<void> deleteAd({required String adUid}) async {
+  Future<Either<String, void>> deleteAd({required String adUid}) async {
     try {
       // 1. Delete photos from Firebase Storage
       final adPhotosRef = _adRef.child(adUid);
@@ -196,14 +196,14 @@ class AdDataSource {
       // 3. Delete the ad document
       await adDocRef.delete();
 
+      return right(null);
     } on FirebaseException catch (e) {
-      print('Failed to delete ad: $e');
-      throw Exception(e.message);
+      return left(e.message ?? 'Failed to delete ad');
     }
   }
 
   /// The method [updateAd] allows to update an ad represented by its unique identifier [adUid] and that meets the passed parameters
-  Future<void> updateAd({
+  Future<Either<String, void>> updateAd({
     required String adUid,
     required String name,
     required Address address,
@@ -283,9 +283,9 @@ class AdDataSource {
         await photoRef.putFile(photo); 
       }
 
+      return right(null);
     } on FirebaseException catch (e) {
-      print('Failed to update ad: $e');
-      throw Exception(e.message);
+      return left(e.message ?? 'Failed to update ad');
     }
   }
 
