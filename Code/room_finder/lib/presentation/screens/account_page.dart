@@ -10,20 +10,34 @@ import 'package:room_finder/presentation/components/buttons/setting_buttons.dart
 import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/presentation/screens/account_page_login_security.dart';
 import 'package:room_finder/presentation/screens/account_page_personal_information.dart';
+import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/provider/authentication_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// ignore: must_be_immutable
 class AccountPage extends ConsumerStatefulWidget {
   final UserData user;
+  final bool isLogged;
 
-  const AccountPage({super.key, required this.user});
+  const AccountPage({super.key, required this.user, required this.isLogged});
 
   @override
   ConsumerState<AccountPage> createState() => _AccountPageState();
 }
 
 class _AccountPageState extends ConsumerState<AccountPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!widget.isLogged) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const LoginPage()));
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,10 +106,10 @@ class _AccountPageState extends ConsumerState<AccountPage> {
                       imageUrl: widget.user.photoUrl,
                     ),
                     SizedBox(height: 10.h),
-                    Text(widget.user.name!,
+                    Text(widget.user.name ?? '',
                         style: Theme.of(context).textTheme.displayMedium),
                     SizedBox(height: 10.h),
-                    Text(widget.user.email!,
+                    Text(widget.user.email ?? '',
                         style: Theme.of(context).textTheme.bodyMedium),
                   ],
                 ),
@@ -135,16 +149,19 @@ class _AccountPageState extends ConsumerState<AccountPage> {
               padding: EdgeInsets.zero,
               children: [
                 SettingButtons(
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PersonalInformationPage(
-                            user: widget.user,
-                          ))).then((_) => setState(() {})),
+                  onPressed: () => Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (context) => PersonalInformationPage(
+                                user: widget.user,
+                              )))
+                      .then((_) => setState(() {})),
                   label: AppLocalizations.of(context)!.btnPersonalInfo,
                   icon: Icons.person_outline,
                 ),
                 SettingButtons(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => LoginSecurityPage(user: widget.user))),
+                      builder: (context) =>
+                          LoginSecurityPage(user: widget.user))),
                   label: AppLocalizations.of(context)!.btnLoginSecurity,
                   icon: Icons.login,
                 ),

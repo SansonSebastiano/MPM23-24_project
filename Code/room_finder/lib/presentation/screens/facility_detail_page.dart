@@ -9,10 +9,13 @@ import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/chat_new_page.dart';
 import 'package:room_finder/presentation/screens/current_renters_page.dart';
+import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:room_finder/util/network_handler.dart';
 
-class FacilityDetailPage extends ConsumerWidget {
+class FacilityDetailPage extends ConsumerStatefulWidget {
+  final bool isLogged;
+
   final bool isStudent;
   final bool isWizardPage;
   final List<String> facilityPhotos;
@@ -26,6 +29,7 @@ class FacilityDetailPage extends ConsumerWidget {
 
   const FacilityDetailPage(
       {super.key,
+      required this.isLogged,
       required this.isStudent,
       required this.isWizardPage,
       required this.facilityPhotos,
@@ -38,19 +42,45 @@ class FacilityDetailPage extends ConsumerWidget {
       required this.facilityRenters});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<FacilityDetailPage> createState() => FacilityDetailPageState();
+}
+
+class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
+  late bool isSaved;
+
+  @override
+  void initState() {
+    super.initState();
+    isSaved = false;
+  }
+
+  void toggleSave() {
+    if (widget.isLogged == false) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
+    } else {}
+    setState(() {
+      isSaved = !isSaved;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final networkStatus = ref.watch(networkAwareProvider);
 
-    final photoCarousel = isStudent
+    final photoCarousel = widget.isStudent
         ? StudentPhotoCarousel(
-            items: facilityPhotos
-                .map((url) => Image(image: NetworkImage(url)))
-                .toList())
-        : HostPhotoCarousel(
-            items: facilityPhotos
+            items: widget.facilityPhotos
                 .map((url) => Image(image: NetworkImage(url)))
                 .toList(),
-            isWizardPage: isWizardPage,
+                isSaved: isSaved,
+                onPressed: toggleSave,
+                )
+        : HostPhotoCarousel(
+            items: widget.facilityPhotos
+                .map((url) => Image(image: NetworkImage(url)))
+                .toList(),
+            isWizardPage: widget.isWizardPage,
           );
 
     return Scaffold(
@@ -69,17 +99,17 @@ class FacilityDetailPage extends ConsumerWidget {
                       Column(
                         children: [
                           _MainFacilityInfos(
-                              facilityName: facilityName,
-                              facilityAddress: facilityAddress,
-                              facilityPrice: facilityPrice,
-                              hostUrlImage: hostUrlImage,
-                              facilityHostName: facilityHostName),
+                              facilityName: widget.facilityName,
+                              facilityAddress: widget.facilityAddress,
+                              facilityPrice: widget.facilityPrice,
+                              hostUrlImage: widget.hostUrlImage,
+                              facilityHostName: widget.facilityHostName),
                           SizedBox(height: 20.h),
                           const Divider(
                             color: ColorPalette.blueberry,
                           ),
                           _RoomsAndAmenities(
-                              facilityServices: facilityServices),
+                              facilityServices: widget.facilityServices),
                           const Divider(
                             color: ColorPalette.blueberry,
                           ),
@@ -94,15 +124,25 @@ class FacilityDetailPage extends ConsumerWidget {
                                   .copyWith(fontWeight: FontWeight.w500),
                             ),
                           ),
-                          isStudent
+                          widget.isStudent
                               ? Align(
                                   alignment: Alignment.centerLeft,
                                   child: TextButton(
-                                    onPressed: () => Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CurrentRentersPage()),
-                                    ),
+                                    onPressed: () {
+                                      if (widget.isLogged) {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const CurrentRentersPage()),
+                                        );
+                                      } else {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LoginPage()),
+                                        );
+                                      }
+                                    },
                                     child: Text(
                                         AppLocalizations.of(context)!
                                             .btnMoreDetails,
@@ -126,7 +166,7 @@ class FacilityDetailPage extends ConsumerWidget {
                                       padding: EdgeInsets.zero,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return facilityRenters[index];
+                                        return widget.facilityRenters[index];
                                       },
                                       separatorBuilder:
                                           (BuildContext context, int index) {
@@ -134,7 +174,7 @@ class FacilityDetailPage extends ConsumerWidget {
                                           height: 10.w,
                                         );
                                       },
-                                      itemCount: facilityRenters.length,
+                                      itemCount: widget.facilityRenters.length,
                                     ),
                                   ),
                                 ),
@@ -143,22 +183,31 @@ class FacilityDetailPage extends ConsumerWidget {
                     ],
                   ),
                 ),
-                isStudent
+                widget.isStudent
                     ? Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.w, vertical: 20.h),
                         child: RectangleButton(
                             label: AppLocalizations.of(context)!.btnRequestInfo,
-                            onPressed: () => Navigator.of(context).push(
+                            onPressed: () {
+                              if (widget.isLogged) {
+                                Navigator.of(context).push(
                                   MaterialPageRoute(
                                       builder: (context) => ChatNewPage(
-                                          receiverImageUrl: hostUrlImage,
-                                          receiverName: facilityHostName,
-                                          facilityName: facilityName,
+                                          receiverImageUrl: widget.hostUrlImage,
+                                          receiverName: widget.facilityHostName,
+                                          facilityName: widget.facilityName,
                                           onTap: () => {})),
-                                )),
+                                );
+                              } else {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                );
+                              }
+                            }),
                       )
-                    : isWizardPage
+                    : widget.isWizardPage
                         ? Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 20.h),
@@ -172,6 +221,7 @@ class FacilityDetailPage extends ConsumerWidget {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               FacilityDetailPage(
+                                            isLogged: widget.isLogged,
                                             isStudent: false,
                                             isWizardPage: false,
                                             facilityPhotos: const [
@@ -212,246 +262,12 @@ class FacilityDetailPage extends ConsumerWidget {
                         : const SizedBox.shrink(),
               ],
             ),
-      // : Row(
-      //   children: [
-      //     Stack(
-      //         children: [
-      //           SingleChildScrollView(
-      //             padding: EdgeInsets.only(
-      //                 bottom: 120
-      //                     .h), // bottom padding to ensure content doesn't overlap with the button
-      //             child: Column(
-      //               crossAxisAlignment: CrossAxisAlignment.start,
-      //               children: [
-      //                 photoCarousel,
-      //                 Padding(
-      //                   padding: EdgeInsets.symmetric(
-      //                       horizontal: 16.w, vertical: 8.h),
-      //                   child: Column(
-      //                     crossAxisAlignment: CrossAxisAlignment.start,
-      //                     children: [
-      //                       SizedBox(height: 10.h),
-      //                       Row(
-      //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                         children: [
-      //                           Expanded(
-      //                             child: Text(
-      //                               facilityName,
-      //                               style: TextStyle(
-      //                                 color: ColorPalette.oxfordBlue,
-      //                                 fontSize: 24.sp,
-      //                                 fontWeight: FontWeight.bold,
-      //                               ),
-      //                             ),
-      //                           ),
-      //                           Text(
-      //                             '€${facilityPrice.toStringAsFixed(2)}', // Formats the price to 2 decimal places
-      //                             style: TextStyle(
-      //                               color: ColorPalette.oxfordBlue,
-      //                               fontSize: 20.sp,
-      //                               fontWeight: FontWeight.bold,
-      //                             ),
-      //                           ),
-      //                         ],
-      //                       ),
-      //                       Row(
-      //                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                         children: [
-      //                           Text(
-      //                             facilityAddress,
-      //                             style: Theme.of(context).textTheme.bodyMedium,
-      //                           ),
-      //                           Text(
-      //                             "per month",
-      //                             style: TextStyle(
-      //                               color: ColorPalette.oxfordBlue,
-      //                               fontSize: 16.sp,
-      //                               fontWeight: FontWeight.bold,
-      //                             ),
-      //                           )
-      //                         ],
-      //                       ),
-      //                       SizedBox(height: 20.h),
-      //                       Row(
-      //                         children: [
-      //                           AccountPhoto(
-      //                               size: 80.w, imageUrl: hostUrlImage),
-      //                           SizedBox(width: 20.w),
-      //                           Column(
-      //                             crossAxisAlignment: CrossAxisAlignment.start,
-      //                             children: [
-      //                               Text(
-      //                                 AppLocalizations.of(context)!.lblHostName,
-      //                                 style: TextStyle(
-      //                                   color: ColorPalette.oxfordBlue,
-      //                                   fontSize: 18.sp,
-      //                                 ),
-      //                               ),
-      //                               Text(
-      //                                 facilityHostName,
-      //                                 style: TextStyle(
-      //                                   color: ColorPalette.oxfordBlue,
-      //                                   fontSize: 18.sp,
-      //                                   fontWeight: FontWeight.bold,
-      //                                 ),
-      //                               ),
-      //                             ],
-      //                           ),
-      //                         ],
-      //                       ),
-      //                       SizedBox(height: 20.h),
-      //                       const Divider(
-      //                         color: ColorPalette.blueberry,
-      //                       ),
-      //                       SizedBox(height: 15.h),
-      //                       Text(
-      //                         AppLocalizations.of(context)!.lblRoomsAmenities,
-      //                         style: Theme.of(context).textTheme.displaySmall,
-      //                       ),
-      //                       SizedBox(height: 10.h),
-      //                       SizedBox(
-      //                         width: 100.w,
-      //                         height: 100.h,
-      //                         child: ListView.separated(
-      //                           scrollDirection: Axis.horizontal,
-      //                           itemCount: facilityServices.length,
-      //                           itemBuilder: (BuildContext context, int index) {
-      //                             return Text(facilityServices[index]);
-      //                           },
-      //                           separatorBuilder:
-      //                               (BuildContext context, int index) {
-      //                             return const Text(' · ');
-      //                           },
-      //                         ),
-      //                       ),
-      //                       // Text(
-      //                       //   widget.servicesText,
-      //                       //   style: Theme.of(context).textTheme.bodyMedium,
-      //                       // ),
-      //                       SizedBox(height: 15.h),
-      //                       const Divider(
-      //                         color: ColorPalette.blueberry,
-      //                       ),
-      //                       SizedBox(height: 15.h),
-      //                       Text(
-      //                         AppLocalizations.of(context)!
-      //                             .lblCurrentRenters(2, 3),
-      //                         style: Theme.of(context).textTheme.displaySmall,
-      //                       ),
-      //                       if (isStudent) ...[
-      //                         SizedBox(height: 16.h),
-      //                         InkWell(
-      //                           onTap: () => Navigator.of(context).push(
-      //                             MaterialPageRoute(
-      //                                 builder: (context) =>
-      //                                     const CurrentRentersPage()),
-      //                           ),
-      //                           child: Text(
-      //                             AppLocalizations.of(context)!.btnMoreDetails,
-      //                             style: const TextStyle(
-      //                               fontWeight: FontWeight.bold,
-      //                               color: ColorPalette.blueberry,
-      //                               decoration: TextDecoration.underline,
-      //                             ),
-      //                           ),
-      //                         ),
-      //                       ],
-      //                       if (!isStudent) ...[
-      //                         SizedBox(height: 20.h),
-      //                         HostFacilityDetailPageRenterBox(
-      //                           name: 'Francesco Dal Maso',
-      //                           contractDeadline: DateTime(2025, 1, 1),
-      //                         ),
-      //                         SizedBox(height: 15.h),
-      //                         HostFacilityDetailPageRenterBox(
-      //                           name: 'Antonio Principe',
-      //                           contractDeadline: DateTime(2025, 3, 1),
-      //                         ),
-      //                       ],
-      //                     ],
-      //                   ),
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //           if (isStudent || isWizardPage) ...[
-      //             Positioned(
-      //               left: 0,
-      //               right: 0,
-      //               bottom: 0,
-      //               child: Container(
-      //                 padding: EdgeInsets.all(16.w),
-      //                 color: ColorPalette.aliceBlue,
-      //                 child: isStudent
-      //                     ? Center(
-      //                         child:
-      // RectangleButton(
-      //                             label: AppLocalizations.of(context)!
-      //                                 .btnRequestInfo,
-      //                             onPressed: () => Navigator.of(context).push(
-      //                                   MaterialPageRoute(
-      //                                       builder: (context) => ChatNewPage(
-      //                                           receiverImageUrl: hostUrlImage,
-      //                                           receiverName: facilityHostName,
-      //                                           facilityName: facilityName,
-      //                                           onTap: () => {})),
-      //                                 )),
-      //                       )
-      //                     : (isWizardPage
-      //                         ? Center(
-      //                             child:
-      //                              RectangleButton(
-      //                                 label: AppLocalizations.of(context)!
-      //                                     .btnConfirm,
-      //                                 // TODO: handle confirm wizard operation
-      //                                 onPressed: () => {
-      //                                       // TODO: replace with real data
-      //                                       Navigator.push(
-      //                                         context,
-      //                                         MaterialPageRoute(
-      //                                           builder: (context) =>
-      //                                               const FacilityDetailPage(
-      //                                                   isStudent: false,
-      //                                                   isWizardPage: false,
-      //                                                   facilityPhotos: [
-      //                                                     "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-      //                                                     "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-      //                                                     "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-      //                                                   ],
-      //                                                   facilityName:
-      //                                                       "Casa Dolce Casa",
-      //                                                   facilityAddress:
-      //                                                       "Padova - Via Roma 12",
-      //                                                   facilityPrice: 300,
-      //                                                   facilityHostName:
-      //                                                       "Mario Rossi",
-      //                                                   hostUrlImage:
-      //                                                       "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-      //                                                   facilityServices: [
-      //                                                     "2 bedrooms",
-      //                                                     "3 beds",
-      //                                                     "1 bathroom",
-      //                                                     "WiFi"
-      //                                                   ]),
-      //                                         ),
-      //                                       ),
-      //                                     }),
-      //                           )
-      //                         : null),
-      //               ),
-      //             )
-      //           ]
-      //         ],
-      //       ),
-      //   ],
-      // ),
     );
   }
 }
 
 class _RoomsAndAmenities extends StatelessWidget {
   const _RoomsAndAmenities({
-    super.key,
     required this.facilityServices,
   });
 

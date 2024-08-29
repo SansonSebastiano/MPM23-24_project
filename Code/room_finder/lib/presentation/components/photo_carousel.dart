@@ -22,12 +22,15 @@ import 'package:room_finder/presentation/screens/wizard_screens/wizard_page1.dar
 abstract class PhotoCarousel extends StatefulWidget {
   final List<Image> items;
   final bool isWizardPage;
+  final bool? isSaved;
+  final void Function()? onPressed;
 
-  const PhotoCarousel({
-    super.key,
-    required this.items,
-    this.isWizardPage = false,
-  });
+  const PhotoCarousel(
+      {super.key,
+      required this.items,
+      this.isWizardPage = false,
+      this.isSaved,
+      this.onPressed});
 
   bool get isStudent;
 
@@ -38,20 +41,6 @@ abstract class PhotoCarousel extends StatefulWidget {
 class _PhotoCarouselState extends State<PhotoCarousel> {
   int _current = 0;
   final CarouselController _controller = CarouselController();
-
-  late bool isSaved;
-
-  @override
-  void initState() {
-    super.initState();
-    isSaved = false;
-  }
-
-  void toggleSave() {
-    setState(() {
-      isSaved = !isSaved;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +92,8 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                     children: [
                       BookmarkButton(
                         size: 50,
-                        isSaved: isSaved,
-                        onPressed: toggleSave,
+                        isSaved: widget.isSaved!,
+                        onPressed: widget.onPressed,
                       ),
                       _PhotoCounter(current: _current, widget: widget)
                     ],
@@ -195,7 +184,8 @@ class HostPhotoCarousel extends PhotoCarousel {
 
 /// [StudentPhotoCarousel] is a widget that displays a carousel of images for the student.
 class StudentPhotoCarousel extends PhotoCarousel {
-  const StudentPhotoCarousel({super.key, required super.items});
+  const StudentPhotoCarousel(
+      {super.key, required super.items, required super.isSaved, required super.onPressed});
 
   @override
   bool get isStudent => true;

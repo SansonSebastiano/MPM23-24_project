@@ -171,7 +171,7 @@ class _PersonalInformationPageState
                                     context: context,
                                     onOk: () {
                                       Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => AccountPage(user: widget.user))
+                                        builder: (context) => AccountPage(user: widget.user, isLogged: true,))
                                       );
                                     },
                                     onCancel: () {

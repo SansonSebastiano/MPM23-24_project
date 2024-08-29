@@ -69,6 +69,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => FacilityDetailPage(
+                        isLogged: widget.isLogged,
                         isStudent: true,
                         isWizardPage: false,
                         facilityPhotos: const [
@@ -177,6 +178,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => FacilityDetailPage(
+                                      isLogged: widget.isLogged,
                                       isStudent: true,
                                       isWizardPage: false,
                                       facilityPhotos: const [
@@ -299,6 +301,7 @@ class _HostHomePageBody extends ConsumerWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => FacilityDetailPage(
+                                      isLogged: true,
                                       isStudent: false,
                                       isWizardPage: false,
                                       facilityPhotos: const [

@@ -163,6 +163,7 @@ class _WizardPage7State extends State<WizardPage7> {
         MaterialPageRoute(
             // TODO: modify with the real data and add an alert dialog to ask confirm
             builder: (context) => FacilityDetailPage(
+                  isLogged: true,
                   isStudent: false,
                   isWizardPage: true,
                   facilityPhotos: const [

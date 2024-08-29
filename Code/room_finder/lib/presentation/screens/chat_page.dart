@@ -6,14 +6,23 @@ import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/chat_detail_page.dart';
+import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class StudentChatPage extends ConsumerWidget {
-  
-  const StudentChatPage({super.key});
+  final bool isLogged;
+
+  const StudentChatPage({super.key, required this.isLogged});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      if (!isLogged) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const LoginPage()));
+      }
+    });
+
     final networkStatus = ref.watch(networkAwareProvider);
 
     return MainTemplateScreen(

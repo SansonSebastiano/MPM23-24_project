@@ -59,6 +59,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => FacilityDetailPage(
+                        isLogged: widget.isLogged,
                         isStudent: true,
                         isWizardPage: false,
                         facilityPhotos: const [
@@ -259,6 +260,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             FacilityDetailPage(
+                                              isLogged: widget.isLogged,
                                           isStudent: true,
                                           isWizardPage: false,
                                           facilityPhotos: const [

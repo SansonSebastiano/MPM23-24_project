@@ -75,12 +75,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       next.maybeWhen(
           orElse: () => null,
           authenticated: (user) {
-            // Navigator.pop(context);
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        // TODO: or in other pages?
                         const MyHomePage()));
             showSuccessSnackBar(
                 context, AppLocalizations.of(context)!.lblSuccessfulLogin);
@@ -103,7 +101,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   children: [
                     SafeArea(
                         child: CancelButton(
-                          // TODO: NAvigator.pop
+                          // TODO: Navigator.pop
                             onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(

@@ -12,7 +12,6 @@ import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/screens/account_page.dart';
 import 'package:room_finder/presentation/screens/chat_page.dart';
 import 'package:room_finder/presentation/screens/home_page.dart';
-import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/presentation/screens/saved_ads_page.dart';
 import 'package:room_finder/presentation/screens/onboarding_page.dart';
 import 'package:room_finder/provider/authentication_provider.dart';
@@ -80,8 +79,7 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
   // Check if a user is logged
   bool isLogged = false;
   // Get the information about the logged user from Authentication
-  late User? userAuthenticated =
-      ref.read(authNotifierProvider.notifier).currentUser;
+  late User? userAuthenticated = ref.read(authNotifierProvider.notifier).currentUser;
   // Get the data about the logged user from Firestore
   late UserData user = UserData(isHost: isHost);
 
@@ -89,6 +87,10 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
   void initState() {
     super.initState();
 
+    _readUser();  
+  }
+
+  void _readUser() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // Get the login user state
       isLogged = ref.read(authNotifierProvider.notifier).isLogged();
@@ -102,7 +104,7 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
             .read(userNotifierProvider.notifier)
             .getUser(userUid: userAuthenticated!.uid);
       }
-    });
+    });  
     setState(() {});
   }
 
@@ -152,7 +154,7 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
               ))),
               bodyTemplate(body: const SafeArea(child: HostChatPage())),
               bodyTemplate(
-                  body: isLogged ? AccountPage(user: user,) : const LoginPage()),
+                  body: AccountPage(user: user, isLogged: isLogged,)),
             ][currentHostPageIndex]
           // Student's screens
           : <Widget>[
@@ -163,15 +165,11 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
                 studentUser: user,
               ))),
               bodyTemplate(
-                  body: isLogged
-                      ? const SafeArea(child: SavedAdsPage())
-                      : const LoginPage()),
+                  body: SafeArea(child: SavedAdsPage(isLogged: isLogged,))),
               bodyTemplate(
-                  body: isLogged
-                      ? const SafeArea(child: StudentChatPage())
-                      : const LoginPage()),
+                  body: SafeArea(child: StudentChatPage(isLogged: isLogged,))),
               bodyTemplate(
-                  body: isLogged ? AccountPage(user: user,) : const LoginPage()),
+                  body: AccountPage(user: user, isLogged: isLogged,)),
             ][currentStudentPageIndex],
       bottomNavigationBar: isHost
           ? HostNavigationBar(
