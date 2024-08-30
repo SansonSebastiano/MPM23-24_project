@@ -107,6 +107,30 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         singleFailedRead: () => print("Failed read single ad"),
         failedDeleteAd: () => print("Fail on delete add"),
         successfulDeleteAd: () => print("Success on delete add"),
+        multipleFailedReads: () => print("Fail on read multiple ads"),
+        multipleSuccessfulRead: (adsData) {
+          for (var element in adsData) {
+            print(element.uid);
+          print(element.hostUid);
+            print(element.name);
+            print(element.address.city);
+            print(element.address.street);
+            print(element.monthlyRent);
+            for (var element in element.rooms) {
+              print(element.name);
+              print(element.quantity);
+            }
+            for (var element in element.renters) {
+              print(element.name);
+              print(element.age);
+              print(element.facultyOfStudies);
+              print(element.interests);
+              print(element.contractDeadline);
+            }
+            element.services.forEach(print);
+            element.photosURLs!.forEach(print);
+            }
+        },
       );
     });
 
@@ -115,11 +139,15 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         Navigator.of(context).pop();
       }),
       rightButton: CancelButton(onPressed: () {
-        // ref.read(adNotifierProvider.notifier).deleteAd(adUid: "vzUxctd2RnzE7g2yvuIw");
+        // ref.read(adNotifierProvider.notifier).deleteAd(adUid: "2BoWwPqff9d6LdU7w7w9");
 
         ref
             .read(adNotifierProvider.notifier)
-            .getAd(adUid: "9QX06eO1lUuPfgOUx8Xe");
+            .getAdsByHostUid(hostUid: "r2DFgZdDDZbnVJXMADD7aP87Mrx2");
+
+        // ref
+        //     .read(adNotifierProvider.notifier)
+        //     .getAd(adUid: "w3zZGCmKw92IqbyyIuti");
 
         showOptionsDialog(
             context: context,
@@ -155,9 +183,20 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
       onNextPressed: _gridItems.length < 6
           ? null
           : () {
+              // ref.read(adNotifierProvider.notifier).updateAd(
+              //     adUid: adUid,
+              //     name: name,
+              //     address: address,
+              //     rooms: rooms,
+              //     rentersCapacity: rentersCapacity,
+              //     renters: renters,
+              //     services: services,
+              //     monthlyRent: monthlyRent,
+              //     newPhotosPaths: newPhotosPaths);
+
               ref.read(adNotifierProvider.notifier).addNewAd(
                   newAd: AdData(
-                      hostUid: "r2DFgZdDDZbnVJXMADD7aP87Mrx2",
+                      hostUid: "test",
                       name: "facility name",
                       address:
                           Address(city: "Torino", street: "Via Trieste, 63"),
