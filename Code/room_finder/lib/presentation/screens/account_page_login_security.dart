@@ -157,7 +157,7 @@ class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
                                               MaterialPageRoute(
                                                   builder: (context) =>
                                                       AccountPage(
-                                                          user: widget.user, isLogged: true,)));
+                                                          user: widget.user)));
                                         },
                                         onCancel: () {
                                           Navigator.of(context).pop();

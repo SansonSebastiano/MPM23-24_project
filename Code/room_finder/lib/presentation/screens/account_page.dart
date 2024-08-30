@@ -10,7 +10,6 @@ import 'package:room_finder/presentation/components/buttons/setting_buttons.dart
 import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/presentation/screens/account_page_login_security.dart';
 import 'package:room_finder/presentation/screens/account_page_personal_information.dart';
-import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/provider/authentication_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,27 +17,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // ignore: must_be_immutable
 class AccountPage extends ConsumerStatefulWidget {
   final UserData user;
-  final bool isLogged;
 
-  const AccountPage({super.key, required this.user, required this.isLogged});
+  const AccountPage({super.key, required this.user});
 
   @override
   ConsumerState<AccountPage> createState() => _AccountPageState();
 }
 
 class _AccountPageState extends ConsumerState<AccountPage> {
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!widget.isLogged) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginPage()));
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     ref.listen(authNotifierProvider, (previous, next) {

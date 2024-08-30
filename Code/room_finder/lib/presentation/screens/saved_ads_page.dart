@@ -8,13 +8,10 @@ import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
-import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class SavedAdsPage extends ConsumerWidget {
-  final bool isLogged;
-
-  const SavedAdsPage({super.key, required this.isLogged});
+  const SavedAdsPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,17 +23,13 @@ class SavedAdsPage extends ConsumerWidget {
           ? Center(
               heightFactor: 6.h,
               child: NoInternetErrorMessage(context: context))
-          : _SavedAdsPageBody(
-              isLogged: isLogged,
-            ),
+          : _SavedAdsPageBody(),
     );
   }
 }
 
 class _SavedAdsPageBody extends ConsumerStatefulWidget {
-  final bool isLogged;
-
-  const _SavedAdsPageBody({required this.isLogged});
+  const _SavedAdsPageBody();
 
   @override
   ConsumerState<_SavedAdsPageBody> createState() => _StudentHomePageBodyState();
@@ -49,14 +42,7 @@ class _StudentHomePageBodyState extends ConsumerState<_SavedAdsPageBody> {
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      if (!widget.isLogged) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const LoginPage()));
-      }
-    });
-
+    
     isSaved = List.generate(4, (index) => true);
     adsList = List<AdsBox>.generate(
         4,

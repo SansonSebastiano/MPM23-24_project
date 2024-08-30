@@ -12,6 +12,7 @@ import 'package:room_finder/presentation/components/bottom_bar.dart';
 import 'package:room_finder/presentation/screens/account_page.dart';
 import 'package:room_finder/presentation/screens/chat_page.dart';
 import 'package:room_finder/presentation/screens/home_page.dart';
+import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/presentation/screens/saved_ads_page.dart';
 import 'package:room_finder/presentation/screens/onboarding_page.dart';
 import 'package:room_finder/provider/authentication_provider.dart';
@@ -153,8 +154,7 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
                 hostUser: user,
               ))),
               bodyTemplate(body: const SafeArea(child: HostChatPage())),
-              bodyTemplate(
-                  body: AccountPage(user: user, isLogged: isLogged,)),
+              bodyTemplate(body: AccountPage(user: user)),
             ][currentHostPageIndex]
           // Student's screens
           : <Widget>[
@@ -162,14 +162,14 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
                   body: SafeArea(
                       child: StudentHomePage(
                 isLogged: isLogged,
-                studentUser: user,
-              ))),
+                studentUser: user,)),
+              ),
               bodyTemplate(
-                  body: SafeArea(child: SavedAdsPage(isLogged: isLogged,))),
+                  body: isLogged ? const SafeArea(child: SavedAdsPage()) : const LoginPage()),
               bodyTemplate(
-                  body: SafeArea(child: StudentChatPage(isLogged: isLogged,))),
+                  body: isLogged ? const SafeArea(child: StudentChatPage()) : const LoginPage()),
               bodyTemplate(
-                  body: AccountPage(user: user, isLogged: isLogged,)),
+                  body: isLogged ? AccountPage(user: user) : const LoginPage()),
             ][currentStudentPageIndex],
       bottomNavigationBar: isHost
           ? HostNavigationBar(
