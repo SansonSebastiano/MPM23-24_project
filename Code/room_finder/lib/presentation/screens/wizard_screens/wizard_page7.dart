@@ -105,6 +105,8 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
           adData.photosURLs!.forEach(print);
         },
         singleFailedRead: () => print("Failed read single ad"),
+        failedDeleteAd: () => print("Fail on delete add"),
+        successfulDeleteAd: () => print("Success on delete add"),
       );
     });
 
@@ -113,11 +115,12 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         Navigator.of(context).pop();
       }),
       rightButton: CancelButton(onPressed: () {
+        // ref.read(adNotifierProvider.notifier).deleteAd(adUid: "vzUxctd2RnzE7g2yvuIw");
 
         ref
             .read(adNotifierProvider.notifier)
-            .getAd(adUid: "tx9dCNHRKjDWd3DpMGhH");
-            
+            .getAd(adUid: "9QX06eO1lUuPfgOUx8Xe");
+
         showOptionsDialog(
             context: context,
             androidDialog: ActionsAndroidDialog(
@@ -152,42 +155,43 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
       onNextPressed: _gridItems.length < 6
           ? null
           : () {
-              ref
-                  .read(adNotifierProvider.notifier)
-                  .addNewAd(newAd: AdData(
-                    hostUid: "r2DFgZdDDZbnVJXMADD7aP87Mrx2",
-                    name: "facility name",
-                    address: Address(city: "Torino", street: "Via Trieste, 63"),
-                    rooms: <Room>[
-                      Room(name: "Living room", quantity: 1),
-                      Room(name: "Bathrooms", quantity: 2),
-                      Room(name: "Kitchens", quantity: 1),
-                      Bedroom(name: "Bedrooms", quantity: 2, numBeds: <int>[1, 2])
+              ref.read(adNotifierProvider.notifier).addNewAd(
+                  newAd: AdData(
+                      hostUid: "r2DFgZdDDZbnVJXMADD7aP87Mrx2",
+                      name: "facility name",
+                      address:
+                          Address(city: "Torino", street: "Via Trieste, 63"),
+                      rooms: <Room>[
+                        Room(name: "Living room", quantity: 1),
+                        Room(name: "Bathrooms", quantity: 2),
+                        Room(name: "Kitchens", quantity: 1),
+                        Bedroom(
+                            name: "Bedrooms", quantity: 2, numBeds: <int>[1, 2])
                       ],
-                    rentersCapacity: 4,
-                    renters: <Renter>[
-                      Renter(
-                        name: "renter name 1",
-                        age: 23,
-                        facultyOfStudies: "facultyOfStudies 1",
-                        interests: "interests 1",
-                        contractDeadline: DateTime.now()),
-                      Renter(
-                        name: "renter name 2",
-                        age: 21,
-                        facultyOfStudies: "facultyOfStudies 2",
-                        interests: "interests 2",
-                        contractDeadline: DateTime.now()),
+                      rentersCapacity: 4,
+                      renters: <Renter>[
                         Renter(
-                        name: "renter name 3",
-                        age: 25,
-                        facultyOfStudies: "facultyOfStudies 3",
-                        interests: "interests 3",
-                        contractDeadline: DateTime.now()),
-                        ],
-                    services: <String>["WiFI", "Washing machine", "Parking"],
-                    monthlyRent: 500),
-                    photosPaths: _photos);
+                            name: "renter name 1",
+                            age: 23,
+                            facultyOfStudies: "facultyOfStudies 1",
+                            interests: "interests 1",
+                            contractDeadline: DateTime.now()),
+                        Renter(
+                            name: "renter name 2",
+                            age: 21,
+                            facultyOfStudies: "facultyOfStudies 2",
+                            interests: "interests 2",
+                            contractDeadline: DateTime.now()),
+                        Renter(
+                            name: "renter name 3",
+                            age: 25,
+                            facultyOfStudies: "facultyOfStudies 3",
+                            interests: "interests 3",
+                            contractDeadline: DateTime.now()),
+                      ],
+                      services: <String>["WiFI", "Washing machine", "Parking"],
+                      monthlyRent: 500),
+                  photosPaths: _photos);
 
               // _reviewAds(context);
             },

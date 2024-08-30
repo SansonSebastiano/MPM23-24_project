@@ -184,12 +184,14 @@ class AdDataSource {
 
       // 3. Upload photos to Firebase Storage
       for (File photo in photosPaths) {
+        final imageData = await photo.readAsBytes();
         String photoName = photo.uri.pathSegments.last; // Get the file name
         Reference photoRef = _adRef
             .child(adDocRef.id)
             .child(photoName); // Append the photo under [adDocRef.id] folder
 
-        await photoRef.putFile(photo);
+        await photoRef.putData(imageData);
+        // await photoRef.putFile(photo);
       }
 
       return right(null);
