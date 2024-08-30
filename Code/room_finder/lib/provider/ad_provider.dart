@@ -24,32 +24,34 @@ class AdNotifier extends StateNotifier<AdState> {
   
   /// The method [addNewAd] allows to add a new ad that respects the passed parameters
   Future<void> addNewAd(
-    {
-      required String hostUid,
-      required String name,
-      required Address address,
-      required List<Room> rooms,
-      required int rentersCapacity,
-      required List<Renter> renters,
-      required List<String> services,
-      required int monthlyRent,
+    { required AdData newAd,
+      // required String hostUid,
+      // required String name,
+      // required Address address,
+      // required List<Room> rooms,
+      // required int rentersCapacity,
+      // required List<Renter> renters,
+      // required List<String> services,
+      // required int monthlyRent,
       required List<File> photosPaths
     }) async {
       state = const AdState.loading();
 
       final response = await _adDataSource.addNewAd(
-        hostUid: hostUid, 
-        name: name, 
-        address: address, 
-        rooms: rooms, 
-        rentersCapacity: rentersCapacity, 
-        renters: renters, 
-        services: services, 
-        monthlyRent: monthlyRent, 
+        newAd: newAd,
+        // hostUid: hostUid, 
+        // name: name, 
+        // address: address, 
+        // rooms: rooms, 
+        // rentersCapacity: rentersCapacity, 
+        // renters: renters, 
+        // services: services, 
+        // monthlyRent: monthlyRent, 
         photosPaths: photosPaths
       );
 
-      state = response.fold((error) => const AdState.failedAddNewAd(),
+      state = response.fold(
+        (error) => const AdState.failedAddNewAd(),
         (response) => const AdState.successfulAddNewAd());
     }
 

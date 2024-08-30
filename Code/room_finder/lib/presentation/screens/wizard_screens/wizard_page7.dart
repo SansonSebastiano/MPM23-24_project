@@ -1,9 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/renter_box.dart';
@@ -11,19 +12,21 @@ import 'package:room_finder/presentation/components/room_photo.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
+import 'package:room_finder/provider/ad_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
 
-class WizardPage7 extends StatefulWidget {
+class WizardPage7 extends ConsumerStatefulWidget {
   const WizardPage7({super.key});
 
   @override
-  State<WizardPage7> createState() => _WizardPage7State();
+  ConsumerState<WizardPage7> createState() => _WizardPage7State();
 }
 
-class _WizardPage7State extends State<WizardPage7> {
+class _WizardPage7State extends ConsumerState<WizardPage7> {
   late File _image;
   final picker = ImagePicker();
   late List<Widget> _gridItems;
+  late List<File> _photos;
 
   @override
   void initState() {
@@ -32,6 +35,8 @@ class _WizardPage7State extends State<WizardPage7> {
     _image = File('');
 
     _gridItems = [];
+
+    _photos = [];
 
     _gridItems.add(
       AddPhotoButton(onPressed: () {
@@ -60,6 +65,7 @@ class _WizardPage7State extends State<WizardPage7> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        _photos.add(_image);
         _gridItems.add(ImageCard(
           image: _image,
           photoNumber: _gridItems.length,
@@ -70,11 +76,48 @@ class _WizardPage7State extends State<WizardPage7> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(adNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        failedAddNewAd: () => print("Fail on add new add"),
+        successfulAddNewAd: () {
+          print("Success on ad new add");
+        },
+        singleSuccessfulRead: (adData) {
+          print(adData.uid);
+          print(adData.hostUid);
+          print(adData.name);
+          print(adData.address.city);
+          print(adData.address.street);
+          print(adData.monthlyRent);
+          for (var element in adData.rooms) {
+            print(element.name);
+            print(element.quantity);
+          }
+          for (var element in adData.renters) {
+            print(element.name);
+            print(element.age);
+            print(element.facultyOfStudies);
+            print(element.interests);
+            print(element.contractDeadline);
+          }
+          adData.services.forEach(print);
+          adData.photosURLs!.forEach(print);
+        },
+        singleFailedRead: () => print("Failed read single ad"),
+      );
+    });
+
     return WizardTemplateScreen(
       leftButton: DarkBackButton(onPressed: () {
         Navigator.of(context).pop();
       }),
       rightButton: CancelButton(onPressed: () {
+
+        ref
+            .read(adNotifierProvider.notifier)
+            .getAd(adUid: "tx9dCNHRKjDWd3DpMGhH");
+            
         showOptionsDialog(
             context: context,
             androidDialog: ActionsAndroidDialog(
@@ -109,7 +152,44 @@ class _WizardPage7State extends State<WizardPage7> {
       onNextPressed: _gridItems.length < 6
           ? null
           : () {
-              _reviewAds(context);
+              ref
+                  .read(adNotifierProvider.notifier)
+                  .addNewAd(newAd: AdData(
+                    hostUid: "r2DFgZdDDZbnVJXMADD7aP87Mrx2",
+                    name: "facility name",
+                    address: Address(city: "Torino", street: "Via Trieste, 63"),
+                    rooms: <Room>[
+                      Room(name: "Living room", quantity: 1),
+                      Room(name: "Bathrooms", quantity: 2),
+                      Room(name: "Kitchens", quantity: 1),
+                      Bedroom(name: "Bedrooms", quantity: 2, numBeds: <int>[1, 2])
+                      ],
+                    rentersCapacity: 4,
+                    renters: <Renter>[
+                      Renter(
+                        name: "renter name 1",
+                        age: 23,
+                        facultyOfStudies: "facultyOfStudies 1",
+                        interests: "interests 1",
+                        contractDeadline: DateTime.now()),
+                      Renter(
+                        name: "renter name 2",
+                        age: 21,
+                        facultyOfStudies: "facultyOfStudies 2",
+                        interests: "interests 2",
+                        contractDeadline: DateTime.now()),
+                        Renter(
+                        name: "renter name 3",
+                        age: 25,
+                        facultyOfStudies: "facultyOfStudies 3",
+                        interests: "interests 3",
+                        contractDeadline: DateTime.now()),
+                        ],
+                    services: <String>["WiFI", "Washing machine", "Parking"],
+                    monthlyRent: 500),
+                    photosPaths: _photos);
+
+              // _reviewAds(context);
             },
       onOkDialog: () => Navigator.of(context).pop(),
       screenContent: Expanded(

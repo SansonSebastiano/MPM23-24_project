@@ -77,7 +77,8 @@ class Room {
 
 /// [Bedroom] is the object that encapsulate the facility bedrooms
 /// 
-/// *[numBeds] represent the number of beds for each bedroom. The list length is the total number of bedrooms while the value indexed by each list element is the number of beds for that bedroom. 
+/// *[numBeds] represent the number of beds for each bedroom. 
+/// The list length is the total number of bedrooms while the value indexed by each list element is the number of beds for that bedroom. 
 class Bedroom extends Room {
   final List<int> numBeds;
 

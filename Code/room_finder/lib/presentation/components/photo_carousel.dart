@@ -40,7 +40,7 @@ abstract class PhotoCarousel extends StatefulWidget {
 
 class _PhotoCarouselState extends State<PhotoCarousel> {
   int _current = 0;
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
