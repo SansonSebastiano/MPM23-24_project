@@ -113,7 +113,7 @@ class AdNotifier extends StateNotifier<AdState> {
   /// - at least [minBathrooms] bedrooms
   /// - with exactly [roommates] roomates
   Future<void> getFilteredAds({
-    String? city,
+    required String city,
     int? minRent,
     int? maxRent,
     List<String>? requiredServices,

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -522,7 +521,7 @@ class AdDataSource {
   /// - at least [minBathrooms] bedrooms
   /// - with exactly [roommates] roomates
   Future<Either<String, List<AdData>>> getFilteredAds({
-    String? city,
+    required String city,
     int? minRent,
     int? maxRent,
     List<String>? requiredServices,
@@ -543,27 +542,16 @@ class AdDataSource {
       }
 
       // Apply city filter
-      // if (city != null) {
-      //   final cityDocs = await _adCollection
-      //       .where('$_addressSubcollectionName.city', isEqualTo: city)
-      //       .get();
-      //   final cityAdIds = cityDocs.docs.map((doc) => doc.id).toList();
-      //   query = query.where(FieldPath.documentId, whereIn: cityAdIds);
-      // }
-
-      // Apply city filter
       final List<QueryDocumentSnapshot<Object?>> filteredList = [];
-      if (city != null) {
-        // capitalize the first letter of the city
-        city = "${city[0].toUpperCase()}${city.substring(1).toLowerCase()}";
-        
-        for (var element in ads) {
-          final addressSnap = await element.reference
-              .collection(_addressSubcollectionName)
-              .get();
-          if (addressSnap.docs.first['city'] == city) {
-            filteredList.add(element);
-          }
+      // capitalize the first letter of the city
+      city = "${city[0].toUpperCase()}${city.substring(1).toLowerCase()}";
+      
+      for (var element in ads) {
+        final addressSnap = await element.reference
+            .collection(_addressSubcollectionName)
+            .get();
+        if (addressSnap.docs.first['city'] == city) {
+          filteredList.add(element);
         }
       }
 

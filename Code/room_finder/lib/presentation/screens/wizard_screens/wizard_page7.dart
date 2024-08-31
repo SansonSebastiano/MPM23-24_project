@@ -79,10 +79,12 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
     ref.listen(adNotifierProvider, (previous, next) {
       next.maybeWhen(
         orElse: () => null,
-        failedAddNewAd: () => print("Fail on add new add"),
+        failedAddNewAd: () => print("Fail on adding new ad"),
         successfulAddNewAd: () {
           print("Success on ad new add");
         },
+        failedUpdateAd: () => print("Fail on updating new ad"),
+        successfulUpdateAd: () => print("Success on updating new ad"),
         singleSuccessfulRead: (adData) {
           print(adData.uid);
           print(adData.hostUid);
@@ -104,10 +106,10 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
           adData.services.forEach(print);
           adData.photosURLs!.forEach(print);
         },
-        singleFailedRead: () => print("Failed read single ad"),
-        failedDeleteAd: () => print("Fail on delete add"),
-        successfulDeleteAd: () => print("Success on delete add"),
-        multipleFailedReads: () => print("Fail on read multiple ads"),
+        singleFailedRead: () => print("Failed reading single ad"),
+        failedDeleteAd: () => print("Fail on deleting add"),
+        successfulDeleteAd: () => print("Success on deleting add"),
+        multipleFailedReads: () => print("Fail on reading multiple ads"),
         multipleSuccessfulReads: (adsData) {
           for (var element in adsData) {
             print(element.uid);
@@ -139,7 +141,13 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         Navigator.of(context).pop();
       }),
       rightButton: CancelButton(onPressed: () {
-        ref.read(adNotifierProvider.notifier).getAdsForRandomCity(n: 5);
+        ref.read(adNotifierProvider.notifier).getFilteredAds(
+                city: 'Torino',
+                minRent: 400,
+                maxRent: 600
+              );
+
+        // ref.read(adNotifierProvider.notifier).getAdsForRandomCity();
 
         // ref.read(adNotifierProvider.notifier).deleteAd(adUid: "CeyTLFSIbA0Hy21Grt44");
 
@@ -149,7 +157,7 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
 
         // ref
         //     .read(adNotifierProvider.notifier)
-        //     .getAd(adUid: "w3zZGCmKw92IqbyyIuti");
+        //     .getAd(adUid: "ymJfgzAodfgI82VIidEQ");
 
         showOptionsDialog(
             context: context,
@@ -185,54 +193,77 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
       onNextPressed: _gridItems.length < 6
           ? null
           : () {
-              // ref.read(adNotifierProvider.notifier).updateAd(
-              //     adUid: adUid,
-              //     name: name,
-              //     address: address,
-              //     rooms: rooms,
-              //     rentersCapacity: rentersCapacity,
-              //     renters: renters,
-              //     services: services,
-              //     monthlyRent: monthlyRent,
-              //     newPhotosPaths: newPhotosPaths);
 
-              ref.read(adNotifierProvider.notifier).addNewAd(
-                  newAd: AdData(
-                      hostUid: "test",
-                      name: "facility name",
-                      address:
-                          Address(city: "Torino", street: "Via Trieste, 63"),
-                      rooms: <Room>[
-                        Room(name: "Living room", quantity: 1),
-                        Room(name: "Bathrooms", quantity: 2),
-                        Room(name: "Kitchens", quantity: 1),
-                        Bedroom(
-                            name: "Bedrooms", quantity: 2, numBeds: <int>[1, 2])
-                      ],
-                      rentersCapacity: 4,
-                      renters: <Renter>[
-                        Renter(
-                            name: "renter name 1",
-                            age: 23,
-                            facultyOfStudies: "facultyOfStudies 1",
-                            interests: "interests 1",
-                            contractDeadline: DateTime.now()),
-                        Renter(
-                            name: "renter name 2",
-                            age: 21,
-                            facultyOfStudies: "facultyOfStudies 2",
-                            interests: "interests 2",
-                            contractDeadline: DateTime.now()),
-                        Renter(
-                            name: "renter name 3",
-                            age: 25,
-                            facultyOfStudies: "facultyOfStudies 3",
-                            interests: "interests 3",
-                            contractDeadline: DateTime.now()),
-                      ],
-                      services: <String>["WiFI", "Washing machine", "Parking"],
-                      monthlyRent: 500),
-                  photosPaths: _photos);
+              // ref.read(adNotifierProvider.notifier).updateAd(
+              //     updatedAd: AdData(
+              //       uid: "ymJfgzAodfgI82VIidEQ",
+              //       hostUid: "r2DFgZdDDZbnVJXMADD7aP87Mrx2",
+              //       name: "facility name updated 3",
+              //       address: Address(city: "Pisa", street: "Via E. Berlinguer, 13"),
+              //       rooms: <Room>[
+              //           Room(name: "Bathrooms", quantity: 2),
+              //           Room(name: "Kitchens", quantity: 1),
+              //           Bedroom(
+              //               name: "Bedrooms", quantity: 2, numBeds: <int>[1, 2])
+              //         ],
+              //       rentersCapacity: 2,
+              //       renters: <Renter>[
+              //           Renter(
+              //               name: "renter name 1",
+              //               age: 23,
+              //               facultyOfStudies: "facultyOfStudies 1",
+              //               interests: "interests 1",
+              //               contractDeadline: DateTime.now()),
+              //           Renter(
+              //               name: "renter name 2",
+              //               age: 21,
+              //               facultyOfStudies: "facultyOfStudies 2",
+              //               interests: "interests 2",
+              //               contractDeadline: DateTime.now()),
+              //         ],
+              //       services: <String>["WiFI", "Washing machine"],
+              //       monthlyRent: 999
+              //     ),
+              //     newPhotosPaths: _photos
+              //   );
+
+              // ref.read(adNotifierProvider.notifier).addNewAd(
+              //     newAd: AdData(
+              //         hostUid: "test",
+              //         name: "facility name",
+              //         address:
+              //             Address(city: "Torino", street: "Via Trieste, 63"),
+              //         rooms: <Room>[
+              //           Room(name: "Living room", quantity: 1),
+              //           Room(name: "Bathrooms", quantity: 2),
+              //           Room(name: "Kitchens", quantity: 1),
+              //           Bedroom(
+              //               name: "Bedrooms", quantity: 2, numBeds: <int>[1, 2])
+              //         ],
+              //         rentersCapacity: 4,
+              //         renters: <Renter>[
+              //           Renter(
+              //               name: "renter name 1",
+              //               age: 23,
+              //               facultyOfStudies: "facultyOfStudies 1",
+              //               interests: "interests 1",
+              //               contractDeadline: DateTime.now()),
+              //           Renter(
+              //               name: "renter name 2",
+              //               age: 21,
+              //               facultyOfStudies: "facultyOfStudies 2",
+              //               interests: "interests 2",
+              //               contractDeadline: DateTime.now()),
+              //           Renter(
+              //               name: "renter name 3",
+              //               age: 25,
+              //               facultyOfStudies: "facultyOfStudies 3",
+              //               interests: "interests 3",
+              //               contractDeadline: DateTime.now()),
+              //         ],
+              //         services: <String>["WiFI", "Washing machine", "Parking"],
+              //         monthlyRent: 500),
+              //     photosPaths: _photos);
 
               // _reviewAds(context);
             },
