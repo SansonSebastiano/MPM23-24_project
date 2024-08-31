@@ -4,11 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/data/ad_data.dart';
+import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/provider/firebase_providers.dart';
 
 /// List of fields for users' documents
 const String _isHostField = 'isHost';
+const String _savedAdsField = 'savedAds';
 const String _userCollectionName = 'users';
 const String _photoUserRef = "photos/users";
 
@@ -24,27 +27,30 @@ class UserDataSource {
 
   UserDataSource(this._ref, this._userCollection, this._usersRef);
 
+  /// The method [getUser] returns an individual user passing as parameter its unique identifier [userUid]
   Future<Either<String, UserData>> getUser({required String userUid}) async {
     try {
       final docSnap = await _userCollection.doc(userUid).get();
-
-      return right(UserData(isHost: docSnap[_isHostField]));
+      
+      return right(UserData(
+        isHost: docSnap[_isHostField], 
+        savedAds: docSnap[_savedAdsField] ? docSnap[_savedAdsField] : []
+      ));
     } on FirebaseException catch (e) {
       return left(e.message ?? "Failed to get the user data");
     }
   }
 
-  /// This method set a new document
-  ///
-  /// with [newUserUid] id
-  ///
-  /// and set the fiels 'isHost' with [isHost] value
+  /// This method set a new document with [newUserUid] id and set the fiels 'isHost' with [isHost] value
   Future<void> addNewUser(
       {required String newUserUid, required bool isHost}) async {
     final userRole = <String, bool>{_isHostField: isHost};
     await _userCollection.doc(newUserUid).set(userRole);
   }
 
+  /// The method [updatePhoto] allows to update the user profile photo passing as parameters:
+  /// - [imageFile], the new image to upload
+  /// - [imageName], the name of the new image
   Future<Either<String, String>> updatePhoto({required File imageFile, required String imageName}) async {
     try {
       // if (image != null )
@@ -56,6 +62,63 @@ class UserDataSource {
       return right(response);
     } on FirebaseException catch (e) {
       return left(e.message ?? "Failed to upload the photo");
+    }
+  }
+
+  /// The method [saveAd] allows to save an ad of interest by passing the parameters:
+  /// - [adUid], the ad uid
+  /// - [userUid], the id of the user who want to save the ad
+  Future<Either<String, void>> saveAd({required String adUid, required String userUid}) async {
+    try {
+      final userDocRef = _userCollection.doc(userUid);
+
+      await userDocRef.update({
+        _savedAdsField: FieldValue.arrayUnion([adUid]),
+      });
+
+      return right(null);
+    } on FirebaseException catch (e) {
+      return left(e.message ?? "Failed to save the ad");
+    }
+  }
+
+  /// The method [removeSavedAd] allows to remove a saved ad by passing the parameters:
+  /// - [adUid], the ad uid
+  /// - [userUid], the id of the user who want to save the ad
+  Future<Either<String, void>> removeSavedAd({required String adUid, required String userUid}) async {
+    try {
+      final userDocRef = _userCollection.doc(userUid);
+
+      await userDocRef.update({
+        _savedAdsField: FieldValue.arrayRemove([adUid]),
+      });
+
+      return right(null);
+    } on FirebaseException catch (e) {
+      return left(e.message ?? "Failed to remove the saved ad");
+    }
+  }
+
+  /// The method [getSavedAds] allows to retrieve the list of all the user's saved ads by passing as parameter the list of user saved ads uids
+  Future<Either<String, List<AdData>>> getSavedAds({required List<String> savedAds}) async {
+    if (savedAds.isEmpty) {
+      return right([]); // Return an empty list if there are no ads
+    }
+    
+    try {
+      final List<AdData> adsList = [];
+
+      for (String adUid in savedAds) {
+        final adResult = await _ref.read(adDataSourceProvider).getAd(adUid: adUid);
+        adResult.fold(
+          (failure) => null, 
+          (adData) => adsList.add(adData),
+        );
+      }
+
+      return right(adsList);
+    } on FirebaseException catch (e) {
+      return left(e.message ?? "Failed to retrieve saved ads");
     }
   }
 }

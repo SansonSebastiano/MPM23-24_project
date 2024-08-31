@@ -3,10 +3,14 @@
 /// *[uid] the ID of the user account
 ///
 /// *[name] the name of the user
+/// 
+/// *[email] the email of the user
 ///
 /// *[photoUrl] the profile photo of the user
 ///
 /// *[isHost] represent the user's role {true if 'host', false if 'student'}
+/// 
+/// *[savedAds] represent the user's list of saved ads
 class UserData {
   final String? uid;
   String? name;
@@ -14,14 +18,15 @@ class UserData {
   // observation: actually photoURL is always <uid>.jpg, the change is not in the name but only in the file uploaded in Storage
   String? photoUrl;
   final bool isHost;
-  // final List<String>? savedAds;
+  final List<String>? savedAds;
 
   UserData(
       {this.uid = '',
       this.name = '',
       this.email = '',
       this.photoUrl = '',
-      required this.isHost});
+      required this.isHost,
+      this.savedAds});
 
   void setPhotoUrl({required String value}) {
     if (value.isNotEmpty) {

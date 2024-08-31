@@ -32,7 +32,7 @@ const String _renterStudies = "facultyOfStudies";
 const String _renterInterests = "interests";
 const String _renterContractDeadline = "contractDeadline";
 
-/// This class allow to handle the 'users' collection in Firestore
+/// This class allow to handle the ads collection in Firestore
 ///
 /// [_adCollection] refers to corresponding collection in Firestore
 ///

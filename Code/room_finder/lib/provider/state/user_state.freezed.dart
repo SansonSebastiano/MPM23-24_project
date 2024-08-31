@@ -22,6 +22,12 @@ mixin _$UserState {
     required TResult Function() loading,
     required TResult Function() failedRead,
     required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +36,12 @@ mixin _$UserState {
     TResult? Function()? loading,
     TResult? Function()? failedRead,
     TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +50,12 @@ mixin _$UserState {
     TResult Function()? loading,
     TResult Function()? failedRead,
     TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +65,14 @@ mixin _$UserState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_FailedRead value) failedRead,
     required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +81,12 @@ mixin _$UserState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_FailedRead value)? failedRead,
     TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +95,12 @@ mixin _$UserState {
     TResult Function(_Loading value)? loading,
     TResult Function(_FailedRead value)? failedRead,
     TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -133,6 +171,12 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function() loading,
     required TResult Function() failedRead,
     required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
   }) {
     return initial();
   }
@@ -144,6 +188,12 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function()? loading,
     TResult? Function()? failedRead,
     TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
   }) {
     return initial?.call();
   }
@@ -155,6 +205,12 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function()? loading,
     TResult Function()? failedRead,
     TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -170,6 +226,14 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function(_Loading value) loading,
     required TResult Function(_FailedRead value) failedRead,
     required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
   }) {
     return initial(this);
   }
@@ -181,6 +245,12 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_FailedRead value)? failedRead,
     TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
   }) {
     return initial?.call(this);
   }
@@ -192,6 +262,12 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function(_Loading value)? loading,
     TResult Function(_FailedRead value)? failedRead,
     TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -253,6 +329,12 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     required TResult Function() loading,
     required TResult Function() failedRead,
     required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
   }) {
     return loading();
   }
@@ -264,6 +346,12 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult? Function()? loading,
     TResult? Function()? failedRead,
     TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
   }) {
     return loading?.call();
   }
@@ -275,6 +363,12 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult Function()? loading,
     TResult Function()? failedRead,
     TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -290,6 +384,14 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_FailedRead value) failedRead,
     required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
   }) {
     return loading(this);
   }
@@ -301,6 +403,12 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_FailedRead value)? failedRead,
     TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
   }) {
     return loading?.call(this);
   }
@@ -312,6 +420,12 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_FailedRead value)? failedRead,
     TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -373,6 +487,12 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
     required TResult Function() loading,
     required TResult Function() failedRead,
     required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
   }) {
     return failedRead();
   }
@@ -384,6 +504,12 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
     TResult? Function()? loading,
     TResult? Function()? failedRead,
     TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
   }) {
     return failedRead?.call();
   }
@@ -395,6 +521,12 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
     TResult Function()? loading,
     TResult Function()? failedRead,
     TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (failedRead != null) {
@@ -410,6 +542,14 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
     required TResult Function(_Loading value) loading,
     required TResult Function(_FailedRead value) failedRead,
     required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
   }) {
     return failedRead(this);
   }
@@ -421,6 +561,12 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_FailedRead value)? failedRead,
     TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
   }) {
     return failedRead?.call(this);
   }
@@ -432,6 +578,12 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
     TResult Function(_Loading value)? loading,
     TResult Function(_FailedRead value)? failedRead,
     TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (failedRead != null) {
@@ -525,6 +677,12 @@ class _$SuccessfulReadImpl
     required TResult Function() loading,
     required TResult Function() failedRead,
     required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
   }) {
     return successfulRead(userData);
   }
@@ -536,6 +694,12 @@ class _$SuccessfulReadImpl
     TResult? Function()? loading,
     TResult? Function()? failedRead,
     TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
   }) {
     return successfulRead?.call(userData);
   }
@@ -547,6 +711,12 @@ class _$SuccessfulReadImpl
     TResult Function()? loading,
     TResult Function()? failedRead,
     TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (successfulRead != null) {
@@ -562,6 +732,14 @@ class _$SuccessfulReadImpl
     required TResult Function(_Loading value) loading,
     required TResult Function(_FailedRead value) failedRead,
     required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
   }) {
     return successfulRead(this);
   }
@@ -573,6 +751,12 @@ class _$SuccessfulReadImpl
     TResult? Function(_Loading value)? loading,
     TResult? Function(_FailedRead value)? failedRead,
     TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
   }) {
     return successfulRead?.call(this);
   }
@@ -584,6 +768,12 @@ class _$SuccessfulReadImpl
     TResult Function(_Loading value)? loading,
     TResult Function(_FailedRead value)? failedRead,
     TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (successfulRead != null) {
@@ -601,4 +791,1014 @@ abstract class _SuccessfulRead implements UserState {
   @JsonKey(ignore: true)
   _$$SuccessfulReadImplCopyWith<_$SuccessfulReadImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$FailedSaveAdImplCopyWith<$Res> {
+  factory _$$FailedSaveAdImplCopyWith(
+          _$FailedSaveAdImpl value, $Res Function(_$FailedSaveAdImpl) then) =
+      __$$FailedSaveAdImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FailedSaveAdImplCopyWithImpl<$Res>
+    extends _$UserStateCopyWithImpl<$Res, _$FailedSaveAdImpl>
+    implements _$$FailedSaveAdImplCopyWith<$Res> {
+  __$$FailedSaveAdImplCopyWithImpl(
+      _$FailedSaveAdImpl _value, $Res Function(_$FailedSaveAdImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$FailedSaveAdImpl with DiagnosticableTreeMixin implements _FailedSaveAd {
+  const _$FailedSaveAdImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserState.failedSaveAd()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'UserState.failedSaveAd'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$FailedSaveAdImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() failedRead,
+    required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+  }) {
+    return failedSaveAd();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? failedRead,
+    TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+  }) {
+    return failedSaveAd?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? failedRead,
+    TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (failedSaveAd != null) {
+      return failedSaveAd();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_FailedRead value) failedRead,
+    required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
+  }) {
+    return failedSaveAd(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_FailedRead value)? failedRead,
+    TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+  }) {
+    return failedSaveAd?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_FailedRead value)? failedRead,
+    TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (failedSaveAd != null) {
+      return failedSaveAd(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FailedSaveAd implements UserState {
+  const factory _FailedSaveAd() = _$FailedSaveAdImpl;
+}
+
+/// @nodoc
+abstract class _$$SuccessfulSaveAdImplCopyWith<$Res> {
+  factory _$$SuccessfulSaveAdImplCopyWith(_$SuccessfulSaveAdImpl value,
+          $Res Function(_$SuccessfulSaveAdImpl) then) =
+      __$$SuccessfulSaveAdImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SuccessfulSaveAdImplCopyWithImpl<$Res>
+    extends _$UserStateCopyWithImpl<$Res, _$SuccessfulSaveAdImpl>
+    implements _$$SuccessfulSaveAdImplCopyWith<$Res> {
+  __$$SuccessfulSaveAdImplCopyWithImpl(_$SuccessfulSaveAdImpl _value,
+      $Res Function(_$SuccessfulSaveAdImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SuccessfulSaveAdImpl
+    with DiagnosticableTreeMixin
+    implements _SuccessfulSaveAd {
+  const _$SuccessfulSaveAdImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserState.successfulSaveAd()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'UserState.successfulSaveAd'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SuccessfulSaveAdImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() failedRead,
+    required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+  }) {
+    return successfulSaveAd();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? failedRead,
+    TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+  }) {
+    return successfulSaveAd?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? failedRead,
+    TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (successfulSaveAd != null) {
+      return successfulSaveAd();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_FailedRead value) failedRead,
+    required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
+  }) {
+    return successfulSaveAd(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_FailedRead value)? failedRead,
+    TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+  }) {
+    return successfulSaveAd?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_FailedRead value)? failedRead,
+    TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (successfulSaveAd != null) {
+      return successfulSaveAd(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SuccessfulSaveAd implements UserState {
+  const factory _SuccessfulSaveAd() = _$SuccessfulSaveAdImpl;
+}
+
+/// @nodoc
+abstract class _$$FailedRemoveSavedAdImplCopyWith<$Res> {
+  factory _$$FailedRemoveSavedAdImplCopyWith(_$FailedRemoveSavedAdImpl value,
+          $Res Function(_$FailedRemoveSavedAdImpl) then) =
+      __$$FailedRemoveSavedAdImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FailedRemoveSavedAdImplCopyWithImpl<$Res>
+    extends _$UserStateCopyWithImpl<$Res, _$FailedRemoveSavedAdImpl>
+    implements _$$FailedRemoveSavedAdImplCopyWith<$Res> {
+  __$$FailedRemoveSavedAdImplCopyWithImpl(_$FailedRemoveSavedAdImpl _value,
+      $Res Function(_$FailedRemoveSavedAdImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$FailedRemoveSavedAdImpl
+    with DiagnosticableTreeMixin
+    implements _FailedRemoveSavedAd {
+  const _$FailedRemoveSavedAdImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserState.failedRemoveSavedAd()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'UserState.failedRemoveSavedAd'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FailedRemoveSavedAdImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() failedRead,
+    required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+  }) {
+    return failedRemoveSavedAd();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? failedRead,
+    TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+  }) {
+    return failedRemoveSavedAd?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? failedRead,
+    TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (failedRemoveSavedAd != null) {
+      return failedRemoveSavedAd();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_FailedRead value) failedRead,
+    required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
+  }) {
+    return failedRemoveSavedAd(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_FailedRead value)? failedRead,
+    TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+  }) {
+    return failedRemoveSavedAd?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_FailedRead value)? failedRead,
+    TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (failedRemoveSavedAd != null) {
+      return failedRemoveSavedAd(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FailedRemoveSavedAd implements UserState {
+  const factory _FailedRemoveSavedAd() = _$FailedRemoveSavedAdImpl;
+}
+
+/// @nodoc
+abstract class _$$SucessfulRemoveSavedAdImplCopyWith<$Res> {
+  factory _$$SucessfulRemoveSavedAdImplCopyWith(
+          _$SucessfulRemoveSavedAdImpl value,
+          $Res Function(_$SucessfulRemoveSavedAdImpl) then) =
+      __$$SucessfulRemoveSavedAdImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SucessfulRemoveSavedAdImplCopyWithImpl<$Res>
+    extends _$UserStateCopyWithImpl<$Res, _$SucessfulRemoveSavedAdImpl>
+    implements _$$SucessfulRemoveSavedAdImplCopyWith<$Res> {
+  __$$SucessfulRemoveSavedAdImplCopyWithImpl(
+      _$SucessfulRemoveSavedAdImpl _value,
+      $Res Function(_$SucessfulRemoveSavedAdImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SucessfulRemoveSavedAdImpl
+    with DiagnosticableTreeMixin
+    implements _SucessfulRemoveSavedAd {
+  const _$SucessfulRemoveSavedAdImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserState.successfulRemoveSavedAd()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'UserState.successfulRemoveSavedAd'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SucessfulRemoveSavedAdImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() failedRead,
+    required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+  }) {
+    return successfulRemoveSavedAd();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? failedRead,
+    TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+  }) {
+    return successfulRemoveSavedAd?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? failedRead,
+    TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (successfulRemoveSavedAd != null) {
+      return successfulRemoveSavedAd();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_FailedRead value) failedRead,
+    required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
+  }) {
+    return successfulRemoveSavedAd(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_FailedRead value)? failedRead,
+    TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+  }) {
+    return successfulRemoveSavedAd?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_FailedRead value)? failedRead,
+    TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (successfulRemoveSavedAd != null) {
+      return successfulRemoveSavedAd(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SucessfulRemoveSavedAd implements UserState {
+  const factory _SucessfulRemoveSavedAd() = _$SucessfulRemoveSavedAdImpl;
+}
+
+/// @nodoc
+abstract class _$$FailedMultipleReadsImplCopyWith<$Res> {
+  factory _$$FailedMultipleReadsImplCopyWith(_$FailedMultipleReadsImpl value,
+          $Res Function(_$FailedMultipleReadsImpl) then) =
+      __$$FailedMultipleReadsImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FailedMultipleReadsImplCopyWithImpl<$Res>
+    extends _$UserStateCopyWithImpl<$Res, _$FailedMultipleReadsImpl>
+    implements _$$FailedMultipleReadsImplCopyWith<$Res> {
+  __$$FailedMultipleReadsImplCopyWithImpl(_$FailedMultipleReadsImpl _value,
+      $Res Function(_$FailedMultipleReadsImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$FailedMultipleReadsImpl
+    with DiagnosticableTreeMixin
+    implements _FailedMultipleReads {
+  const _$FailedMultipleReadsImpl();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserState.failedMultipleReads()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'UserState.failedMultipleReads'));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$FailedMultipleReadsImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() failedRead,
+    required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+  }) {
+    return failedMultipleReads();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? failedRead,
+    TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+  }) {
+    return failedMultipleReads?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? failedRead,
+    TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (failedMultipleReads != null) {
+      return failedMultipleReads();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_FailedRead value) failedRead,
+    required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
+  }) {
+    return failedMultipleReads(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_FailedRead value)? failedRead,
+    TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+  }) {
+    return failedMultipleReads?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_FailedRead value)? failedRead,
+    TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (failedMultipleReads != null) {
+      return failedMultipleReads(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _FailedMultipleReads implements UserState {
+  const factory _FailedMultipleReads() = _$FailedMultipleReadsImpl;
+}
+
+/// @nodoc
+abstract class _$$SuccessfulMultipleReadsImplCopyWith<$Res> {
+  factory _$$SuccessfulMultipleReadsImplCopyWith(
+          _$SuccessfulMultipleReadsImpl value,
+          $Res Function(_$SuccessfulMultipleReadsImpl) then) =
+      __$$SuccessfulMultipleReadsImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<AdData> adsData});
+}
+
+/// @nodoc
+class __$$SuccessfulMultipleReadsImplCopyWithImpl<$Res>
+    extends _$UserStateCopyWithImpl<$Res, _$SuccessfulMultipleReadsImpl>
+    implements _$$SuccessfulMultipleReadsImplCopyWith<$Res> {
+  __$$SuccessfulMultipleReadsImplCopyWithImpl(
+      _$SuccessfulMultipleReadsImpl _value,
+      $Res Function(_$SuccessfulMultipleReadsImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? adsData = null,
+  }) {
+    return _then(_$SuccessfulMultipleReadsImpl(
+      adsData: null == adsData
+          ? _value._adsData
+          : adsData // ignore: cast_nullable_to_non_nullable
+              as List<AdData>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$SuccessfulMultipleReadsImpl
+    with DiagnosticableTreeMixin
+    implements _SuccessfulMultipleReads {
+  const _$SuccessfulMultipleReadsImpl({required final List<AdData> adsData})
+      : _adsData = adsData;
+
+  final List<AdData> _adsData;
+  @override
+  List<AdData> get adsData {
+    if (_adsData is EqualUnmodifiableListView) return _adsData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_adsData);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserState.successfulMultipleReads(adsData: $adsData)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserState.successfulMultipleReads'))
+      ..add(DiagnosticsProperty('adsData', adsData));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SuccessfulMultipleReadsImpl &&
+            const DeepCollectionEquality().equals(other._adsData, _adsData));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_adsData));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SuccessfulMultipleReadsImplCopyWith<_$SuccessfulMultipleReadsImpl>
+      get copyWith => __$$SuccessfulMultipleReadsImplCopyWithImpl<
+          _$SuccessfulMultipleReadsImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() failedRead,
+    required TResult Function(UserData userData) successfulRead,
+    required TResult Function() failedSaveAd,
+    required TResult Function() successfulSaveAd,
+    required TResult Function() failedRemoveSavedAd,
+    required TResult Function() successfulRemoveSavedAd,
+    required TResult Function() failedMultipleReads,
+    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+  }) {
+    return successfulMultipleReads(adsData);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? failedRead,
+    TResult? Function(UserData userData)? successfulRead,
+    TResult? Function()? failedSaveAd,
+    TResult? Function()? successfulSaveAd,
+    TResult? Function()? failedRemoveSavedAd,
+    TResult? Function()? successfulRemoveSavedAd,
+    TResult? Function()? failedMultipleReads,
+    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+  }) {
+    return successfulMultipleReads?.call(adsData);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? failedRead,
+    TResult Function(UserData userData)? successfulRead,
+    TResult Function()? failedSaveAd,
+    TResult Function()? successfulSaveAd,
+    TResult Function()? failedRemoveSavedAd,
+    TResult Function()? successfulRemoveSavedAd,
+    TResult Function()? failedMultipleReads,
+    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (successfulMultipleReads != null) {
+      return successfulMultipleReads(adsData);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_FailedRead value) failedRead,
+    required TResult Function(_SuccessfulRead value) successfulRead,
+    required TResult Function(_FailedSaveAd value) failedSaveAd,
+    required TResult Function(_SuccessfulSaveAd value) successfulSaveAd,
+    required TResult Function(_FailedRemoveSavedAd value) failedRemoveSavedAd,
+    required TResult Function(_SucessfulRemoveSavedAd value)
+        successfulRemoveSavedAd,
+    required TResult Function(_FailedMultipleReads value) failedMultipleReads,
+    required TResult Function(_SuccessfulMultipleReads value)
+        successfulMultipleReads,
+  }) {
+    return successfulMultipleReads(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_FailedRead value)? failedRead,
+    TResult? Function(_SuccessfulRead value)? successfulRead,
+    TResult? Function(_FailedSaveAd value)? failedSaveAd,
+    TResult? Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult? Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult? Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult? Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult? Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+  }) {
+    return successfulMultipleReads?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_FailedRead value)? failedRead,
+    TResult Function(_SuccessfulRead value)? successfulRead,
+    TResult Function(_FailedSaveAd value)? failedSaveAd,
+    TResult Function(_SuccessfulSaveAd value)? successfulSaveAd,
+    TResult Function(_FailedRemoveSavedAd value)? failedRemoveSavedAd,
+    TResult Function(_SucessfulRemoveSavedAd value)? successfulRemoveSavedAd,
+    TResult Function(_FailedMultipleReads value)? failedMultipleReads,
+    TResult Function(_SuccessfulMultipleReads value)? successfulMultipleReads,
+    required TResult orElse(),
+  }) {
+    if (successfulMultipleReads != null) {
+      return successfulMultipleReads(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SuccessfulMultipleReads implements UserState {
+  const factory _SuccessfulMultipleReads(
+      {required final List<AdData> adsData}) = _$SuccessfulMultipleReadsImpl;
+
+  List<AdData> get adsData;
+  @JsonKey(ignore: true)
+  _$$SuccessfulMultipleReadsImplCopyWith<_$SuccessfulMultipleReadsImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

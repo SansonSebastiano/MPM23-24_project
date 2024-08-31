@@ -108,7 +108,7 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         failedDeleteAd: () => print("Fail on delete add"),
         successfulDeleteAd: () => print("Success on delete add"),
         multipleFailedReads: () => print("Fail on read multiple ads"),
-        multipleSuccessfulRead: (adsData) {
+        multipleSuccessfulReads: (adsData) {
           for (var element in adsData) {
             print(element.uid);
           print(element.hostUid);
