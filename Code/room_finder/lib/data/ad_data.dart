@@ -319,8 +319,9 @@ class AdDataSource {
       for (File photo in newPhotosPaths) {
         final imageData = await photo.readAsBytes();
         String photoName = photo.uri.pathSegments.last; // Get the file name
-        Reference photoRef =
-            _adRef.child(updatedAd.uid!).child(photoName); // Reference for the new photo
+        Reference photoRef = _adRef
+            .child(updatedAd.uid!)
+            .child(photoName); // Reference for the new photo
         await photoRef.putData(imageData);
       }
 
@@ -531,31 +532,57 @@ class AdDataSource {
     int? roommates,
   }) async {
     try {
-      Query query = _adCollection;
+      // Query query = _adCollection;
+
+      // Fetch all ads
+      final adsSnapshot = await _adCollection.get();
+      final ads = adsSnapshot.docs; // list of all 'ads' collections
+
+      if (ads.isEmpty) {
+        return right([]);
+      }
 
       // Apply city filter
+      // if (city != null) {
+      //   final cityDocs = await _adCollection
+      //       .where('$_addressSubcollectionName.city', isEqualTo: city)
+      //       .get();
+      //   final cityAdIds = cityDocs.docs.map((doc) => doc.id).toList();
+      //   query = query.where(FieldPath.documentId, whereIn: cityAdIds);
+      // }
+
+      // Apply city filter
+      final List<QueryDocumentSnapshot<Object?>> filteredList = [];
       if (city != null) {
-        final cityDocs = await _adCollection
-            .where('$_addressSubcollectionName.city', isEqualTo: city)
-            .get();
-        final cityAdIds = cityDocs.docs.map((doc) => doc.id).toList();
-        query = query.where(FieldPath.documentId, whereIn: cityAdIds);
+        // capitalize the first letter of the city
+        city = "${city[0].toUpperCase()}${city.substring(1).toLowerCase()}";
+        
+        for (var element in ads) {
+          final addressSnap = await element.reference
+              .collection(_addressSubcollectionName)
+              .get();
+          if (addressSnap.docs.first['city'] == city) {
+            filteredList.add(element);
+          }
+        }
       }
 
       // Apply price range filter
       if (minRent != null) {
-        query = query.where(_monthlyRentField, isGreaterThanOrEqualTo: minRent);
+        // query = query.where(_monthlyRentField, isGreaterThanOrEqualTo: minRent);
+        filteredList.removeWhere((item) => item[_monthlyRentField] < minRent);
       }
       if (maxRent != null) {
-        query = query.where(_monthlyRentField, isLessThanOrEqualTo: maxRent);
+        // query = query.where(_monthlyRentField, isLessThanOrEqualTo: maxRent);
+        filteredList.removeWhere((item) => item[_monthlyRentField] > maxRent);
       }
 
       // Execute the query
-      final adsSnapshot = await query.get();
+      // final adsSnapshot = await query.get();
 
       List<AdData> filteredAds = [];
 
-      for (final doc in adsSnapshot.docs) {
+      for (final doc in filteredList) {
         final adUid = doc.id;
 
         // Fetch address subcollection
