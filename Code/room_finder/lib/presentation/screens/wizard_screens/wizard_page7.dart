@@ -143,9 +143,11 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
       rightButton: CancelButton(onPressed: () {
         ref.read(adNotifierProvider.notifier).getFilteredAds(
                 city: 'Torino',
-                minRent: 400,
-                maxRent: 600,
-                requiredServices: <String> ["WiFI", "Washing machine"]
+                // minRent: 400,
+                // maxRent: 600,
+                // requiredServices: <String> ["WiFI", "Washing machine"],
+                // minBathrooms: 2,
+                roommates: 3
               );
 
         // ref.read(adNotifierProvider.notifier).getAdsForRandomCity();

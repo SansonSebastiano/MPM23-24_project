@@ -600,6 +600,7 @@ class AdDataSource {
         }).toList();
 
         // Apply room filters (skip the rest of the code if any of these conditions is not respected)
+        // FIXME: the using of the `.length` is wrong (for the rooms)
         if (minBedrooms != null &&
             roomsList.whereType<Bedroom>().length < minBedrooms) {
           continue;
@@ -633,6 +634,7 @@ class AdDataSource {
         }).toList();
 
         // Apply renter filters
+        // TODO: less than or equals ????
         if (roommates != null && rentersList.length != roommates) {
           continue;
         }
