@@ -239,25 +239,26 @@ class AdDataSource {
 
   /// The method [updateAd] allows to update an ad represented by its unique identifier [adUid] and that meets the passed parameters
   Future<Either<String, void>> updateAd({
-    required String adUid,
-    required String name,
-    required Address address,
-    required List<Room> rooms,
-    required int rentersCapacity,
-    required List<Renter> renters,
-    required List<String> services,
-    required int monthlyRent,
+    required AdData updatedAd,
+    // required String adUid,
+    // required String name,
+    // required Address address,
+    // required List<Room> rooms,
+    // required int rentersCapacity,
+    // required List<Renter> renters,
+    // required List<String> services,
+    // required int monthlyRent,
     required List<File> newPhotosPaths,
   }) async {
     try {
-      final adDocRef = _adCollection.doc(adUid);
+      final adDocRef = _adCollection.doc(updatedAd.uid);
 
       // 1. Update standard fields
       await adDocRef.update({
-        _nameField: name,
-        _rentersCapacityField: rentersCapacity,
-        _monthlyRentField: monthlyRent,
-        _servicesField: services,
+        _nameField: updatedAd.name,
+        _rentersCapacityField: updatedAd.rentersCapacity,
+        _monthlyRentField: updatedAd.monthlyRent,
+        _servicesField: updatedAd.services,
       });
 
       // 2. Update subcollections
@@ -267,8 +268,8 @@ class AdDataSource {
           await adDocRef.collection(_addressSubcollectionName).get();
 
       await addressSnapshot.docs.first.reference.update({
-        'street': address.street,
-        'city': address.city,
+        'street': updatedAd.address.street,
+        'city': updatedAd.address.city,
       });
 
       // Update Rooms
@@ -278,7 +279,7 @@ class AdDataSource {
         await doc.reference.delete();
       }
 
-      for (final room in rooms) {
+      for (final room in updatedAd.rooms) {
         final roomData = {
           'name': room.name,
           'quantity': room.quantity,
@@ -295,7 +296,7 @@ class AdDataSource {
       for (final doc in rentersSnapshot.docs) {
         await doc.reference.delete();
       }
-      for (final renter in renters) {
+      for (final renter in updatedAd.renters) {
         await adDocRef.collection(_rentersSubcollectionName).add({
           'name': renter.name,
           'age': renter.age,
@@ -306,7 +307,7 @@ class AdDataSource {
       }
 
       // 3. Update photos in Firebase Storage
-      final adPhotosRef = _adRef.child(adUid);
+      final adPhotosRef = _adRef.child(updatedAd.uid!);
       final adPhotos = await adPhotosRef.listAll();
 
       // Delete old photos
@@ -316,10 +317,11 @@ class AdDataSource {
 
       // Upload new photos
       for (File photo in newPhotosPaths) {
+        final imageData = await photo.readAsBytes();
         String photoName = photo.uri.pathSegments.last; // Get the file name
         Reference photoRef =
-            _adRef.child(adUid).child(photoName); // Reference for the new photo
-        await photoRef.putFile(photo);
+            _adRef.child(updatedAd.uid!).child(photoName); // Reference for the new photo
+        await photoRef.putData(imageData);
       }
 
       return right(null);
@@ -328,9 +330,8 @@ class AdDataSource {
     }
   }
 
-  /// The method [getAdsForRandomCity] returns a list of [n] ads located in a random city
-  Future<Either<String, List<AdData>>> getAdsForRandomCity(
-      {required int n}) async {
+  /// The method [getAdsForRandomCity] returns a list of ads located in a random city
+  Future<Either<String, List<AdData>>> getAdsForRandomCity() async {
     try {
       // 1. Fetch all ads
       final adsSnapshot = await _adCollection.get();
@@ -340,24 +341,15 @@ class AdDataSource {
       if (ads.isEmpty) {
         return right([]);
       }
+      // Get a random document
       final DocumentSnapshot randomAdDoc = (ads..shuffle()).first;
       final addressSnapshot = await randomAdDoc.reference
           .collection(_addressSubcollectionName)
           .get();
+      // Extract its city
       final randomCity = addressSnapshot.docs.first['city'];
 
-      /*
-      JUST FOR TESTING 
-      
-      milano
-      torino
-      padova
-      bologna
-      torino
-      trieste
-      torino
-       */
-
+      // Get ads in which their city is the same as [randomCity]
       final List<QueryDocumentSnapshot<Object?>> cityAdsSnapshot = [];
       for (var element in ads) {
         final addressSnap =
@@ -367,12 +359,7 @@ class AdDataSource {
         }
       }
 
-      // final cityAdsSnapshot = await _adCollection
-      //     .where('$_addressSubcollectionName.city', isEqualTo: randomCity)
-      //     // .orderBy('createdAt', descending: true)
-      //     // .limit(n)
-      //     .get();
-
+      // Create AdData list with [cityAdsSnapshot] elements
       List<AdData> adsList = [];
       for (final doc in cityAdsSnapshot) {
         final adUid = doc.id;

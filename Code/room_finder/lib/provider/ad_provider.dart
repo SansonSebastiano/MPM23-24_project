@@ -63,38 +63,32 @@ class AdNotifier extends StateNotifier<AdState> {
 
   /// The method [updateAd] allows to update an ad represented by its unique identifier [adUid] and that meets the passed parameters
   Future<void> updateAd({
-    required String adUid,
-    required String name,
-    required Address address,
-    required List<Room> rooms,
-    required int rentersCapacity,
-    required List<Renter> renters,
-    required List<String> services,
-    required int monthlyRent,
+    required AdData updatedAd,
+    // required String adUid,
+    // required String name,
+    // required Address address,
+    // required List<Room> rooms,
+    // required int rentersCapacity,
+    // required List<Renter> renters,
+    // required List<String> services,
+    // required int monthlyRent,
     required List<File> newPhotosPaths,
   }) async {
     state = const AdState.loading();
 
     final response = await _adDataSource.updateAd(
-        adUid: adUid,
-        name: name,
-        address: address,
-        rooms: rooms,
-        rentersCapacity: rentersCapacity,
-        renters: renters,
-        services: services,
-        monthlyRent: monthlyRent,
+        updatedAd: updatedAd,
         newPhotosPaths: newPhotosPaths);
 
     state = response.fold((error) => const AdState.failedUpdateAd(),
         (response) => const AdState.successfulUpdateAd());
   }
 
-  /// The method [getAdsForRandomCity] returns a list of [n] ads located in a random city
-  Future<void> getAdsForRandomCity({required int n}) async {
+  /// The method [getAdsForRandomCity] returns a list of ads located in a random city
+  Future<void> getAdsForRandomCity() async {
     state = const AdState.loading();
 
-    final response = await _adDataSource.getAdsForRandomCity(n: n);
+    final response = await _adDataSource.getAdsForRandomCity();
 
     state = response.fold((error) => const AdState.multipleFailedReads(),
         (response) => AdState.multipleSuccessfulReads(adsData: response));
