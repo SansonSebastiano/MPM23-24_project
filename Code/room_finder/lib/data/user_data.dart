@@ -34,7 +34,7 @@ class UserDataSource {
       
       return right(UserData(
         isHost: docSnap[_isHostField], 
-        savedAds: docSnap[_savedAdsField] ? docSnap[_savedAdsField] : []
+        // savedAds: docSnap[_savedAdsField] ?? []
       ));
     } on FirebaseException catch (e) {
       return left(e.message ?? "Failed to get the user data");

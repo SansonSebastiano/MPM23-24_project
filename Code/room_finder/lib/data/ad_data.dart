@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -327,13 +328,13 @@ class AdDataSource {
     }
   }
 
-  /// The method [getLatestAdsForRandomCity] returns a list of [n] ads located in a random city
-  Future<Either<String, List<AdData>>> getLatestAdsForRandomCity(
+  /// The method [getAdsForRandomCity] returns a list of [n] ads located in a random city
+  Future<Either<String, List<AdData>>> getAdsForRandomCity(
       {required int n}) async {
     try {
       // 1. Fetch all ads
       final adsSnapshot = await _adCollection.get();
-      final ads = adsSnapshot.docs;
+      final ads = adsSnapshot.docs; // list of all 'ads' collections
 
       // 2. Filter ads by random city
       if (ads.isEmpty) {
@@ -345,15 +346,43 @@ class AdDataSource {
           .get();
       final randomCity = addressSnapshot.docs.first['city'];
 
-      final cityAdsSnapshot = await _adCollection
-          .where('$_addressSubcollectionName.city', isEqualTo: randomCity)
-          .orderBy('createdAt', descending: true)
-          .limit(n)
-          .get();
+      /*
+      JUST FOR TESTING 
+      
+      milano
+      torino
+      padova
+      bologna
+      torino
+      trieste
+      torino
+       */
+
+      final List<QueryDocumentSnapshot<Object?>> cityAdsSnapshot = [];
+      for (var element in ads) {
+        final addressSnap =
+            await element.reference.collection(_addressSubcollectionName).get();
+        if (addressSnap.docs.first['city'] == randomCity) {
+          cityAdsSnapshot.add(element);
+        }
+      }
+
+      // final cityAdsSnapshot = await _adCollection
+      //     .where('$_addressSubcollectionName.city', isEqualTo: randomCity)
+      //     // .orderBy('createdAt', descending: true)
+      //     // .limit(n)
+      //     .get();
 
       List<AdData> adsList = [];
-      for (final doc in cityAdsSnapshot.docs) {
+      for (final doc in cityAdsSnapshot) {
         final adUid = doc.id;
+
+        // Fetch ad address
+        final addressSnapshot =
+            await doc.reference.collection(_addressSubcollectionName).get();
+        final addressData = addressSnapshot.docs.first.data();
+        Address address =
+            Address(street: addressData['street'], city: addressData['city']);
 
         // Fetch ad photos
         final adPhotos = await _adRef.child(adUid).listAll();
@@ -400,10 +429,7 @@ class AdDataSource {
           uid: adUid,
           hostUid: doc[_hostUidField],
           name: doc[_nameField],
-          address: Address(
-            street: doc[_addressSubcollectionName]['street'],
-            city: doc[_addressSubcollectionName]['city'],
-          ),
+          address: address,
           rooms: roomsList,
           rentersCapacity: doc[_rentersCapacityField],
           renters: rentersList,

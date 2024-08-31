@@ -13,18 +13,17 @@ class AdNotifier extends StateNotifier<AdState> {
 
   /// The method [getAd] returns an individual ad passing as parameter its unique identifier [adUid]
   Future<void> getAd({required String adUid}) async {
-    state = const AdState.loading(); 
+    state = const AdState.loading();
 
     final response = await _adDataSource.getAd(adUid: adUid);
 
-    state = response.fold(
-        (error) => const AdState.singleFailedRead(),
+    state = response.fold((error) => const AdState.singleFailedRead(),
         (response) => AdState.singleSuccessfulRead(adData: response));
   }
-  
+
   /// The method [addNewAd] allows to add a new ad that respects the passed parameters
   Future<void> addNewAd(
-    { required AdData newAd,
+      {required AdData newAd,
       // required String hostUid,
       // required String name,
       // required Address address,
@@ -33,27 +32,24 @@ class AdNotifier extends StateNotifier<AdState> {
       // required List<Renter> renters,
       // required List<String> services,
       // required int monthlyRent,
-      required List<File> photosPaths
-    }) async {
-      state = const AdState.loading();
+      required List<File> photosPaths}) async {
+    state = const AdState.loading();
 
-      final response = await _adDataSource.addNewAd(
+    final response = await _adDataSource.addNewAd(
         newAd: newAd,
-        // hostUid: hostUid, 
-        // name: name, 
-        // address: address, 
-        // rooms: rooms, 
-        // rentersCapacity: rentersCapacity, 
-        // renters: renters, 
-        // services: services, 
-        // monthlyRent: monthlyRent, 
-        photosPaths: photosPaths
-      );
+        // hostUid: hostUid,
+        // name: name,
+        // address: address,
+        // rooms: rooms,
+        // rentersCapacity: rentersCapacity,
+        // renters: renters,
+        // services: services,
+        // monthlyRent: monthlyRent,
+        photosPaths: photosPaths);
 
-      state = response.fold(
-        (error) => const AdState.failedAddNewAd(),
+    state = response.fold((error) => const AdState.failedAddNewAd(),
         (response) => const AdState.successfulAddNewAd());
-    }
+  }
 
   /// The method [deleteAd] allows to delete an ad passing as parameter its unique identifier [adUid]
   Future<void> deleteAd({required String adUid}) async {
@@ -80,29 +76,27 @@ class AdNotifier extends StateNotifier<AdState> {
     state = const AdState.loading();
 
     final response = await _adDataSource.updateAd(
-      adUid: adUid, 
-      name: name, 
-      address: address, 
-      rooms: rooms, 
-      rentersCapacity: rentersCapacity, 
-      renters: renters, 
-      services: services, 
-      monthlyRent: monthlyRent, 
-      newPhotosPaths: newPhotosPaths
-    );
+        adUid: adUid,
+        name: name,
+        address: address,
+        rooms: rooms,
+        rentersCapacity: rentersCapacity,
+        renters: renters,
+        services: services,
+        monthlyRent: monthlyRent,
+        newPhotosPaths: newPhotosPaths);
 
     state = response.fold((error) => const AdState.failedUpdateAd(),
         (response) => const AdState.successfulUpdateAd());
   }
 
-  /// The method [getLatestAdsForRandomCity] returns a list of [n] ads located in a random city
-  Future<void> getLatestAdsForRandomCity({required int n}) async {
+  /// The method [getAdsForRandomCity] returns a list of [n] ads located in a random city
+  Future<void> getAdsForRandomCity({required int n}) async {
     state = const AdState.loading();
 
-    final response = await _adDataSource.getLatestAdsForRandomCity(n: n);
+    final response = await _adDataSource.getAdsForRandomCity(n: n);
 
-    state = response.fold(
-        (error) => const AdState.multipleFailedReads(),
+    state = response.fold((error) => const AdState.multipleFailedReads(),
         (response) => AdState.multipleSuccessfulReads(adsData: response));
   }
 
@@ -112,8 +106,7 @@ class AdNotifier extends StateNotifier<AdState> {
 
     final response = await _adDataSource.getAdsByHostUid(hostUid: hostUid);
 
-    state = response.fold(
-        (error) => const AdState.multipleFailedReads(),
+    state = response.fold((error) => const AdState.multipleFailedReads(),
         (response) => AdState.multipleSuccessfulReads(adsData: response));
   }
 
@@ -126,7 +119,7 @@ class AdNotifier extends StateNotifier<AdState> {
   /// - at least [minBathrooms] bedrooms
   /// - with exactly [roommates] roomates
   Future<void> getFilteredAds({
-    String? city, 
+    String? city,
     int? minRent,
     int? maxRent,
     List<String>? requiredServices,
@@ -138,18 +131,16 @@ class AdNotifier extends StateNotifier<AdState> {
     state = const AdState.loading();
 
     final response = await _adDataSource.getFilteredAds(
-      city: city,
-      minRent: minRent,
-      maxRent: maxRent,
-      requiredServices: requiredServices,
-      minBedrooms: minBedrooms,
-      minBeds: minBeds,
-      minBathrooms: minBathrooms,
-      roommates: roommates
-    );
+        city: city,
+        minRent: minRent,
+        maxRent: maxRent,
+        requiredServices: requiredServices,
+        minBedrooms: minBedrooms,
+        minBeds: minBeds,
+        minBathrooms: minBathrooms,
+        roommates: roommates);
 
-    state = response.fold(
-        (error) => const AdState.multipleFailedReads(),
+    state = response.fold((error) => const AdState.multipleFailedReads(),
         (response) => AdState.multipleSuccessfulReads(adsData: response));
   }
 }

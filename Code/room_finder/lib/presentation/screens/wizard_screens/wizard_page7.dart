@@ -111,7 +111,7 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         multipleSuccessfulReads: (adsData) {
           for (var element in adsData) {
             print(element.uid);
-          print(element.hostUid);
+            print(element.hostUid);
             print(element.name);
             print(element.address.city);
             print(element.address.street);
@@ -129,7 +129,7 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
             }
             element.services.forEach(print);
             element.photosURLs!.forEach(print);
-            }
+          }
         },
       );
     });
@@ -139,11 +139,13 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         Navigator.of(context).pop();
       }),
       rightButton: CancelButton(onPressed: () {
-        // ref.read(adNotifierProvider.notifier).deleteAd(adUid: "2BoWwPqff9d6LdU7w7w9");
+        ref.read(adNotifierProvider.notifier).getAdsForRandomCity(n: 5);
 
-        ref
-            .read(adNotifierProvider.notifier)
-            .getAdsByHostUid(hostUid: "r2DFgZdDDZbnVJXMADD7aP87Mrx2");
+        // ref.read(adNotifierProvider.notifier).deleteAd(adUid: "CeyTLFSIbA0Hy21Grt44");
+
+        // ref
+        //     .read(adNotifierProvider.notifier)
+        //     .getAdsByHostUid(hostUid: "r2DFgZdDDZbnVJXMADD7aP87Mrx2");
 
         // ref
         //     .read(adNotifierProvider.notifier)
