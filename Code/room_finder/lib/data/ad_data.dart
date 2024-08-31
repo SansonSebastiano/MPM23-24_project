@@ -545,11 +545,10 @@ class AdDataSource {
       final List<QueryDocumentSnapshot<Object?>> filteredList = [];
       // capitalize the first letter of the city
       city = "${city[0].toUpperCase()}${city.substring(1).toLowerCase()}";
-      
+
       for (var element in ads) {
-        final addressSnap = await element.reference
-            .collection(_addressSubcollectionName)
-            .get();
+        final addressSnap =
+            await element.reference.collection(_addressSubcollectionName).get();
         if (addressSnap.docs.first['city'] == city) {
           filteredList.add(element);
         }
@@ -639,6 +638,12 @@ class AdDataSource {
         }
 
         // Fetch services field
+        // Capitalizing the first letter for every required service
+        if (requiredServices != null) {
+          for (var element in requiredServices) {
+            element = "${element[0].toUpperCase()}${element.substring(1).toLowerCase()}";
+          }
+        }
         final services = List<String>.from(doc[_servicesField] ?? []);
         if (requiredServices != null &&
             !requiredServices.every((service) => services.contains(service))) {

@@ -144,7 +144,8 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         ref.read(adNotifierProvider.notifier).getFilteredAds(
                 city: 'Torino',
                 minRent: 400,
-                maxRent: 600
+                maxRent: 600,
+                requiredServices: <String> ["WiFI", "Washing machine"]
               );
 
         // ref.read(adNotifierProvider.notifier).getAdsForRandomCity();
