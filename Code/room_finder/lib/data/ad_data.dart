@@ -621,6 +621,7 @@ class AdDataSource {
           city: addressSnap.docs.first['city'],
         );
 
+        int numberOfBeds = 0;
         int numberOfBedrooms = 0;
         int numberOfBathrooms = 0;
 
@@ -631,6 +632,7 @@ class AdDataSource {
           final roomData = roomDoc.data();
           if (roomData.containsKey('numBeds')) {
             numberOfBedrooms = numberOfBedrooms + (roomData['quantity'] as int);
+            numberOfBeds = List<int>.from(roomData['numBeds']).reduce((bedsSum, b) => bedsSum + b);
 
             return Bedroom(
               name: roomData['name'],
@@ -653,12 +655,7 @@ class AdDataSource {
         if (minBedrooms != null && numberOfBedrooms < minBedrooms) {
           continue;
         }
-        if (minBeds != null &&
-            roomsList.whereType<Bedroom>().fold(
-                    0,
-                    (bedsSum, b) =>
-                        bedsSum + b.numBeds.reduce((a, b) => a + b)) <
-                minBeds) {
+        if (minBeds != null && numberOfBeds < minBeds) {
           continue;
         }
         if (minBathrooms != null && numberOfBathrooms < minBathrooms) {
