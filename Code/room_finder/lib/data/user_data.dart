@@ -99,6 +99,25 @@ class UserDataSource {
     }
   }
 
+  /// The method [isAdSaved] checks if an ad has been saved by the current user by passing the parameters:
+  /// - [adUid], the ad uid
+  /// - [userUid], the id of the user who want to save the ad
+  Future<Either<String, bool>> isAdSaved({required String adUid, required String userUid}) async {
+    try {
+      final userDocRef = _userCollection.doc(userUid);
+      final docSnap = await userDocRef.get();
+
+      // Retrieve the user savedAds list
+      List<String> savedAds = List<String>.from(docSnap[_savedAdsField] ?? []);
+
+      // Check if the adUid exists in the savedAds list
+      bool isAdSaved = savedAds.contains(adUid);
+      return right(isAdSaved);
+    } on FirebaseException catch (e) {
+      return left(e.message ?? "Failed to save the ad");
+    }
+  }
+
   /// The method [getSavedAds] allows to retrieve the list of all the user's saved ads by passing as parameter the list of user saved ads uids
   Future<Either<String, List<AdData>>> getSavedAds({required List<String> savedAds}) async {
     if (savedAds.isEmpty) {

@@ -23,6 +23,10 @@ class UserState with _$UserState {
 
   const factory UserState.successfulRemoveSavedAd() = _SucessfulRemoveSavedAd;
 
+  const factory UserState.failedSavedAdRead() = _FailedSavedAdRead;
+
+  const factory UserState.successfulSavedAdRead() = _SuccessfulSavedAdRead;
+
   const factory UserState.failedMultipleReads() = _FailedMultipleReads;
 
   const factory UserState.successfulMultipleReads({required List<AdData> adsData}) = _SuccessfulMultipleReads;

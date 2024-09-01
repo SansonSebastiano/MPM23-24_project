@@ -43,6 +43,18 @@ class UserNotifier extends StateNotifier<UserState> {
         (response) => const UserState.successfulRemoveSavedAd());
   }
 
+  /// The method [isAdSaved] checks if an ad has been saved by the current user by passing the parameters:
+  /// - [adUid], the ad uid
+  /// - [userUid], the id of the user who want to save the ad
+  Future<void> isAdSaved({required String adUid, required String userUid}) async {
+    state = const UserState.loading();
+
+    final response = await _userDataSource.isAdSaved(adUid: adUid, userUid: userUid);
+
+    state = response.fold((error) => const UserState.failedSavedAdRead(),
+        (response) => const UserState.successfulSavedAdRead());
+  }
+
   /// The method [getSavedAds] allows to retrieve the list of all the user's saved ads by passing as parameter the list of user saved ads uids
   Future<void> getSavedAds({required List<String> savedAds}) async {
     state = const UserState.loading();
