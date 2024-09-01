@@ -86,6 +86,7 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         failedUpdateAd: () => print("Fail on updating new ad"),
         successfulUpdateAd: () => print("Success on updating new ad"),
         singleSuccessfulRead: (adData) {
+          /* // CHECK IF THE RETURNED adData IS NULL BEFORE PRINTING IT 
           print(adData.uid);
           print(adData.hostUid);
           print(adData.name);
@@ -104,7 +105,7 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
             print(element.contractDeadline);
           }
           adData.services.forEach(print);
-          adData.photosURLs!.forEach(print);
+          adData.photosURLs!.forEach(print); */
         },
         singleFailedRead: () => print("Failed reading single ad"),
         failedDeleteAd: () => print("Fail on deleting add"),

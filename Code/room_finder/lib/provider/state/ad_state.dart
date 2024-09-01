@@ -12,7 +12,7 @@ class AdState with _$AdState {
 
   const factory AdState.singleFailedRead() = _SingleFailedRead;
 
-  const factory AdState.singleSuccessfulRead({required AdData adData}) = _SingleSuccessfulRead;
+  const factory AdState.singleSuccessfulRead({required AdData? adData}) = _SingleSuccessfulRead;
 
   const factory AdState.multipleFailedReads() = _MultipleFailedRead;
 

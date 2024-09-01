@@ -44,9 +44,30 @@ class AdDataSource {
   AdDataSource(this._adCollection, this._adRef);
 
   /// The method [getAd] returns an individual ad passing as parameter its unique identifier [adUid]
-  Future<Either<String, AdData>> getAd({required String adUid}) async {
+  Future<Either<String, AdData?>> getAd({required String adUid, required bool isHost}) async {
     try {
       final docSnap = await _adCollection.doc(adUid).get();
+
+      // Fetch renters subcollection
+      final rentersSnap =
+          await docSnap.reference.collection(_rentersSubcollectionName).get();
+      final List<Renter> renters = rentersSnap.docs.map((renterDoc) {
+        final renterData = renterDoc.data();
+        return Renter(
+          name: renterData['name'],
+          age: renterData['age'],
+          facultyOfStudies: renterData['facultyOfStudies'],
+          interests: renterData['interests'],
+          contractDeadline: DateTime.parse(renterData['contractDeadline']),
+        );
+      }).toList();
+
+      final rentersCapacity = docSnap.get(_rentersCapacityField);
+
+      // If the user is a student and the facility has reached its maximum capacity don't return it
+      if (!isHost && renters.length == rentersCapacity) {
+        return right(null);
+      }
 
       // Fetch address subcollection
       final addressSnap =
@@ -73,20 +94,6 @@ class AdDataSource {
             quantity: roomData['quantity'],
           );
         }
-      }).toList();
-
-      // Fetch renters subcollection
-      final rentersSnap =
-          await docSnap.reference.collection(_rentersSubcollectionName).get();
-      final List<Renter> renters = rentersSnap.docs.map((renterDoc) {
-        final renterData = renterDoc.data();
-        return Renter(
-          name: renterData['name'],
-          age: renterData['age'],
-          facultyOfStudies: renterData['facultyOfStudies'],
-          interests: renterData['interests'],
-          contractDeadline: DateTime.parse(renterData['contractDeadline']),
-        );
       }).toList();
 
       // Fetch services field
@@ -364,6 +371,27 @@ class AdDataSource {
       for (final doc in cityAdsSnapshot) {
         final adUid = doc.id;
 
+        // Fetch renters
+        final rentersSnapshot =
+            await doc.reference.collection(_rentersSubcollectionName).get();
+        List<Renter> rentersList = rentersSnapshot.docs.map((renterDoc) {
+          final renterData = renterDoc.data();
+          return Renter(
+            name: renterData['name'],
+            age: renterData['age'],
+            facultyOfStudies: renterData['facultyOfStudies'],
+            interests: renterData['interests'],
+            contractDeadline: DateTime.parse(renterData['contractDeadline']),
+          );
+        }).toList();
+
+        final rentersCapacity = doc[_rentersCapacityField] as int;
+
+        // Skip the ad if renters count equals the rentersCapacity
+        if(rentersList.length == rentersCapacity) {
+          continue;
+        }
+
         // Fetch ad address
         final addressSnapshot =
             await doc.reference.collection(_addressSubcollectionName).get();
@@ -393,20 +421,6 @@ class AdDataSource {
               quantity: roomData['quantity'],
             );
           }
-        }).toList();
-
-        // Fetch renters
-        final rentersSnapshot =
-            await doc.reference.collection(_rentersSubcollectionName).get();
-        List<Renter> rentersList = rentersSnapshot.docs.map((renterDoc) {
-          final renterData = renterDoc.data();
-          return Renter(
-            name: renterData['name'],
-            age: renterData['age'],
-            facultyOfStudies: renterData['facultyOfStudies'],
-            interests: renterData['interests'],
-            contractDeadline: DateTime.parse(renterData['contractDeadline']),
-          );
         }).toList();
 
         // Fetch services field
@@ -572,53 +586,6 @@ class AdDataSource {
       for (final doc in filteredList) {
         final adUid = doc.id;
 
-        // Fetch address subcollection
-        final addressSnap =
-            await doc.reference.collection(_addressSubcollectionName).get();
-        final address = Address(
-          street: addressSnap.docs.first['street'],
-          city: addressSnap.docs.first['city'],
-        );
-
-        // Fetch rooms subcollection
-        final roomsSnap =
-            await doc.reference.collection(_roomsSubcollectionName).get();
-        List<Room> roomsList = roomsSnap.docs.map((roomDoc) {
-          final roomData = roomDoc.data();
-          if (roomData.containsKey('numBeds')) {
-            return Bedroom(
-              name: roomData['name'],
-              quantity: roomData['quantity'],
-              numBeds: List<int>.from(roomData['numBeds']),
-            );
-          } else {
-            return Room(
-              name: roomData['name'],
-              quantity: roomData['quantity'],
-            );
-          }
-        }).toList();
-
-        // Apply room filters (skip the rest of the code if any of these conditions is not respected)
-        // FIXME: the using of the `.length` is wrong (for the rooms)
-        if (minBedrooms != null &&
-            roomsList.whereType<Bedroom>().length < minBedrooms) {
-          continue;
-        }
-        if (minBeds != null &&
-            roomsList.whereType<Bedroom>().fold(
-                    0,
-                    (bedsSum, b) =>
-                        bedsSum + b.numBeds.reduce((a, b) => a + b)) <
-                minBeds) {
-          continue;
-        }
-        if (minBathrooms != null &&
-            roomsList.where((r) => r.name == "Bathrooms").length <
-                minBathrooms) {
-          continue;
-        }
-
         // Fetch renters subcollection
         final rentersSnap =
             await doc.reference.collection(_rentersSubcollectionName).get();
@@ -632,10 +599,69 @@ class AdDataSource {
             contractDeadline: DateTime.parse(renterData['contractDeadline']),
           );
         }).toList();
+        
+        final rentersCapacity = doc[_rentersCapacityField] as int;
+
+        // Skip the ad if renters count equals the rentersCapacity
+        if(rentersList.length == rentersCapacity) {
+          continue;
+        }
 
         // Apply renter filters
         // TODO: less than or equals ????
         if (roommates != null && rentersList.length != roommates) {
+          continue;
+        }
+
+        // Fetch address subcollection
+        final addressSnap =
+            await doc.reference.collection(_addressSubcollectionName).get();
+        final address = Address(
+          street: addressSnap.docs.first['street'],
+          city: addressSnap.docs.first['city'],
+        );
+
+        int numberOfBedrooms = 0;
+        int numberOfBathrooms = 0;
+
+        // Fetch rooms subcollection
+        final roomsSnap =
+            await doc.reference.collection(_roomsSubcollectionName).get();
+        List<Room> roomsList = roomsSnap.docs.map((roomDoc) {
+          final roomData = roomDoc.data();
+          if (roomData.containsKey('numBeds')) {
+            numberOfBedrooms = numberOfBedrooms + (roomData['quantity'] as int);
+
+            return Bedroom(
+              name: roomData['name'],
+              quantity: roomData['quantity'],
+              numBeds: List<int>.from(roomData['numBeds']),
+            );
+          } else {
+            if(roomData['name'] == 'Bathrooms'){
+              numberOfBathrooms = numberOfBathrooms + (roomData['quantity'] as int);
+            }
+
+            return Room(
+              name: roomData['name'],
+              quantity: roomData['quantity'],
+            );
+          }
+        }).toList();
+
+        // Apply room filters (skip the rest of the code if any of these conditions is not respected)
+        if (minBedrooms != null && numberOfBedrooms < minBedrooms) {
+          continue;
+        }
+        if (minBeds != null &&
+            roomsList.whereType<Bedroom>().fold(
+                    0,
+                    (bedsSum, b) =>
+                        bedsSum + b.numBeds.reduce((a, b) => a + b)) <
+                minBeds) {
+          continue;
+        }
+        if (minBathrooms != null && numberOfBathrooms < minBathrooms) {
           continue;
         }
 

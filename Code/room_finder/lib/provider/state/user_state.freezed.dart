@@ -29,7 +29,7 @@ mixin _$UserState {
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -45,7 +45,7 @@ mixin _$UserState {
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,7 +61,7 @@ mixin _$UserState {
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -191,7 +191,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return initial();
   }
@@ -210,7 +210,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return initial?.call();
   }
@@ -229,7 +229,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -362,7 +362,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return loading();
   }
@@ -381,7 +381,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return loading?.call();
   }
@@ -400,7 +400,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -533,7 +533,7 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return failedRead();
   }
@@ -552,7 +552,7 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return failedRead?.call();
   }
@@ -571,7 +571,7 @@ class _$FailedReadImpl with DiagnosticableTreeMixin implements _FailedRead {
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (failedRead != null) {
@@ -736,7 +736,7 @@ class _$SuccessfulReadImpl
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return successfulRead(userData);
   }
@@ -755,7 +755,7 @@ class _$SuccessfulReadImpl
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return successfulRead?.call(userData);
   }
@@ -774,7 +774,7 @@ class _$SuccessfulReadImpl
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (successfulRead != null) {
@@ -913,7 +913,7 @@ class _$FailedSaveAdImpl with DiagnosticableTreeMixin implements _FailedSaveAd {
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return failedSaveAd();
   }
@@ -932,7 +932,7 @@ class _$FailedSaveAdImpl with DiagnosticableTreeMixin implements _FailedSaveAd {
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return failedSaveAd?.call();
   }
@@ -951,7 +951,7 @@ class _$FailedSaveAdImpl with DiagnosticableTreeMixin implements _FailedSaveAd {
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (failedSaveAd != null) {
@@ -1086,7 +1086,7 @@ class _$SuccessfulSaveAdImpl
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return successfulSaveAd();
   }
@@ -1105,7 +1105,7 @@ class _$SuccessfulSaveAdImpl
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return successfulSaveAd?.call();
   }
@@ -1124,7 +1124,7 @@ class _$SuccessfulSaveAdImpl
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (successfulSaveAd != null) {
@@ -1261,7 +1261,7 @@ class _$FailedRemoveSavedAdImpl
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return failedRemoveSavedAd();
   }
@@ -1280,7 +1280,7 @@ class _$FailedRemoveSavedAdImpl
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return failedRemoveSavedAd?.call();
   }
@@ -1299,7 +1299,7 @@ class _$FailedRemoveSavedAdImpl
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (failedRemoveSavedAd != null) {
@@ -1438,7 +1438,7 @@ class _$SucessfulRemoveSavedAdImpl
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return successfulRemoveSavedAd();
   }
@@ -1457,7 +1457,7 @@ class _$SucessfulRemoveSavedAdImpl
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return successfulRemoveSavedAd?.call();
   }
@@ -1476,7 +1476,7 @@ class _$SucessfulRemoveSavedAdImpl
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (successfulRemoveSavedAd != null) {
@@ -1611,7 +1611,7 @@ class _$FailedSavedAdReadImpl
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return failedSavedAdRead();
   }
@@ -1630,7 +1630,7 @@ class _$FailedSavedAdReadImpl
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return failedSavedAdRead?.call();
   }
@@ -1649,7 +1649,7 @@ class _$FailedSavedAdReadImpl
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (failedSavedAdRead != null) {
@@ -1787,7 +1787,7 @@ class _$SuccessfulSavedAdReadImpl
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return successfulSavedAdRead();
   }
@@ -1806,7 +1806,7 @@ class _$SuccessfulSavedAdReadImpl
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return successfulSavedAdRead?.call();
   }
@@ -1825,7 +1825,7 @@ class _$SuccessfulSavedAdReadImpl
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (successfulSavedAdRead != null) {
@@ -1962,7 +1962,7 @@ class _$FailedMultipleReadsImpl
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return failedMultipleReads();
   }
@@ -1981,7 +1981,7 @@ class _$FailedMultipleReadsImpl
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return failedMultipleReads?.call();
   }
@@ -2000,7 +2000,7 @@ class _$FailedMultipleReadsImpl
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (failedMultipleReads != null) {
@@ -2085,7 +2085,7 @@ abstract class _$$SuccessfulMultipleReadsImplCopyWith<$Res> {
           $Res Function(_$SuccessfulMultipleReadsImpl) then) =
       __$$SuccessfulMultipleReadsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<AdData> adsData});
+  $Res call({List<AdData?> adsData});
 }
 
 /// @nodoc
@@ -2106,7 +2106,7 @@ class __$$SuccessfulMultipleReadsImplCopyWithImpl<$Res>
       adsData: null == adsData
           ? _value._adsData
           : adsData // ignore: cast_nullable_to_non_nullable
-              as List<AdData>,
+              as List<AdData?>,
     ));
   }
 }
@@ -2116,12 +2116,12 @@ class __$$SuccessfulMultipleReadsImplCopyWithImpl<$Res>
 class _$SuccessfulMultipleReadsImpl
     with DiagnosticableTreeMixin
     implements _SuccessfulMultipleReads {
-  const _$SuccessfulMultipleReadsImpl({required final List<AdData> adsData})
+  const _$SuccessfulMultipleReadsImpl({required final List<AdData?> adsData})
       : _adsData = adsData;
 
-  final List<AdData> _adsData;
+  final List<AdData?> _adsData;
   @override
-  List<AdData> get adsData {
+  List<AdData?> get adsData {
     if (_adsData is EqualUnmodifiableListView) return _adsData;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_adsData);
@@ -2173,7 +2173,7 @@ class _$SuccessfulMultipleReadsImpl
     required TResult Function() failedSavedAdRead,
     required TResult Function() successfulSavedAdRead,
     required TResult Function() failedMultipleReads,
-    required TResult Function(List<AdData> adsData) successfulMultipleReads,
+    required TResult Function(List<AdData?> adsData) successfulMultipleReads,
   }) {
     return successfulMultipleReads(adsData);
   }
@@ -2192,7 +2192,7 @@ class _$SuccessfulMultipleReadsImpl
     TResult? Function()? failedSavedAdRead,
     TResult? Function()? successfulSavedAdRead,
     TResult? Function()? failedMultipleReads,
-    TResult? Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult? Function(List<AdData?> adsData)? successfulMultipleReads,
   }) {
     return successfulMultipleReads?.call(adsData);
   }
@@ -2211,7 +2211,7 @@ class _$SuccessfulMultipleReadsImpl
     TResult Function()? failedSavedAdRead,
     TResult Function()? successfulSavedAdRead,
     TResult Function()? failedMultipleReads,
-    TResult Function(List<AdData> adsData)? successfulMultipleReads,
+    TResult Function(List<AdData?> adsData)? successfulMultipleReads,
     required TResult orElse(),
   }) {
     if (successfulMultipleReads != null) {
@@ -2287,9 +2287,9 @@ class _$SuccessfulMultipleReadsImpl
 
 abstract class _SuccessfulMultipleReads implements UserState {
   const factory _SuccessfulMultipleReads(
-      {required final List<AdData> adsData}) = _$SuccessfulMultipleReadsImpl;
+      {required final List<AdData?> adsData}) = _$SuccessfulMultipleReadsImpl;
 
-  List<AdData> get adsData;
+  List<AdData?> get adsData;
   @JsonKey(ignore: true)
   _$$SuccessfulMultipleReadsImplCopyWith<_$SuccessfulMultipleReadsImpl>
       get copyWith => throw _privateConstructorUsedError;

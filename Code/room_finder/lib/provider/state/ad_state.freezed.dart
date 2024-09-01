@@ -21,7 +21,7 @@ mixin _$AdState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -37,7 +37,7 @@ mixin _$AdState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -53,7 +53,7 @@ mixin _$AdState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -181,7 +181,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -200,7 +200,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -219,7 +219,7 @@ class _$InitialImpl with DiagnosticableTreeMixin implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -350,7 +350,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -369,7 +369,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -388,7 +388,7 @@ class _$LoadingImpl with DiagnosticableTreeMixin implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -521,7 +521,7 @@ class _$SingleFailedReadImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -540,7 +540,7 @@ class _$SingleFailedReadImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -559,7 +559,7 @@ class _$SingleFailedReadImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -649,7 +649,7 @@ abstract class _$$SingleSuccessfulReadImplCopyWith<$Res> {
           $Res Function(_$SingleSuccessfulReadImpl) then) =
       __$$SingleSuccessfulReadImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({AdData adData});
+  $Res call({AdData? adData});
 }
 
 /// @nodoc
@@ -663,13 +663,13 @@ class __$$SingleSuccessfulReadImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? adData = null,
+    Object? adData = freezed,
   }) {
     return _then(_$SingleSuccessfulReadImpl(
-      adData: null == adData
+      adData: freezed == adData
           ? _value.adData
           : adData // ignore: cast_nullable_to_non_nullable
-              as AdData,
+              as AdData?,
     ));
   }
 }
@@ -682,7 +682,7 @@ class _$SingleSuccessfulReadImpl
   const _$SingleSuccessfulReadImpl({required this.adData});
 
   @override
-  final AdData adData;
+  final AdData? adData;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -722,7 +722,7 @@ class _$SingleSuccessfulReadImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -741,7 +741,7 @@ class _$SingleSuccessfulReadImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -760,7 +760,7 @@ class _$SingleSuccessfulReadImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -841,10 +841,10 @@ class _$SingleSuccessfulReadImpl
 }
 
 abstract class _SingleSuccessfulRead implements AdState {
-  const factory _SingleSuccessfulRead({required final AdData adData}) =
+  const factory _SingleSuccessfulRead({required final AdData? adData}) =
       _$SingleSuccessfulReadImpl;
 
-  AdData get adData;
+  AdData? get adData;
   @JsonKey(ignore: true)
   _$$SingleSuccessfulReadImplCopyWith<_$SingleSuccessfulReadImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -899,7 +899,7 @@ class _$MultipleFailedReadImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -918,7 +918,7 @@ class _$MultipleFailedReadImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -937,7 +937,7 @@ class _$MultipleFailedReadImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -1108,7 +1108,7 @@ class _$MultipleSuccessfulReadImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -1127,7 +1127,7 @@ class _$MultipleSuccessfulReadImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -1146,7 +1146,7 @@ class _$MultipleSuccessfulReadImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -1285,7 +1285,7 @@ class _$FailedAddNewAdImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -1304,7 +1304,7 @@ class _$FailedAddNewAdImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -1323,7 +1323,7 @@ class _$FailedAddNewAdImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -1456,7 +1456,7 @@ class _$SuccessfulAddNewAdImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -1475,7 +1475,7 @@ class _$SuccessfulAddNewAdImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -1494,7 +1494,7 @@ class _$SuccessfulAddNewAdImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -1627,7 +1627,7 @@ class _$FailedDeleteAdImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -1646,7 +1646,7 @@ class _$FailedDeleteAdImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -1665,7 +1665,7 @@ class _$FailedDeleteAdImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -1798,7 +1798,7 @@ class _$SuccessfulDeleteAdImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -1817,7 +1817,7 @@ class _$SuccessfulDeleteAdImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -1836,7 +1836,7 @@ class _$SuccessfulDeleteAdImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -1969,7 +1969,7 @@ class _$FailedUpdateAdImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -1988,7 +1988,7 @@ class _$FailedUpdateAdImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -2007,7 +2007,7 @@ class _$FailedUpdateAdImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,
@@ -2140,7 +2140,7 @@ class _$SuccessfulUpdateAdImpl
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() singleFailedRead,
-    required TResult Function(AdData adData) singleSuccessfulRead,
+    required TResult Function(AdData? adData) singleSuccessfulRead,
     required TResult Function() multipleFailedReads,
     required TResult Function(List<AdData> adsData) multipleSuccessfulReads,
     required TResult Function() failedAddNewAd,
@@ -2159,7 +2159,7 @@ class _$SuccessfulUpdateAdImpl
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? singleFailedRead,
-    TResult? Function(AdData adData)? singleSuccessfulRead,
+    TResult? Function(AdData? adData)? singleSuccessfulRead,
     TResult? Function()? multipleFailedReads,
     TResult? Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult? Function()? failedAddNewAd,
@@ -2178,7 +2178,7 @@ class _$SuccessfulUpdateAdImpl
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? singleFailedRead,
-    TResult Function(AdData adData)? singleSuccessfulRead,
+    TResult Function(AdData? adData)? singleSuccessfulRead,
     TResult Function()? multipleFailedReads,
     TResult Function(List<AdData> adsData)? multipleSuccessfulReads,
     TResult Function()? failedAddNewAd,

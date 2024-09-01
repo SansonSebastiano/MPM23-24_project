@@ -119,16 +119,16 @@ class UserDataSource {
   }
 
   /// The method [getSavedAds] allows to retrieve the list of all the user's saved ads by passing as parameter the list of user saved ads uids
-  Future<Either<String, List<AdData>>> getSavedAds({required List<String> savedAds}) async {
+  Future<Either<String, List<AdData?>>> getSavedAds({required List<String> savedAds}) async {
     if (savedAds.isEmpty) {
       return right([]); // Return an empty list if there are no ads
     }
     
     try {
-      final List<AdData> adsList = [];
+      final List<AdData?> adsList = [];
 
       for (String adUid in savedAds) {
-        final adResult = await _ref.read(adDataSourceProvider).getAd(adUid: adUid);
+        final adResult = await _ref.read(adDataSourceProvider).getAd(adUid: adUid, isHost: false);
         adResult.fold(
           (failure) => null, 
           (adData) => adsList.add(adData),

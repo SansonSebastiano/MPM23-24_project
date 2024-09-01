@@ -29,5 +29,5 @@ class UserState with _$UserState {
 
   const factory UserState.failedMultipleReads() = _FailedMultipleReads;
 
-  const factory UserState.successfulMultipleReads({required List<AdData> adsData}) = _SuccessfulMultipleReads;
+  const factory UserState.successfulMultipleReads({required List<AdData?> adsData}) = _SuccessfulMultipleReads;
 }

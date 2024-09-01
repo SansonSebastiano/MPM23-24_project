@@ -12,10 +12,10 @@ class AdNotifier extends StateNotifier<AdState> {
   AdNotifier(this._adDataSource) : super(const AdState.initial());
 
   /// The method [getAd] returns an individual ad passing as parameter its unique identifier [adUid]
-  Future<void> getAd({required String adUid}) async {
+  Future<void> getAd({required String adUid, required bool isHost}) async {
     state = const AdState.loading();
 
-    final response = await _adDataSource.getAd(adUid: adUid);
+    final response = await _adDataSource.getAd(adUid: adUid, isHost: isHost);
 
     state = response.fold((error) => const AdState.singleFailedRead(),
         (response) => AdState.singleSuccessfulRead(adData: response));
