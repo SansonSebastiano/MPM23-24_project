@@ -125,7 +125,7 @@
     "lblAccountPhoto": "Foto profilo",
     "btnCancel": "Annulla",
     "lblHostName": "Nome dell'host:",
-    "lblRoomsAmenities": "Stanze e servizi",
+    "lblServices": "Servizi",
     "lblWarningTitleDialog": "Attenzione!",
     "lblCancelWizard": "Sei sicuro di voler uscire? I dati inseriti verranno persi.",
     "lblCity": "Città",
@@ -148,5 +148,6 @@
     "lblFailedUpdateName": "Errore durante l'aggiornamento del nome: riprova.",
     "lblSuccessfulPersInfoUpdate": "Informazioni personali aggiornate correttamente",
     "lblSuccessfulPasswordUpdate": "Password aggiornata correttamente",
-    "lblFailedPasswordUpdate": "Errore durante l'aggiornamento della password: riprova"
+    "lblFailedPasswordUpdate": "Errore durante l'aggiornamento della password: riprova",
+    "lblRooms": "Stanze"
 }

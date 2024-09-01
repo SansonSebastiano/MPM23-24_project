@@ -118,6 +118,7 @@ class _WizardPage2BodyState extends State<_WizardPage2Body> {
                     return SizedBox(height: 20.h); // Add padding between items
                   },
                   itemBuilder: (context, index) {
+                    print(_rooms[index].counter);
                     return _rooms[index];
                   }),
             ),

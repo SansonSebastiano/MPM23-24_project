@@ -27,6 +27,8 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
   final String hostUrlImage;
   final List<String> facilityServices;
   final List<Renter> facilityRenters;
+  // TODO: add list of roooms
+  final List<Room> facilityRooms;
 
   const FacilityDetailPage(
       {super.key,
@@ -40,7 +42,8 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
       required this.facilityHostName,
       required this.hostUrlImage,
       required this.facilityServices,
-      required this.facilityRenters});
+      required this.facilityRenters,
+      required this.facilityRooms});
 
   @override
   ConsumerState<FacilityDetailPage> createState() => FacilityDetailPageState();
@@ -69,14 +72,16 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
   Widget build(BuildContext context) {
     final networkStatus = ref.watch(networkAwareProvider);
 
+    final servicesText = widget.facilityServices.join(' · ');
+
     final photoCarousel = widget.isStudent
         ? StudentPhotoCarousel(
             items: widget.facilityPhotos
                 .map((url) => Image(image: NetworkImage(url)))
                 .toList(),
-                isSaved: isSaved,
-                onPressed: toggleSave,
-                )
+            isSaved: isSaved,
+            onPressed: toggleSave,
+          )
         : HostPhotoCarousel(
             items: widget.facilityPhotos
                 .map((url) => Image(image: NetworkImage(url)))
@@ -109,8 +114,62 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                           const Divider(
                             color: ColorPalette.blueberry,
                           ),
-                          _RoomsAndAmenities(
-                              facilityServices: widget.facilityServices),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              AppLocalizations.of(context)!.lblAmenities,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.h),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                servicesText,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ),
+                          ),
+                          const Divider(
+                            color: ColorPalette.blueberry,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              AppLocalizations.of(context)!.lblRooms,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 100.h,
+                            child: ListView.separated(
+                              itemBuilder: (BuildContext context, int index) {
+                                // FIXME: the text format
+                                return RichText(
+                                    text: TextSpan(
+                                        text: widget.facilityRooms[index].runtimeType == Bedroom 
+                                        ? "${widget.facilityRooms[index].name}: ${widget.facilityRooms[index].quantity} \nBeds: ${(widget.facilityRooms[index] as Bedroom).numBeds}"
+                                        : "${widget.facilityRooms[index].name}: ${widget.facilityRooms[index].quantity}",
+                                    style: Theme.of(context).textTheme.bodyMedium
+                                  ),
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 10.w,
+                                );
+                              },
+                              itemCount: widget.facilityRooms.length,
+                            ),
+                          ),
                           const Divider(
                             color: ColorPalette.blueberry,
                           ),
@@ -168,9 +227,11 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return HostFacilityDetailPageRenterBox(
-                                          name: widget.facilityRenters[index].name,
-                                          contractDeadline:
-                                              widget.facilityRenters[index].contractDeadline,
+                                          name: widget
+                                              .facilityRenters[index].name,
+                                          contractDeadline: widget
+                                              .facilityRenters[index]
+                                              .contractDeadline,
                                         );
                                       },
                                       separatorBuilder:
@@ -228,14 +289,20 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                             isLogged: widget.isLogged,
                                             isStudent: false,
                                             isWizardPage: false,
-                                            facilityPhotos: widget.facilityPhotos,
+                                            facilityPhotos:
+                                                widget.facilityPhotos,
                                             facilityName: widget.facilityName,
-                                            facilityAddress: widget.facilityAddress,
+                                            facilityAddress:
+                                                widget.facilityAddress,
                                             facilityPrice: widget.facilityPrice,
-                                            facilityHostName: widget.facilityHostName,
+                                            facilityHostName:
+                                                widget.facilityHostName,
                                             hostUrlImage: widget.hostUrlImage,
-                                            facilityServices: widget.facilityServices,
-                                            facilityRenters: widget.facilityRenters,
+                                            facilityServices:
+                                                widget.facilityServices,
+                                            facilityRenters:
+                                                widget.facilityRenters,
+                                            facilityRooms: widget.facilityRooms,
                                           ),
                                         ),
                                       ),
@@ -244,48 +311,6 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                         : const SizedBox.shrink(),
               ],
             ),
-    );
-  }
-}
-
-class _RoomsAndAmenities extends StatelessWidget {
-  const _RoomsAndAmenities({
-    required this.facilityServices,
-  });
-
-  final List<String> facilityServices;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            AppLocalizations.of(context)!.lblRoomsAmenities,
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(fontWeight: FontWeight.w500),
-          ),
-        ),
-        SizedBox(
-          width: double.infinity,
-          height: 40.w,
-          child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                return Align(
-                    alignment: Alignment.center,
-                    child: Text(facilityServices[index]));
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const Align(
-                    alignment: Alignment.center, child: Text(' · '));
-              },
-              itemCount: facilityServices.length),
-        ),
-      ],
     );
   }
 }

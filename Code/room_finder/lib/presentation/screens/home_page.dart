@@ -103,6 +103,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                           //   contractDeadline: DateTime(2025, 3, 1),
                           // ),
                         ],
+                        facilityRooms: [],
                       ),
                     ),
                   ),
@@ -214,6 +215,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                                         //       DateTime(2025, 3, 1),
                                         // ),
                                       ],
+                                      facilityRooms: [],
                                     ),
                                   ),
                                 ),
@@ -285,31 +287,6 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
         multipleSuccessfulReads: (adsData) {
           hostAds = adsData;
 
-          for (var element in hostAds) {
-            print(element.uid);
-            print(element.hostUid);
-            print(element.name);
-            print(element.address.city);
-            print(element.address.street);
-            print(element.monthlyRent);
-            for (var element in element.rooms) {
-              print(element.name);
-              print(element.quantity);
-              if (element.runtimeType == Bedroom) {
-                print((element as Bedroom).numBeds);
-              }
-            }
-            print(element.rentersCapacity);
-            for (var element in element.renters) {
-              print(element.name);
-              print(element.age);
-              print(element.facultyOfStudies);
-              print(element.interests);
-              print(element.contractDeadline);
-            }
-            element.services.forEach(print);
-            element.photosURLs!.forEach(print);
-          }
           setState(() {
             isOnLoad = false;
           });
@@ -384,6 +361,7 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                                       hostUrlImage: widget.hostUser.photoUrl!,
                                       facilityServices: hostAds[index].services,
                                       facilityRenters: hostAds[index].renters,
+                                      facilityRooms: hostAds[index].rooms,
                                     ),
                                   ),
                                 ),

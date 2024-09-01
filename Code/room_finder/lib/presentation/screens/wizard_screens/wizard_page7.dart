@@ -154,13 +154,13 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
       rightButton: CancelButton(onPressed: () {
         ref.read(adNotifierProvider.notifier).getFilteredAds(
               city: 'Torino',
-              // minRent: 400,
-              // maxRent: 600,
-              // requiredServices: <String> ["WiFI", "Washing machine"],
-              // minBathrooms: 2,
-              // minBedrooms: 1,
-              minBeds: 3,
-              // roommates: 3,
+              minRent: 400,
+              maxRent: 500,
+              requiredServices: <String> ["WiFI", "Washing machine"],
+              minBathrooms: 2,
+              minBedrooms: 1,
+              minBeds: 4,
+              roommates: 3,
             );
 
         // ref.read(adNotifierProvider.notifier).getAdsForRandomCity();
@@ -364,6 +364,7 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
                     //   contractDeadline: DateTime(2025, 3, 1),
                     // ),
                   ],
+                  facilityRooms: [],
                 )));
   }
 

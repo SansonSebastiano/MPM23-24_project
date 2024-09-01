@@ -526,9 +526,13 @@
   "@lblHostName": {
     "description": "The label that represents host name"
   },
-  "lblRoomsAmenities": "Rooms and Amenities",
-  "@lblRoomsAmenities": {
-    "description": "The label that represents rooms and amenities"
+  "lblServices": "Services",
+  "@lblServices": {
+    "description": "The label that represents  amenities"
+  },
+  "lblRooms": "Rooms",
+  "@lblRooms": {
+    "description": "The label that represents  amenities"
   },
   "lblWarningTitleDialog": "Warning!",
   "@lblWarningTitleDialog": {
