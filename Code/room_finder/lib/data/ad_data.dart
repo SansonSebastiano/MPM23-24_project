@@ -690,7 +690,7 @@ class AdDataSource {
           name: doc[_nameField],
           address: address,
           rooms: roomsList,
-          rentersCapacity: doc[_rentersCapacityField],
+          rentersCapacity: rentersCapacity,
           renters: rentersList,
           services: services,
           monthlyRent: doc[_monthlyRentField],

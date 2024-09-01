@@ -84,6 +84,8 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
   // Get the data about the logged user from Firestore
   late UserData user = UserData(isHost: isHost);
 
+  // bool isOnLoad = true;
+
   @override
   void initState() {
     super.initState();
@@ -126,12 +128,11 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
           // setting the user role to display the correct screens
           setState(() {
             isHost = userData.isHost;
+            // isOnLoad = false;
           });
         },
         // TODO: decide this, on failed getting data
         failedRead: () => null,
-        // FIXME: it does not work properly
-        loading: () => const Center(child: CircularProgressIndicator(),),
       );
     });
 

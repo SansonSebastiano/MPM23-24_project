@@ -86,14 +86,14 @@ class _StudentHomePageBodyState extends ConsumerState<_SavedAdsPageBody> {
                           "Air condition"
                         ],
                         facilityRenters: [
-                          HostFacilityDetailPageRenterBox(
-                            name: 'Francesco Dal Maso',
-                            contractDeadline: DateTime(2025, 1, 1),
-                          ),
-                          HostFacilityDetailPageRenterBox(
-                            name: 'Antonio Principe',
-                            contractDeadline: DateTime(2025, 3, 1),
-                          ),
+                          // HostFacilityDetailPageRenterBox(
+                          //   name: 'Francesco Dal Maso',
+                          //   contractDeadline: DateTime(2025, 1, 1),
+                          // ),
+                          // HostFacilityDetailPageRenterBox(
+                          //   name: 'Antonio Principe',
+                          //   contractDeadline: DateTime(2025, 3, 1),
+                          // ),
                         ],
                       ),
                     ),
@@ -158,14 +158,14 @@ class _StudentHomePageBodyState extends ConsumerState<_SavedAdsPageBody> {
                               "WiFi"
                             ],
                             facilityRenters: [
-                              HostFacilityDetailPageRenterBox(
-                                name: 'Francesco Dal Maso',
-                                contractDeadline: DateTime(2025, 1, 1),
-                              ),
-                              HostFacilityDetailPageRenterBox(
-                                name: 'Antonio Principe',
-                                contractDeadline: DateTime(2025, 3, 1),
-                              ),
+                              // HostFacilityDetailPageRenterBox(
+                              //   name: 'Francesco Dal Maso',
+                              //   contractDeadline: DateTime(2025, 1, 1),
+                              // ),
+                              // HostFacilityDetailPageRenterBox(
+                              //   name: 'Antonio Principe',
+                              //   contractDeadline: DateTime(2025, 3, 1),
+                              // ),
                             ],
                           ),
                         ),

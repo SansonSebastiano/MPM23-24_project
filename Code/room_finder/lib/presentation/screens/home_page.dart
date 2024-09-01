@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
@@ -12,6 +13,7 @@ import 'package:room_finder/presentation/components/search_bar.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
 import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/presentation/screens/wizard_screens/wizard_page1.dart';
+import 'package:room_finder/provider/ad_provider.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class StudentHomePage extends StatelessWidget {
@@ -92,14 +94,14 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                           "Air condition"
                         ],
                         facilityRenters: [
-                          HostFacilityDetailPageRenterBox(
-                            name: 'Francesco Dal Maso',
-                            contractDeadline: DateTime(2025, 1, 1),
-                          ),
-                          HostFacilityDetailPageRenterBox(
-                            name: 'Antonio Principe',
-                            contractDeadline: DateTime(2025, 3, 1),
-                          ),
+                          // HostFacilityDetailPageRenterBox(
+                          //   name: 'Francesco Dal Maso',
+                          //   contractDeadline: DateTime(2025, 1, 1),
+                          // ),
+                          // HostFacilityDetailPageRenterBox(
+                          //   name: 'Antonio Principe',
+                          //   contractDeadline: DateTime(2025, 3, 1),
+                          // ),
                         ],
                       ),
                     ),
@@ -201,16 +203,16 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                                         "Air condition"
                                       ],
                                       facilityRenters: [
-                                        HostFacilityDetailPageRenterBox(
-                                          name: 'Francesco Dal Maso',
-                                          contractDeadline:
-                                              DateTime(2025, 1, 1),
-                                        ),
-                                        HostFacilityDetailPageRenterBox(
-                                          name: 'Antonio Principe',
-                                          contractDeadline:
-                                              DateTime(2025, 3, 1),
-                                        ),
+                                        // HostFacilityDetailPageRenterBox(
+                                        //   name: 'Francesco Dal Maso',
+                                        //   contractDeadline:
+                                        //       DateTime(2025, 1, 1),
+                                        // ),
+                                        // HostFacilityDetailPageRenterBox(
+                                        //   name: 'Antonio Principe',
+                                        //   contractDeadline:
+                                        //       DateTime(2025, 3, 1),
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -237,17 +239,83 @@ class HostHomePage extends StatelessWidget {
     return MainTemplateScreen(
       // TODO: screenLabel should be adapted to the host user's name
       screenLabel: AppLocalizations.of(context)!.lblWelcomeUser(hostUser.name!),
-      screenContent: const _HostHomePageBody(),
+      screenContent: _HostHomePageBody(
+        hostUser: hostUser,
+      ),
     );
   }
 }
 
-class _HostHomePageBody extends ConsumerWidget {
-  const _HostHomePageBody();
+class _HostHomePageBody extends ConsumerStatefulWidget {
+  final UserData hostUser;
+  const _HostHomePageBody({required this.hostUser});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    var connectivityStatusProvider = ref.watch(networkAwareProvider);
+  ConsumerState<_HostHomePageBody> createState() => _HostHomePageBodyState();
+}
+
+class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
+  bool isConnected = false;
+  List<AdData> hostAds = [];
+  bool isOnLoad = true;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      var connectivityStatusProvider = ref.watch(networkAwareProvider);
+      setState(() {
+        isConnected = connectivityStatusProvider == NetworkStatus.on;
+      });
+
+      if (isConnected) {
+        ref
+            .read(adNotifierProvider.notifier)
+            .getAdsByHostUid(hostUid: widget.hostUser.uid!);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen(adNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        multipleFailedReads: () => print("Fail on reading multiple ads"),
+        multipleSuccessfulReads: (adsData) {
+          hostAds = adsData;
+
+          for (var element in hostAds) {
+            print(element.uid);
+            print(element.hostUid);
+            print(element.name);
+            print(element.address.city);
+            print(element.address.street);
+            print(element.monthlyRent);
+            for (var element in element.rooms) {
+              print(element.name);
+              print(element.quantity);
+              if (element.runtimeType == Bedroom) {
+                print((element as Bedroom).numBeds);
+              }
+            }
+            print(element.rentersCapacity);
+            for (var element in element.renters) {
+              print(element.name);
+              print(element.age);
+              print(element.facultyOfStudies);
+              print(element.interests);
+              print(element.contractDeadline);
+            }
+            element.services.forEach(print);
+            element.photosURLs!.forEach(print);
+          }
+          setState(() {
+            isOnLoad = false;
+          });
+        },
+      );
+    });
 
     return Expanded(
       child: Column(
@@ -278,25 +346,29 @@ class _HostHomePageBody extends ConsumerWidget {
               ],
             ),
           ),
-          connectivityStatusProvider == NetworkStatus.off
+
+          isOnLoad 
+          ? const Expanded(child: Center(child: CircularProgressIndicator(),)) 
+          : !isConnected
               ? Expanded(
                   child: Center(
                     child: NoInternetErrorMessage(context: context),
                   ),
                 )
+              : hostAds.isEmpty 
+              ? Expanded(child: Center(child: NoDataErrorMessage(context: context,),))
               : Expanded(
                   child: ListView.separated(
                     padding: EdgeInsets.all(20.w),
-                    itemCount: 4,
+                    itemCount: hostAds.length,
                     itemBuilder: (BuildContext context, int index) {
                       return AdsBox(
                           imageUrl:
-                              "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                          city: "Padova",
-                          street: "Via Roma 12",
-                          price: 300,
+                              hostAds[index].photosURLs!.first,
+                          city: hostAds[index].address.city,
+                          street: hostAds[index].address.street,
+                          price: hostAds[index].monthlyRent,
                           onPressed: () => {
-                                // TODO: replace with real data
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -304,35 +376,14 @@ class _HostHomePageBody extends ConsumerWidget {
                                       isLogged: true,
                                       isStudent: false,
                                       isWizardPage: false,
-                                      facilityPhotos: const [
-                                        "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                                        "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-                                        "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-                                      ],
-                                      facilityName: "Casa Dolce Casa",
-                                      facilityAddress: "Padova - Via Roma 12",
-                                      facilityPrice: 300,
-                                      facilityHostName: "Mario Rossi",
-                                      hostUrlImage:
-                                          "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-                                      facilityServices: const [
-                                        "2 bedrooms",
-                                        "3 beds",
-                                        "1 bathroom",
-                                        "WiFi"
-                                      ],
-                                      facilityRenters: [
-                                        HostFacilityDetailPageRenterBox(
-                                          name: 'Francesco Dal Maso',
-                                          contractDeadline:
-                                              DateTime(2025, 1, 1),
-                                        ),
-                                        HostFacilityDetailPageRenterBox(
-                                          name: 'Antonio Principe',
-                                          contractDeadline:
-                                              DateTime(2025, 3, 1),
-                                        ),
-                                      ],
+                                      facilityPhotos: hostAds[index].photosURLs!,
+                                      facilityName: hostAds[index].name,
+                                      facilityAddress: "${hostAds[index].address.city} - ${hostAds[index].address.street}",
+                                      facilityPrice: hostAds[index].monthlyRent,
+                                      facilityHostName: widget.hostUser.name!,
+                                      hostUrlImage: widget.hostUser.photoUrl!,
+                                      facilityServices: hostAds[index].services,
+                                      facilityRenters: hostAds[index].renters,
                                     ),
                                   ),
                                 ),

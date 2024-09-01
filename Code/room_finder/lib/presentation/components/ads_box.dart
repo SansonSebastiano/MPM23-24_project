@@ -15,7 +15,7 @@ class AdsBox extends StatelessWidget {
   final String imageUrl;
   final String city;
   final String street;
-  final double price;
+  final int price;
   final BookmarkButton? bookmarkButton;
   final void Function() onPressed;
 

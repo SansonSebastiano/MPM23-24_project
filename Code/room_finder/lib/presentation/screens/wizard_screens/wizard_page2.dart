@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/presentation/components/add_on.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
@@ -10,7 +11,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/wizard_screens/wizard_page3.dart';
 
 class WizardPage2 extends StatelessWidget {
-  const WizardPage2({super.key});
+  final Address address;
+
+  const WizardPage2({super.key, required this.address});
 
   @override
   Widget build(BuildContext context) {
@@ -20,32 +23,29 @@ class WizardPage2 extends StatelessWidget {
         }),
         rightButton: CancelButton(onPressed: () {
           showOptionsDialog(
-            context: context,
-            androidDialog: ActionsAndroidDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
               context: context,
-              onOk: () {
-                // TODO: Replace with the real data
-                  backToHostHomePage(context);
-              },
-              onCancel: () {
-                Navigator.of(context).pop();
-              }
-            ),
-            iosDialog: ActionsIosDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
-              context: context,
-              onOk: () {
-                // TODO: Replace with the real data
-                  backToHostHomePage(context);
-              },
-              onCancel: () {
-                Navigator.of(context).pop();
-              }
-            )
-          );
+              androidDialog: ActionsAndroidDialog(
+                  title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                  content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                  context: context,
+                  onOk: () {
+                    // TODO: Replace with the real data
+                    backToHostHomePage(context);
+                  },
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  }),
+              iosDialog: ActionsIosDialog(
+                  title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                  content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                  context: context,
+                  onOk: () {
+                    // TODO: Replace with the real data
+                    backToHostHomePage(context);
+                  },
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  }));
         }),
         rightButtonVisibility: true,
         screenTitle: AppLocalizations.of(context)!.lblSetRooms,

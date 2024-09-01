@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/presentation/components/account_photo.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
@@ -21,11 +22,11 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
   final List<String> facilityPhotos;
   final String facilityName;
   final String facilityAddress;
-  final double facilityPrice;
+  final int facilityPrice;
   final String facilityHostName;
   final String hostUrlImage;
   final List<String> facilityServices;
-  final List<HostFacilityDetailPageRenterBox> facilityRenters;
+  final List<Renter> facilityRenters;
 
   const FacilityDetailPage(
       {super.key,
@@ -166,7 +167,11 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                       padding: EdgeInsets.zero,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return widget.facilityRenters[index];
+                                        return HostFacilityDetailPageRenterBox(
+                                          name: widget.facilityRenters[index].name,
+                                          contractDeadline:
+                                              widget.facilityRenters[index].contractDeadline,
+                                        );
                                       },
                                       separatorBuilder:
                                           (BuildContext context, int index) {
@@ -215,7 +220,6 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                 label: AppLocalizations.of(context)!.btnConfirm,
                                 // TODO: handle confirm wizard operation
                                 onPressed: () => {
-                                      // TODO: replace with real data
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -224,36 +228,14 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                             isLogged: widget.isLogged,
                                             isStudent: false,
                                             isWizardPage: false,
-                                            facilityPhotos: const [
-                                              "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                                              "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-                                              "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-                                            ],
-                                            facilityName: "Casa Dolce Casa",
-                                            facilityAddress:
-                                                "Padova - Via Roma 12",
-                                            facilityPrice: 300,
-                                            facilityHostName: "Mario Rossi",
-                                            hostUrlImage:
-                                                "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-                                            facilityServices: const [
-                                              "2 bedrooms",
-                                              "3 beds",
-                                              "1 bathroom",
-                                              "WiFi"
-                                            ],
-                                            facilityRenters: [
-                                              HostFacilityDetailPageRenterBox(
-                                                name: 'Francesco Dal Maso',
-                                                contractDeadline:
-                                                    DateTime(2025, 1, 1),
-                                              ),
-                                              HostFacilityDetailPageRenterBox(
-                                                name: 'Antonio Principe',
-                                                contractDeadline:
-                                                    DateTime(2025, 3, 1),
-                                              ),
-                                            ],
+                                            facilityPhotos: widget.facilityPhotos,
+                                            facilityName: widget.facilityName,
+                                            facilityAddress: widget.facilityAddress,
+                                            facilityPrice: widget.facilityPrice,
+                                            facilityHostName: widget.facilityHostName,
+                                            hostUrlImage: widget.hostUrlImage,
+                                            facilityServices: widget.facilityServices,
+                                            facilityRenters: widget.facilityRenters,
                                           ),
                                         ),
                                       ),
@@ -319,7 +301,7 @@ class _MainFacilityInfos extends StatelessWidget {
 
   final String facilityName;
   final String facilityAddress;
-  final double facilityPrice;
+  final int facilityPrice;
   final String hostUrlImage;
   final String facilityHostName;
 

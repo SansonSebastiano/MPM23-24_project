@@ -86,26 +86,32 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
         failedUpdateAd: () => print("Fail on updating new ad"),
         successfulUpdateAd: () => print("Success on updating new ad"),
         singleSuccessfulRead: (adData) {
-          /* // CHECK IF THE RETURNED adData IS NULL BEFORE PRINTING IT 
-          print(adData.uid);
-          print(adData.hostUid);
-          print(adData.name);
-          print(adData.address.city);
-          print(adData.address.street);
-          print(adData.monthlyRent);
-          for (var element in adData.rooms) {
-            print(element.name);
-            print(element.quantity);
+          // CHECK IF THE RETURNED adData IS NULL BEFORE PRINTING IT
+          if (adData != null) {
+            print(adData.uid);
+            print(adData.hostUid);
+            print(adData.name);
+            print(adData.address.city);
+            print(adData.address.street);
+            print(adData.monthlyRent);
+            for (var element in adData.rooms) {
+              print(element.name);
+              print(element.quantity);
+              if (element.runtimeType == Bedroom) {
+                print((element as Bedroom).numBeds);
+              }
+            }
+            print(adData.rentersCapacity);
+            for (var element in adData.renters) {
+              print(element.name);
+              print(element.age);
+              print(element.facultyOfStudies);
+              print(element.interests);
+              print(element.contractDeadline);
+            }
+            adData.services.forEach(print);
+            adData.photosURLs!.forEach(print);
           }
-          for (var element in adData.renters) {
-            print(element.name);
-            print(element.age);
-            print(element.facultyOfStudies);
-            print(element.interests);
-            print(element.contractDeadline);
-          }
-          adData.services.forEach(print);
-          adData.photosURLs!.forEach(print); */
         },
         singleFailedRead: () => print("Failed reading single ad"),
         failedDeleteAd: () => print("Fail on deleting add"),
@@ -122,7 +128,11 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
             for (var element in element.rooms) {
               print(element.name);
               print(element.quantity);
+              if (element.runtimeType == Bedroom) {
+                print((element as Bedroom).numBeds);
+              }
             }
+            print(element.rentersCapacity);
             for (var element in element.renters) {
               print(element.name);
               print(element.age);
@@ -143,13 +153,15 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
       }),
       rightButton: CancelButton(onPressed: () {
         ref.read(adNotifierProvider.notifier).getFilteredAds(
-                city: 'Torino',
-                // minRent: 400,
-                // maxRent: 600,
-                // requiredServices: <String> ["WiFI", "Washing machine"],
-                // minBathrooms: 2,
-                roommates: 3
-              );
+              city: 'Torino',
+              // minRent: 400,
+              // maxRent: 600,
+              // requiredServices: <String> ["WiFI", "Washing machine"],
+              // minBathrooms: 2,
+              // minBedrooms: 1,
+              minBeds: 3,
+              // roommates: 3,
+            );
 
         // ref.read(adNotifierProvider.notifier).getAdsForRandomCity();
 
@@ -197,7 +209,6 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
       onNextPressed: _gridItems.length < 6
           ? null
           : () {
-
               // ref.read(adNotifierProvider.notifier).updateAd(
               //     updatedAd: AdData(
               //       uid: "ymJfgzAodfgI82VIidEQ",
@@ -344,14 +355,14 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
                     "WiFi"
                   ],
                   facilityRenters: [
-                    HostFacilityDetailPageRenterBox(
-                      name: 'Francesco Dal Maso',
-                      contractDeadline: DateTime(2025, 1, 1),
-                    ),
-                    HostFacilityDetailPageRenterBox(
-                      name: 'Antonio Principe',
-                      contractDeadline: DateTime(2025, 3, 1),
-                    ),
+                    // HostFacilityDetailPageRenterBox(
+                    //   name: 'Francesco Dal Maso',
+                    //   contractDeadline: DateTime(2025, 1, 1),
+                    // ),
+                    // HostFacilityDetailPageRenterBox(
+                    //   name: 'Antonio Principe',
+                    //   contractDeadline: DateTime(2025, 3, 1),
+                    // ),
                   ],
                 )));
   }
