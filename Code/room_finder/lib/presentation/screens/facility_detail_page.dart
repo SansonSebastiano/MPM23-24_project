@@ -74,6 +74,18 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
 
     final servicesText = widget.facilityServices.join(' · ');
 
+    List<String> bedsText = <String>[];
+    int i = 0;
+    for (var room in widget.facilityRooms) {
+      if (room.runtimeType == Bedroom) {
+        for (var beds in (room as Bedroom).numBeds) {
+          bedsText.add(
+              "${AppLocalizations.of(context)!.lblBedroom(i + 1)}: ${AppLocalizations.of(context)!.lblBed(beds)}");
+          i++;
+        }
+      }
+    }
+
     final photoCarousel = widget.isStudent
         ? StudentPhotoCarousel(
             items: widget.facilityPhotos
@@ -150,16 +162,47 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                           SizedBox(
                             height: 100.h,
                             child: ListView.separated(
+                              padding: EdgeInsets.zero,
                               itemBuilder: (BuildContext context, int index) {
-                                // FIXME: the text format
                                 return RichText(
-                                    text: TextSpan(
-                                        text: widget.facilityRooms[index].runtimeType == Bedroom 
-                                        ? "${widget.facilityRooms[index].name}: ${widget.facilityRooms[index].quantity} \nBeds: ${(widget.facilityRooms[index] as Bedroom).numBeds}"
-                                        : "${widget.facilityRooms[index].name}: ${widget.facilityRooms[index].quantity}",
-                                    style: Theme.of(context).textTheme.bodyMedium
+                                  text: TextSpan(
+                                    text:
+                                        "- ${widget.facilityRooms[index].name}: ",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                    children: [
+                                      widget.facilityRooms[index].runtimeType ==
+                                              Bedroom
+                                          ? TextSpan(
+                                              text:
+                                                  "\n   - ${bedsText.getRange(0, bedsText.length).join('\n   - ')}")
+                                          : TextSpan(
+                                              text:
+                                                  "${widget.facilityRooms[index].quantity}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium)
+                                    ],
                                   ),
                                 );
+                                // RichText(
+                                //   text: TextSpan(
+                                //       text: widget.facilityRooms[index]
+                                //                   .runtimeType ==
+                                //               Bedroom
+                                //           ? "${widget.facilityRooms[index].name}: ${widget.facilityRooms[index].quantity} \nBeds: ${(widget.facilityRooms[index] as Bedroom).numBeds.reduce((value, element) => value + element)}"
+                                //           : "${widget.facilityRooms[index].name}: ${widget.facilityRooms[index].quantity}",
+                                //       style: Theme.of(context)
+                                //           .textTheme
+                                //           .bodyMedium!
+                                //           .copyWith(
+                                //             fontWeight: FontWeight.w400,
+                                //           )),
+                                // );
                               },
                               separatorBuilder:
                                   (BuildContext context, int index) {

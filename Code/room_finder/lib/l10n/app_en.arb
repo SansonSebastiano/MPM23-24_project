@@ -631,5 +631,25 @@
   "lblFailedPasswordUpdate": "Error on password update: try again",
   "@lblFailedPasswordUpdate": {
     "description": "label for error snackbar"
+  },
+  "lblBedroom": "Bedroom {number}",
+  "@lblBedroom": {
+    "description": "Label to print the number of bedroom in a facility",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "lblBed": "{number} bed(s)",
+  "@lblBed": {
+    "description": "Label to print the number of bedroom in a facility",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "1"
+      }
+    }
   }
 }
