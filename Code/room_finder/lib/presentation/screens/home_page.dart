@@ -65,9 +65,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
         isConnected = connectivityStatusProvider == NetworkStatus.on;
       });
 
-      ref
-          .read(adNotifierProvider.notifier)
-          .getAdsForRandomCity();
+      ref.read(adNotifierProvider.notifier).getAdsForRandomCity();
     });
   }
 
@@ -121,12 +119,13 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
         orElse: () => null,
         successfulSavedAdRead : (isAdSaved, index) {
           setState(() {
-            if(!oneTime[0] && index == 0) {
-              areAdsSaved[index] = isAdSaved;
-            }
-            else if(oneTime[0] && index != 0) {
-              areAdsSaved[index] = isAdSaved;
-            }
+            //bool isFirstAdSaved = areAdsSaved[0];
+
+            areAdsSaved[index] = isAdSaved;
+
+            //if(oneTime[0] && index == 0) {
+            //  areAdsSaved[index] = isFirstAdSaved;
+            //}
           });
         }
       );
