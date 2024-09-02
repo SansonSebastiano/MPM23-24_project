@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/chat_new_page.dart';
 import 'package:room_finder/presentation/screens/current_renters_page.dart';
 import 'package:room_finder/presentation/screens/login_page.dart';
+import 'package:room_finder/provider/user_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:room_finder/util/network_handler.dart';
 
@@ -29,6 +30,8 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
   final List<Renter> facilityRenters;
   // TODO: add list of roooms
   final List<Room> facilityRooms;
+  final String? adUid;
+  final String? studentUid;
 
   const FacilityDetailPage(
       {super.key,
@@ -43,26 +46,40 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
       required this.hostUrlImage,
       required this.facilityServices,
       required this.facilityRenters,
-      required this.facilityRooms});
+      required this.facilityRooms, 
+      this.adUid,
+      this.studentUid});
 
   @override
   ConsumerState<FacilityDetailPage> createState() => FacilityDetailPageState();
 }
 
 class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
-  late bool isSaved;
+  bool isSaved = false;
+  bool oneTime = false;
 
   @override
   void initState() {
     super.initState();
-    isSaved = false;
   }
 
-  void toggleSave() {
+  void toggleSave() async {
     if (widget.isLogged == false) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const LoginPage()));
-    } else {}
+    } else {
+      if(isSaved) {
+        await ref.read(userNotifierProvider.notifier).removeSavedAd(
+          adUid: widget.adUid!, 
+          userUid: widget.studentUid!
+        );
+      } else {
+        await ref.read(userNotifierProvider.notifier).saveAd(
+          adUid: widget.adUid!, 
+          userUid: widget.studentUid!
+        );
+      }
+    }
     setState(() {
       isSaved = !isSaved;
     });
@@ -70,6 +87,28 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(userNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        successfulSavedAdRead : (isAdSavedValue, index) {
+          setState(() {
+            isSaved = isAdSavedValue;
+          });
+        }
+      );
+    });
+
+    Future.delayed(const Duration(microseconds: 0), () async {
+      if(oneTime == false) {
+        await ref.read(userNotifierProvider.notifier).isAdSaved(
+          adUid: widget.adUid!,
+          userUid: widget.studentUid!,
+          index: 0
+        );
+        oneTime = true;
+      }
+    });
+
     final networkStatus = ref.watch(networkAwareProvider);
 
     final servicesText = widget.facilityServices.join(' · ');
