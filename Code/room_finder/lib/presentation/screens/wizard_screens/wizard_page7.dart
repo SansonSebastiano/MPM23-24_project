@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
@@ -13,6 +16,7 @@ import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
 import 'package:room_finder/style/color_palette.dart';
+import 'package:http/http.dart' as http;
 
 class WizardPage7 extends ConsumerStatefulWidget {
   final Address address;
@@ -23,6 +27,8 @@ class WizardPage7 extends ConsumerStatefulWidget {
   final int monthlyRent;
   final String name;
   final UserData hostUser;
+  final bool isEditingMode;
+  final AdData? adToEdit;
 
   const WizardPage7(
       {super.key,
@@ -33,7 +39,9 @@ class WizardPage7 extends ConsumerStatefulWidget {
       required this.services,
       required this.monthlyRent,
       required this.name,
-      required this.hostUser});
+      required this.hostUser,
+      required this.isEditingMode,
+      this.adToEdit});
 
   @override
   ConsumerState<WizardPage7> createState() => _WizardPage7State();
@@ -44,6 +52,7 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
   final picker = ImagePicker();
   late List<Widget> _gridItems;
   late List<File> _photos;
+  bool isOnLoad = true;
 
   @override
   void initState() {
@@ -73,6 +82,37 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
             });
       }),
     );
+
+    if (widget.isEditingMode) {
+      Future.delayed(const Duration(microseconds: 0), () async {
+        for (var element in widget.adToEdit!.photosURLs!) {
+          final File photo = await convertURLtoFile(element);
+          _gridItems.add(ImageCard(
+            image: photo,
+            photoNumber: _gridItems.length,
+          ));
+          _photos.add(photo);
+        }
+        setState(() {
+          isOnLoad = false;
+        });
+      });
+    }
+  }
+
+  Future<File> convertURLtoFile(String photoURL) async {
+    var rng = Random();
+    final http.Response responseData = await http.get(Uri.parse(photoURL));
+    final uint8List = responseData.bodyBytes;
+    var buffer = uint8List.buffer;
+    ByteData byteData = ByteData.view(buffer);
+    var tempDir = await getTemporaryDirectory();
+    final file = await File(
+            '${tempDir.path}${(rng.nextInt(100)).toString()}.jpg')
+        .writeAsBytes(
+            buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
   }
 
   // Getting image from [ImageSource source]
@@ -138,43 +178,50 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
       screenContent: Expanded(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10.h,
-              mainAxisSpacing: 10.w,
-            ),
-            itemCount: _gridItems.length,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return AddPhotoButton(onPressed: () {
-                  showImageSelectionOption(
-                      context: context,
-                      onGalleryPressed: () {
-                        // get image from gallery
-                        getImageFrom(ImageSource.gallery);
-                        // close the options modal
-                        Navigator.of(context).pop();
-                      },
-                      onCameraPressed: () {
-                        // get image from camera
-                        getImageFrom(ImageSource.camera);
-                        // close the options modal
-                        Navigator.of(context).pop();
+          child: widget.isEditingMode && isOnLoad
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10.h,
+                    mainAxisSpacing: 10.w,
+                  ),
+                  itemCount: _gridItems.length,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return AddPhotoButton(onPressed: () {
+                        showImageSelectionOption(
+                            context: context,
+                            onGalleryPressed: () {
+                              // get image from gallery
+                              getImageFrom(ImageSource.gallery);
+                              // close the options modal
+                              Navigator.of(context).pop();
+                            },
+                            onCameraPressed: () {
+                              // get image from camera
+                              getImageFrom(ImageSource.camera);
+                              // close the options modal
+                              Navigator.of(context).pop();
+                            });
                       });
-                });
-              } else {
-                return ImageCard(
-                    image: (_gridItems[index] as ImageCard).image,
-                    photoNumber: index,
-                    onRemovePressed: () {
-                      setState(() {
-                        _gridItems.removeAt(index);
-                      });
-                    });
-              }
-            },
-          ),
+                    } else {
+                      return ImageCard(
+                        image: (_gridItems[index] as ImageCard).image,
+                        photoNumber: index,
+                        onRemovePressed: () {
+                          setState(() {
+                            _gridItems.removeAt(index);
+                            // FIXME: check if the remove works fine
+                            _photos.removeAt(index-1);
+                          });
+                        },
+                      );
+                    }
+                  },
+                ),
         ),
       ),
     );
@@ -189,16 +236,28 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
                   isStudent: false,
                   isWizardPage: true,
                   facilityPhotos: _photos,
-                  facilityName: widget.name,
-                  facilityAddress: widget.address,
-                  facilityPrice: widget.monthlyRent,
-                  facilityHostName: widget.hostUser.name!,
-                  hostUrlImage: widget.hostUser.photoUrl!,
-                  facilityServices: widget.services,
-                  maxRenters: widget.rentersCapacity,
-                  facilityRenters: widget.renters,
-                  facilityRooms: widget.rooms,
-                  hostUid: widget.hostUser.uid,
+                  ad: AdData(
+                      uid: widget.isEditingMode
+                      ? widget.adToEdit!.uid!
+                      : '',
+                      hostUid: widget.hostUser.uid!,
+                      name: widget.name,
+                      address: widget.address,
+                      rooms: widget.rooms,
+                      rentersCapacity: widget.rentersCapacity,
+                      renters: widget.renters,
+                      services: widget.services,
+                      monthlyRent: widget.monthlyRent),
+                  // facilityName: widget.name,
+                  // facilityAddress: widget.address,
+                  // facilityPrice: widget.monthlyRent,
+                  // facilityHostName: widget.hostUser.name!,
+                  // facilityServices: widget.services,
+                  // facilityRentersCapacity: widget.rentersCapacity,
+                  // facilityRenters: widget.renters,
+                  // facilityRooms: widget.rooms,
+                  host: widget.hostUser,
+                  isEditingMode: widget.isEditingMode,
                 )));
   }
 

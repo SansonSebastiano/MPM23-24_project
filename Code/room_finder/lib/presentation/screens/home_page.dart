@@ -243,6 +243,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                                               adUid: randomCityAds[index].uid,
                                               studentUid:
                                                   widget.studentUser.uid,
+                                              isEditingMode: false,
                                             ),
                                           ),
                                         ),
@@ -410,6 +411,7 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                                               //     hostAds[index].rooms,
                                               adUid: hostAds[index].uid,
                                               host: widget.hostUser,
+                                              isEditingMode: false,
                                             ),
                                           ),
                                         ),

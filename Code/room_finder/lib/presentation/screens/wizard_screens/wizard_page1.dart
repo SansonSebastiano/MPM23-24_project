@@ -11,8 +11,14 @@ import 'package:room_finder/presentation/screens/wizard_screens/wizard_page2.dar
 
 class WizardPage1 extends StatefulWidget {
   final UserData hostUser;
+  final bool isEditingMode;
+  final AdData? adToEdit;
 
-  const WizardPage1({super.key, required this.hostUser});
+  const WizardPage1(
+      {super.key,
+      required this.hostUser,
+      required this.isEditingMode,
+      this.adToEdit});
 
   @override
   State<WizardPage1> createState() => _WizardPage1State();
@@ -28,8 +34,19 @@ class _WizardPage1State extends State<WizardPage1> {
   @override
   void initState() {
     super.initState();
-    _cityController = TextEditingController();
-    _streetController = TextEditingController();
+    if (widget.isEditingMode) {
+      _cityController =
+          TextEditingController(text: widget.adToEdit!.address.city);
+      _streetController =
+          TextEditingController(text: widget.adToEdit!.address.street);
+      setState(() {
+        _isCityValid = true;
+        _isStreetValid = true;
+      });
+    } else {
+      _cityController = TextEditingController();
+      _streetController = TextEditingController();
+    }
   }
 
   @override
@@ -95,6 +112,8 @@ class _WizardPage1State extends State<WizardPage1> {
                               street: _streetController.text,
                               city: _cityController.text),
                           hostUser: widget.hostUser,
+                          isEditingMode: widget.isEditingMode,
+                          adToEdit: widget.adToEdit,
                         )),
               );
             }

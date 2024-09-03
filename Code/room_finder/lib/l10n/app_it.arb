@@ -154,5 +154,6 @@
     "lblBed": "{number} letto(i)",
     "lblAskNewAdUpload": "Sei sicuro di aggiungere questo nuovo annuncio?",
     "lblSuccessfulAdUpload": "Nuovo annuncio aggiunto",
-    "lblSuccessfulAdDeleted": "Annuncio rimosso"
+    "lblSuccessfulAdDeleted": "Annuncio rimosso",
+    "lblSuccessfulAdUpdated": "Annuncio aggiornato"
 }

@@ -29,17 +29,10 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
   final bool isWizardPage;
   final AdData ad;
   final List<File>? facilityPhotos;
-  // final List<String>? facilityPhotosURL;
-  // final String facilityName;
-  // final Address facilityAddress;
-  // final int facilityPrice;
-  // final List<String> facilityServices;
-  // final int facilityRentersCapacity;
-  // final List<Renter> facilityRenters;
-  // final List<Room> facilityRooms;
   final UserData? host;
   final String? adUid;
   final String? studentUid;
+  final bool isEditingMode;
 
   const FacilityDetailPage(
       {super.key,
@@ -48,17 +41,10 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
       required this.isWizardPage,
       required this.ad,
       this.facilityPhotos,
-      // this.facilityPhotosURL,
-      // required this.facilityName,
-      // required this.facilityAddress,
-      // required this.facilityPrice,
-      // required this.facilityServices,
-      // required this.facilityRentersCapacity,
-      // required this.facilityRenters,
-      // required this.facilityRooms,
       this.host,
       this.adUid,
-      this.studentUid});
+      this.studentUid,
+      required this.isEditingMode});
 
   @override
   ConsumerState<FacilityDetailPage> createState() => FacilityDetailPageState();
@@ -189,6 +175,17 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
         failedDeleteAd: () {
           // TODO:
         },
+        successfulUpdateAd: () {
+          showSuccessSnackBar(
+              context, AppLocalizations.of(context)!.lblSuccessfulAdUpdated);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+          );
+        },
+        failedUpdateAd: () {
+          // TODO: 
+        },
       );
     });
 
@@ -208,6 +205,26 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                 services: widget.ad.services,
                 monthlyRent: widget.ad.monthlyRent),
             photosPaths: widget.facilityPhotos!);
+      }
+    }
+
+    Future<void> updateAd() async {
+      if (networkStatus == NetworkStatus.off) {
+        showErrorSnackBar(
+            context, AppLocalizations.of(context)!.lblConnectionErrorDesc);
+      } else {
+        await ref.read(adNotifierProvider.notifier).updateAd(
+            updatedAd: AdData(
+              uid: widget.ad.uid,
+              hostUid: widget.host!.uid!,
+              name: widget.ad.name,
+              address: widget.ad.address,
+              rooms: widget.ad.rooms,
+              rentersCapacity: widget.ad.rentersCapacity,
+              renters: widget.ad.renters,
+              services: widget.ad.services,
+              monthlyRent: widget.ad.monthlyRent),
+            newPhotosPaths: widget.facilityPhotos!);
       }
     }
 
@@ -278,8 +295,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                 return RichText(
                                   text: TextSpan(
                                     // TODO: check if some rooms are 0
-                                    text:
-                                        "- ${widget.ad.rooms[index].name}: ",
+                                    text: "- ${widget.ad.rooms[index].name}: ",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
@@ -336,10 +352,15 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   CurrentRentersPage(
-                                                    facilityName: widget.ad.name,
-                                                    facilityAddress: widget.ad.address,
-                                                    facilityMaximumRentersCapacity: widget.ad.rentersCapacity,
-                                                    facilityRenters: widget.ad.renters,
+                                                    facilityName:
+                                                        widget.ad.name,
+                                                    facilityAddress:
+                                                        widget.ad.address,
+                                                    facilityMaximumRentersCapacity:
+                                                        widget
+                                                            .ad.rentersCapacity,
+                                                    facilityRenters:
+                                                        widget.ad.renters,
                                                   )),
                                         );
                                       } else {
@@ -374,11 +395,9 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return HostFacilityDetailPageRenterBox(
-                                          name: widget
-                                              .ad.renters[index].name,
-                                          contractDeadline: widget
-                                              .ad.renters[index]
-                                              .contractDeadline,
+                                          name: widget.ad.renters[index].name,
+                                          contractDeadline: widget.ad
+                                              .renters[index].contractDeadline,
                                         );
                                       },
                                       separatorBuilder:
@@ -428,7 +447,9 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                             child: RectangleButton(
                                 label: AppLocalizations.of(context)!.btnConfirm,
                                 onPressed: () async {
-                                  await uploadNewAd();
+                                  widget.isEditingMode 
+                                  ? await updateAd()
+                                  : await uploadNewAd();
                                 }),
                           )
                         : const SizedBox.shrink(),

@@ -14,8 +14,15 @@ import 'package:room_finder/presentation/screens/wizard_screens/wizard_page3.dar
 class WizardPage2 extends StatefulWidget {
   final Address address;
   final UserData hostUser;
+  final bool isEditingMode;
+  final AdData? adToEdit;
 
-  const WizardPage2({super.key, required this.address, required this.hostUser});
+  const WizardPage2(
+      {super.key,
+      required this.address,
+      required this.hostUser,
+      required this.isEditingMode,
+      this.adToEdit});
 
   @override
   State<WizardPage2> createState() => _WizardPage2State();
@@ -30,23 +37,29 @@ class _WizardPage2State extends State<WizardPage2> {
   void initState() {
     super.initState();
     _controller = TextEditingController();
-    // _rooms = <RoomOption>[];
-    _rooms = <Room>[];
+    if (!widget.isEditingMode) {
+      _rooms = <Room>[];
+    } else {
+      _rooms = widget.adToEdit!.rooms;
+      setState(() {});
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _rooms = <Room>[
-      Room(name: AppLocalizations.of(context)!.lblBathrooms, quantity: 0),
-      Room(name: AppLocalizations.of(context)!.lblKitchens, quantity: 0),
-      Room(name: AppLocalizations.of(context)!.lblLivingRoom, quantity: 0),
-      Bedroom(
-          name: AppLocalizations.of(context)!.lblBedrooms,
-          quantity: 0,
-          numBeds: []),
-    ];
+    if (!widget.isEditingMode) {
+      _rooms = <Room>[
+        Room(name: AppLocalizations.of(context)!.lblBathrooms, quantity: 0),
+        Room(name: AppLocalizations.of(context)!.lblKitchens, quantity: 0),
+        Room(name: AppLocalizations.of(context)!.lblLivingRoom, quantity: 0),
+        Bedroom(
+            name: AppLocalizations.of(context)!.lblBedrooms,
+            quantity: 0,
+            numBeds: []),
+      ];
+    }
   }
 
   @override
@@ -57,103 +70,117 @@ class _WizardPage2State extends State<WizardPage2> {
 
   @override
   Widget build(BuildContext context) {
-     return WizardTemplateScreen(
-        leftButton: DarkBackButton(onPressed: () {
-          Navigator.of(context).pop();
-        }),
-        rightButton: CancelButton(onPressed: () {
-          showOptionsDialog(
-              context: context,
-              androidDialog: ActionsAndroidDialog(
-                  title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-                  content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-                  context: context,
-                  onOk: () {
-                    // TODO: Replace with the real data
-                    backToHostHomePage(context);
-                  },
-                  onCancel: () {
-                    Navigator.of(context).pop();
-                  }),
-              iosDialog: ActionsIosDialog(
-                  title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-                  content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-                  context: context,
-                  onOk: () {
-                    // TODO: Replace with the real data
-                    backToHostHomePage(context);
-                  },
-                  onCancel: () {
-                    Navigator.of(context).pop();
-                  }));
-        }),
-        rightButtonVisibility: true,
-        screenTitle: AppLocalizations.of(context)!.lblSetRooms,
-        dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard2,
-        onOkDialog: () => Navigator.of(context).pop(),
-        currentStep: 2,
-        btnNextLabel: AppLocalizations.of(context)!.btnNext,
-        onNextPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => WizardPage3(address: widget.address, rooms: _rooms, hostUser:  widget.hostUser,)),
-          );
-        },
-        screenContent: Expanded(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
-        child: Column(
-          children: <Widget>[
-            AddOn(
-                label: AppLocalizations.of(context)!.lblAddRooms,
-                onPressed: () {
-                  _addRoom(context);
+    return WizardTemplateScreen(
+      leftButton: DarkBackButton(onPressed: () {
+        Navigator.of(context).pop();
+      }),
+      rightButton: CancelButton(onPressed: () {
+        showOptionsDialog(
+            context: context,
+            androidDialog: ActionsAndroidDialog(
+                title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                context: context,
+                onOk: () {
+                  // TODO: Replace with the real data
+                  backToHostHomePage(context);
+                },
+                onCancel: () {
+                  Navigator.of(context).pop();
                 }),
-            SizedBox(height: 20.h),
-            Expanded(
-              child: ListView.separated(
-                  itemCount: _rooms.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(height: 20.h); // Add padding between items
-                  },
-                  itemBuilder: (context, index) {
-                    return RoomOption(
-                      roomName: _rooms[index].name,
-                      roomCounter: _rooms[index].quantity,
-                      onRoomIncrement: () => setState(() {
-                        _rooms[index].quantity++;
-                        if (_rooms[index].runtimeType == Bedroom) {
-                          (_rooms[index] as Bedroom).numBeds.add(0);
-                        }
-                      }),
-                      onRoomDecrement: () {
-                        if (_rooms[index].quantity > 0) {
-                          setState(() {
-                            _rooms[index].quantity--;
-                          });
-                        }
-                      },
-                      bedCounter: _rooms[index].runtimeType == Bedroom ? (_rooms[index] as Bedroom).numBeds : [],
-                      onBedDecrement: (bedIndex) {
-                        if (_rooms[index].runtimeType == Bedroom && (_rooms[index] as Bedroom).numBeds[bedIndex] > 0) {
-                          setState(() {
-                            _rooms[index].runtimeType == Bedroom? (_rooms[index] as Bedroom).numBeds[bedIndex]-- : null;
-                          });
-                        }
-                      },
-                      onBedIncrement: (bedIndex) => setState(() {
-                        (_rooms[index] as Bedroom).numBeds[bedIndex]++;
-                      }),
-                    );
+            iosDialog: ActionsIosDialog(
+                title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                context: context,
+                onOk: () {
+                  // TODO: Replace with the real data
+                  backToHostHomePage(context);
+                },
+                onCancel: () {
+                  Navigator.of(context).pop();
+                }));
+      }),
+      rightButtonVisibility: true,
+      screenTitle: AppLocalizations.of(context)!.lblSetRooms,
+      dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard2,
+      onOkDialog: () => Navigator.of(context).pop(),
+      currentStep: 2,
+      btnNextLabel: AppLocalizations.of(context)!.btnNext,
+      onNextPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => WizardPage3(
+                    address: widget.address,
+                    rooms: _rooms,
+                    hostUser: widget.hostUser,
+                    isEditingMode: widget.isEditingMode,
+                    adToEdit: widget.adToEdit,
+                  )),
+        );
+      },
+      screenContent: Expanded(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
+          child: Column(
+            children: <Widget>[
+              AddOn(
+                  label: AppLocalizations.of(context)!.lblAddRooms,
+                  onPressed: () {
+                    _addRoom(context);
                   }),
-            ),
-          ],
+              SizedBox(height: 20.h),
+              Expanded(
+                child: ListView.separated(
+                    itemCount: _rooms.length,
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                          height: 20.h); // Add padding between items
+                    },
+                    itemBuilder: (context, index) {
+                      return RoomOption(
+                        roomName: _rooms[index].name,
+                        roomCounter: _rooms[index].quantity,
+                        onRoomIncrement: () => setState(() {
+                          _rooms[index].quantity++;
+                          if (_rooms[index].runtimeType == Bedroom) {
+                            (_rooms[index] as Bedroom).numBeds.add(0);
+                          }
+                        }),
+                        onRoomDecrement: () {
+                          if (_rooms[index].quantity > 0) {
+                            setState(() {
+                              _rooms[index].quantity--;
+                            });
+                          }
+                        },
+                        bedCounter: _rooms[index].runtimeType == Bedroom
+                            ? (_rooms[index] as Bedroom).numBeds
+                            : [],
+                        onBedDecrement: (bedIndex) {
+                          if (_rooms[index].runtimeType == Bedroom &&
+                              (_rooms[index] as Bedroom).numBeds[bedIndex] >
+                                  0) {
+                            setState(() {
+                              _rooms[index].runtimeType == Bedroom
+                                  ? (_rooms[index] as Bedroom)
+                                      .numBeds[bedIndex]--
+                                  : null;
+                            });
+                          }
+                        },
+                        onBedIncrement: (bedIndex) => setState(() {
+                          (_rooms[index] as Bedroom).numBeds[bedIndex]++;
+                        }),
+                      );
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-      );
-    }
-
+    );
+  }
 
   void _addRoom(BuildContext context) {
     return showOptionsDialog(

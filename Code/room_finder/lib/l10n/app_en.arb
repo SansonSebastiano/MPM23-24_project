@@ -663,5 +663,9 @@
   "lblSuccessfulAdDeleted": "Ad deleted",
   "@lblSuccessfulAdDeleted": {
     "description": "label for success snackbar"
+  },
+  "lblSuccessfulAdUpdated": "Ad updated",
+  "@lblSuccessfulAdUpdated": {
+    "description": "label for success snackbar"
   }
 }

@@ -17,6 +17,8 @@ class WizardPage4 extends StatefulWidget {
   final int rentersCapacity;
   final List<Renter> renters;
   final UserData hostUser;
+  final bool isEditingMode;
+  final AdData? adToEdit;
 
   const WizardPage4(
       {super.key,
@@ -24,7 +26,9 @@ class WizardPage4 extends StatefulWidget {
       required this.rooms,
       required this.rentersCapacity,
       required this.renters,
-      required this.hostUser});
+      required this.hostUser,
+      required this.isEditingMode,
+      this.adToEdit});
 
   @override
   State<WizardPage4> createState() => _WizardPage4State();
@@ -38,22 +42,30 @@ class _WizardPage4State extends State<WizardPage4> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
-    _amenities = <AmenitiesOption>[];
-    _amenitiesSwitches = {};
+    if (widget.isEditingMode) {
+      _amenitiesSwitches = {
+        for (var item in widget.adToEdit!.services) item: true
+      };
+    } else {
+      _controller = TextEditingController();
+      _amenities = <AmenitiesOption>[];
+      _amenitiesSwitches = {};
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _amenitiesSwitches = {
-      AppLocalizations.of(context)!.lblWiFi: false,
-      AppLocalizations.of(context)!.lblDishwasher: false,
-      AppLocalizations.of(context)!.lblWashingMachine: false,
-      AppLocalizations.of(context)!.lblDedicatedParking: false,
-      AppLocalizations.of(context)!.lblAirConditioning: false,
-    };
+    if (!widget.isEditingMode) {
+      _amenitiesSwitches = {
+        AppLocalizations.of(context)!.lblWiFi: false,
+        AppLocalizations.of(context)!.lblDishwasher: false,
+        AppLocalizations.of(context)!.lblWashingMachine: false,
+        AppLocalizations.of(context)!.lblDedicatedParking: false,
+        AppLocalizations.of(context)!.lblAirConditioning: false,
+      }; 
+    }
 
     _amenities = _amenitiesSwitches.entries
         .map((entry) => AmenitiesOption(
@@ -125,14 +137,17 @@ class _WizardPage4State extends State<WizardPage4> {
 
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WizardPage5(
-                  address: widget.address,
-                  rooms: widget.rooms,
-                  rentersCapacity: widget.rentersCapacity,
-                  renters: widget.renters,
-                  services: services,
-                  hostUser: widget.hostUser,
-                )),
+                MaterialPageRoute(
+                    builder: (context) => WizardPage5(
+                          address: widget.address,
+                          rooms: widget.rooms,
+                          rentersCapacity: widget.rentersCapacity,
+                          renters: widget.renters,
+                          services: services,
+                          hostUser: widget.hostUser,
+                          isEditingMode: widget.isEditingMode,
+                          adToEdit: widget.adToEdit,
+                        )),
               );
             }
           : null,

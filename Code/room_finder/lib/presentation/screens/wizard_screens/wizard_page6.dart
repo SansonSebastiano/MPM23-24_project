@@ -16,17 +16,20 @@ class WizardPage6 extends StatefulWidget {
   final List<String> services;
   final int monthlyRent;
   final UserData hostUser;
+  final bool isEditingMode;
+  final AdData? adToEdit;
 
-  const WizardPage6({
-    super.key,
-    required this.address,
-    required this.rooms,
-    required this.rentersCapacity,
-    required this.renters,
-    required this.services,
-    required this.monthlyRent,
-    required this.hostUser
-  });
+  const WizardPage6(
+      {super.key,
+      required this.address,
+      required this.rooms,
+      required this.rentersCapacity,
+      required this.renters,
+      required this.services,
+      required this.monthlyRent,
+      required this.hostUser,
+      required this.isEditingMode,
+      this.adToEdit});
 
   @override
   State<WizardPage6> createState() => _WizardPage6State();
@@ -38,7 +41,11 @@ class _WizardPage6State extends State<WizardPage6> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    if (widget.isEditingMode) {
+      _controller = TextEditingController(text: widget.adToEdit!.name);
+    } else {
+      _controller = TextEditingController();
+    }
   }
 
   @override
@@ -96,15 +103,17 @@ class _WizardPage6State extends State<WizardPage6> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => WizardPage7(
-                          address: widget.address,
-                          rooms: widget.rooms,
-                          rentersCapacity: widget.rentersCapacity,
-                          renters: widget.renters,
-                          services: widget.services,
-                          monthlyRent: widget.monthlyRent,
-                          name: _controller.text,
-                          hostUser: widget.hostUser,
-                        )),
+                              address: widget.address,
+                              rooms: widget.rooms,
+                              rentersCapacity: widget.rentersCapacity,
+                              renters: widget.renters,
+                              services: widget.services,
+                              monthlyRent: widget.monthlyRent,
+                              name: _controller.text,
+                              hostUser: widget.hostUser,
+                              isEditingMode: widget.isEditingMode,
+                              adToEdit: widget.adToEdit,
+                            )),
                   );
                 },
           onOkDialog: () => Navigator.of(context).pop(),
