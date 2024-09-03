@@ -11,7 +11,11 @@ import 'package:room_finder/presentation/screens/facility_detail_page.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class SavedAdsPage extends ConsumerWidget {
-  const SavedAdsPage({super.key});
+  final List<String> savedAds;
+  
+  const SavedAdsPage({
+    super.key,
+    required this.savedAds});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

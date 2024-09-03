@@ -124,7 +124,8 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
               name: userAuthenticated!.displayName,
               email: userAuthenticated!.email,
               photoUrl: userAuthenticated!.photoURL,
-              isHost: userData.isHost);
+              isHost: userData.isHost,
+              savedAds: userData.savedAds);
           // setting the user role to display the correct screens
           setState(() {
             isHost = userData.isHost;
@@ -166,7 +167,7 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
                 studentUser: user,)),
               ),
               bodyTemplate(
-                  body: isLogged ? const SafeArea(child: SavedAdsPage()) : const LoginPage()),
+                  body: isLogged ? SafeArea(child: SavedAdsPage(savedAds: user.savedAds!,)) : const LoginPage()),
               bodyTemplate(
                   body: isLogged ? const SafeArea(child: StudentChatPage()) : const LoginPage()),
               bodyTemplate(
