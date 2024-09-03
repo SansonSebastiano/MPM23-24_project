@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
-import 'package:room_finder/presentation/screens/wizard_screens/wizard_page1.dart';
 
 /// [PhotoCarousel] is a widget that displays a carousel of images.
 /// It is used in the app to display the images of a room or apartment.

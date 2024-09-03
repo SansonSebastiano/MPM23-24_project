@@ -1,13 +1,11 @@
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/main.dart';
 import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/presentation/components/account_photo.dart';
-import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/photo_carousel.dart';
@@ -18,6 +16,7 @@ import 'package:room_finder/presentation/screens/chat_new_page.dart';
 import 'package:room_finder/presentation/screens/current_renters_page.dart';
 import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/provider/ad_provider.dart';
+import 'package:room_finder/provider/user_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:room_finder/util/network_handler.dart';
 
@@ -39,6 +38,7 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
   final List<Renter> facilityRenters;
   final List<Room> facilityRooms;
   final String? adUid;
+  final String? studentUid;
 
   const FacilityDetailPage(
       {super.key,
@@ -57,26 +57,39 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
       required this.facilityRenters,
       required this.facilityRooms,
       this.hostUid,
-      this.adUid});
+      this.adUid,
+      this.studentUid});
 
   @override
   ConsumerState<FacilityDetailPage> createState() => FacilityDetailPageState();
 }
 
 class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
-  late bool isSaved;
+  bool isSaved = false;
+  bool oneTime = false;
 
   @override
   void initState() {
     super.initState();
-    isSaved = false;
   }
 
-  void toggleSave() {
+  void toggleSave() async {
     if (widget.isLogged == false) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const LoginPage()));
-    } else {}
+    } else {
+      if(isSaved) {
+        await ref.read(userNotifierProvider.notifier).removeSavedAd(
+          adUid: widget.adUid!, 
+          userUid: widget.studentUid!
+        );
+      } else {
+        await ref.read(userNotifierProvider.notifier).saveAd(
+          adUid: widget.adUid!, 
+          userUid: widget.studentUid!
+        );
+      }
+    }
     setState(() {
       isSaved = !isSaved;
     });
@@ -84,6 +97,28 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(userNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        successfulSavedAdRead : (isAdSavedValue, index) {
+          setState(() {
+            isSaved = isAdSavedValue;
+          });
+        }
+      );
+    });
+
+    Future.delayed(const Duration(microseconds: 0), () async {
+      if(oneTime == false) {
+        await ref.read(userNotifierProvider.notifier).isAdSaved(
+          adUid: widget.adUid!,
+          userUid: widget.studentUid!,
+          index: 0
+        );
+        oneTime = true;
+      }
+    });
+
     final networkStatus = ref.watch(networkAwareProvider);
 
     final servicesText = widget.facilityServices.join(' · ');
@@ -131,6 +166,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
       next.maybeWhen(
         orElse: () => null,
         successfulAddNewAd: () {
+          // FIXME: too slow
           showSuccessSnackBar(
               context, AppLocalizations.of(context)!.lblSuccessfulAdUpload);
           Navigator.push(

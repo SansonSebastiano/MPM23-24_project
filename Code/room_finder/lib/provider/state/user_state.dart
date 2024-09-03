@@ -25,7 +25,7 @@ class UserState with _$UserState {
 
   const factory UserState.failedSavedAdRead() = _FailedSavedAdRead;
 
-  const factory UserState.successfulSavedAdRead() = _SuccessfulSavedAdRead;
+  const factory UserState.successfulSavedAdRead({required bool isAdSaved, required int index}) = _SuccessfulSavedAdRead;
 
   const factory UserState.failedMultipleReads() = _FailedMultipleReads;
 

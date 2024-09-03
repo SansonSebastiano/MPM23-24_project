@@ -5,7 +5,6 @@ import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
-import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';

@@ -13,6 +13,7 @@ import 'package:room_finder/presentation/screens/facility_detail_page.dart';
 import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/presentation/screens/wizard_screens/wizard_page1.dart';
 import 'package:room_finder/provider/ad_provider.dart';
+import 'package:room_finder/provider/user_provider.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class StudentHomePage extends StatelessWidget {
@@ -28,15 +29,16 @@ class StudentHomePage extends StatelessWidget {
       screenLabel: isLogged
           ? AppLocalizations.of(context)!.lblWelcomeUser(studentUser.name!)
           : AppLocalizations.of(context)!.lblWelcomeNotLogged,
-      screenContent: _StudentHomePageBody(isLogged: isLogged),
+      screenContent: _StudentHomePageBody(isLogged: isLogged, studentUser: studentUser),
     );
   }
 }
 
 class _StudentHomePageBody extends ConsumerStatefulWidget {
   final bool isLogged;
+  final UserData studentUser;
 
-  const _StudentHomePageBody({required this.isLogged});
+  const _StudentHomePageBody({required this.isLogged, required this.studentUser});
 
   @override
   ConsumerState<_StudentHomePageBody> createState() =>
@@ -44,85 +46,92 @@ class _StudentHomePageBody extends ConsumerStatefulWidget {
 }
 
 class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
-  late List<bool> isSaved;
-  late List<AdsBox> adsList;
+  bool isConnected = false;
+  List<AdData> randomCityAds = [];
+  bool isOnLoad = true;
+  late List<bool> areAdsSaved;
+  late List<bool> oneTime;
 
   @override
   void initState() {
     super.initState();
-    isSaved = List.generate(4, (index) => false);
-    adsList = List<AdsBox>.generate(
-        4,
-        (index) => AdsBox(
-            imageUrl:
-                "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-            city: "Padova",
-            street: "Via Roma 12",
-            price: 300,
-            bookmarkButton: BookmarkButton(
-              size: 50.0,
-              isSaved: isSaved[index],
-              onPressed: () => toggleSave(index),
-            ),
-            onPressed: () => {
-                  // TODO: replace with real data
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FacilityDetailPage(
-                        isLogged: widget.isLogged,
-                        isStudent: true,
-                        isWizardPage: false,
-                        facilityPhotosURL: const [
-                          "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                          "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-                          "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-                        ],
-                        facilityName: "Casa Dolce Casa",
-                        facilityAddress: Address(street: "street", city: "city"),
-                        facilityPrice: 300,
-                        facilityHostName: "Mario Rossi",
-                        hostUrlImage:
-                            "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-                        facilityServices: const [
-                          "2 bedrooms",
-                          "3 beds",
-                          "1 bathroom",
-                          "WiFi",
-                          "Dedicated parking",
-                          "Air condition"
-                        ],
-                        maxRenters: 10,
-                        facilityRenters: [
-                          // HostFacilityDetailPageRenterBox(
-                          //   name: 'Francesco Dal Maso',
-                          //   contractDeadline: DateTime(2025, 1, 1),
-                          // ),
-                          // HostFacilityDetailPageRenterBox(
-                          //   name: 'Antonio Principe',
-                          //   contractDeadline: DateTime(2025, 3, 1),
-                          // ),
-                        ],
-                        facilityRooms: [],
-                      ),
-                    ),
-                  ),
-                }));
-  }
+    areAdsSaved = <bool>[];
+    oneTime = <bool>[];
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      var connectivityStatusProvider = ref.watch(networkAwareProvider);
+      setState(() {
+        isConnected = connectivityStatusProvider == NetworkStatus.on;
+      });
 
-  void toggleSave(int index) {
-    if (widget.isLogged == false) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()));
-    } else {}
-    setState(() {
-      isSaved[index] = !isSaved[index];
+      ref.read(adNotifierProvider.notifier).getAdsForRandomCity();
     });
   }
 
+  void toggleSave(int index, String adUid, String userUid) async {
+    if (widget.isLogged == false) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
+    } else {
+      if(areAdsSaved[index]) {
+        await ref.read(userNotifierProvider.notifier).removeSavedAd(
+          adUid: adUid, 
+          userUid: userUid
+        );
+      } else {
+        await ref.read(userNotifierProvider.notifier).saveAd(
+          adUid: adUid, 
+          userUid: userUid
+        );
+      }
+    }
+
+    setState(() {
+      areAdsSaved[index] = !areAdsSaved[index];
+    });
+  } 
+
   @override
   Widget build(BuildContext context) {
-    var connectivityStatusProvider = ref.watch(networkAwareProvider);
+    ref.listen(adNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        multipleFailedReads: () => print("Fail on reading multiple ads"),
+        multipleSuccessfulReads: (adsData) {
+          randomCityAds = adsData;
+
+          // initializing isSavedAd, oneTime lists
+          for (var element in randomCityAds) {
+            areAdsSaved.add(false);
+            oneTime.add(false);
+          }
+
+          setState(() {
+            isOnLoad = false;
+          });
+        },
+      );
+    });
+
+    ref.listen(userNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        successfulSavedAdRead : (isAdSaved, index) {
+          setState(() {
+            //bool isFirstAdSaved = areAdsSaved[0];
+
+            areAdsSaved[index] = isAdSaved;
+
+            //if(oneTime[0] && index == 0) {
+            //  areAdsSaved[index] = isFirstAdSaved;
+            //}
+          });
+        }
+      );
+    });
+
+    if(ref.read(networkAwareProvider) == NetworkStatus.off){
+      isOnLoad = false;
+    }
 
     return Expanded(
       child: Column(
@@ -151,82 +160,74 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
               ],
             ),
           ),
-          connectivityStatusProvider == NetworkStatus.off
+
+          isOnLoad 
+          ? const Expanded(child: Center(child: CircularProgressIndicator(),)) 
+          : ref.read(networkAwareProvider) == NetworkStatus.off
               ? Expanded(
                   child: Center(
-                    child: NoInternetErrorMessage(
-                      context: context,
-                    ),
+                    child: NoInternetErrorMessage(context: context),
                   ),
                 )
+              : randomCityAds.isEmpty 
+              ? Expanded(child: Center(child: NoDataErrorMessage(context: context,),))
               : Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    itemCount: adsList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return AdsBox(
-                          imageUrl:
-                              "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                          city: "Padova",
-                          street: "Via Roma 12",
-                          price: 300,
-                          bookmarkButton: BookmarkButton(
-                            size: 50.0,
-                            isSaved: isSaved[index],
-                            onPressed: () => toggleSave(index),
-                          ),
-                          onPressed: () => {
-                                // TODO: replace with real data
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => FacilityDetailPage(
-                                      isLogged: widget.isLogged,
-                                      isStudent: true,
-                                      isWizardPage: false,
-                                      facilityPhotosURL: const [
-                                        "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                                        "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
-                                        "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
-                                      ],
-                                      facilityName: "Casa Dolce Casa",
-                                      facilityAddress: Address(street: "street", city: "city"),
-                                      facilityPrice: 300,
-                                      facilityHostName: "Mario Rossi",
-                                      hostUrlImage:
-                                          "https://cdn.create.vista.com/api/media/medium/319362956/stock-photo-man-pointing-showing-copy-space-isolated-on-white-background-casual-handsome-caucasian-young-man?token=",
-                                      facilityServices: const [
-                                        "2 bedrooms",
-                                        "3 beds",
-                                        "1 bathroom",
-                                        "WiFi",
-                                        "Dedicated parking",
-                                        "Air condition"
-                                      ],
-                                      maxRenters: 10,
-                                      facilityRenters: [
-                                        // HostFacilityDetailPageRenterBox(
-                                        //   name: 'Francesco Dal Maso',
-                                        //   contractDeadline:
-                                        //       DateTime(2025, 1, 1),
-                                        // ),
-                                        // HostFacilityDetailPageRenterBox(
-                                        //   name: 'Antonio Principe',
-                                        //   contractDeadline:
-                                        //       DateTime(2025, 3, 1),
-                                        // ),
-                                      ],
-                                      facilityRooms: [],
-                                    ),
+                child: ListView.separated(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  itemCount: randomCityAds.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Future.delayed(const Duration(microseconds: 0), () async {
+                      if(oneTime[index] == false) {
+                        await ref.read(userNotifierProvider.notifier).isAdSaved(
+                          adUid: randomCityAds[index].uid!,
+                          userUid: widget.studentUser.uid!,
+                          index: index
+                        );
+                        oneTime[index] = true;
+                      }
+                    });
+
+                    return AdsBox(
+                        imageUrl:
+                            randomCityAds[index].photosURLs!.first,
+                        city: randomCityAds[index].address.city,
+                        street: randomCityAds[index].address.street,
+                        price: randomCityAds[index].monthlyRent,
+                        bookmarkButton: BookmarkButton(
+                          size: 50.0,
+                          isSaved: areAdsSaved[index], 
+                          onPressed: () => toggleSave(index, randomCityAds[index].uid!, widget.studentUser.uid!),
+                        ),
+                        onPressed: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FacilityDetailPage(
+                                    isLogged: widget.isLogged,
+                                    isStudent: true,
+                                    isWizardPage: false,
+                                    facilityPhotosURL: randomCityAds[index].photosURLs!,
+                                    facilityName: randomCityAds[index].name,
+                                    facilityAddress: randomCityAds[index].address,
+                                    facilityPrice: randomCityAds[index].monthlyRent,
+                                    facilityHostName: "DA IMPLEMENTARE", // TODO
+                                    hostUrlImage: "DA IMPLEMENTARE", // TODO
+                                    facilityServices: randomCityAds[index].services,
+                                    facilityRenters: randomCityAds[index].renters,
+                                    facilityRooms: randomCityAds[index].rooms,
+                                    adUid: randomCityAds[index].uid,
+                                    studentUid: widget.studentUser.uid,
+                                    maxRenters: randomCityAds[index].rentersCapacity,
                                   ),
                                 ),
-                              });
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(height: 20.h);
-                    },
-                  ),
+                              ),
+                            });
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(height: 20.h);
+                  },
                 ),
+              ),
         ],
       ),
     );
