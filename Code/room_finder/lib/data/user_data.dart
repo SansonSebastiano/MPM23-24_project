@@ -27,26 +27,16 @@ class UserDataSource {
 
   UserDataSource(this._ref, this._userCollection, this._usersRef);
 
-  /// The method [getUserProfilePhoto] returns the download link of the user's profile photo.
-  /// - [userUid], the unique identifier of the user.
-  Future<Either<String, String>> getUserProfilePhoto({required String userUid}) async {
-    try {
-      final photoRef = _usersRef.child("$userUid.jpg");
-      final downloadUrl = await photoRef.getDownloadURL();
-      return right(downloadUrl);
-    } on FirebaseException catch (e) {
-      return left(e.message ?? "Failed to get the user profile photo");
-    }
-  }
-
   /// The method [getUser] returns an individual user passing as parameter its unique identifier [userUid]
   Future<Either<String, UserData>> getUser({required String userUid}) async {
     try {
       final docSnap = await _userCollection.doc(userUid).get();
       
+      final savedAds = List<String>.from(docSnap[_savedAdsField] ?? []);
+
       return right(UserData(
         isHost: docSnap[_isHostField], 
-        // savedAds: docSnap[_savedAdsField] ?? []
+        savedAds: savedAds
       ));
     } on FirebaseException catch (e) {
       return left(e.message ?? "Failed to get the user data");
