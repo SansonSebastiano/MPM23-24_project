@@ -29,7 +29,8 @@ class StudentHomePage extends StatelessWidget {
       screenLabel: isLogged
           ? AppLocalizations.of(context)!.lblWelcomeUser(studentUser.name!)
           : AppLocalizations.of(context)!.lblWelcomeNotLogged,
-      screenContent: _StudentHomePageBody(isLogged: isLogged, studentUser: studentUser),
+      screenContent:
+          _StudentHomePageBody(isLogged: isLogged, studentUser: studentUser),
     );
   }
 }
@@ -38,7 +39,8 @@ class _StudentHomePageBody extends ConsumerStatefulWidget {
   final bool isLogged;
   final UserData studentUser;
 
-  const _StudentHomePageBody({required this.isLogged, required this.studentUser});
+  const _StudentHomePageBody(
+      {required this.isLogged, required this.studentUser});
 
   @override
   ConsumerState<_StudentHomePageBody> createState() =>
@@ -72,23 +74,21 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const LoginPage()));
     } else {
-      if(areAdsSaved[index]) {
-        await ref.read(userNotifierProvider.notifier).removeSavedAd(
-          adUid: adUid, 
-          userUid: userUid
-        );
+      if (areAdsSaved[index]) {
+        await ref
+            .read(userNotifierProvider.notifier)
+            .removeSavedAd(adUid: adUid, userUid: userUid);
       } else {
-        await ref.read(userNotifierProvider.notifier).saveAd(
-          adUid: adUid, 
-          userUid: userUid
-        );
+        await ref
+            .read(userNotifierProvider.notifier)
+            .saveAd(adUid: adUid, userUid: userUid);
       }
     }
 
     setState(() {
       areAdsSaved[index] = !areAdsSaved[index];
     });
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,22 +114,21 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
 
     ref.listen(userNotifierProvider, (previous, next) {
       next.maybeWhen(
-        orElse: () => null,
-        successfulSavedAdRead : (isAdSaved, index) {
-          setState(() {
-            //bool isFirstAdSaved = areAdsSaved[0];
+          orElse: () => null,
+          successfulSavedAdRead: (isAdSaved, index) {
+            setState(() {
+              //bool isFirstAdSaved = areAdsSaved[0];
 
-            areAdsSaved[index] = isAdSaved;
+              areAdsSaved[index] = isAdSaved;
 
-            //if(oneTime[0] && index == 0) {
-            //  areAdsSaved[index] = isFirstAdSaved;
-            //}
+              //if(oneTime[0] && index == 0) {
+              //  areAdsSaved[index] = isFirstAdSaved;
+              //}
+            });
           });
-        }
-      );
     });
 
-    if(ref.read(networkAwareProvider) == NetworkStatus.off){
+    if (ref.read(networkAwareProvider) == NetworkStatus.off) {
       isOnLoad = false;
     }
 
@@ -160,74 +159,101 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
               ],
             ),
           ),
-
-          isOnLoad 
-          ? const Expanded(child: Center(child: CircularProgressIndicator(),)) 
-          : ref.read(networkAwareProvider) == NetworkStatus.off
-              ? Expanded(
+          isOnLoad
+              ? const Expanded(
                   child: Center(
-                    child: NoInternetErrorMessage(context: context),
-                  ),
-                )
-              : randomCityAds.isEmpty 
-              ? Expanded(child: Center(child: NoDataErrorMessage(context: context,),))
-              : Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  itemCount: randomCityAds.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    Future.delayed(const Duration(microseconds: 0), () async {
-                      if(oneTime[index] == false) {
-                        await ref.read(userNotifierProvider.notifier).isAdSaved(
-                          adUid: randomCityAds[index].uid!,
-                          userUid: widget.studentUser.uid!,
-                          index: index
-                        );
-                        oneTime[index] = true;
-                      }
-                    });
+                  child: CircularProgressIndicator(),
+                ))
+              : ref.read(networkAwareProvider) == NetworkStatus.off
+                  ? Expanded(
+                      child: Center(
+                        child: NoInternetErrorMessage(context: context),
+                      ),
+                    )
+                  : randomCityAds.isEmpty
+                      ? Expanded(
+                          child: Center(
+                          child: NoDataErrorMessage(
+                            context: context,
+                          ),
+                        ))
+                      : Expanded(
+                          child: ListView.separated(
+                            padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            itemCount: randomCityAds.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              Future.delayed(const Duration(microseconds: 0),
+                                  () async {
+                                if (oneTime[index] == false) {
+                                  await ref
+                                      .read(userNotifierProvider.notifier)
+                                      .isAdSaved(
+                                          adUid: randomCityAds[index].uid!,
+                                          userUid: widget.studentUser.uid!,
+                                          index: index);
+                                  oneTime[index] = true;
+                                }
+                              });
 
-                    return AdsBox(
-                        imageUrl:
-                            randomCityAds[index].photosURLs!.first,
-                        city: randomCityAds[index].address.city,
-                        street: randomCityAds[index].address.street,
-                        price: randomCityAds[index].monthlyRent,
-                        bookmarkButton: BookmarkButton(
-                          size: 50.0,
-                          isSaved: areAdsSaved[index], 
-                          onPressed: () => toggleSave(index, randomCityAds[index].uid!, widget.studentUser.uid!),
-                        ),
-                        onPressed: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FacilityDetailPage(
-                                    isLogged: widget.isLogged,
-                                    isStudent: true,
-                                    isWizardPage: false,
-                                    facilityPhotosURL: randomCityAds[index].photosURLs!,
-                                    facilityName: randomCityAds[index].name,
-                                    facilityAddress: randomCityAds[index].address,
-                                    facilityPrice: randomCityAds[index].monthlyRent,
-                                    facilityHostName: "DA IMPLEMENTARE", // TODO
-                                    hostUrlImage: "DA IMPLEMENTARE", // TODO
-                                    facilityServices: randomCityAds[index].services,
-                                    facilityRenters: randomCityAds[index].renters,
-                                    facilityRooms: randomCityAds[index].rooms,
-                                    adUid: randomCityAds[index].uid,
-                                    studentUid: widget.studentUser.uid,
-                                    maxRenters: randomCityAds[index].rentersCapacity,
+                              return AdsBox(
+                                  imageUrl:
+                                      randomCityAds[index].photosURLs!.first,
+                                  city: randomCityAds[index].address.city,
+                                  street: randomCityAds[index].address.street,
+                                  price: randomCityAds[index].monthlyRent,
+                                  bookmarkButton: BookmarkButton(
+                                    size: 50.0,
+                                    isSaved: areAdsSaved[index],
+                                    onPressed: () => toggleSave(
+                                        index,
+                                        randomCityAds[index].uid!,
+                                        widget.studentUser.uid!),
                                   ),
-                                ),
-                              ),
-                            });
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(height: 20.h);
-                  },
-                ),
-              ),
+                                  onPressed: () => {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FacilityDetailPage(
+                                              isLogged: widget.isLogged,
+                                              isStudent: true,
+                                              isWizardPage: false,
+                                              ad: randomCityAds[index],
+                                              // facilityPhotosURL:
+                                              //     randomCityAds[index]
+                                              //         .photosURLs!,
+                                              // facilityName:
+                                              //     randomCityAds[index].name,
+                                              // facilityAddress:
+                                              //     randomCityAds[index].address,
+                                              // facilityPrice:
+                                              //     randomCityAds[index]
+                                              //         .monthlyRent,
+                                              // // facilityHostName: "DA IMPLEMENTARE", // TODO
+                                              // // hostUrlImage: "DA IMPLEMENTARE", // TODO
+                                              // facilityServices:
+                                              //     randomCityAds[index].services,
+                                              // facilityRenters:
+                                              //     randomCityAds[index].renters,
+                                              // facilityRooms:
+                                              //     randomCityAds[index].rooms,
+                                              // facilityRentersCapacity:
+                                              //     randomCityAds[index]
+                                              //         .rentersCapacity,
+                                              adUid: randomCityAds[index].uid,
+                                              studentUid:
+                                                  widget.studentUser.uid,
+                                            ),
+                                          ),
+                                        ),
+                                      });
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(height: 20.h);
+                            },
+                          ),
+                        ),
         ],
       ),
     );
@@ -317,6 +343,7 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                               MaterialPageRoute(builder: (context) {
                             return WizardPage1(
                               hostUser: widget.hostUser,
+                              isEditingMode: false,
                             );
                           }));
                         },
@@ -364,25 +391,25 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                                               isLogged: true,
                                               isStudent: false,
                                               isWizardPage: false,
-                                              facilityPhotosURL:
-                                                  hostAds[index].photosURLs!,
-                                              facilityName: hostAds[index].name,
-                                              facilityAddress: hostAds[index].address,
-                                              facilityPrice:
-                                                  hostAds[index].monthlyRent,
-                                              facilityHostName:
-                                                  widget.hostUser.name!,
-                                              hostUrlImage:
-                                                  widget.hostUser.photoUrl!,
-                                              facilityServices:
-                                                  hostAds[index].services,
-                                              maxRenters: hostAds[index]
-                                                  .rentersCapacity,
-                                              facilityRenters:
-                                                  hostAds[index].renters,
-                                              facilityRooms:
-                                                  hostAds[index].rooms,
+                                              ad: hostAds[index],
+                                              // facilityPhotosURL:
+                                              //     hostAds[index].photosURLs!,
+                                              // facilityName: hostAds[index].name,
+                                              // facilityAddress:
+                                              //     hostAds[index].address,
+                                              // facilityPrice:
+                                              //     hostAds[index].monthlyRent,
+                                              // facilityServices:
+                                              //     hostAds[index].services,
+                                              // facilityRentersCapacity:
+                                              //     hostAds[index]
+                                              //         .rentersCapacity,
+                                              // facilityRenters:
+                                              //     hostAds[index].renters,
+                                              // facilityRooms:
+                                              //     hostAds[index].rooms,
                                               adUid: hostAds[index].uid,
+                                              host: widget.hostUser,
                                             ),
                                           ),
                                         ),

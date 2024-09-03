@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/main.dart';
 import 'package:room_finder/model/ad_model.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/account_photo.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
@@ -15,6 +16,7 @@ import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/presentation/screens/chat_new_page.dart';
 import 'package:room_finder/presentation/screens/current_renters_page.dart';
 import 'package:room_finder/presentation/screens/login_page.dart';
+import 'package:room_finder/presentation/screens/wizard_screens/wizard_page1.dart';
 import 'package:room_finder/provider/ad_provider.dart';
 import 'package:room_finder/provider/user_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
@@ -25,18 +27,17 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
 
   final bool isStudent;
   final bool isWizardPage;
-  final List<String>? facilityPhotosURL;
+  final AdData ad;
   final List<File>? facilityPhotos;
-  final String facilityName;
-  final Address facilityAddress;
-  final int facilityPrice;
-  final String facilityHostName;
-  final String hostUrlImage;
-  final String? hostUid;
-  final List<String> facilityServices;
-  final int maxRenters;
-  final List<Renter> facilityRenters;
-  final List<Room> facilityRooms;
+  // final List<String>? facilityPhotosURL;
+  // final String facilityName;
+  // final Address facilityAddress;
+  // final int facilityPrice;
+  // final List<String> facilityServices;
+  // final int facilityRentersCapacity;
+  // final List<Renter> facilityRenters;
+  // final List<Room> facilityRooms;
+  final UserData? host;
   final String? adUid;
   final String? studentUid;
 
@@ -45,18 +46,17 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
       required this.isLogged,
       required this.isStudent,
       required this.isWizardPage,
-      this.facilityPhotosURL,
+      required this.ad,
       this.facilityPhotos,
-      required this.facilityName,
-      required this.facilityAddress,
-      required this.facilityPrice,
-      required this.facilityHostName,
-      required this.hostUrlImage,
-      required this.facilityServices,
-      required this.maxRenters,
-      required this.facilityRenters,
-      required this.facilityRooms,
-      this.hostUid,
+      // this.facilityPhotosURL,
+      // required this.facilityName,
+      // required this.facilityAddress,
+      // required this.facilityPrice,
+      // required this.facilityServices,
+      // required this.facilityRentersCapacity,
+      // required this.facilityRenters,
+      // required this.facilityRooms,
+      this.host,
       this.adUid,
       this.studentUid});
 
@@ -78,16 +78,14 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const LoginPage()));
     } else {
-      if(isSaved) {
-        await ref.read(userNotifierProvider.notifier).removeSavedAd(
-          adUid: widget.adUid!, 
-          userUid: widget.studentUid!
-        );
+      if (isSaved) {
+        await ref
+            .read(userNotifierProvider.notifier)
+            .removeSavedAd(adUid: widget.adUid!, userUid: widget.studentUid!);
       } else {
-        await ref.read(userNotifierProvider.notifier).saveAd(
-          adUid: widget.adUid!, 
-          userUid: widget.studentUid!
-        );
+        await ref
+            .read(userNotifierProvider.notifier)
+            .saveAd(adUid: widget.adUid!, userUid: widget.studentUid!);
       }
     }
     setState(() {
@@ -99,33 +97,29 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
   Widget build(BuildContext context) {
     ref.listen(userNotifierProvider, (previous, next) {
       next.maybeWhen(
-        orElse: () => null,
-        successfulSavedAdRead : (isAdSavedValue, index) {
-          setState(() {
-            isSaved = isAdSavedValue;
+          orElse: () => null,
+          successfulSavedAdRead: (isAdSavedValue, index) {
+            setState(() {
+              isSaved = isAdSavedValue;
+            });
           });
-        }
-      );
     });
 
     Future.delayed(const Duration(microseconds: 0), () async {
-      if(oneTime == false) {
+      if (oneTime == false) {
         await ref.read(userNotifierProvider.notifier).isAdSaved(
-          adUid: widget.adUid!,
-          userUid: widget.studentUid!,
-          index: 0
-        );
+            adUid: widget.adUid!, userUid: widget.studentUid!, index: 0);
         oneTime = true;
       }
     });
 
     final networkStatus = ref.watch(networkAwareProvider);
 
-    final servicesText = widget.facilityServices.join(' · ');
+    final servicesText = widget.ad.services.join(' · ');
 
     List<String> bedsText = <String>[];
     int i = 0;
-    for (var room in widget.facilityRooms) {
+    for (var room in widget.ad.rooms) {
       if (room.runtimeType == Bedroom) {
         for (var beds in (room as Bedroom).numBeds) {
           bedsText.add(
@@ -137,7 +131,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
 
     final photoCarousel = widget.isStudent
         ? StudentPhotoCarousel(
-            items: widget.facilityPhotosURL!
+            items: widget.ad.photosURLs!
                 .map((url) => Image(image: NetworkImage(url)))
                 .toList(),
             isSaved: isSaved,
@@ -148,7 +142,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                 ? widget.facilityPhotos!
                     .map((file) => Image.file(file))
                     .toList()
-                : widget.facilityPhotosURL!
+                : widget.ad.photosURLs!
                     .map((url) => Image(image: NetworkImage(url)))
                     .toList(),
             isWizardPage: widget.isWizardPage,
@@ -158,7 +152,14 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                   .deleteAd(adUid: widget.adUid!);
             },
             onEditPressed: () {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WizardPage1(
+                            hostUser: widget.host!,
+                            isEditingMode: true,
+                            adToEdit: widget.ad,
+                          )));
             },
           );
 
@@ -198,14 +199,14 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
       } else {
         await ref.read(adNotifierProvider.notifier).addNewAd(
             newAd: AdData(
-                hostUid: widget.hostUid!,
-                name: widget.facilityName,
-                address: widget.facilityAddress,
-                rooms: widget.facilityRooms,
-                rentersCapacity: widget.maxRenters,
-                renters: widget.facilityRenters,
-                services: widget.facilityServices,
-                monthlyRent: widget.facilityPrice),
+                hostUid: widget.host!.uid!,
+                name: widget.ad.name,
+                address: widget.ad.address,
+                rooms: widget.ad.rooms,
+                rentersCapacity: widget.ad.rentersCapacity,
+                renters: widget.ad.renters,
+                services: widget.ad.services,
+                monthlyRent: widget.ad.monthlyRent),
             photosPaths: widget.facilityPhotos!);
       }
     }
@@ -226,12 +227,12 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                       Column(
                         children: [
                           _MainFacilityInfos(
-                              facilityName: widget.facilityName,
+                              facilityName: widget.ad.name,
                               facilityAddress:
-                                  "${widget.facilityAddress.city} - ${widget.facilityAddress.street}",
-                              facilityPrice: widget.facilityPrice,
-                              hostUrlImage: widget.hostUrlImage,
-                              facilityHostName: widget.facilityHostName),
+                                  "${widget.ad.address.city} - ${widget.ad.address.street}",
+                              facilityPrice: widget.ad.monthlyRent,
+                              hostUrlImage: widget.host!.photoUrl!,
+                              facilityHostName: widget.host!.name!),
                           SizedBox(height: 20.h),
                           const Divider(
                             color: ColorPalette.blueberry,
@@ -278,7 +279,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                   text: TextSpan(
                                     // TODO: check if some rooms are 0
                                     text:
-                                        "- ${widget.facilityRooms[index].name}: ",
+                                        "- ${widget.ad.rooms[index].name}: ",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
@@ -286,14 +287,14 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                           fontWeight: FontWeight.w400,
                                         ),
                                     children: [
-                                      widget.facilityRooms[index].runtimeType ==
+                                      widget.ad.rooms[index].runtimeType ==
                                               Bedroom
                                           ? TextSpan(
                                               text:
                                                   "\n   - ${bedsText.getRange(0, bedsText.length).join('\n   - ')}")
                                           : TextSpan(
                                               text:
-                                                  "${widget.facilityRooms[index].quantity}",
+                                                  "${widget.ad.rooms[index].quantity}",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium)
@@ -307,7 +308,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                   height: 10.w,
                                 );
                               },
-                              itemCount: widget.facilityRooms.length,
+                              itemCount: widget.ad.rooms.length,
                             ),
                           ),
                           const Divider(
@@ -317,8 +318,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               AppLocalizations.of(context)!.lblCurrentRenters(
-                                  widget.facilityRenters.length,
-                                  widget.maxRenters),
+                                  widget.ad.renters.length,
+                                  widget.ad.rentersCapacity),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -369,9 +370,9 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                           (BuildContext context, int index) {
                                         return HostFacilityDetailPageRenterBox(
                                           name: widget
-                                              .facilityRenters[index].name,
+                                              .ad.renters[index].name,
                                           contractDeadline: widget
-                                              .facilityRenters[index]
+                                              .ad.renters[index]
                                               .contractDeadline,
                                         );
                                       },
@@ -381,7 +382,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                           height: 10.w,
                                         );
                                       },
-                                      itemCount: widget.facilityRenters.length,
+                                      itemCount: widget.ad.renters.length,
                                     ),
                                   ),
                                 ),
@@ -401,9 +402,10 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                       builder: (context) => ChatNewPage(
-                                          receiverImageUrl: widget.hostUrlImage,
-                                          receiverName: widget.facilityHostName,
-                                          facilityName: widget.facilityName,
+                                          receiverImageUrl:
+                                              widget.host!.photoUrl!,
+                                          receiverName: widget.host!.name!,
+                                          facilityName: widget.ad.name,
                                           onTap: () => {})),
                                 );
                               } else {

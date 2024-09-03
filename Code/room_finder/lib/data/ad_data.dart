@@ -243,7 +243,7 @@ class AdDataSource {
     }
   }
 
-  /// The method [updateAd] allows to update an ad represented by its unique identifier [adUid] and that meets the passed parameters
+  /// The method [updateAd] allows to update an ad represented by its unique identifier [updatedAd.uid] and that meets the passed parameters
   Future<Either<String, void>> updateAd({
     required AdData updatedAd,
     // required String adUid,
