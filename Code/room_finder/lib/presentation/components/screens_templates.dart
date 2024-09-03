@@ -26,7 +26,7 @@ class MainTemplateScreen extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 20.w, top: 30.h, bottom: 30.h),
+          padding: EdgeInsets.only(left: 30.w, top: 30.h, bottom: 30.h),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(screenLabel,

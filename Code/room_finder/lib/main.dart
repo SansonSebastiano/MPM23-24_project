@@ -167,7 +167,9 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
                 studentUser: user,)),
               ),
               bodyTemplate(
-                  body: isLogged ? SafeArea(child: SavedAdsPage(savedAds: user.savedAds!,)) : const LoginPage()),
+                  body: isLogged 
+                  ? SafeArea(child: SavedAdsPage(currentUserUid: user.uid!)) 
+                  : const LoginPage()),
               bodyTemplate(
                   body: isLogged ? const SafeArea(child: StudentChatPage()) : const LoginPage()),
               bodyTemplate(
