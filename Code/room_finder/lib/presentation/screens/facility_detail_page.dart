@@ -326,7 +326,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                   .copyWith(fontWeight: FontWeight.w500),
                             ),
                           ),
-                          widget.isStudent
+                          widget.isStudent && widget.facilityRenters.isNotEmpty
                               ? Align(
                                   alignment: Alignment.centerLeft,
                                   child: TextButton(
@@ -335,7 +335,12 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const CurrentRentersPage()),
+                                                  CurrentRentersPage(
+                                                    facilityName: widget.facilityName,
+                                                    facilityAddress: widget.facilityAddress,
+                                                    facilityMaximumRentersCapacity: widget.maxRenters,
+                                                    facilityRenters: widget.facilityRenters,
+                                                  )),
                                         );
                                       } else {
                                         Navigator.of(context).push(
