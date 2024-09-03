@@ -651,5 +651,17 @@
         "example": "1"
       }
     }
+  },
+  "lblAskNewAdUpload": "Are you sure to add this new ad?",
+  "@lblAskNewAdUpload": {
+    "description": "label for AlertDialog"
+  },
+  "lblSuccessfulAdUpload": "New ad added",
+  "@lblSuccessfulAdUpload": {
+    "description": "label for success snackbar"
+  },
+  "lblSuccessfulAdDeleted": "Ad deleted",
+  "@lblSuccessfulAdDeleted": {
+    "description": "label for success snackbar"
   }
 }

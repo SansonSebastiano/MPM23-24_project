@@ -67,7 +67,7 @@ class Address {
 /// *[quantity] represent the number of the same room present in the facility
 class Room {
   final String name;
-  final int quantity;
+  int quantity;
 
   Room({
     required this.name,

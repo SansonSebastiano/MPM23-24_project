@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/model/ad_model.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/add_on.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/base_panel.dart';
@@ -12,7 +14,11 @@ import 'package:room_finder/presentation/screens/wizard_screens/wizard_page4.dar
 import 'package:room_finder/style/color_palette.dart';
 
 class WizardPage3 extends StatefulWidget {
-  const WizardPage3({super.key});
+  final Address address;
+  final List<Room> rooms;
+  final UserData hostUser;
+
+  const WizardPage3({super.key, required this.address, required this.rooms, required this.hostUser});
 
   @override
   State<WizardPage3> createState() => _WizardPage3State();
@@ -27,7 +33,7 @@ class _WizardPage3State extends State<WizardPage3> {
 
   late int maxRenter;
 
-  final List<RenterBox> _renters = <RenterBox>[];
+  final List<Renter> _renters = <Renter>[];
 
   // TODO: implement the button active logic: when the user has filled all the fields
   // bool _isButtonActive = false;
@@ -82,30 +88,27 @@ class _WizardPage3State extends State<WizardPage3> {
         showOptionsDialog(
             context: context,
             androidDialog: ActionsAndroidDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
-              context: context,
-              onOk: () {
-                // TODO: Replace with the real data
+                title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                context: context,
+                onOk: () {
+                  // TODO: Replace with the real data
                   backToHostHomePage(context);
-              },
-              onCancel: () {
-                Navigator.of(context).pop();
-              }
-            ),
+                },
+                onCancel: () {
+                  Navigator.of(context).pop();
+                }),
             iosDialog: ActionsIosDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
-              context: context,
-              onOk: () {
-                // TODO: Replace with the real data
+                title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                context: context,
+                onOk: () {
+                  // TODO: Replace with the real data
                   backToHostHomePage(context);
-              },
-              onCancel: () {
-                Navigator.of(context).pop();
-              }
-            )
-          );
+                },
+                onCancel: () {
+                  Navigator.of(context).pop();
+                }));
       }),
       rightButtonVisibility: true,
       screenTitle: AppLocalizations.of(context)!.lblManageRenters,
@@ -117,7 +120,13 @@ class _WizardPage3State extends State<WizardPage3> {
           : () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const WizardPage4()),
+                MaterialPageRoute(builder: (context) => WizardPage4(
+                  address: widget.address,
+                  rooms: widget.rooms,
+                  rentersCapacity: maxRenter,
+                  renters: _renters,
+                  hostUser: widget.hostUser,
+                )),
               );
             },
       onOkDialog: () => Navigator.of(context).pop(),
@@ -198,7 +207,7 @@ class _WizardPage3State extends State<WizardPage3> {
             // FIXME: the enable of the button doesn't work properly
             onConfirmPressed: () {
               setState(() {
-                _renters[index] = HostRenterBox(
+                _renters[index] = Renter(
                   name: nameController.text,
                   facultyOfStudies: studiesController.text,
                   interests: interestsController.text,
@@ -243,7 +252,7 @@ class _WizardPage3State extends State<WizardPage3> {
             // FIXME: the enable of the button doesn't work properly
             onConfirmPressed: () {
               setState(() {
-                _renters.add(HostRenterBox(
+                _renters.add(Renter(
                   name: nameController.text,
                   facultyOfStudies: studiesController.text,
                   interests: interestsController.text,

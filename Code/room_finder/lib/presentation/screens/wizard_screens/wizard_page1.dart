@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/model/ad_model.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/input_text_fields.dart';
@@ -9,7 +10,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/wizard_screens/wizard_page2.dart';
 
 class WizardPage1 extends StatefulWidget {
-  const WizardPage1({super.key});
+  final UserData hostUser;
+
+  const WizardPage1({super.key, required this.hostUser});
 
   @override
   State<WizardPage1> createState() => _WizardPage1State();
@@ -86,7 +89,13 @@ class _WizardPage1State extends State<WizardPage1> {
           ? () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WizardPage2(address: Address(street: _streetController.text, city: _cityController.text),)),
+                MaterialPageRoute(
+                    builder: (context) => WizardPage2(
+                          address: Address(
+                              street: _streetController.text,
+                              city: _cityController.text),
+                          hostUser: widget.hostUser,
+                        )),
               );
             }
           : null,
@@ -105,15 +114,15 @@ class _WizardPage1State extends State<WizardPage1> {
                 ),
                 SizedBox(height: 20.h),
                 StandardTextField(
-                    label: AppLocalizations.of(context)!.lblCity,
-                    onValueValidityChanged: _onCityValidityChanged,
-                    controller: _cityController,
+                  label: AppLocalizations.of(context)!.lblCity,
+                  onValueValidityChanged: _onCityValidityChanged,
+                  controller: _cityController,
                 ),
                 SizedBox(height: 20.h),
                 StandardTextField(
-                    label: AppLocalizations.of(context)!.lblStreet,
-                    onValueValidityChanged: _onAddressValidityChanged,
-                    controller: _streetController,
+                  label: AppLocalizations.of(context)!.lblStreet,
+                  onValueValidityChanged: _onAddressValidityChanged,
+                  controller: _streetController,
                 ),
               ],
             ),

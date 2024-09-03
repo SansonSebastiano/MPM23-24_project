@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:room_finder/model/ad_model.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/add_on.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/amenities_option.dart';
@@ -10,7 +12,19 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/wizard_screens/wizard_page5.dart';
 
 class WizardPage4 extends StatefulWidget {
-  const WizardPage4({super.key});
+  final Address address;
+  final List<Room> rooms;
+  final int rentersCapacity;
+  final List<Renter> renters;
+  final UserData hostUser;
+
+  const WizardPage4(
+      {super.key,
+      required this.address,
+      required this.rooms,
+      required this.rentersCapacity,
+      required this.renters,
+      required this.hostUser});
 
   @override
   State<WizardPage4> createState() => _WizardPage4State();
@@ -70,42 +84,58 @@ class _WizardPage4State extends State<WizardPage4> {
         showOptionsDialog(
             context: context,
             androidDialog: ActionsAndroidDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
-              context: context,
-              onOk: () {
-                // TODO: Replace with the real data
+                title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                context: context,
+                onOk: () {
+                  // TODO: Replace with the real data
                   backToHostHomePage(context);
-              },
-              onCancel: () {
-                Navigator.of(context).pop();
-              }
-            ),
+                },
+                onCancel: () {
+                  Navigator.of(context).pop();
+                }),
             iosDialog: ActionsIosDialog(
-              title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-              content: Text(AppLocalizations.of(context)!.lblCancelWizard), 
-              context: context,
-              onOk: () {
-                // TODO: Replace with the real data
+                title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                context: context,
+                onOk: () {
+                  // TODO: Replace with the real data
                   backToHostHomePage(context);
-              },
-              onCancel: () {
-                Navigator.of(context).pop();
-              }
-            )
-          );
+                },
+                onCancel: () {
+                  Navigator.of(context).pop();
+                }));
       }),
       rightButtonVisibility: true,
       screenTitle: AppLocalizations.of(context)!.lblAmenitieService,
       dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard4,
       currentStep: 4,
       btnNextLabel: AppLocalizations.of(context)!.btnNext,
-      onNextPressed: _amenitiesSwitches.values.contains(true) ? () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const WizardPage5()),
-          );
-      } : null,
+      onNextPressed: _amenitiesSwitches.values.contains(true)
+          ? () {
+              List<String> services = [];
+              // get selected services
+              for (int i = 0;
+                  i < _amenitiesSwitches.values.toList().length;
+                  i++) {
+                if (_amenitiesSwitches.values.toList()[i]) {
+                  services.add(_amenitiesSwitches.keys.toList()[i]);
+                }
+              }
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WizardPage5(
+                  address: widget.address,
+                  rooms: widget.rooms,
+                  rentersCapacity: widget.rentersCapacity,
+                  renters: widget.renters,
+                  services: services,
+                  hostUser: widget.hostUser,
+                )),
+              );
+            }
+          : null,
       onOkDialog: () => Navigator.of(context).pop(),
       screenContent: Expanded(
         child: Padding(
@@ -133,7 +163,8 @@ class _WizardPage4State extends State<WizardPage4> {
                       label: _amenitiesSwitches.keys.elementAt(index),
                       onChanged: (value) {
                         setState(() {
-                          _amenitiesSwitches[_amenitiesSwitches.keys.elementAt(index)] = value;
+                          _amenitiesSwitches[
+                              _amenitiesSwitches.keys.elementAt(index)] = value;
                         });
                       },
                       isChecked: _amenitiesSwitches.values.elementAt(index),

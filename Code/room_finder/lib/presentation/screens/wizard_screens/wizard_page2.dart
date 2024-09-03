@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:room_finder/model/ad_model.dart';
+import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/add_on.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
@@ -10,14 +11,53 @@ import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/wizard_screens/wizard_page3.dart';
 
-class WizardPage2 extends StatelessWidget {
+class WizardPage2 extends StatefulWidget {
   final Address address;
+  final UserData hostUser;
 
-  const WizardPage2({super.key, required this.address});
+  const WizardPage2({super.key, required this.address, required this.hostUser});
+
+  @override
+  State<WizardPage2> createState() => _WizardPage2State();
+}
+
+class _WizardPage2State extends State<WizardPage2> {
+  late TextEditingController _controller;
+
+  late List<Room> _rooms;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+    // _rooms = <RoomOption>[];
+    _rooms = <Room>[];
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _rooms = <Room>[
+      Room(name: AppLocalizations.of(context)!.lblBathrooms, quantity: 0),
+      Room(name: AppLocalizations.of(context)!.lblKitchens, quantity: 0),
+      Room(name: AppLocalizations.of(context)!.lblLivingRoom, quantity: 0),
+      Bedroom(
+          name: AppLocalizations.of(context)!.lblBedrooms,
+          quantity: 0,
+          numBeds: []),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return WizardTemplateScreen(
+     return WizardTemplateScreen(
         leftButton: DarkBackButton(onPressed: () {
           Navigator.of(context).pop();
         }),
@@ -49,7 +89,6 @@ class WizardPage2 extends StatelessWidget {
         }),
         rightButtonVisibility: true,
         screenTitle: AppLocalizations.of(context)!.lblSetRooms,
-        screenContent: const _WizardPage2Body(),
         dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard2,
         onOkDialog: () => Navigator.of(context).pop(),
         currentStep: 2,
@@ -57,50 +96,10 @@ class WizardPage2 extends StatelessWidget {
         onNextPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const WizardPage3()),
+            MaterialPageRoute(builder: (context) => WizardPage3(address: widget.address, rooms: _rooms, hostUser:  widget.hostUser,)),
           );
-        });
-  }
-}
-
-class _WizardPage2Body extends StatefulWidget {
-  const _WizardPage2Body();
-
-  @override
-  State<_WizardPage2Body> createState() => _WizardPage2BodyState();
-}
-
-class _WizardPage2BodyState extends State<_WizardPage2Body> {
-  late TextEditingController _controller;
-  late List<RoomOption> _rooms;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-    _rooms = <RoomOption>[];
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _rooms = <RoomOption>[
-      RoomOption(roomName: AppLocalizations.of(context)!.lblBathrooms),
-      RoomOption(roomName: AppLocalizations.of(context)!.lblKitchens),
-      RoomOption(roomName: AppLocalizations.of(context)!.lblLivingRoom),
-      RoomOption(roomName: AppLocalizations.of(context)!.lblBedrooms),
-    ];
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
+        },
+        screenContent: Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
         child: Column(
@@ -118,15 +117,43 @@ class _WizardPage2BodyState extends State<_WizardPage2Body> {
                     return SizedBox(height: 20.h); // Add padding between items
                   },
                   itemBuilder: (context, index) {
-                    print(_rooms[index].counter);
-                    return _rooms[index];
+                    return RoomOption(
+                      roomName: _rooms[index].name,
+                      roomCounter: _rooms[index].quantity,
+                      onRoomIncrement: () => setState(() {
+                        _rooms[index].quantity++;
+                        if (_rooms[index].runtimeType == Bedroom) {
+                          (_rooms[index] as Bedroom).numBeds.add(0);
+                        }
+                      }),
+                      onRoomDecrement: () {
+                        if (_rooms[index].quantity > 0) {
+                          setState(() {
+                            _rooms[index].quantity--;
+                          });
+                        }
+                      },
+                      bedCounter: _rooms[index].runtimeType == Bedroom ? (_rooms[index] as Bedroom).numBeds : [],
+                      onBedDecrement: (bedIndex) {
+                        if (_rooms[index].runtimeType == Bedroom && (_rooms[index] as Bedroom).numBeds[bedIndex] > 0) {
+                          setState(() {
+                            _rooms[index].runtimeType == Bedroom? (_rooms[index] as Bedroom).numBeds[bedIndex]-- : null;
+                          });
+                        }
+                      },
+                      onBedIncrement: (bedIndex) => setState(() {
+                        (_rooms[index] as Bedroom).numBeds[bedIndex]++;
+                      }),
+                    );
                   }),
             ),
           ],
         ),
       ),
-    );
-  }
+    ),
+      );
+    }
+
 
   void _addRoom(BuildContext context) {
     return showOptionsDialog(
@@ -159,9 +186,10 @@ class _WizardPage2BodyState extends State<_WizardPage2Body> {
 
   void _onOk(BuildContext context) {
     setState(() {
-      _rooms.add(RoomOption(
-        roomName: _controller.text,
-      ));
+      _rooms.add(Room(name: _controller.text, quantity: 0));
+      // _rooms.add(RoomOption(
+      //   roomName: _controller.text,
+      // ));
     });
     _controller.clear();
     Navigator.of(context).pop();

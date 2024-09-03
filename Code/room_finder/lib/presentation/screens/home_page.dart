@@ -6,7 +6,6 @@ import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
-import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/search_bar.dart';
@@ -74,13 +73,13 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                         isLogged: widget.isLogged,
                         isStudent: true,
                         isWizardPage: false,
-                        facilityPhotos: const [
+                        facilityPhotosURL: const [
                           "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
                           "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
                           "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
                         ],
                         facilityName: "Casa Dolce Casa",
-                        facilityAddress: "Padova - Via Roma 12",
+                        facilityAddress: Address(street: "street", city: "city"),
                         facilityPrice: 300,
                         facilityHostName: "Mario Rossi",
                         hostUrlImage:
@@ -93,6 +92,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                           "Dedicated parking",
                           "Air condition"
                         ],
+                        maxRenters: 10,
                         facilityRenters: [
                           // HostFacilityDetailPageRenterBox(
                           //   name: 'Francesco Dal Maso',
@@ -184,13 +184,13 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                                       isLogged: widget.isLogged,
                                       isStudent: true,
                                       isWizardPage: false,
-                                      facilityPhotos: const [
+                                      facilityPhotosURL: const [
                                         "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
                                         "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
                                         "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
                                       ],
                                       facilityName: "Casa Dolce Casa",
-                                      facilityAddress: "Padova - Via Roma 12",
+                                      facilityAddress: Address(street: "street", city: "city"),
                                       facilityPrice: 300,
                                       facilityHostName: "Mario Rossi",
                                       hostUrlImage:
@@ -203,6 +203,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                                         "Dedicated parking",
                                         "Air condition"
                                       ],
+                                      maxRenters: 10,
                                       facilityRenters: [
                                         // HostFacilityDetailPageRenterBox(
                                         //   name: 'Francesco Dal Maso',
@@ -313,7 +314,9 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                           // TODO: Replace with real data
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return const WizardPage1();
+                            return WizardPage1(
+                              hostUser: widget.hostUser,
+                            );
                           }));
                         },
                       ),
@@ -323,56 +326,74 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
               ],
             ),
           ),
-
-          isOnLoad 
-          ? const Expanded(child: Center(child: CircularProgressIndicator(),)) 
-          : !isConnected
-              ? Expanded(
+          isOnLoad
+              ? const Expanded(
                   child: Center(
-                    child: NoInternetErrorMessage(context: context),
-                  ),
-                )
-              : hostAds.isEmpty 
-              ? Expanded(child: Center(child: NoDataErrorMessage(context: context,),))
-              : Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.all(20.w),
-                    itemCount: hostAds.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return AdsBox(
-                          imageUrl:
-                              hostAds[index].photosURLs!.first,
-                          city: hostAds[index].address.city,
-                          street: hostAds[index].address.street,
-                          price: hostAds[index].monthlyRent,
-                          onPressed: () => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => FacilityDetailPage(
-                                      isLogged: true,
-                                      isStudent: false,
-                                      isWizardPage: false,
-                                      facilityPhotos: hostAds[index].photosURLs!,
-                                      facilityName: hostAds[index].name,
-                                      facilityAddress: "${hostAds[index].address.city} - ${hostAds[index].address.street}",
-                                      facilityPrice: hostAds[index].monthlyRent,
-                                      facilityHostName: widget.hostUser.name!,
-                                      hostUrlImage: widget.hostUser.photoUrl!,
-                                      facilityServices: hostAds[index].services,
-                                      facilityRenters: hostAds[index].renters,
-                                      facilityRooms: hostAds[index].rooms,
-                                    ),
-                                  ),
-                                ),
-                              });
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                          height: 20.h); // Add padding between items
-                    },
-                  ),
-                ),
+                  child: CircularProgressIndicator(),
+                ))
+              : !isConnected
+                  ? Expanded(
+                      child: Center(
+                        child: NoInternetErrorMessage(context: context),
+                      ),
+                    )
+                  : hostAds.isEmpty
+                      ? Expanded(
+                          child: Center(
+                          child: NoDataErrorMessage(
+                            context: context,
+                          ),
+                        ))
+                      : Expanded(
+                          child: ListView.separated(
+                            padding: EdgeInsets.all(20.w),
+                            itemCount: hostAds.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return AdsBox(
+                                  imageUrl: hostAds[index].photosURLs!.first,
+                                  city: hostAds[index].address.city,
+                                  street: hostAds[index].address.street,
+                                  price: hostAds[index].monthlyRent,
+                                  onPressed: () => {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FacilityDetailPage(
+                                              isLogged: true,
+                                              isStudent: false,
+                                              isWizardPage: false,
+                                              facilityPhotosURL:
+                                                  hostAds[index].photosURLs!,
+                                              facilityName: hostAds[index].name,
+                                              facilityAddress: hostAds[index].address,
+                                              facilityPrice:
+                                                  hostAds[index].monthlyRent,
+                                              facilityHostName:
+                                                  widget.hostUser.name!,
+                                              hostUrlImage:
+                                                  widget.hostUser.photoUrl!,
+                                              facilityServices:
+                                                  hostAds[index].services,
+                                              maxRenters: hostAds[index]
+                                                  .rentersCapacity,
+                                              facilityRenters:
+                                                  hostAds[index].renters,
+                                              facilityRooms:
+                                                  hostAds[index].rooms,
+                                              adUid: hostAds[index].uid,
+                                            ),
+                                          ),
+                                        ),
+                                      });
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(
+                                  height: 20.h); // Add padding between items
+                            },
+                          ),
+                        ),
         ],
       ),
     );

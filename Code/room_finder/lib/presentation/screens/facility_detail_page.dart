@@ -1,16 +1,23 @@
+import 'dart:io';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/main.dart';
 import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/presentation/components/account_photo.dart';
+import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/photo_carousel.dart';
 import 'package:room_finder/presentation/components/renter_box.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/presentation/screens/chat_new_page.dart';
 import 'package:room_finder/presentation/screens/current_renters_page.dart';
 import 'package:room_finder/presentation/screens/login_page.dart';
+import 'package:room_finder/provider/ad_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:room_finder/util/network_handler.dart';
 
@@ -19,31 +26,38 @@ class FacilityDetailPage extends ConsumerStatefulWidget {
 
   final bool isStudent;
   final bool isWizardPage;
-  final List<String> facilityPhotos;
+  final List<String>? facilityPhotosURL;
+  final List<File>? facilityPhotos;
   final String facilityName;
-  final String facilityAddress;
+  final Address facilityAddress;
   final int facilityPrice;
   final String facilityHostName;
   final String hostUrlImage;
+  final String? hostUid;
   final List<String> facilityServices;
+  final int maxRenters;
   final List<Renter> facilityRenters;
-  // TODO: add list of roooms
   final List<Room> facilityRooms;
+  final String? adUid;
 
   const FacilityDetailPage(
       {super.key,
       required this.isLogged,
       required this.isStudent,
       required this.isWizardPage,
-      required this.facilityPhotos,
+      this.facilityPhotosURL,
+      this.facilityPhotos,
       required this.facilityName,
       required this.facilityAddress,
       required this.facilityPrice,
       required this.facilityHostName,
       required this.hostUrlImage,
       required this.facilityServices,
+      required this.maxRenters,
       required this.facilityRenters,
-      required this.facilityRooms});
+      required this.facilityRooms,
+      this.hostUid,
+      this.adUid});
 
   @override
   ConsumerState<FacilityDetailPage> createState() => FacilityDetailPageState();
@@ -88,18 +102,77 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
 
     final photoCarousel = widget.isStudent
         ? StudentPhotoCarousel(
-            items: widget.facilityPhotos
+            items: widget.facilityPhotosURL!
                 .map((url) => Image(image: NetworkImage(url)))
                 .toList(),
             isSaved: isSaved,
             onPressed: toggleSave,
           )
         : HostPhotoCarousel(
-            items: widget.facilityPhotos
-                .map((url) => Image(image: NetworkImage(url)))
-                .toList(),
+            items: widget.isWizardPage
+                ? widget.facilityPhotos!
+                    .map((file) => Image.file(file))
+                    .toList()
+                : widget.facilityPhotosURL!
+                    .map((url) => Image(image: NetworkImage(url)))
+                    .toList(),
             isWizardPage: widget.isWizardPage,
+            onDeletePressed: () {
+              ref
+                  .read(adNotifierProvider.notifier)
+                  .deleteAd(adUid: widget.adUid!);
+            },
+            onEditPressed: () {
+
+            },
           );
+
+    ref.listen(adNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => null,
+        successfulAddNewAd: () {
+          showSuccessSnackBar(
+              context, AppLocalizations.of(context)!.lblSuccessfulAdUpload);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+          );
+        },
+        failedAddNewAd: () {
+          // TODO:
+        },
+        successfulDeleteAd: () {
+          showSuccessSnackBar(
+              context, AppLocalizations.of(context)!.lblSuccessfulAdDeleted);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+          );
+        },
+        failedDeleteAd: () {
+          // TODO:
+        },
+      );
+    });
+
+    Future<void> uploadNewAd() async {
+      if (networkStatus == NetworkStatus.off) {
+        showErrorSnackBar(
+            context, AppLocalizations.of(context)!.lblConnectionErrorDesc);
+      } else {
+        await ref.read(adNotifierProvider.notifier).addNewAd(
+            newAd: AdData(
+                hostUid: widget.hostUid!,
+                name: widget.facilityName,
+                address: widget.facilityAddress,
+                rooms: widget.facilityRooms,
+                rentersCapacity: widget.maxRenters,
+                renters: widget.facilityRenters,
+                services: widget.facilityServices,
+                monthlyRent: widget.facilityPrice),
+            photosPaths: widget.facilityPhotos!);
+      }
+    }
 
     return Scaffold(
       body: networkStatus == NetworkStatus.off
@@ -118,7 +191,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                         children: [
                           _MainFacilityInfos(
                               facilityName: widget.facilityName,
-                              facilityAddress: widget.facilityAddress,
+                              facilityAddress:
+                                  "${widget.facilityAddress.city} - ${widget.facilityAddress.street}",
                               facilityPrice: widget.facilityPrice,
                               hostUrlImage: widget.hostUrlImage,
                               facilityHostName: widget.facilityHostName),
@@ -166,6 +240,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                               itemBuilder: (BuildContext context, int index) {
                                 return RichText(
                                   text: TextSpan(
+                                    // TODO: check if some rooms are 0
                                     text:
                                         "- ${widget.facilityRooms[index].name}: ",
                                     style: Theme.of(context)
@@ -189,20 +264,6 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                     ],
                                   ),
                                 );
-                                // RichText(
-                                //   text: TextSpan(
-                                //       text: widget.facilityRooms[index]
-                                //                   .runtimeType ==
-                                //               Bedroom
-                                //           ? "${widget.facilityRooms[index].name}: ${widget.facilityRooms[index].quantity} \nBeds: ${(widget.facilityRooms[index] as Bedroom).numBeds.reduce((value, element) => value + element)}"
-                                //           : "${widget.facilityRooms[index].name}: ${widget.facilityRooms[index].quantity}",
-                                //       style: Theme.of(context)
-                                //           .textTheme
-                                //           .bodyMedium!
-                                //           .copyWith(
-                                //             fontWeight: FontWeight.w400,
-                                //           )),
-                                // );
                               },
                               separatorBuilder:
                                   (BuildContext context, int index) {
@@ -219,8 +280,9 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              AppLocalizations.of(context)!
-                                  .lblCurrentRenters(2, 3),
+                              AppLocalizations.of(context)!.lblCurrentRenters(
+                                  widget.facilityRenters.length,
+                                  widget.maxRenters),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -322,34 +384,9 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                 horizontal: 20.w, vertical: 20.h),
                             child: RectangleButton(
                                 label: AppLocalizations.of(context)!.btnConfirm,
-                                // TODO: handle confirm wizard operation
-                                onPressed: () => {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              FacilityDetailPage(
-                                            isLogged: widget.isLogged,
-                                            isStudent: false,
-                                            isWizardPage: false,
-                                            facilityPhotos:
-                                                widget.facilityPhotos,
-                                            facilityName: widget.facilityName,
-                                            facilityAddress:
-                                                widget.facilityAddress,
-                                            facilityPrice: widget.facilityPrice,
-                                            facilityHostName:
-                                                widget.facilityHostName,
-                                            hostUrlImage: widget.hostUrlImage,
-                                            facilityServices:
-                                                widget.facilityServices,
-                                            facilityRenters:
-                                                widget.facilityRenters,
-                                            facilityRooms: widget.facilityRooms,
-                                          ),
-                                        ),
-                                      ),
-                                    }),
+                                onPressed: () async {
+                                  await uploadNewAd();
+                                }),
                           )
                         : const SizedBox.shrink(),
               ],

@@ -24,13 +24,17 @@ abstract class PhotoCarousel extends StatefulWidget {
   final bool isWizardPage;
   final bool? isSaved;
   final void Function()? onPressed;
+  final void Function()? onEditPressed;
+  final void Function()? onDeletePressed;
 
   const PhotoCarousel(
       {super.key,
       required this.items,
       this.isWizardPage = false,
       this.isSaved,
-      this.onPressed});
+      this.onPressed,
+      this.onDeletePressed,
+      this.onEditPressed});
 
   bool get isStudent;
 
@@ -125,17 +129,9 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           EditButton(
-                            onPressed: () {
-                              // TODO: Replace with real data
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return const WizardPage1();
-                              }));
-                            },
+                            onPressed: widget.onEditPressed!,
                           ),
-                          DeleteButton(onPressed: () {
-                            // TODO: Implement delete functionality
-                          }),
+                          DeleteButton(onPressed: widget.onDeletePressed!),
                           _PhotoCounter(current: _current, widget: widget),
                         ],
                       ),
@@ -176,7 +172,7 @@ class _PhotoCounter extends StatelessWidget {
 /// [HostPhotoCarousel] is a widget that displays a carousel of images for the host.
 class HostPhotoCarousel extends PhotoCarousel {
   const HostPhotoCarousel(
-      {super.key, required super.items, required super.isWizardPage});
+      {super.key, required super.items, required super.isWizardPage, required super.onEditPressed, required super.onDeletePressed});
 
   @override
   bool get isStudent => false;
@@ -185,7 +181,10 @@ class HostPhotoCarousel extends PhotoCarousel {
 /// [StudentPhotoCarousel] is a widget that displays a carousel of images for the student.
 class StudentPhotoCarousel extends PhotoCarousel {
   const StudentPhotoCarousel(
-      {super.key, required super.items, required super.isSaved, required super.onPressed});
+      {super.key,
+      required super.items,
+      required super.isSaved,
+      required super.onPressed});
 
   @override
   bool get isStudent => true;

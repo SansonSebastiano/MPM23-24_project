@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
@@ -62,13 +63,13 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                         isLogged: widget.isLogged,
                         isStudent: true,
                         isWizardPage: false,
-                        facilityPhotos: const [
+                        facilityPhotosURL: const [
                           "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
                           "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
                           "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
                         ],
                         facilityName: "Casa Dolce Casa",
-                        facilityAddress: "Padova - Via Roma 12",
+                        facilityAddress: Address(street: 'street', city: 'city'),
                         facilityPrice: 300,
                         facilityHostName: "Mario Rossi",
                         hostUrlImage:
@@ -81,6 +82,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                           "Dedicated parking",
                           "Air condition"
                         ],
+                        maxRenters: 10,
                         facilityRenters: [
                           // HostFacilityDetailPageRenterBox(
                           //   name: 'Francesco Dal Maso',
@@ -261,17 +263,16 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             FacilityDetailPage(
-                                              isLogged: widget.isLogged,
+                                          isLogged: widget.isLogged,
                                           isStudent: true,
                                           isWizardPage: false,
-                                          facilityPhotos: const [
+                                          facilityPhotosURL: const [
                                             "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
                                             "https://cdn.cosedicasa.com/wp-content/uploads/webp/2022/05/cucina-e-soggiorno-640x320.webp",
                                             "https://www.grazia.it/content/uploads/2018/03/come-arredare-monolocale-sfruttando-centimetri-2.jpg"
                                           ],
                                           facilityName: "Casa Dolce Casa",
-                                          facilityAddress:
-                                              "Padova - Via Roma 12",
+                                          facilityAddress: Address(street: 'street', city: 'city'),
                                           facilityPrice: 300,
                                           facilityHostName: "Mario Rossi",
                                           hostUrlImage:
@@ -282,6 +283,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                                             "1 bathroom",
                                             "WiFi"
                                           ],
+                                          maxRenters: 10,
                                           facilityRenters: [
                                             // HostFacilityDetailPageRenterBox(
                                             //   name: 'Francesco Dal Maso',
