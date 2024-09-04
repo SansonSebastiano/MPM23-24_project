@@ -80,7 +80,8 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
   // Check if a user is logged
   bool isLogged = false;
   // Get the information about the logged user from Authentication
-  late User? userAuthenticated = ref.read(authNotifierProvider.notifier).currentUser;
+  late User? userAuthenticated =
+      ref.read(authNotifierProvider.notifier).currentUser;
   // Get the data about the logged user from Firestore
   late UserData user = UserData(isHost: isHost);
 
@@ -90,7 +91,7 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
   void initState() {
     super.initState();
 
-    _readUser();  
+    _readUser();
   }
 
   void _readUser() {
@@ -102,12 +103,13 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
         // get the infos
         userAuthenticated =
             ref.read(authNotifierProvider.notifier).currentUser!;
+        print(userAuthenticated!.photoURL);
         // get the data
         await ref
             .read(userNotifierProvider.notifier)
             .getUser(userUid: userAuthenticated!.uid);
       }
-    });  
+    });
     setState(() {});
   }
 
@@ -152,7 +154,9 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
       body: isHost
           // Host's screens
           ? <Widget>[
-              bodyTemplate(body: SafeArea(child: HostHomePage(
+              bodyTemplate(
+                  body: SafeArea(
+                      child: HostHomePage(
                 hostUser: user,
               ))),
               bodyTemplate(body: const SafeArea(child: HostChatPage())),
@@ -161,17 +165,20 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
           // Student's screens
           : <Widget>[
               bodyTemplate(
-                  body: SafeArea(
-                      child: StudentHomePage(
-                isLogged: isLogged,
-                studentUser: user,)),
+                body: SafeArea(
+                    child: StudentHomePage(
+                  isLogged: isLogged,
+                  studentUser: user,
+                )),
               ),
               bodyTemplate(
-                  body: isLogged 
-                  ? SafeArea(child: SavedAdsPage(currentUserUid: user.uid!)) 
-                  : const LoginPage()),
+                  body: isLogged
+                      ? SafeArea(child: SavedAdsPage(currentUserUid: user.uid!))
+                      : const LoginPage()),
               bodyTemplate(
-                  body: isLogged ? const SafeArea(child: StudentChatPage()) : const LoginPage()),
+                  body: isLogged
+                      ? const SafeArea(child: StudentChatPage())
+                      : const LoginPage()),
               bodyTemplate(
                   body: isLogged ? AccountPage(user: user) : const LoginPage()),
             ][currentStudentPageIndex],

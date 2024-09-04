@@ -91,13 +91,15 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
           });
     });
 
-    Future.delayed(const Duration(microseconds: 0), () async {
-      if (oneTime == false) {
-        await ref.read(userNotifierProvider.notifier).isAdSaved(
-            adUid: widget.adUid!, userUid: widget.studentUid!, index: 0);
-        oneTime = true;
-      }
-    });
+    if (widget.isLogged && widget.isStudent) {
+      Future.delayed(const Duration(microseconds: 0), () async {
+        if (oneTime == false) {
+          await ref.read(userNotifierProvider.notifier).isAdSaved(
+              adUid: widget.adUid!, userUid: widget.studentUid!, index: 0);
+          oneTime = true;
+        }
+      });
+    }
 
     final networkStatus = ref.watch(networkAwareProvider);
 
@@ -197,6 +199,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
         await ref.read(adNotifierProvider.notifier).addNewAd(
             newAd: AdData(
                 hostUid: widget.host!.uid!,
+                hostName: widget.host!.name!,
+                hostPhotoURL: widget.host!.photoUrl!,
                 name: widget.ad.name,
                 address: widget.ad.address,
                 rooms: widget.ad.rooms,
@@ -217,6 +221,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
             updatedAd: AdData(
               uid: widget.ad.uid,
               hostUid: widget.host!.uid!,
+              hostName: widget.host!.name!,
+              hostPhotoURL: widget.host!.photoUrl!,
               name: widget.ad.name,
               address: widget.ad.address,
               rooms: widget.ad.rooms,
@@ -248,8 +254,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                               facilityAddress:
                                   "${widget.ad.address.city} - ${widget.ad.address.street}",
                               facilityPrice: widget.ad.monthlyRent,
-                              hostUrlImage: widget.host!.photoUrl!,
-                              facilityHostName: widget.host!.name!),
+                              hostUrlImage: widget.ad.hostPhotoURL,
+                              facilityHostName: widget.ad.hostName),
                           SizedBox(height: 20.h),
                           const Divider(
                             color: ColorPalette.blueberry,

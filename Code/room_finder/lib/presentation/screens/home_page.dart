@@ -184,14 +184,16 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                             itemBuilder: (BuildContext context, int index) {
                               Future.delayed(const Duration(microseconds: 0),
                                   () async {
-                                if (oneTime[index] == false) {
-                                  await ref
-                                      .read(userNotifierProvider.notifier)
-                                      .isAdSaved(
-                                          adUid: randomCityAds[index].uid!,
-                                          userUid: widget.studentUser.uid!,
-                                          index: index);
-                                  oneTime[index] = true;
+                                if (widget.isLogged) {
+                                  if (oneTime[index] == false) {
+                                    await ref
+                                        .read(userNotifierProvider.notifier)
+                                        .isAdSaved(
+                                            adUid: randomCityAds[index].uid!,
+                                            userUid: widget.studentUser.uid!,
+                                            index: index);
+                                    oneTime[index] = true;
+                                  }
                                 }
                               });
 

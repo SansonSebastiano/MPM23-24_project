@@ -9,6 +9,8 @@ import 'package:room_finder/provider/firebase_providers.dart';
 
 /// List of fields for ads' documents
 const String _hostUidField = 'hostUid';
+const String _hostNameField = "hostName";
+const String _hostPhotoURLField = "hostPhotoURL";
 const String _nameField = 'name';
 const String _rentersCapacityField = 'rentersCapacity';
 const String _monthlyRentField = 'monthlyRent';
@@ -44,7 +46,8 @@ class AdDataSource {
   AdDataSource(this._adCollection, this._adRef);
 
   /// The method [getAd] returns an individual ad passing as parameter its unique identifier [adUid]
-  Future<Either<String, AdData?>> getAd({required String adUid, required bool isHost}) async {
+  Future<Either<String, AdData?>> getAd(
+      {required String adUid, required bool isHost}) async {
     try {
       final docSnap = await _adCollection.doc(adUid).get();
 
@@ -108,6 +111,8 @@ class AdDataSource {
       return right(AdData(
         uid: adUid,
         hostUid: docSnap[_hostUidField],
+        hostName: docSnap[_hostNameField],
+        hostPhotoURL: docSnap[_hostPhotoURLField],
         name: docSnap[_nameField],
         address: address,
         rooms: rooms,
@@ -153,6 +158,8 @@ class AdDataSource {
       // 1. Add standard fields
       DocumentReference adDocRef = await _adCollection.add({
         _hostUidField: newAd.hostUid,
+        _hostNameField: newAd.hostName,
+        _hostPhotoURLField: newAd.hostPhotoURL,
         _nameField: newAd.name,
         _rentersCapacityField: newAd.rentersCapacity,
         _monthlyRentField: newAd.monthlyRent,
@@ -246,14 +253,6 @@ class AdDataSource {
   /// The method [updateAd] allows to update an ad represented by its unique identifier [updatedAd.uid] and that meets the passed parameters
   Future<Either<String, void>> updateAd({
     required AdData updatedAd,
-    // required String adUid,
-    // required String name,
-    // required Address address,
-    // required List<Room> rooms,
-    // required int rentersCapacity,
-    // required List<Renter> renters,
-    // required List<String> services,
-    // required int monthlyRent,
     required List<File> newPhotosPaths,
   }) async {
     try {
@@ -388,7 +387,7 @@ class AdDataSource {
         final rentersCapacity = doc[_rentersCapacityField] as int;
 
         // Skip the ad if renters count equals the rentersCapacity
-        if(rentersList.length == rentersCapacity) {
+        if (rentersList.length == rentersCapacity) {
           continue;
         }
 
@@ -429,6 +428,8 @@ class AdDataSource {
         adsList.add(AdData(
           uid: adUid,
           hostUid: doc[_hostUidField],
+          hostName: doc[_hostNameField],
+          hostPhotoURL: doc[_hostPhotoURLField],
           name: doc[_nameField],
           address: address,
           rooms: roomsList,
@@ -506,6 +507,8 @@ class AdDataSource {
         adsList.add(AdData(
           uid: adUid,
           hostUid: doc[_hostUidField],
+          hostName: doc[_hostNameField],
+          hostPhotoURL: doc[_hostPhotoURLField],
           name: doc[_nameField],
           address: Address(
             street: addressData['street'],
@@ -599,11 +602,11 @@ class AdDataSource {
             contractDeadline: DateTime.parse(renterData['contractDeadline']),
           );
         }).toList();
-        
+
         final rentersCapacity = doc[_rentersCapacityField] as int;
 
         // Skip the ad if renters count equals the rentersCapacity
-        if(rentersList.length == rentersCapacity) {
+        if (rentersList.length == rentersCapacity) {
           continue;
         }
 
@@ -632,7 +635,8 @@ class AdDataSource {
           final roomData = roomDoc.data();
           if (roomData.containsKey('numBeds')) {
             numberOfBedrooms = numberOfBedrooms + (roomData['quantity'] as int);
-            numberOfBeds = List<int>.from(roomData['numBeds']).reduce((bedsSum, b) => bedsSum + b);
+            numberOfBeds = List<int>.from(roomData['numBeds'])
+                .reduce((bedsSum, b) => bedsSum + b);
 
             return Bedroom(
               name: roomData['name'],
@@ -640,8 +644,9 @@ class AdDataSource {
               numBeds: List<int>.from(roomData['numBeds']),
             );
           } else {
-            if(roomData['name'] == 'Bathrooms'){
-              numberOfBathrooms = numberOfBathrooms + (roomData['quantity'] as int);
+            if (roomData['name'] == 'Bathrooms') {
+              numberOfBathrooms =
+                  numberOfBathrooms + (roomData['quantity'] as int);
             }
 
             return Room(
@@ -666,7 +671,8 @@ class AdDataSource {
         // Capitalizing the first letter for every required service
         if (requiredServices != null) {
           for (var element in requiredServices) {
-            element = "${element[0].toUpperCase()}${element.substring(1).toLowerCase()}";
+            element =
+                "${element[0].toUpperCase()}${element.substring(1).toLowerCase()}";
           }
         }
         final services = List<String>.from(doc[_servicesField] ?? []);
@@ -684,6 +690,8 @@ class AdDataSource {
         filteredAds.add(AdData(
           uid: adUid,
           hostUid: doc[_hostUidField],
+          hostName: doc[_hostNameField],
+          hostPhotoURL: doc[_hostPhotoURLField],
           name: doc[_nameField],
           address: address,
           rooms: roomsList,

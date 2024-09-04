@@ -241,6 +241,8 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
                       ? widget.adToEdit!.uid!
                       : '',
                       hostUid: widget.hostUser.uid!,
+                      hostName: widget.hostUser.name!,
+                      hostPhotoURL: widget.hostUser.photoUrl!,
                       name: widget.name,
                       address: widget.address,
                       rooms: widget.rooms,
