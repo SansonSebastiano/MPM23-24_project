@@ -14,6 +14,10 @@ class AdState with _$AdState {
 
   const factory AdState.singleSuccessfulRead({required AdData? adData}) = _SingleSuccessfulRead;
 
+  const factory AdState.multipleRandomFailedReads() = _MultipleRandomFailedRead;
+
+  const factory AdState.multipleRandomSuccessfulReads({required List<AdData> adsData}) = _MultipleRandomSuccessfulRead;
+
   const factory AdState.multipleFailedReads() = _MultipleFailedRead;
 
   const factory AdState.multipleSuccessfulReads({required List<AdData> adsData}) = _MultipleSuccessfulRead;

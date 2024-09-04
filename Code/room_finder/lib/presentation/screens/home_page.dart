@@ -95,8 +95,8 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
     ref.listen(adNotifierProvider, (previous, next) {
       next.maybeWhen(
         orElse: () => null,
-        multipleFailedReads: () => print("Fail on reading multiple ads"),
-        multipleSuccessfulReads: (adsData) {
+        multipleRandomFailedReads: () => print("Fail on reading multiple ads"),
+        multipleRandomSuccessfulReads: (adsData) {
           randomCityAds = adsData;
 
           // initializing isSavedAd, oneTime lists
@@ -147,6 +147,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                 CustomSearchBar(
                   hintText: AppLocalizations.of(context)!.lblEnterCity,
                   isLogged: widget.isLogged,
+                  currentUserUid: widget.studentUser.uid!
                 ),
                 SizedBox(height: 60.h),
                 Align(

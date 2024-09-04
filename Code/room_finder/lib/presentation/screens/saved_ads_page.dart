@@ -119,21 +119,21 @@ class _StudentHomePageBodyState extends ConsumerState<_SavedAdsPageBody> {
                                     price: savedAds[index]!.monthlyRent,
                                     onPressed: () => {
                                           Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                FacilityDetailPage(
-                                              isLogged: widget.currentUserUid.isNotEmpty,
-                                              isStudent: true,
-                                              isWizardPage: false,
-                                              ad: savedAds[index]!,
-                                              adUid: savedAds[index]!.uid,
-                                              studentUid:
-                                                  widget.currentUserUid,
-                                              isEditingMode: false,
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FacilityDetailPage(
+                                                isLogged: widget.currentUserUid.isNotEmpty,
+                                                isStudent: true,
+                                                isWizardPage: false,
+                                                ad: savedAds[index]!,
+                                                adUid: savedAds[index]!.uid,
+                                                studentUid:
+                                                    widget.currentUserUid,
+                                                isEditingMode: false,
+                                              ),
                                             ),
                                           ),
-                                        ),
                                         });
                               },
                               separatorBuilder: (BuildContext context, int index) {

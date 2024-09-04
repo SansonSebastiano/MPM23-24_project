@@ -90,8 +90,8 @@ class AdNotifier extends StateNotifier<AdState> {
 
     final response = await _adDataSource.getAdsForRandomCity();
 
-    state = response.fold((error) => const AdState.multipleFailedReads(),
-        (response) => AdState.multipleSuccessfulReads(adsData: response));
+    state = response.fold((error) => const AdState.multipleRandomFailedReads(),
+        (response) => AdState.multipleRandomSuccessfulReads(adsData: response));
   }
 
   /// The method [getAdsByHostUid] returns a host ads list searching for the host unique identifier [hostUid]
