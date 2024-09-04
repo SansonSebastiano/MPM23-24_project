@@ -118,12 +118,20 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
     }
 
     final photoCarousel = widget.isStudent
-        ? StudentPhotoCarousel(
-            items: widget.ad.photosURLs!
-                .map((url) => Image(image: NetworkImage(url)))
-                .toList(),
-            isSaved: isSaved,
-            onPressed: toggleSave,
+        ? PopScope(
+            onPopInvoked: (didPop) {
+              if (didPop) {
+                return;
+              }
+            },
+            child: StudentPhotoCarousel(
+              items: widget.ad.photosURLs!
+                  .map((url) => Image(image: NetworkImage(url)))
+                  .toList(),
+              isSaved: isSaved,
+              onSavePressed: toggleSave,
+              onBackPressed: () => Navigator.pop(context),
+            ),
           )
         : HostPhotoCarousel(
             items: widget.isWizardPage
@@ -149,6 +157,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                             adToEdit: widget.ad,
                           )));
             },
+            onBackPressed: () => Navigator.pop(context),
           );
 
     ref.listen(adNotifierProvider, (previous, next) {
@@ -169,7 +178,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
         successfulDeleteAd: () {
           showSuccessSnackBar(
               context, AppLocalizations.of(context)!.lblSuccessfulAdDeleted);
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const MyHomePage()),
           );
@@ -180,13 +189,13 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
         successfulUpdateAd: () {
           showSuccessSnackBar(
               context, AppLocalizations.of(context)!.lblSuccessfulAdUpdated);
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const MyHomePage()),
           );
         },
         failedUpdateAd: () {
-          // TODO: 
+          // TODO:
         },
       );
     });
@@ -219,17 +228,17 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
       } else {
         await ref.read(adNotifierProvider.notifier).updateAd(
             updatedAd: AdData(
-              uid: widget.ad.uid,
-              hostUid: widget.host!.uid!,
-              hostName: widget.host!.name!,
-              hostPhotoURL: widget.host!.photoUrl!,
-              name: widget.ad.name,
-              address: widget.ad.address,
-              rooms: widget.ad.rooms,
-              rentersCapacity: widget.ad.rentersCapacity,
-              renters: widget.ad.renters,
-              services: widget.ad.services,
-              monthlyRent: widget.ad.monthlyRent),
+                uid: widget.ad.uid,
+                hostUid: widget.host!.uid!,
+                hostName: widget.host!.name!,
+                hostPhotoURL: widget.host!.photoUrl!,
+                name: widget.ad.name,
+                address: widget.ad.address,
+                rooms: widget.ad.rooms,
+                rentersCapacity: widget.ad.rentersCapacity,
+                renters: widget.ad.renters,
+                services: widget.ad.services,
+                monthlyRent: widget.ad.monthlyRent),
             newPhotosPaths: widget.facilityPhotos!);
       }
     }
@@ -453,9 +462,9 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                             child: RectangleButton(
                                 label: AppLocalizations.of(context)!.btnConfirm,
                                 onPressed: () async {
-                                  widget.isEditingMode 
-                                  ? await updateAd()
-                                  : await uploadNewAd();
+                                  widget.isEditingMode
+                                      ? await updateAd()
+                                      : await uploadNewAd();
                                 }),
                           )
                         : const SizedBox.shrink(),

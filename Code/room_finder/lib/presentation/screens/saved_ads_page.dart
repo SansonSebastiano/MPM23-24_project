@@ -11,12 +11,12 @@ import 'package:room_finder/provider/user_provider.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class SavedAdsPage extends ConsumerWidget {
-  final String currentUserUid; 
-  
+  final String currentUserUid;
+
   const SavedAdsPage({
     super.key,
     required this.currentUserUid,
-    });
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,7 +35,7 @@ class SavedAdsPage extends ConsumerWidget {
 
 class _SavedAdsPageBody extends ConsumerStatefulWidget {
   final String currentUserUid;
-  
+
   const _SavedAdsPageBody(
     this.currentUserUid,
   );
@@ -54,7 +54,9 @@ class _StudentHomePageBodyState extends ConsumerState<_SavedAdsPageBody> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ref.read(userNotifierProvider.notifier).getUser(userUid: widget.currentUserUid);
+      ref
+          .read(userNotifierProvider.notifier)
+          .getUser(userUid: widget.currentUserUid);
     });
   }
 
@@ -62,85 +64,94 @@ class _StudentHomePageBodyState extends ConsumerState<_SavedAdsPageBody> {
   Widget build(BuildContext context) {
     ref.listen(userNotifierProvider, (previous, next) {
       next.maybeWhen(
-        orElse: () => null,
-        failedRead: () => print("Fail on reading user"),
-        successfulRead: (userData) {
-          savedAdsUids = userData.savedAds!;
+          orElse: () => null,
+          failedRead: () => print("Fail on reading user"),
+          successfulRead: (userData) {
+            savedAdsUids = userData.savedAds!;
 
-          ref.read(userNotifierProvider.notifier).getSavedAds(savedAds: savedAdsUids);
-        },
-        failedMultipleReads: () => print("Fail on reading multiple saved ads"),
-        successfulMultipleReads: (adsData) {
-          savedAds = adsData;
+            ref
+                .read(userNotifierProvider.notifier)
+                .getSavedAds(savedAds: savedAdsUids);
+          },
+          failedMultipleReads: () =>
+              print("Fail on reading multiple saved ads"),
+          successfulMultipleReads: (adsData) {
+            savedAds = adsData;
 
-          setState(() {
-            isOnLoad = false;
+            setState(() {
+              isOnLoad = false;
+            });
           });
-        }
-      );
     });
-    
+
     return Expanded(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.w),
-              child: Text(AppLocalizations.of(context)!.lblSavedAdsDesc),
-            ),
-            SizedBox(height: 20.h),
-            isOnLoad 
-                ? const Expanded(
+        child: Column(children: [
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30.w),
+        child: Text(AppLocalizations.of(context)!.lblSavedAdsDesc),
+      ),
+      SizedBox(height: 20.h),
+      isOnLoad
+          ? const Expanded(
+              child: Center(
+              child: CircularProgressIndicator(),
+            ))
+          : ref.read(networkAwareProvider) == NetworkStatus.off
+              ? Expanded(
+                  child: Center(
+                    child: NoInternetErrorMessage(context: context),
+                  ),
+                )
+              : savedAds.isEmpty
+                  ? Expanded(
                       child: Center(
-                      child: CircularProgressIndicator(),
+                      child: NoDataErrorMessage(
+                        context: context,
+                      ),
                     ))
-                : ref.read(networkAwareProvider) == NetworkStatus.off
-                    ? Expanded(
-                      child: Center(
-                        child: NoInternetErrorMessage(context: context),
+                  : Expanded(
+                      child: ListView.separated(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        itemCount: savedAds.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return AdsBox(
+                              imageUrl: savedAds[index]!.photosURLs!.first,
+                              city: savedAds[index]!.address.city,
+                              street: savedAds[index]!.address.street,
+                              price: savedAds[index]!.monthlyRent,
+                              onPressed: () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FacilityDetailPage(
+                                      isLogged:
+                                          widget.currentUserUid.isNotEmpty,
+                                      isStudent: true,
+                                      isWizardPage: false,
+                                      ad: savedAds[index]!,
+                                      adUid: savedAds[index]!.uid,
+                                      studentUid: widget.currentUserUid,
+                                      isEditingMode: false,
+                                    ),
+                                  ),
+                                );
+
+                                if (true) {
+                                  setState(() {
+                                    isOnLoad = true;
+                                  });
+                                  await ref
+                                    .read(userNotifierProvider.notifier)
+                                    .getUser(userUid: widget.currentUserUid);
+                                }
+                              });
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                              height: 20.h); // Add padding between items
+                        },
                       ),
                     )
-                    : savedAds.isEmpty
-                        ? Expanded(
-                          child: Center(
-                          child: NoDataErrorMessage(
-                            context: context,
-                          ),
-                        ))
-                        : Expanded(
-                            child: ListView.separated(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w),
-                              itemCount: savedAds.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return AdsBox(
-                                    imageUrl:
-                                        savedAds[index]!.photosURLs!.first,
-                                    city: savedAds[index]!.address.city,
-                                    street: savedAds[index]!.address.street,
-                                    price: savedAds[index]!.monthlyRent,
-                                    onPressed: () => {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  FacilityDetailPage(
-                                                isLogged: widget.currentUserUid.isNotEmpty,
-                                                isStudent: true,
-                                                isWizardPage: false,
-                                                ad: savedAds[index]!,
-                                                adUid: savedAds[index]!.uid,
-                                                studentUid:
-                                                    widget.currentUserUid,
-                                                isEditingMode: false,
-                                              ),
-                                            ),
-                                          ),
-                                        });
-                              },
-                              separatorBuilder: (BuildContext context, int index) {
-                                return SizedBox(height: 20.h); // Add padding between items
-                              },
-                            ),
-                          )
     ]));
   }
 }

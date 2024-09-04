@@ -22,18 +22,20 @@ abstract class PhotoCarousel extends StatefulWidget {
   final List<Image> items;
   final bool isWizardPage;
   final bool? isSaved;
-  final void Function()? onPressed;
+  final void Function()? onSavePressed;
   final void Function()? onEditPressed;
   final void Function()? onDeletePressed;
+  final void Function() onBackPressed;
 
   const PhotoCarousel(
       {super.key,
       required this.items,
       this.isWizardPage = false,
       this.isSaved,
-      this.onPressed,
+      this.onSavePressed,
       this.onDeletePressed,
-      this.onEditPressed});
+      this.onEditPressed,
+      required this.onBackPressed});
 
   bool get isStudent;
 
@@ -80,7 +82,7 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
           alignment: Alignment.topLeft,
           child: SafeArea(
             child: LightBackButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: widget.onBackPressed,
             ),
           ),
         ),
@@ -96,7 +98,7 @@ class _PhotoCarouselState extends State<PhotoCarousel> {
                       BookmarkButton(
                         size: 50,
                         isSaved: widget.isSaved!,
-                        onPressed: widget.onPressed,
+                        onPressed: widget.onSavePressed,
                       ),
                       _PhotoCounter(current: _current, widget: widget)
                     ],
@@ -171,7 +173,7 @@ class _PhotoCounter extends StatelessWidget {
 /// [HostPhotoCarousel] is a widget that displays a carousel of images for the host.
 class HostPhotoCarousel extends PhotoCarousel {
   const HostPhotoCarousel(
-      {super.key, required super.items, required super.isWizardPage, required super.onEditPressed, required super.onDeletePressed});
+      {super.key, required super.items, required super.isWizardPage, required super.onEditPressed, required super.onDeletePressed, required super.onBackPressed});
 
   @override
   bool get isStudent => false;
@@ -183,7 +185,8 @@ class StudentPhotoCarousel extends PhotoCarousel {
       {super.key,
       required super.items,
       required super.isSaved,
-      required super.onPressed});
+      required super.onSavePressed,
+      required super.onBackPressed});
 
   @override
   bool get isStudent => true;
