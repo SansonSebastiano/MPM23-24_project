@@ -117,13 +117,7 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
           orElse: () => null,
           successfulSavedAdRead: (isAdSaved, index) {
             setState(() {
-              //bool isFirstAdSaved = areAdsSaved[0];
-
               areAdsSaved[index] = isAdSaved;
-
-              //if(oneTime[0] && index == 0) {
-              //  areAdsSaved[index] = isFirstAdSaved;
-              //}
             });
           });
     });
@@ -145,10 +139,9 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                 ),
                 SizedBox(height: 30.h),
                 CustomSearchBar(
-                  hintText: AppLocalizations.of(context)!.lblEnterCity,
-                  isLogged: widget.isLogged,
-                  currentUserUid: widget.studentUser.uid!
-                ),
+                    hintText: AppLocalizations.of(context)!.lblEnterCity,
+                    isLogged: widget.isLogged,
+                    currentUserUid: widget.studentUser.uid!),
                 SizedBox(height: 60.h),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -204,53 +197,31 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                                   city: randomCityAds[index].address.city,
                                   street: randomCityAds[index].address.street,
                                   price: randomCityAds[index].monthlyRent,
-                                  bookmarkButton: BookmarkButton(
-                                    size: 50.0,
-                                    isSaved: areAdsSaved[index],
-                                    onPressed: () => toggleSave(
-                                        index,
-                                        randomCityAds[index].uid!,
-                                        widget.studentUser.uid!),
-                                  ),
-                                  onPressed: () => {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                FacilityDetailPage(
-                                              isLogged: widget.isLogged,
-                                              isStudent: true,
-                                              isWizardPage: false,
-                                              ad: randomCityAds[index],
-                                              // facilityPhotosURL:
-                                              //     randomCityAds[index]
-                                              //         .photosURLs!,
-                                              // facilityName:
-                                              //     randomCityAds[index].name,
-                                              // facilityAddress:
-                                              //     randomCityAds[index].address,
-                                              // facilityPrice:
-                                              //     randomCityAds[index]
-                                              //         .monthlyRent,
-                                              // // facilityHostName: "DA IMPLEMENTARE", // TODO
-                                              // // hostUrlImage: "DA IMPLEMENTARE", // TODO
-                                              // facilityServices:
-                                              //     randomCityAds[index].services,
-                                              // facilityRenters:
-                                              //     randomCityAds[index].renters,
-                                              // facilityRooms:
-                                              //     randomCityAds[index].rooms,
-                                              // facilityRentersCapacity:
-                                              //     randomCityAds[index]
-                                              //         .rentersCapacity,
-                                              adUid: randomCityAds[index].uid,
-                                              studentUid:
-                                                  widget.studentUser.uid,
-                                              isEditingMode: false,
-                                            ),
-                                          ),
+                                  // bookmarkButton: BookmarkButton(
+                                  //   size: 50.0,
+                                  //   isSaved: areAdsSaved[index],
+                                  //   onPressed: () => toggleSave(
+                                  //       index,
+                                  //       randomCityAds[index].uid!,
+                                  //       widget.studentUser.uid!),
+                                  // ),
+                                  onPressed: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            FacilityDetailPage(
+                                          isLogged: widget.isLogged,
+                                          isStudent: true,
+                                          isWizardPage: false,
+                                          ad: randomCityAds[index],
+                                          adUid: randomCityAds[index].uid,
+                                          studentUid: widget.studentUser.uid,
+                                          isEditingMode: false,
                                         ),
-                                      });
+                                      ),
+                                    );
+                                  });
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {

@@ -118,21 +118,14 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
     }
 
     final photoCarousel = widget.isStudent
-        ? PopScope(
-            onPopInvoked: (didPop) {
-              if (didPop) {
-                return;
-              }
-            },
-            child: StudentPhotoCarousel(
-              items: widget.ad.photosURLs!
-                  .map((url) => Image(image: NetworkImage(url)))
-                  .toList(),
-              isSaved: isSaved,
-              onSavePressed: toggleSave,
-              onBackPressed: () => Navigator.pop(context),
-            ),
-          )
+        ? StudentPhotoCarousel(
+          items: widget.ad.photosURLs!
+              .map((url) => Image(image: NetworkImage(url)))
+              .toList(),
+          isSaved: isSaved,
+          onSavePressed: toggleSave,
+          onBackPressed: () => Navigator.pop(context, true),
+        )
         : HostPhotoCarousel(
             items: widget.isWizardPage
                 ? widget.facilityPhotos!

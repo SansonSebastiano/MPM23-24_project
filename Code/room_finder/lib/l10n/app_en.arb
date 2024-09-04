@@ -410,7 +410,7 @@
   "@lblRenterContract": {
     "description": "The label to enter the contract deadline"
   },
-  "lblWiFi": "Wi-Fi",
+  "lblWiFi": "WiFi",
   "@lblWiFi": {
     "description": "The label to set the Wi-Fi"
   },
