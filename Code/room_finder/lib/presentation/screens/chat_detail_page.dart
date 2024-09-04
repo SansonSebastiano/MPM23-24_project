@@ -112,7 +112,7 @@ class ChatDetailPageBody extends StatelessWidget {
                     time: '05:40 PM',
                   ),
                   const Message(
-                    message: "Great, can we share our phone numbers to discuss more about the proposal?",
+                    message: "Great! Can we share our phone numbers to discuss more about the proposal?",
                     isSent: false,
                     time: '05:50 PM',
                   ),
@@ -129,7 +129,7 @@ class ChatDetailPageBody extends StatelessWidget {
                     time: '05:40 PM',
                   ),
                   const Message(
-                    message: "Great, can we share our phone numbers to discuss more about the proposal?",
+                    message: "Great! Can we share our phone numbers to discuss more about the proposal?",
                     isSent: true,
                     time: '05:50 PM',
                   ),

@@ -10,10 +10,8 @@ import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/search_bar.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
-import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/presentation/screens/wizard_screens/wizard_page1.dart';
 import 'package:room_finder/provider/ad_provider.dart';
-import 'package:room_finder/provider/user_provider.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class StudentHomePage extends StatelessWidget {
@@ -51,14 +49,10 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
   bool isConnected = false;
   List<AdData> randomCityAds = [];
   bool isOnLoad = true;
-  late List<bool> areAdsSaved;
-  late List<bool> oneTime;
 
   @override
   void initState() {
     super.initState();
-    areAdsSaved = <bool>[];
-    oneTime = <bool>[];
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var connectivityStatusProvider = ref.watch(networkAwareProvider);
       setState(() {
@@ -66,27 +60,6 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
       });
 
       ref.read(adNotifierProvider.notifier).getAdsForRandomCity();
-    });
-  }
-
-  void toggleSave(int index, String adUid, String userUid) async {
-    if (widget.isLogged == false) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()));
-    } else {
-      if (areAdsSaved[index]) {
-        await ref
-            .read(userNotifierProvider.notifier)
-            .removeSavedAd(adUid: adUid, userUid: userUid);
-      } else {
-        await ref
-            .read(userNotifierProvider.notifier)
-            .saveAd(adUid: adUid, userUid: userUid);
-      }
-    }
-
-    setState(() {
-      areAdsSaved[index] = !areAdsSaved[index];
     });
   }
 
@@ -99,27 +72,11 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
         multipleRandomSuccessfulReads: (adsData) {
           randomCityAds = adsData;
 
-          // initializing isSavedAd, oneTime lists
-          for (var element in randomCityAds) {
-            areAdsSaved.add(false);
-            oneTime.add(false);
-          }
-
           setState(() {
             isOnLoad = false;
           });
         },
       );
-    });
-
-    ref.listen(userNotifierProvider, (previous, next) {
-      next.maybeWhen(
-          orElse: () => null,
-          successfulSavedAdRead: (isAdSaved, index) {
-            setState(() {
-              areAdsSaved[index] = isAdSaved;
-            });
-          });
     });
 
     if (ref.read(networkAwareProvider) == NetworkStatus.off) {
@@ -176,35 +133,12 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             itemCount: randomCityAds.length,
                             itemBuilder: (BuildContext context, int index) {
-                              Future.delayed(const Duration(microseconds: 0),
-                                  () async {
-                                if (widget.isLogged) {
-                                  if (oneTime[index] == false) {
-                                    await ref
-                                        .read(userNotifierProvider.notifier)
-                                        .isAdSaved(
-                                            adUid: randomCityAds[index].uid!,
-                                            userUid: widget.studentUser.uid!,
-                                            index: index);
-                                    oneTime[index] = true;
-                                  }
-                                }
-                              });
-
                               return AdsBox(
                                   imageUrl:
                                       randomCityAds[index].photosURLs!.first,
                                   city: randomCityAds[index].address.city,
                                   street: randomCityAds[index].address.street,
                                   price: randomCityAds[index].monthlyRent,
-                                  // bookmarkButton: BookmarkButton(
-                                  //   size: 50.0,
-                                  //   isSaved: areAdsSaved[index],
-                                  //   onPressed: () => toggleSave(
-                                  //       index,
-                                  //       randomCityAds[index].uid!,
-                                  //       widget.studentUser.uid!),
-                                  // ),
                                   onPressed: () async {
                                     await Navigator.push(
                                       context,
@@ -313,7 +247,6 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                         isAddButton: true,
                         size: 40.w,
                         onPressed: () {
-                          // TODO: Replace with real data
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return WizardPage1(
@@ -367,22 +300,6 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                                               isStudent: false,
                                               isWizardPage: false,
                                               ad: hostAds[index],
-                                              // facilityPhotosURL:
-                                              //     hostAds[index].photosURLs!,
-                                              // facilityName: hostAds[index].name,
-                                              // facilityAddress:
-                                              //     hostAds[index].address,
-                                              // facilityPrice:
-                                              //     hostAds[index].monthlyRent,
-                                              // facilityServices:
-                                              //     hostAds[index].services,
-                                              // facilityRentersCapacity:
-                                              //     hostAds[index]
-                                              //         .rentersCapacity,
-                                              // facilityRenters:
-                                              //     hostAds[index].renters,
-                                              // facilityRooms:
-                                              //     hostAds[index].rooms,
                                               adUid: hostAds[index].uid,
                                               host: widget.hostUser,
                                               isEditingMode: false,
@@ -394,7 +311,7 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                             separatorBuilder:
                                 (BuildContext context, int index) {
                               return SizedBox(
-                                  height: 20.h); // Add padding between items
+                                  height: 20.h);
                             },
                           ),
                         ),

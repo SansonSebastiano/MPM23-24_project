@@ -295,15 +295,16 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                   .copyWith(fontWeight: FontWeight.w500),
                             ),
                           ),
-                          SizedBox(
-                            height: 100.h,
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 5.h),
                             child: ListView.separated(
                               padding: EdgeInsets.zero,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
                               itemBuilder: (BuildContext context, int index) {
                                 return RichText(
                                   text: TextSpan(
-                                    // TODO: check if some rooms are 0
-                                    text: "- ${widget.ad.rooms[index].name}: ",
+                                    text: "• ${widget.ad.rooms[index].name}: ",
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
@@ -311,29 +312,25 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                           fontWeight: FontWeight.w400,
                                         ),
                                     children: [
-                                      widget.ad.rooms[index].runtimeType ==
-                                              Bedroom
+                                      widget.ad.rooms[index].runtimeType == Bedroom
                                           ? TextSpan(
                                               text:
-                                                  "\n   - ${bedsText.getRange(0, bedsText.length).join('\n   - ')}")
+                                                  "\n   ▪ ${bedsText.getRange(0, bedsText.length).join('\n   ▪ ')}")
                                           : TextSpan(
-                                              text:
-                                                  "${widget.ad.rooms[index].quantity}",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium)
+                                              text: "${widget.ad.rooms[index].quantity}",
+                                              style: Theme.of(context).textTheme.bodyMedium,
+                                            ),
                                     ],
                                   ),
                                 );
                               },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
+                              separatorBuilder: (BuildContext context, int index) {
                                 return SizedBox(
                                   height: 10.w,
                                 );
                               },
                               itemCount: widget.ad.rooms.length,
-                            ),
+                            )
                           ),
                           const Divider(
                             color: ColorPalette.blueberry,
@@ -352,46 +349,50 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                           ),
                           widget.isStudent && widget.ad.renters.isNotEmpty
                               ? Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      if (widget.isLogged) {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CurrentRentersPage(
-                                                    facilityName:
-                                                        widget.ad.name,
-                                                    facilityAddress:
-                                                        widget.ad.address,
-                                                    facilityMaximumRentersCapacity:
-                                                        widget
-                                                            .ad.rentersCapacity,
-                                                    facilityRenters:
-                                                        widget.ad.renters,
-                                                  )),
-                                        );
-                                      } else {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LoginPage()),
-                                        );
-                                      }
-                                    },
-                                    child: Text(
-                                        AppLocalizations.of(context)!
-                                            .btnMoreDetails,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .displaySmall!
-                                            .copyWith(
-                                              fontSize: 16.sp,
-                                              color: ColorPalette.blueberry,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                            )),
-                                  ),
+                                  alignment: Alignment.topLeft,
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        if (widget.isLogged) {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CurrentRentersPage(
+                                                      facilityName:
+                                                          widget.ad.name,
+                                                      facilityAddress:
+                                                          widget.ad.address,
+                                                      facilityMaximumRentersCapacity:
+                                                          widget
+                                                              .ad.rentersCapacity,
+                                                      facilityRenters:
+                                                          widget.ad.renters,
+                                                    )),
+                                          );
+                                        } else {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const LoginPage()),
+                                          );
+                                        }
+                                      },
+                                      child: Text(
+                                          AppLocalizations.of(context)!
+                                              .btnMoreDetails,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displaySmall!
+                                              .copyWith(
+                                                fontSize: 18.sp,
+                                                color: ColorPalette.blueberry,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                    decorationColor: ColorPalette.blueberry
+                                              )),
+                                    ),
+                                  )
                                 )
                               : SizedBox(
                                   height: 200.h,

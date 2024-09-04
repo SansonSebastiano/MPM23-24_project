@@ -8,9 +8,8 @@ import 'package:room_finder/provider/firebase_providers.dart';
 /// This class allow to handle the user account in Authentication
 class AuthDataSource {
   final FirebaseAuth _auth;
-  final Ref _ref;
 
-  AuthDataSource(this._auth, this._ref);
+  AuthDataSource(this._auth);
 
   /// This method allow to get the current logged user's info
   User? get currentUser => _auth.currentUser;
@@ -90,5 +89,5 @@ class AuthDataSource {
 }
 
 final authDataSourceProvider = Provider<AuthDataSource>(
-  (ref) => AuthDataSource(ref.read(firebaseAuthProvider), ref),
+  (ref) => AuthDataSource(ref.read(firebaseAuthProvider)),
 );
