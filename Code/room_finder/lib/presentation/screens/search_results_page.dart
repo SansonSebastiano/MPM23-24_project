@@ -16,14 +16,32 @@ import 'package:room_finder/util/network_handler.dart';
 
 class SearchResultsPage extends ConsumerStatefulWidget {
   final bool isLogged;
-  final String searchCity;
   final String currentUserUid;
+
+  final String searchCity;
+
+  // fields used to search filtered ads
+  final int? minRent;
+  final int? maxRent;
+  final List<String>? requiredServices;
+  final int? minBedrooms;
+  final int? minBeds;
+  final int? minBathrooms;
+  final int? roommates;
 
   const SearchResultsPage({
     super.key, 
     required this.isLogged, 
+    required this.currentUserUid,
     required this.searchCity,
-    required this.currentUserUid});
+    this.minRent,
+    this.maxRent,
+    this.requiredServices,
+    this.minBedrooms,
+    this.minBeds,
+    this.minBathrooms,
+    this.roommates
+    });
 
   @override
   ConsumerState<SearchResultsPage> createState() => _SearchResultsPageState();
@@ -32,6 +50,7 @@ class SearchResultsPage extends ConsumerStatefulWidget {
 class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
   List<AdData> filteredAds = [];
   bool isOnLoad = true;
+  bool areFiltersApplied = false;
 
   late RangeValues _currentRangeValues;
   late Map<String, bool> _amenitiesSwitches;
@@ -40,14 +59,12 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
   @override
   void initState() {
     super.initState();
-    
-    _currentRangeValues = const RangeValues(0, 1000);
-    _amenitiesSwitches = {};
-    _selectedRoomIndex = {};
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ref.read(adNotifierProvider.notifier).getFilteredAds(city: widget.searchCity);
-    });
+    // Initialize with passed filters or default values
+    _currentRangeValues = RangeValues(
+      widget.minRent?.toDouble() ?? 0,
+      widget.maxRent?.toDouble() ?? 1000,
+    );
   }
 
   @override
@@ -55,39 +72,43 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
     super.didChangeDependencies();
 
     _amenitiesSwitches = {
-      AppLocalizations.of(context)!.lblWiFi: false,
-      AppLocalizations.of(context)!.lblDishwasher: false,
-      AppLocalizations.of(context)!.lblWashingMachine: false,
-      AppLocalizations.of(context)!.lblDedicatedParking: false,
-      AppLocalizations.of(context)!.lblAirConditioning: false,
+      AppLocalizations.of(context)!.lblWiFi: widget.requiredServices?.contains(AppLocalizations.of(context)!.lblWiFi) ?? false,
+      AppLocalizations.of(context)!.lblDishwasher: widget.requiredServices?.contains(AppLocalizations.of(context)!.lblDishwasher) ?? false,
+      AppLocalizations.of(context)!.lblWashingMachine: widget.requiredServices?.contains(AppLocalizations.of(context)!.lblWashingMachine) ?? false,
+      AppLocalizations.of(context)!.lblDedicatedParking: widget.requiredServices?.contains(AppLocalizations.of(context)!.lblDedicatedParking) ?? false,
+      AppLocalizations.of(context)!.lblAirConditioning: widget.requiredServices?.contains(AppLocalizations.of(context)!.lblAirConditioning) ?? false,
     };
 
     _selectedRoomIndex = {
-      AppLocalizations.of(context)!.lblBedrooms: 0,
-      AppLocalizations.of(context)!.lblBeds: 0,
-      AppLocalizations.of(context)!.lblBathrooms: 0,
-      AppLocalizations.of(context)!.lblRoommates: 0
+      AppLocalizations.of(context)!.lblBedrooms: widget.minBedrooms ?? 0,
+      AppLocalizations.of(context)!.lblBeds: widget.minBeds ?? 0,
+      AppLocalizations.of(context)!.lblBathrooms: widget.minBathrooms ?? 0,
+      AppLocalizations.of(context)!.lblRoommates: widget.roommates ?? 0,
     };
+
+    // Determine if filters are applied
+    areFiltersApplied = _currentRangeValues.start > 0 ||
+                        _currentRangeValues.end < 1000 ||
+                        _amenitiesSwitches.containsValue(true) ||
+                        _selectedRoomIndex.values.any((value) => value > 0);
+
+    // Fetch the ads after dependencies have been set
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ref.read(adNotifierProvider.notifier).getFilteredAds(
+        city: widget.searchCity,
+        minRent: widget.minRent,
+        maxRent: widget.maxRent,
+        requiredServices: widget.requiredServices,
+        minBedrooms: widget.minBedrooms,
+        minBeds: widget.minBeds,
+        minBathrooms: widget.minBathrooms,
+        roommates: widget.roommates
+      );
+    });
   }
 
   void _showSearchFilterPanel() {
     _showFilterPanel();
-    // showModalPanel(
-    //     context: context,
-    //     panel: SearchFilterPanel(
-    //       context: context,
-    //       panelTitle: AppLocalizations.of(context)!.lblFilters,
-    //       buttonLabel: AppLocalizations.of(context)!.btnApplyFilters,
-    //       // TODO: Implement the onConfirm function
-    //       onConfirmPressed: () {},
-    //       onClosedPressed: () => Navigator.pop(context),
-    //       currentRangeValues: _currentRangeValues,
-    //       onPriceChanged: (values) {
-    //         setState(() {
-    //           _currentRangeValues = values;
-    //         });
-    //       },
-    //     ));
   }
 
   Future _showFilterPanel() {
@@ -103,29 +124,69 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
             context: context,
             panelTitle: AppLocalizations.of(context)!.lblFilters,
             buttonLabel: AppLocalizations.of(context)!.btnApplyFilters,
-            // TODO: Implement the onConfirm function
-            onConfirmPressed: () {},
+            onConfirmPressed: () {
+              // Get the selected filters
+              final minRent = _currentRangeValues.start.toInt();
+              final maxRent = _currentRangeValues.end.toInt();
+              
+              // Collect selected amenities
+              final selectedAmenities = _amenitiesSwitches.entries
+                  .where((entry) => entry.value)
+                  .map((entry) => entry.key)
+                  .toList();
+              
+              // Collect selected room-related filters
+              final minBedrooms = _selectedRoomIndex[AppLocalizations.of(context)!.lblBedrooms];
+              final minBeds = _selectedRoomIndex[AppLocalizations.of(context)!.lblBeds];
+              final minBathrooms = _selectedRoomIndex[AppLocalizations.of(context)!.lblBathrooms];
+              final roommates = _selectedRoomIndex[AppLocalizations.of(context)!.lblRoommates];
+              
+              // Check if any filters are applied
+              bool areFiltersApplied = 
+                minRent > 0 ||
+                maxRent < 1000 ||
+                selectedAmenities.isNotEmpty ||
+                minBedrooms! > 0 ||
+                minBeds! > 0 ||
+                minBathrooms! > 0 ||
+                roommates! > 0;
+
+              if (areFiltersApplied) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) {
+                      return SearchResultsPage(
+                        isLogged: widget.isLogged,
+                        currentUserUid: widget.currentUserUid,
+                        searchCity: widget.searchCity,
+                        minRent: minRent,
+                        maxRent: maxRent,
+                        requiredServices: selectedAmenities.isEmpty ? null : selectedAmenities,
+                        minBedrooms: minBedrooms == 0 ? null : minBedrooms,
+                        minBeds: minBeds == 0 ? null : minBeds,
+                        minBathrooms: minBathrooms == 0 ? null : minBathrooms,
+                        roommates: roommates == 0 ? null : roommates,
+                      );
+                    }));
+              }
+            },
             onClosedPressed: () => Navigator.pop(context),
             currentRangeValues: _currentRangeValues,
             onPriceChanged: (values) {
               setModalState(() {
                 _currentRangeValues = values;
               });
-              print("price: $_currentRangeValues");
             },
             amenitiesSwitches: _amenitiesSwitches,
             onServiceChanged: (key, value) {
               setModalState(() {
                 _amenitiesSwitches[key] = value;
               });
-              print("$key: ${_amenitiesSwitches[key]}");
             },
             selectedRoomIndex: _selectedRoomIndex,
             onRoomIndexSelected: (key, value, entry) {
               setModalState(() {
                 _selectedRoomIndex[key] = value ? entry : 0;
               });
-              print("$key: ${_selectedRoomIndex[key]}");
             },
           );
         });
@@ -148,9 +209,6 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
         }
       );
     });
-    
-    // TODO: Implement the logic to check if filters are applied
-    bool areFiltersApplied = true;
 
     return SecondaryTemplateScreen(
         leftHeaderWidget:
@@ -176,11 +234,44 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                     )
                 : filteredAds.isEmpty
                     ? Expanded(
-                      child: Center(
-                      child: NoDataErrorMessage(
-                        context: context,
-                      ),
-                    ))
+                        child: Column(
+                          children: [
+                            // If filters are applied, show the "Remove Filters" button
+                            if (areFiltersApplied)
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10.h),
+                                child: OutlinedButton.icon(
+                                  onPressed: () {
+                                    // Remove filters by reinvoking SearchResultsPage without filters
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return SearchResultsPage(
+                                        isLogged: widget.isLogged,
+                                        searchCity: widget.searchCity,
+                                        currentUserUid: widget.currentUserUid,
+                                      );
+                                    }));
+                                  },
+                                  label: Text(AppLocalizations.of(context)!.btnRemoveFilters),
+                                  icon: const Icon(Icons.clear_rounded),
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: Theme.of(context).colorScheme.error,
+                                    side: BorderSide(
+                                      color: Theme.of(context).colorScheme.error,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            Expanded(
+                              child: Center(
+                                child: NoDataErrorMessage(
+                                  context: context,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     : Expanded(
                         child: Column(
                           children: [
@@ -189,12 +280,15 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                                     padding: EdgeInsets.symmetric(vertical: 10.h),
                                     child: OutlinedButton.icon(
                                       onPressed: () {
-                                        print("remove filters pressed");
-                                        // TODO: implement areFiltersApplied logic
-
-                                        // setState(() {
-                                        //   areFiltersApplied = false;
-                                        // });
+                                        // Remove filters by reinvoking SearchResultsPage without filters
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context) {
+                                          return SearchResultsPage(
+                                            isLogged: widget.isLogged,
+                                            searchCity: widget.searchCity,
+                                            currentUserUid: widget.currentUserUid
+                                          );
+                                        }));
                                       },
                                       label: Text(AppLocalizations.of(context)!
                                           .btnRemoveFilters),
@@ -207,7 +301,6 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                                                   Theme.of(context).colorScheme.error)),
                                     ),
                                   )
-                                // ignore: dead_code
                                 : const SizedBox.shrink(),
                             Expanded(
                               child: ListView.separated(
