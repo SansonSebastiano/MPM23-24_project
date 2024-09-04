@@ -74,13 +74,15 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
       final networkStatus = ref.read(networkAwareProvider);
 
       if (networkStatus == NetworkStatus.off) {
-        showErrorSnackBar(context, AppLocalizations.of(context)!.lblConnectionErrorDesc);
+        showErrorSnackBar(
+            context, AppLocalizations.of(context)!.lblConnectionErrorDesc);
       } else {
         // Proceed with registration logic
         ref.read(authNotifierProvider.notifier).signup(
             userCredential: AuthArgs(
                 email: _emailController.text, password: _pswdController.text),
-            user: UserData(name: _nameController.text, isHost: !_isStudentSelected));
+            user: UserData(
+                name: _nameController.text, isHost: !_isStudentSelected));
       }
     }
   }
@@ -106,39 +108,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
               context, AppLocalizations.of(context)!.lblFailedSignup));
     });
 
-    return // FIXME: PopScope(
-      // canPop: false,
-      // onPopInvoked: (didPop) async {
-      //   if (_hasUnsavedChanges) {
-      //     showOptionsDialog(
-      //       context: context,
-      //       androidDialog: ActionsAndroidDialog(
-      //         title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-      //         content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-      //         context: context,
-      //         onOk: () { 
-      //           Navigator.of(context).pop();
-      //           Navigator.of(context).pop();
-      //         },
-      //         onCancel: () => Navigator.of(context).pop(),
-      //       ),
-      //       iosDialog: ActionsIosDialog(
-      //         title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-      //         content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-      //         context: context,
-      //         onOk: () { 
-      //           Navigator.of(context).pop();
-      //           Navigator.of(context).pop();
-      //         },
-      //         onCancel: () => Navigator.of(context).pop(),
-      //       ),
-      //     );
-      //   } else {
-      //     Navigator.of(context).pop();
-      //   }
-      // },
-      //child: 
-      Scaffold(
+    return Scaffold(
         body: SafeArea(
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -151,35 +121,42 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DarkBackButton(
-                        onPressed: (_hasUnsavedChanges) 
-                        ? () { showOptionsDialog(
-                          context: context,
-                          androidDialog: ActionsAndroidDialog(
-                              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-                              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-                              context: context,
-                              onOk: () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                              },
-                              onCancel: () {
-                                Navigator.of(context).pop();
-                              }),
-                          iosDialog: ActionsIosDialog(
-                              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-                              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-                              context: context,
-                              onOk: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const LoginPage())
-                                );
-                              },
-                              onCancel: () {
-                                Navigator.of(context).pop();
-                              }));
-                          } 
-                        : () => Navigator.of(context).pop()
-                      ),
+                          onPressed: (_hasUnsavedChanges)
+                              ? () {
+                                  showOptionsDialog(
+                                      context: context,
+                                      androidDialog: ActionsAndroidDialog(
+                                          title: AppLocalizations.of(context)!
+                                              .lblWarningTitleDialog,
+                                          content: Text(
+                                              AppLocalizations.of(context)!
+                                                  .lblCancelWizard),
+                                          context: context,
+                                          onOk: () {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                          },
+                                          onCancel: () {
+                                            Navigator.of(context).pop();
+                                          }),
+                                      iosDialog: ActionsIosDialog(
+                                          title: AppLocalizations.of(context)!
+                                              .lblWarningTitleDialog,
+                                          content: Text(
+                                              AppLocalizations.of(context)!
+                                                  .lblCancelWizard),
+                                          context: context,
+                                          onOk: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const LoginPage()));
+                                          },
+                                          onCancel: () {
+                                            Navigator.of(context).pop();
+                                          }));
+                                }
+                              : () => Navigator.of(context).pop()),
                       SizedBox(height: 40.h),
                       Padding(
                         padding: EdgeInsets.symmetric(
@@ -187,9 +164,11 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(AppLocalizations.of(context)!.lblRegistration,
-                                style:
-                                    Theme.of(context).textTheme.displayMedium),
+                            Text(
+                                AppLocalizations.of(context)!.lblRegistration,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayMedium),
                             SizedBox(height: 20.h),
                             SwitchTypeAccountButton(
                               onInfo: () => showOptionsDialog(
@@ -224,9 +203,9 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                             ),
                             SizedBox(height: 20.h),
                             StandardTextField(
-                                label: AppLocalizations.of(context)!.lblName,
-                                onValueValidityChanged: _onNameValidityChanged,
-                                controller: _nameController,
+                              label: AppLocalizations.of(context)!.lblName,
+                              onValueValidityChanged: _onNameValidityChanged,
+                              controller: _nameController,
                             ),
                             SizedBox(height: 20.h),
                             EmailTextField(
@@ -235,7 +214,8 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                             ),
                             SizedBox(height: 20.h),
                             RegistrationPswdTextField(
-                              onPswdValidationChanged: _onPasswordValidityChanged,
+                              onPswdValidationChanged:
+                                  _onPasswordValidityChanged,
                               pswdController: _pswdController,
                               confirmPswdController: _confirmPswdController,
                             ),
@@ -269,6 +249,5 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
             ),
           ),
         ]);
-    //)
   }
 }

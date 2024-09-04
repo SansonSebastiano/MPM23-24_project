@@ -433,8 +433,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                   MaterialPageRoute(
                                       builder: (context) => ChatNewPage(
                                           receiverImageUrl:
-                                              widget.host!.photoUrl!,
-                                          receiverName: widget.host!.name!,
+                                              widget.ad.hostPhotoURL,
+                                          receiverName: widget.ad.hostName,
                                           facilityName: widget.ad.name,
                                           onTap: () => {})),
                                 );

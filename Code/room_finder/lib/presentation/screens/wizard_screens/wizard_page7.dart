@@ -214,7 +214,6 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
                         onRemovePressed: () {
                           setState(() {
                             _gridItems.removeAt(index);
-                            // FIXME: check if the remove works fine
                             _photos.removeAt(index-1);
                           });
                         },
@@ -250,14 +249,6 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
                       renters: widget.renters,
                       services: widget.services,
                       monthlyRent: widget.monthlyRent),
-                  // facilityName: widget.name,
-                  // facilityAddress: widget.address,
-                  // facilityPrice: widget.monthlyRent,
-                  // facilityHostName: widget.hostUser.name!,
-                  // facilityServices: widget.services,
-                  // facilityRentersCapacity: widget.rentersCapacity,
-                  // facilityRenters: widget.renters,
-                  // facilityRooms: widget.rooms,
                   host: widget.hostUser,
                   isEditingMode: widget.isEditingMode,
                 )));

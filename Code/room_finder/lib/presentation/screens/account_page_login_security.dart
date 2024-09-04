@@ -81,39 +81,7 @@ class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
       );
     });
 
-    return // FIXME: PopScope(
-        // canPop: true,
-        // onPopInvoked: (didPop) async {
-        //   if (_pswdController.text.isNotEmpty || _confirmPswdController.text.isNotEmpty) {
-        //     showOptionsDialog(
-        //       context: context,
-        //       androidDialog: ActionsAndroidDialog(
-        //         title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-        //         content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-        //         context: context,
-        //         onOk: () {
-        //           Navigator.of(context).pop();
-        //           Navigator.of(context).pop();
-        //         },
-        //         onCancel: () => Navigator.of(context).pop(),
-        //       ),
-        //       iosDialog: ActionsIosDialog(
-        //         title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-        //         content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-        //         context: context,
-        //         onOk: () {
-        //           Navigator.of(context).pop();
-        //           Navigator.of(context).pop();
-        //         },
-        //         onCancel: () => Navigator.of(context).pop(),
-        //       ),
-        //     );
-        //   } else {
-        //     Navigator.of(context).pop();
-        //   }
-        // },
-        // child:
-        Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -139,8 +107,11 @@ class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
                                                 .lblCancelWizard),
                                         context: context,
                                         onOk: () {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pop();
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AccountPage(
+                                                          user: widget.user)));
                                         },
                                         onCancel: () {
                                           Navigator.of(context).pop();
@@ -220,6 +191,5 @@ class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
         ),
       ),
     );
-    // )
   }
 }

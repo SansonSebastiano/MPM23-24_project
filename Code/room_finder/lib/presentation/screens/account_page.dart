@@ -26,6 +26,14 @@ class AccountPage extends ConsumerStatefulWidget {
 
 class _AccountPageState extends ConsumerState<AccountPage> {
   @override
+  void initState() {
+    super.initState();
+    setState(() {
+      
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     ref.listen(authNotifierProvider, (previous, next) {
       next.maybeWhen(
