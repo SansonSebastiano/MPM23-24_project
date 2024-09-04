@@ -10,22 +10,28 @@ import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:room_finder/presentation/components/search_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
-import 'package:room_finder/presentation/screens/login_page.dart';
+import 'package:room_finder/provider/ad_provider.dart';
 import 'package:room_finder/style/color_palette.dart';
 import 'package:room_finder/util/network_handler.dart';
 
 class SearchResultsPage extends ConsumerStatefulWidget {
   final bool isLogged;
+  final String searchCity;
+  final String currentUserUid;
 
-  const SearchResultsPage({super.key, required this.isLogged});
+  const SearchResultsPage({
+    super.key, 
+    required this.isLogged, 
+    required this.searchCity,
+    required this.currentUserUid});
 
   @override
   ConsumerState<SearchResultsPage> createState() => _SearchResultsPageState();
 }
 
 class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
-  late List<bool> isSaved;
-  late List<AdsBox> adsList;
+  List<AdData> filteredAds = [];
+  bool isOnLoad = true;
 
   late RangeValues _currentRangeValues;
   late Map<String, bool> _amenitiesSwitches;
@@ -34,39 +40,14 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
   @override
   void initState() {
     super.initState();
-    // TODO: the end should be the max value from the backend
+    
     _currentRangeValues = const RangeValues(0, 1000);
     _amenitiesSwitches = {};
     _selectedRoomIndex = {};
 
-    isSaved = List.generate(4, (index) => false);
-    adsList = List<AdsBox>.generate(
-        4,
-        (index) => AdsBox(
-            imageUrl:
-                "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-            city: "Padova",
-            street: "Via Roma 12",
-            price: 300,
-            bookmarkButton: BookmarkButton(
-              size: 50.0,
-              isSaved: isSaved[index],
-              onPressed: () => toggleSave(index),
-            ),
-            onPressed: () => {
-                  // TODO: replace with real data
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => FacilityDetailPage(
-                  //       isLogged: widget.isLogged,
-                  //       isStudent: true,
-                  //       isWizardPage: false,
-                        
-                  //     ),
-                  //   ),
-                  // ),
-                }));
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ref.read(adNotifierProvider.notifier).getFilteredAds(city: widget.searchCity);
+    });
   }
 
   @override
@@ -87,16 +68,6 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
       AppLocalizations.of(context)!.lblBathrooms: 0,
       AppLocalizations.of(context)!.lblRoommates: 0
     };
-  }
-
-  void toggleSave(int index) {
-    if (widget.isLogged == false) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()));
-    } else {}
-    setState(() {
-      isSaved[index] = !isSaved[index];
-    });
   }
 
   void _showSearchFilterPanel() {
@@ -164,7 +135,20 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final networkStatus = ref.watch(networkAwareProvider);
+    ref.listen(adNotifierProvider, (previous, next) {
+      next.maybeWhen(
+        orElse: () => {},
+        multipleFailedReads: () => print("Fail on reading multiple search ads"),
+        multipleSuccessfulReads: (adsData) {
+          filteredAds = adsData;
+
+          setState(() {
+            isOnLoad = false;
+          });
+        }
+      );
+    });
+    
     // TODO: Implement the logic to check if filters are applied
     bool areFiltersApplied = true;
 
@@ -172,81 +156,95 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
         leftHeaderWidget:
             DarkBackButton(onPressed: () => Navigator.pop(context)),
         centerHeaderWidget: CustomSearchBar(
-          hintText: "Padova",
+          hintText: widget.searchCity,
           isLogged: widget.isLogged,
+          currentUserUid: widget.currentUserUid,
         ),
         rightHeaderWidget:
             FilterButton(onPressed: () => _showSearchFilterPanel()),
         rightHeaderWidgetVisibility: true,
-        content: networkStatus == NetworkStatus.off
-            ? Center(
-                heightFactor: 8.h,
-                child: NoInternetErrorMessage(context: context))
-            : Expanded(
-                child: Column(
-                  children: [
-                    areFiltersApplied
-                        ? Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.h),
-                            child: OutlinedButton.icon(
-                              onPressed: () {
-                                print("remove filters pressed");
-                                // TODO: implement areFiltersApplied logic
-
-                                // setState(() {
-                                //   areFiltersApplied = false;
-                                // });
-                              },
-                              label: Text(AppLocalizations.of(context)!
-                                  .btnRemoveFilters),
-                              icon: const Icon(Icons.clear_rounded),
-                              style: OutlinedButton.styleFrom(
-                                  foregroundColor:
-                                      Theme.of(context).colorScheme.error,
-                                  side: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.error)),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                    Expanded(
-                      child: ListView.separated(
-                        padding: EdgeInsets.all(20.w),
-                        itemCount: adsList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return AdsBox(
-                              imageUrl:
-                                  "https://media.mondoconv.it/media/catalog/product/cache/9183606dc745a22d5039e6cdddceeb98/X/A/XABP_1LVL.jpg",
-                              city: "Padova",
-                              street: "Via Roma 12",
-                              price: 300,
-                              bookmarkButton: BookmarkButton(
-                                size: 50.0,
-                                isSaved: isSaved[index],
-                                onPressed: () => toggleSave(index),
-                              ),
-                              onPressed: () => {
-                                    // TODO: replace with real data
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) =>
-                                    //         FacilityDetailPage(
-                                    //       isLogged: widget.isLogged,
-                                    //       isStudent: true,
-                                    //       isWizardPage: false,
-                                          
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                  });
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                              height: 20.h); // Add padding between items
-                        },
+        content: isOnLoad
+            ? const Expanded(
+                child: Center(
+                child: CircularProgressIndicator(),
+              ))
+            : ref.read(networkAwareProvider) == NetworkStatus.off
+                ? Expanded(
+                      child: Center(
+                        child: NoInternetErrorMessage(context: context),
                       ),
-                    ),
+                    )
+                : filteredAds.isEmpty
+                    ? Expanded(
+                      child: Center(
+                      child: NoDataErrorMessage(
+                        context: context,
+                      ),
+                    ))
+                    : Expanded(
+                        child: Column(
+                          children: [
+                            areFiltersApplied
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                                    child: OutlinedButton.icon(
+                                      onPressed: () {
+                                        print("remove filters pressed");
+                                        // TODO: implement areFiltersApplied logic
+
+                                        // setState(() {
+                                        //   areFiltersApplied = false;
+                                        // });
+                                      },
+                                      label: Text(AppLocalizations.of(context)!
+                                          .btnRemoveFilters),
+                                      icon: const Icon(Icons.clear_rounded),
+                                      style: OutlinedButton.styleFrom(
+                                          foregroundColor:
+                                              Theme.of(context).colorScheme.error,
+                                          side: BorderSide(
+                                              color:
+                                                  Theme.of(context).colorScheme.error)),
+                                    ),
+                                  )
+                                // ignore: dead_code
+                                : const SizedBox.shrink(),
+                            Expanded(
+                              child: ListView.separated(
+                                padding: EdgeInsets.all(20.w),
+                                itemCount: filteredAds.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return AdsBox(
+                                      imageUrl:
+                                          filteredAds[index].photosURLs!.first,
+                                      city: filteredAds[index].address.city,
+                                      street: filteredAds[index].address.street,
+                                      price: filteredAds[index].monthlyRent,
+                                      onPressed: () => {
+                                          Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FacilityDetailPage(
+                                              isLogged: widget.isLogged,
+                                              isStudent: true,
+                                              isWizardPage: false,
+                                              ad: filteredAds[index],
+                                              adUid: filteredAds[index].uid,
+                                              studentUid:
+                                                  widget.currentUserUid,
+                                              isEditingMode: false,
+                                            ),
+                                          ),
+                                        ),
+                                      }
+                                  );
+                                },
+                                separatorBuilder: (BuildContext context, int index) {
+                                  return SizedBox(height: 20.h);
+                                },
+                              ),
+                            ),
                   ],
                 ),
               ));
