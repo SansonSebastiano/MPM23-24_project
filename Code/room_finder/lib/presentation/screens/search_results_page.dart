@@ -153,7 +153,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                 roommates! > 0;
 
               if (areFiltersApplied) {
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) {
                       return SearchResultsPage(
                         isLogged: widget.isLogged,
@@ -211,148 +211,153 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
       );
     });
 
-    return PopScope(
+    return PopScope (
       canPop: false,
-      onPopInvoked: (canPop) { 
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return const MyHomePage();
-          }));
+      onPopInvoked: (didPop) {
+        if(didPop) {
+          return;
+        }
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const MyHomePage();
+        }));
       },
       child: SecondaryTemplateScreen(
-        leftHeaderWidget:
-            DarkBackButton(
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const MyHomePage();
-              }))
-            ),
-        centerHeaderWidget: CustomSearchBar(
-          hintText: widget.searchCity,
-          isLogged: widget.isLogged,
-          currentUserUid: widget.currentUserUid,
-        ),
-        rightHeaderWidget:
-            FilterButton(onPressed: () => _showSearchFilterPanel()),
-        rightHeaderWidgetVisibility: true,
-        content: isOnLoad
-            ? const Expanded(
-                child: Center(
-                child: CircularProgressIndicator(),
-              ))
-            : ref.read(networkAwareProvider) == NetworkStatus.off
-                ? Expanded(
-                      child: Center(
-                        child: NoInternetErrorMessage(context: context),
-                      ),
-                    )
-                : filteredAds.isEmpty
-                    ? Expanded(
-                        child: Column(
-                          children: [
-                            // If filters are applied, show the "Remove Filters" button
-                            if (areFiltersApplied)
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10.h),
-                                child: OutlinedButton.icon(
-                                  onPressed: () {
-                                    // Remove filters by reinvoking SearchResultsPage without filters
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return SearchResultsPage(
-                                        isLogged: widget.isLogged,
-                                        searchCity: widget.searchCity,
-                                        currentUserUid: widget.currentUserUid,
-                                      );
-                                    }));
-                                  },
-                                  label: Text(AppLocalizations.of(context)!.btnRemoveFilters),
-                                  icon: const Icon(Icons.clear_rounded),
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: Theme.of(context).colorScheme.error,
-                                    side: BorderSide(
-                                      color: Theme.of(context).colorScheme.error,
+          leftHeaderWidget:
+              DarkBackButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const MyHomePage();
+                }))
+              ),
+          centerHeaderWidget: CustomSearchBar(
+            hintText: widget.searchCity,
+            isLogged: widget.isLogged,
+            currentUserUid: widget.currentUserUid,
+            isInvokedFromHome: false,
+          ),
+          rightHeaderWidget:
+              FilterButton(onPressed: () => _showSearchFilterPanel()),
+          rightHeaderWidgetVisibility: true,
+          content: isOnLoad
+              ? const Expanded(
+                  child: Center(
+                  child: CircularProgressIndicator(),
+                ))
+              : ref.read(networkAwareProvider) == NetworkStatus.off
+                  ? Expanded(
+                        child: Center(
+                          child: NoInternetErrorMessage(context: context),
+                        ),
+                      )
+                  : filteredAds.isEmpty
+                      ? Expanded(
+                          child: Column(
+                            children: [
+                              // If filters are applied, show the "Remove Filters" button
+                              if (areFiltersApplied)
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10.h),
+                                  child: OutlinedButton.icon(
+                                    onPressed: () {
+                                      // Remove filters by reinvoking SearchResultsPage without filters
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return SearchResultsPage(
+                                          isLogged: widget.isLogged,
+                                          searchCity: widget.searchCity,
+                                          currentUserUid: widget.currentUserUid,
+                                        );
+                                      }));
+                                    },
+                                    label: Text(AppLocalizations.of(context)!.btnRemoveFilters),
+                                    icon: const Icon(Icons.clear_rounded),
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor: Theme.of(context).colorScheme.error,
+                                      side: BorderSide(
+                                        color: Theme.of(context).colorScheme.error,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            Expanded(
-                              child: Center(
-                                child: NoDataErrorMessage(
-                                  context: context,
+                              Expanded(
+                                child: Center(
+                                  child: NoDataErrorMessage(
+                                    context: context,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : Expanded(
-                        child: Column(
-                          children: [
-                            areFiltersApplied
-                                ? Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                                    child: OutlinedButton.icon(
-                                      onPressed: () {
-                                        // Remove filters by reinvoking SearchResultsPage without filters
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context) {
-                                          return SearchResultsPage(
-                                            isLogged: widget.isLogged,
-                                            searchCity: widget.searchCity,
-                                            currentUserUid: widget.currentUserUid
-                                          );
-                                        }));
-                                      },
-                                      label: Text(AppLocalizations.of(context)!
-                                          .btnRemoveFilters),
-                                      icon: const Icon(Icons.clear_rounded),
-                                      style: OutlinedButton.styleFrom(
-                                          foregroundColor:
-                                              Theme.of(context).colorScheme.error,
-                                          side: BorderSide(
-                                              color:
-                                                  Theme.of(context).colorScheme.error)),
-                                    ),
-                                  )
-                                : const SizedBox.shrink(),
-                            Expanded(
-                              child: ListView.separated(
-                                padding: EdgeInsets.all(20.w),
-                                itemCount: filteredAds.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return AdsBox(
-                                      imageUrl:
-                                          filteredAds[index].photosURLs!.first,
-                                      city: filteredAds[index].address.city,
-                                      street: filteredAds[index].address.street,
-                                      price: filteredAds[index].monthlyRent,
-                                      onPressed: () => {
-                                          Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                FacilityDetailPage(
+                            ],
+                          ),
+                        )
+                      : Expanded(
+                          child: Column(
+                            children: [
+                              areFiltersApplied
+                                  ? Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 10.h),
+                                      child: OutlinedButton.icon(
+                                        onPressed: () {
+                                          // Remove filters by reinvoking SearchResultsPage without filters
+                                          Navigator.pushReplacement(context,
+                                              MaterialPageRoute(builder: (context) {
+                                            return SearchResultsPage(
                                               isLogged: widget.isLogged,
-                                              isStudent: true,
-                                              isWizardPage: false,
-                                              ad: filteredAds[index],
-                                              adUid: filteredAds[index].uid,
-                                              studentUid:
-                                                  widget.currentUserUid,
-                                              isEditingMode: false,
+                                              searchCity: widget.searchCity,
+                                              currentUserUid: widget.currentUserUid
+                                            );
+                                          }));
+                                        },
+                                        label: Text(AppLocalizations.of(context)!
+                                            .btnRemoveFilters),
+                                        icon: const Icon(Icons.clear_rounded),
+                                        style: OutlinedButton.styleFrom(
+                                            foregroundColor:
+                                                Theme.of(context).colorScheme.error,
+                                            side: BorderSide(
+                                                color:
+                                                    Theme.of(context).colorScheme.error)),
+                                      ),
+                                    )
+                                  : const SizedBox.shrink(),
+                              Expanded(
+                                child: ListView.separated(
+                                  padding: EdgeInsets.all(20.w),
+                                  itemCount: filteredAds.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return AdsBox(
+                                        imageUrl:
+                                            filteredAds[index].photosURLs!.first,
+                                        city: filteredAds[index].address.city,
+                                        street: filteredAds[index].address.street,
+                                        price: filteredAds[index].monthlyRent,
+                                        onPressed: () => {
+                                            Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FacilityDetailPage(
+                                                isLogged: widget.isLogged,
+                                                isStudent: true,
+                                                isWizardPage: false,
+                                                ad: filteredAds[index],
+                                                adUid: filteredAds[index].uid,
+                                                studentUid:
+                                                    widget.currentUserUid,
+                                                isEditingMode: false,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      }
-                                  );
-                                },
-                                separatorBuilder: (BuildContext context, int index) {
-                                  return SizedBox(height: 20.h);
-                                },
+                                        }
+                                    );
+                                  },
+                                  separatorBuilder: (BuildContext context, int index) {
+                                    return SizedBox(height: 20.h);
+                                  },
+                                ),
                               ),
-                            ),
-                  ],
-                ),
-              ))
+                    ],
+                  ),
+                )
+      ),
     );
   }
 }

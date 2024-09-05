@@ -98,7 +98,8 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                 CustomSearchBar(
                     hintText: AppLocalizations.of(context)!.lblEnterCity,
                     isLogged: widget.isLogged,
-                    currentUserUid: widget.studentUser.uid!),
+                    currentUserUid: widget.studentUser.uid!,
+                    isInvokedFromHome: true),
                 SizedBox(height: 60.h),
                 Align(
                   alignment: Alignment.centerLeft,

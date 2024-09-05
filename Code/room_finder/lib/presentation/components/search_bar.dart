@@ -10,12 +10,14 @@ class CustomSearchBar extends StatefulWidget {
   final String? hintText;
   final bool isLogged;
   final String currentUserUid;
+  final bool isInvokedFromHome;
 
   const CustomSearchBar({
     super.key, 
     this.hintText, 
     required this.isLogged,
-    required this.currentUserUid});
+    required this.currentUserUid,
+    required this.isInvokedFromHome});
 
   @override
   State<CustomSearchBar> createState() => _CustomSearchBarState();
@@ -71,14 +73,23 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                     ? () {
                         String searchCity = _searchController.text.trim();
 
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return SearchResultsPage(
-                            isLogged: widget.isLogged,
-                            searchCity: searchCity,
-                            currentUserUid: widget.currentUserUid
-                          );
-                        }));
+                        if(widget.isInvokedFromHome){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return SearchResultsPage(
+                              isLogged: widget.isLogged,
+                              searchCity: searchCity,
+                              currentUserUid: widget.currentUserUid
+                            );
+                          }));
+                        } else {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                            return SearchResultsPage(
+                              isLogged: widget.isLogged,
+                              searchCity: searchCity,
+                              currentUserUid: widget.currentUserUid
+                            );
+                          }));
+                        }
                       }
                     : null,
                 icon: const Icon(Icons.search),
