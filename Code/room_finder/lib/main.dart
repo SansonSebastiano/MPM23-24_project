@@ -124,10 +124,10 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
         successfulRead: (userData) {
           // create the user instance
           user = UserData(
-              uid: userAuthenticated!.uid,
-              name: userAuthenticated!.displayName,
-              email: userAuthenticated!.email,
-              photoUrl: userAuthenticated!.photoURL,
+              uid: userData.uid,
+              name: userData.name,
+              email: userData.email,
+              photoUrl: userData.photoUrl,
               isHost: userData.isHost,
               savedAds: userData.savedAds);
           // setting the user role to display the correct screens

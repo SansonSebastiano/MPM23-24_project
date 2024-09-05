@@ -16,9 +16,9 @@ const String _userCollectionName = 'users';
 const String _photoUserRef = "photos/users";
 
 /// This class allow to handle the 'users' collection in Firestore
-/// 
+///
 /// [_userCollection] refers to corresponding collection in Firestore
-/// 
+///
 /// [_usersRef] refers to path on Storage for uploading profile picture
 class UserDataSource {
   final CollectionReference _userCollection;
@@ -31,13 +31,9 @@ class UserDataSource {
   Future<Either<String, UserData>> getUser({required String userUid}) async {
     try {
       final docSnap = await _userCollection.doc(userUid).get();
-      
-      final savedAds = List<String>.from(docSnap[_savedAdsField] ?? []);
+      List<String> savedAds = List<String>.from(docSnap[_savedAdsField] ?? []);
 
-      return right(UserData(
-        isHost: docSnap[_isHostField], 
-        savedAds: savedAds
-      ));
+      return right(UserData(isHost: docSnap[_isHostField], savedAds: savedAds));
     } on FirebaseException catch (e) {
       return left(e.message ?? "Failed to get the user data");
     }
@@ -46,14 +42,18 @@ class UserDataSource {
   /// This method set a new document with [newUserUid] id and set the fiels 'isHost' with [isHost] value
   Future<void> addNewUser(
       {required String newUserUid, required bool isHost}) async {
-    final userRole = <String, bool>{_isHostField: isHost};
-    await _userCollection.doc(newUserUid).set(userRole);
+    final docData = {
+      _isHostField: isHost,
+      _savedAdsField: []
+    };
+    await _userCollection.doc(newUserUid).set(docData);
   }
 
   /// The method [updatePhoto] allows to update the user profile photo passing as parameters:
   /// - [imageFile], the new image to upload
   /// - [imageName], the name of the new image
-  Future<Either<String, String>> updatePhoto({required File imageFile, required String imageName}) async {
+  Future<Either<String, String>> updatePhoto(
+      {required File imageFile, required String imageName}) async {
     try {
       // if (image != null )
       // var imageFile = File(image.path);
@@ -70,7 +70,8 @@ class UserDataSource {
   /// The method [saveAd] allows to save an ad of interest by passing the parameters:
   /// - [adUid], the ad uid
   /// - [userUid], the id of the user who want to save the ad
-  Future<Either<String, void>> saveAd({required String adUid, required String userUid}) async {
+  Future<Either<String, void>> saveAd(
+      {required String adUid, required String userUid}) async {
     try {
       final userDocRef = _userCollection.doc(userUid);
 
@@ -87,7 +88,8 @@ class UserDataSource {
   /// The method [removeSavedAd] allows to remove a saved ad by passing the parameters:
   /// - [adUid], the ad uid
   /// - [userUid], the id of the user who want to save the ad
-  Future<Either<String, void>> removeSavedAd({required String adUid, required String userUid}) async {
+  Future<Either<String, void>> removeSavedAd(
+      {required String adUid, required String userUid}) async {
     try {
       final userDocRef = _userCollection.doc(userUid);
 
@@ -104,7 +106,8 @@ class UserDataSource {
   /// The method [isAdSaved] checks if an ad has been saved by the current user by passing the parameters:
   /// - [adUid], the ad uid
   /// - [userUid], the id of the user who want to save the ad
-  Future<Either<String, bool>> isAdSaved({required String adUid, required String userUid}) async {
+  Future<Either<String, bool>> isAdSaved(
+      {required String adUid, required String userUid}) async {
     try {
       final userDocRef = _userCollection.doc(userUid);
       final docSnap = await userDocRef.get();
@@ -121,18 +124,21 @@ class UserDataSource {
   }
 
   /// The method [getSavedAds] allows to retrieve the list of all the user's saved ads by passing as parameter the list of user saved ads uids
-  Future<Either<String, List<AdData?>>> getSavedAds({required List<String> savedAds}) async {
+  Future<Either<String, List<AdData?>>> getSavedAds(
+      {required List<String> savedAds}) async {
     if (savedAds.isEmpty) {
       return right([]); // Return an empty list if there are no ads
     }
-    
+
     try {
       final List<AdData?> adsList = [];
 
       for (String adUid in savedAds) {
-        final adResult = await _ref.read(adDataSourceProvider).getAd(adUid: adUid, isHost: false);
+        final adResult = await _ref
+            .read(adDataSourceProvider)
+            .getAd(adUid: adUid, isHost: false);
         adResult.fold(
-          (failure) => null, 
+          (failure) => null,
           (adData) => adsList.add(adData),
         );
       }

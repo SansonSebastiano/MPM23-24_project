@@ -67,16 +67,10 @@ class _PersonalInformationPageState
             context, AppLocalizations.of(context)!.lblConnectionErrorDesc);
       } else {
         // Proceed submitting changes
-        if (_nameController.text.isNotEmpty) {
-          ref
-              .read(authNotifierProvider.notifier)
-              .updateName(newUserName: _nameController.text);
-        }
-        if (_image != null) {
-          ref
-              .read(authNotifierProvider.notifier)
-              .updatePhoto(imageName: widget.user.uid!, imageFile: _image!);
-        }
+        ref.read(authNotifierProvider.notifier).updatePersonalInformation(
+            newUserName: _nameController.text,
+            imageName: widget.user.uid,
+            imageFile: _image);
       }
     }
   }
@@ -91,17 +85,13 @@ class _PersonalInformationPageState
         nameNotUpdated: () => showErrorSnackBar(
             context, AppLocalizations.of(context)!.lblFailedUpdateName),
         personalInfoUpdated: (newName, photoURL) {
-          if (newName != '') {
-            widget.user.setName(value: newName);
-          }
-          if (photoURL != '') {
-            widget.user.setPhotoUrl(value: photoURL);
-          }
-
+          // if (newName != '') {
+          //   widget.user.setName(value: newName);
+          // }
           showSuccessSnackBar(context,
               AppLocalizations.of(context)!.lblSuccessfulPersInfoUpdate);
 
-          Navigator.pop(context);
+          Navigator.pop(context, widget.user);
         },
         photoNotUpdated: () => showErrorSnackBar(
             context, AppLocalizations.of(context)!.lblFailedUpdatePhoto),

@@ -72,6 +72,19 @@ class AuthNotifier extends StateNotifier<AuthenticationState> {
         (response) => const AuthenticationState.successfulLogout());
   }
 
+  Future<void> updatePersonalInformation(
+      {String? newUserName, String? imageName, File? imageFile}) async {
+    state = const AuthenticationState.loading();
+
+    if (newUserName != null) {
+      await updateName(newUserName: newUserName);
+    }
+
+    if (imageName != null && imageFile != null) {
+      await updatePhoto(imageName: imageName, imageFile: imageFile);
+    }
+  }
+
   Future<void> updateName({required String newUserName}) async {
     state = const AuthenticationState.loading();
 
@@ -115,7 +128,7 @@ class AuthNotifier extends StateNotifier<AuthenticationState> {
         await _authDataSource.updatePassword(newPassword: newPassword);
 
     state = response.fold(
-        (error) => const AuthenticationState.passwordNotUpdated(), 
+        (error) => const AuthenticationState.passwordNotUpdated(),
         (response) => const AuthenticationState.passwordUpdated());
   }
 }

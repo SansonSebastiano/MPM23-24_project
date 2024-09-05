@@ -13,10 +13,9 @@
 /// *[savedAds] represent the user's list of saved ads
 class UserData {
   final String? uid;
-  String? name;
+  final String? name;
   final String? email;
-  // observation: actually photoURL is always <uid>.jpg, the change is not in the name but only in the file uploaded in Storage
-  String? photoUrl;
+  final String? photoUrl;
   final bool isHost;
   final List<String>? savedAds;
 
@@ -27,18 +26,6 @@ class UserData {
       this.photoUrl = '',
       required this.isHost,
       this.savedAds});
-
-  void setPhotoUrl({required String value}) {
-    if (value.isNotEmpty) {
-      photoUrl = value;
-    }
-  }
-
-  void setName({required String value}) {
-    if (value.isNotEmpty) {
-      name = value;
-    }
-  }
 
   // USE THESE WHEN THE OBJECT IS MORE COMPLEX, IN ORDER TO A EASIER CONVERSION
 
