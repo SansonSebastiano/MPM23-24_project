@@ -31,11 +31,17 @@ class _AccountPageState extends ConsumerState<AccountPage> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await ref
           .read(userNotifierProvider.notifier)
           .getUser(userUid: widget.user.uid!);
     });
+  }
+
+  Future<void> _waitForFirebaseUrlUpdate() async {
+    // Mock delay to simulate waiting for the Firebase URL update
+    await Future.delayed(const Duration(seconds: 1));
   }
 
   @override
@@ -73,133 +79,140 @@ class _AccountPageState extends ConsumerState<AccountPage> {
         ? const Center(
             child: CircularProgressIndicator(),
           )
-        : Column(
-            children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  ClipPath(
-                    clipper: EllipseClipper(),
-                    child: Container(
-                      height: 300.h,
-                      color: ColorPalette.darkConflowerBlue,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsets.only(top: 55.h, left: 235.w, right: 15.w),
-                    child: LogoutButton(
-                        onPressed: () => showOptionsDialog(
-                            context: context,
-                            androidDialog: ActionsAndroidDialog(
-                                context: context,
-                                title: AppLocalizations.of(context)!.btnLogout,
-                                content: Text(AppLocalizations.of(context)!
-                                    .logoutAlertMessage),
-                                onOk: () => {
-                                      ref
-                                          .read(authNotifierProvider.notifier)
-                                          .logout(),
-                                      Navigator.pop(context)
-                                    },
-                                onCancel: () => Navigator.pop(context)),
-                            iosDialog: ActionsIosDialog(
-                                context: context,
-                                title: AppLocalizations.of(context)!.btnLogout,
-                                content: Text(AppLocalizations.of(context)!
-                                    .logoutAlertMessage),
-                                onOk: () => {
-                                      ref
-                                          .read(authNotifierProvider.notifier)
-                                          .logout(),
-                                      Navigator.pop(context)
-                                    },
-                                onCancel: () => Navigator.pop(context)))),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 100.h),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          // FIXME: the photo is not updated after come back from personal info page
-                          AccountPhoto(
-                            size: 180.r,
-                            imageUrl: settingUser.photoUrl,
+        : FutureBuilder<void>(
+            future: _waitForFirebaseUrlUpdate(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return Column(
+                  children: [
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        ClipPath(
+                          clipper: EllipseClipper(),
+                          child: Container(
+                            height: 300.h,
+                            color: ColorPalette.darkConflowerBlue,
                           ),
-                          SizedBox(height: 10.h),
-                          Text(settingUser.name ?? '',
-                              style: Theme.of(context).textTheme.displayMedium),
-                          SizedBox(height: 10.h),
-                          Text(settingUser.email ?? '',
-                              style: Theme.of(context).textTheme.bodyMedium),
-                        ],
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: 55.h, left: 235.w, right: 15.w),
+                          child: LogoutButton(
+                              onPressed: () => showOptionsDialog(
+                                  context: context,
+                                  androidDialog: ActionsAndroidDialog(
+                                      context: context,
+                                      title: AppLocalizations.of(context)!.btnLogout,
+                                      content: Text(AppLocalizations.of(context)!
+                                          .logoutAlertMessage),
+                                      onOk: () => {
+                                            ref
+                                                .read(authNotifierProvider.notifier)
+                                                .logout(),
+                                            Navigator.pop(context)
+                                          },
+                                      onCancel: () => Navigator.pop(context)),
+                                  iosDialog: ActionsIosDialog(
+                                      context: context,
+                                      title: AppLocalizations.of(context)!.btnLogout,
+                                      content: Text(AppLocalizations.of(context)!
+                                          .logoutAlertMessage),
+                                      onOk: () => {
+                                            ref
+                                                .read(authNotifierProvider.notifier)
+                                                .logout(),
+                                            Navigator.pop(context)
+                                          },
+                                      onCancel: () => Navigator.pop(context)))),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 100.h),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Column(
+                              children: [
+                                AccountPhoto(
+                                  size: 180.r,
+                                  imageUrl: settingUser.photoUrl,
+                                ),
+                                SizedBox(height: 10.h),
+                                Text(settingUser.name ?? '',
+                                    style: Theme.of(context).textTheme.displayMedium),
+                                SizedBox(height: 10.h),
+                                Text(settingUser.email ?? '',
+                                    style: Theme.of(context).textTheme.bodyMedium),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.h),
+                      child: Divider(
+                        color: ColorPalette.blueberry,
+                        indent: 25.w,
+                        endIndent: 25.w,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20.h),
-                child: Divider(
-                  color: ColorPalette.blueberry,
-                  indent: 25.w,
-                  endIndent: 25.w,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 25.w, top: 15.h, bottom: 15.h),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    AppLocalizations.of(context)!.lblSettings,
-                    style: TextStyle(
-                      color: ColorPalette.oxfordBlue,
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.bold,
+                    Padding(
+                      padding: EdgeInsets.only(left: 25.w, top: 15.h, bottom: 15.h),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          AppLocalizations.of(context)!.lblSettings,
+                          style: TextStyle(
+                            color: ColorPalette.oxfordBlue,
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10.w,
-                  ),
-                  child: ListView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.zero,
-                    children: [
-                      SettingButtons(
-                        onPressed: () async {
-                          await Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => PersonalInformationPage(
-                                    user: settingUser,
-                                  )));
-                          setState(() {
-                            isOnLoad = true;
-                          });
-                          await ref
-                              .read(userNotifierProvider.notifier)
-                              .getUser(userUid: widget.user.uid!);
-                        },
-                        label: AppLocalizations.of(context)!.btnPersonalInfo,
-                        icon: Icons.person_outline,
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                        ),
+                        child: ListView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          children: [
+                            SettingButtons(
+                              onPressed: () async {
+                                await Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => PersonalInformationPage(
+                                          user: settingUser,
+                                        )));
+                                setState(() {
+                                  isOnLoad = true;
+                                });
+                                await ref
+                                    .read(userNotifierProvider.notifier)
+                                    .getUser(userUid: widget.user.uid!);
+                              },
+                              label: AppLocalizations.of(context)!.btnPersonalInfo,
+                              icon: Icons.person_outline,
+                            ),
+                            SettingButtons(
+                              onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          LoginSecurityPage(user: settingUser))),
+                              label: AppLocalizations.of(context)!.btnLoginSecurity,
+                              icon: Icons.login,
+                            ),
+                          ],
+                        ),
                       ),
-                      SettingButtons(
-                        onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    LoginSecurityPage(user: settingUser))),
-                        label: AppLocalizations.of(context)!.btnLoginSecurity,
-                        icon: Icons.login,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          );
+                    ),
+                  ],
+                );
+            }
+        );
   }
 }
 
