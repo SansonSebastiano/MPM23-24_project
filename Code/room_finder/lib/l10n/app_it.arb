@@ -155,5 +155,6 @@
     "lblAskNewAdUpload": "Sei sicuro di aggiungere questo nuovo annuncio?",
     "lblSuccessfulAdUpload": "Nuovo annuncio aggiunto",
     "lblSuccessfulAdDeleted": "Annuncio rimosso",
-    "lblSuccessfulAdUpdated": "Annuncio aggiornato"
+    "lblSuccessfulAdUpdated": "Annuncio aggiornato",
+    "lblSubmitChanges": "Applica modifiche"
 }

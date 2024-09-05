@@ -667,5 +667,9 @@
   "lblSuccessfulAdUpdated": "Ad updated",
   "@lblSuccessfulAdUpdated": {
     "description": "label for success snackbar"
+  },
+  "lblSubmitChanges": "Submit changes",
+  "@lblSubmitChanges": {
+    "description": "label for submitting changes button"
   }
 }

@@ -64,8 +64,7 @@ class _PersonalInformationPageState
       var networkStatus = ref.read(networkAwareProvider);
 
       if (networkStatus == NetworkStatus.off) {
-        // TODO: see issue #35
-        showErrorSnackBar(context, "No internet connection. Please try again.");
+        showErrorSnackBar(context, AppLocalizations.of(context)!.lblConnectionErrorDesc);
       } else {
         // Proceed submitting changes
         if (_nameController.text.isNotEmpty) {
@@ -205,8 +204,7 @@ class _PersonalInformationPageState
                             child: Stack(
                               children: [
                                 RectangleButton(
-                                  // TODO: see issue #35
-                                  label: "Submit changes",
+                                  label: AppLocalizations.of(context)!.lblSubmitChanges,
                                   onPressed: _handleSubmitChanges,
                                 ),
                                 if (!_isNameChanged && !_isPhotoChanged)
