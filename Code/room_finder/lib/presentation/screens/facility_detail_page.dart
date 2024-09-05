@@ -119,13 +119,13 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
 
     final photoCarousel = widget.isStudent
         ? StudentPhotoCarousel(
-          items: widget.ad.photosURLs!
-              .map((url) => Image(image: NetworkImage(url)))
-              .toList(),
-          isSaved: isSaved,
-          onSavePressed: toggleSave,
-          onBackPressed: () => Navigator.pop(context, true),
-        )
+            items: widget.ad.photosURLs!
+                .map((url) => Image(image: NetworkImage(url)))
+                .toList(),
+            isSaved: isSaved,
+            onSavePressed: toggleSave,
+            onBackPressed: () => Navigator.pop(context, true),
+          )
         : HostPhotoCarousel(
             items: widget.isWizardPage
                 ? widget.facilityPhotos!
@@ -160,7 +160,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
           // FIXME: too slow
           showSuccessSnackBar(
               context, AppLocalizations.of(context)!.lblSuccessfulAdUpload);
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const MyHomePage()),
           );
@@ -246,8 +246,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                 photoCarousel,
                 Expanded(
                   child: ListView(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 20.w, vertical: 20.h),
                     children: [
                       Column(
                         children: [
@@ -296,42 +296,48 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(vertical: 5.h),
-                            child: ListView.separated(
-                              padding: EdgeInsets.zero,
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return RichText(
-                                  text: TextSpan(
-                                    text: "• ${widget.ad.rooms[index].name}: ",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                    children: [
-                                      widget.ad.rooms[index].runtimeType == Bedroom
-                                          ? TextSpan(
-                                              text:
-                                                  "\n   ▪ ${bedsText.getRange(0, bedsText.length).join('\n   ▪ ')}")
-                                          : TextSpan(
-                                              text: "${widget.ad.rooms[index].quantity}",
-                                              style: Theme.of(context).textTheme.bodyMedium,
-                                            ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              separatorBuilder: (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 10.w,
-                                );
-                              },
-                              itemCount: widget.ad.rooms.length,
-                            )
-                          ),
+                              padding: EdgeInsets.symmetric(vertical: 5.h),
+                              child: ListView.separated(
+                                padding: EdgeInsets.zero,
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  return RichText(
+                                    text: TextSpan(
+                                      text:
+                                          "• ${widget.ad.rooms[index].name}: ",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                      children: [
+                                        widget.ad.rooms[index].runtimeType ==
+                                                Bedroom
+                                            ? TextSpan(
+                                                text:
+                                                    "\n   ▪ ${bedsText.getRange(0, bedsText.length).join('\n   ▪ ')}")
+                                            : TextSpan(
+                                                text:
+                                                    "${widget.ad.rooms[index].quantity}",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                              ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return SizedBox(
+                                    height: 10.w,
+                                  );
+                                },
+                                itemCount: widget.ad.rooms.length,
+                              )),
                           const Divider(
                             color: ColorPalette.blueberry,
                           ),
@@ -351,7 +357,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                               ? Align(
                                   alignment: Alignment.topLeft,
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10.h),
                                     child: GestureDetector(
                                       onTap: () {
                                         if (widget.isLogged) {
@@ -364,8 +371,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                                       facilityAddress:
                                                           widget.ad.address,
                                                       facilityMaximumRentersCapacity:
-                                                          widget
-                                                              .ad.rentersCapacity,
+                                                          widget.ad
+                                                              .rentersCapacity,
                                                       facilityRenters:
                                                           widget.ad.renters,
                                                     )),
@@ -385,15 +392,16 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                               .textTheme
                                               .displaySmall!
                                               .copyWith(
-                                                fontSize: 18.sp,
-                                                color: ColorPalette.blueberry,
-                                                decoration:
-                                                    TextDecoration.underline,
-                                                    decorationColor: ColorPalette.blueberry
-                                              )),
+                                                  fontSize: 18.sp,
+                                                  color:
+                                                      ColorPalette.blueberry,
+                                                  decoration: TextDecoration
+                                                      .underline,
+                                                  decorationColor:
+                                                      ColorPalette
+                                                          .blueberry)),
                                     ),
-                                  )
-                                )
+                                  ))
                               : SizedBox(
                                   height: 200.h,
                                   child: Padding(
@@ -405,8 +413,10 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                           (BuildContext context, int index) {
                                         return HostFacilityDetailPageRenterBox(
                                           name: widget.ad.renters[index].name,
-                                          contractDeadline: widget.ad
-                                              .renters[index].contractDeadline,
+                                          contractDeadline: widget
+                                              .ad
+                                              .renters[index]
+                                              .contractDeadline,
                                         );
                                       },
                                       separatorBuilder:
@@ -429,7 +439,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.w, vertical: 20.h),
                         child: RectangleButton(
-                            label: AppLocalizations.of(context)!.btnRequestInfo,
+                            label:
+                                AppLocalizations.of(context)!.btnRequestInfo,
                             onPressed: () {
                               if (widget.isLogged) {
                                 Navigator.of(context).push(
@@ -444,7 +455,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                               } else {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                      builder: (context) => const LoginPage()),
+                                      builder: (context) =>
+                                          const LoginPage()),
                                 );
                               }
                             }),
@@ -454,7 +466,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 20.h),
                             child: RectangleButton(
-                                label: AppLocalizations.of(context)!.btnConfirm,
+                                label:
+                                    AppLocalizations.of(context)!.btnConfirm,
                                 onPressed: () async {
                                   widget.isEditingMode
                                       ? await updateAd()

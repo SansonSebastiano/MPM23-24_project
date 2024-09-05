@@ -227,7 +227,7 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
   }
 
   void _reviewAds(BuildContext context) {
-    Navigator.push(
+    Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) => FacilityDetailPage(

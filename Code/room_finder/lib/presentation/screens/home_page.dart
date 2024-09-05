@@ -247,7 +247,7 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                         isAddButton: true,
                         size: 40.w,
                         onPressed: () {
-                          Navigator.push(context,
+                          Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (context) {
                             return WizardPage1(
                               hostUser: widget.hostUser,

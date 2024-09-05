@@ -135,7 +135,7 @@ class _WizardPage4State extends State<WizardPage4> {
                 }
               }
 
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => WizardPage5(

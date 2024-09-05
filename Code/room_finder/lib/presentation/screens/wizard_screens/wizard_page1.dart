@@ -70,80 +70,112 @@ class _WizardPage1State extends State<WizardPage1> {
 
   @override
   Widget build(BuildContext context) {
-    return WizardTemplateScreen(
-      leftButton: CancelButton(onPressed: () {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) {
+          return;
+        }
         showOptionsDialog(
-            context: context,
-            androidDialog: ActionsAndroidDialog(
-                title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-                content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-                context: context,
-                onOk: () {
-                  // TODO: Replace with the real data
-                  backToHostHomePage(context);
-                },
-                onCancel: () {
-                  Navigator.of(context).pop();
-                }),
-            iosDialog: ActionsIosDialog(
-                title: AppLocalizations.of(context)!.lblWarningTitleDialog,
-                content: Text(AppLocalizations.of(context)!.lblCancelWizard),
-                context: context,
-                onOk: () {
-                  // TODO: Replace with the real data
-                  backToHostHomePage(context);
-                },
-                onCancel: () {
-                  Navigator.of(context).pop();
-                }));
-      }),
-      screenTitle: AppLocalizations.of(context)!.lblAddress,
-      currentStep: 1,
-      btnNextLabel: AppLocalizations.of(context)!.btnNext,
-      dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard1,
-      onOkDialog: () => Navigator.of(context).pop(),
-      onNextPressed: (_isCityValid && _isStreetValid)
-          ? () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => WizardPage2(
-                          address: Address(
-                              street: _streetController.text,
-                              city: _cityController.text),
-                          hostUser: widget.hostUser,
-                          isEditingMode: widget.isEditingMode,
-                          adToEdit: widget.adToEdit,
-                        )),
-              );
-            }
-          : null,
-      screenContent: Expanded(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Center(
-                  child: Image(
-                    image: const AssetImage('assets/images/Address-form.png'),
-                    width: 200.w,
-                    height: 200.h,
+          context: context,
+          androidDialog: ActionsAndroidDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+              context: context,
+              onOk: () {
+                // TODO: Replace with the real data
+                backToHostHomePage(context);
+              },
+              onCancel: () {
+                Navigator.of(context).pop();
+              }),
+          iosDialog: ActionsIosDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+              context: context,
+              onOk: () {
+                // TODO: Replace with the real data
+                backToHostHomePage(context);
+              },
+              onCancel: () {
+                Navigator.of(context).pop();
+              }));
+      },
+      child: WizardTemplateScreen(
+        leftButton: CancelButton(onPressed: () {
+          showOptionsDialog(
+              context: context,
+              androidDialog: ActionsAndroidDialog(
+                  title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                  content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                  context: context,
+                  onOk: () {
+                    // TODO: Replace with the real data
+                    backToHostHomePage(context);
+                  },
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  }),
+              iosDialog: ActionsIosDialog(
+                  title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                  content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+                  context: context,
+                  onOk: () {
+                    // TODO: Replace with the real data
+                    backToHostHomePage(context);
+                  },
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  }));
+        }),
+        screenTitle: AppLocalizations.of(context)!.lblAddress,
+        currentStep: 1,
+        btnNextLabel: AppLocalizations.of(context)!.btnNext,
+        dialogContent: AppLocalizations.of(context)!.lblContentDialogWizard1,
+        onOkDialog: () => Navigator.of(context).pop(),
+        onNextPressed: (_isCityValid && _isStreetValid)
+            ? () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => WizardPage2(
+                            address: Address(
+                                street: _streetController.text,
+                                city: _cityController.text),
+                            hostUser: widget.hostUser,
+                            isEditingMode: widget.isEditingMode,
+                            adToEdit: widget.adToEdit,
+                          )),
+                );
+              }
+            : null,
+        screenContent: Expanded(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Center(
+                    child: Image(
+                      image: const AssetImage('assets/images/Address-form.png'),
+                      width: 200.w,
+                      height: 200.h,
+                    ),
                   ),
-                ),
-                SizedBox(height: 20.h),
-                StandardTextField(
-                  label: AppLocalizations.of(context)!.lblCity,
-                  onValueValidityChanged: _onCityValidityChanged,
-                  controller: _cityController,
-                ),
-                SizedBox(height: 20.h),
-                StandardTextField(
-                  label: AppLocalizations.of(context)!.lblStreet,
-                  onValueValidityChanged: _onAddressValidityChanged,
-                  controller: _streetController,
-                ),
-              ],
+                  SizedBox(height: 20.h),
+                  StandardTextField(
+                    label: AppLocalizations.of(context)!.lblCity,
+                    onValueValidityChanged: _onCityValidityChanged,
+                    controller: _cityController,
+                  ),
+                  SizedBox(height: 20.h),
+                  StandardTextField(
+                    label: AppLocalizations.of(context)!.lblStreet,
+                    onValueValidityChanged: _onAddressValidityChanged,
+                    controller: _streetController,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

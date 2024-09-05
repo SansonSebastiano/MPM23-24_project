@@ -133,7 +133,7 @@ class _WizardPage3State extends State<WizardPage3> {
       onNextPressed: maxRenter == 0
           ? null
           : () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => WizardPage4(

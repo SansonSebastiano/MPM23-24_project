@@ -214,9 +214,9 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
     return PopScope(
       canPop: false,
       onPopInvoked: (canPop) { 
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const MyHomePage();
-        }));
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const MyHomePage();
+          }));
       },
       child: SecondaryTemplateScreen(
         leftHeaderWidget:

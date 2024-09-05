@@ -107,7 +107,7 @@ class _WizardPage2State extends State<WizardPage2> {
       currentStep: 2,
       btnNextLabel: AppLocalizations.of(context)!.btnNext,
       onNextPressed: () {
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => WizardPage3(

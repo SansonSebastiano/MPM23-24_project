@@ -99,7 +99,7 @@ class _WizardPage6State extends State<WizardPage6> {
           onNextPressed: _controller.value.text.isEmpty
               ? null
               : () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => WizardPage7(
