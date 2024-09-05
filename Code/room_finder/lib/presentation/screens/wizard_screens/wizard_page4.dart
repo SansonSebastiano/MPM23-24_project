@@ -35,7 +35,7 @@ class WizardPage4 extends StatefulWidget {
 }
 
 class _WizardPage4State extends State<WizardPage4> {
-  late TextEditingController _controller;
+  late TextEditingController _controller = TextEditingController();
   late List<AmenitiesOption> _amenities;
   late Map<String, bool> _amenitiesSwitches;
 
@@ -47,10 +47,10 @@ class _WizardPage4State extends State<WizardPage4> {
         for (var item in widget.adToEdit!.services) item: true
       };
     } else {
-      _controller = TextEditingController();
       _amenities = <AmenitiesOption>[];
       _amenitiesSwitches = {};
     }
+    _controller = TextEditingController();
   }
 
   @override

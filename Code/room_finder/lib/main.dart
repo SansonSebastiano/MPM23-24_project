@@ -85,7 +85,7 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
   // Get the data about the logged user from Firestore
   late UserData user = UserData(isHost: isHost);
 
-  // bool isOnLoad = true;
+  bool isOnLoad = true;
 
   @override
   void initState() {
@@ -107,9 +107,12 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
         await ref
             .read(userNotifierProvider.notifier)
             .getUser(userUid: userAuthenticated!.uid);
+      } else {
+        setState(() {
+          isOnLoad = false;
+        });
       }
     });
-    setState(() {});
   }
 
   @override
@@ -130,11 +133,15 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
           // setting the user role to display the correct screens
           setState(() {
             isHost = userData.isHost;
-            // isOnLoad = false;
+            isOnLoad = false;
           });
         },
         // TODO: decide this, on failed getting data
-        failedRead: () => null,
+        failedRead: () {
+          setState(() {
+            isOnLoad = false;
+          });
+        },
       );
     });
 
@@ -149,55 +156,64 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
       return const OnBoardingPage();
     }
 
-    return Scaffold(
-      body: isHost
-          // Host's screens
-          ? <Widget>[
-              bodyTemplate(
-                  body: SafeArea(
-                      child: HostHomePage(
-                hostUser: user,
-              ))),
-              bodyTemplate(body: const SafeArea(child: HostChatPage())),
-              bodyTemplate(body: AccountPage(user: user)),
-            ][currentHostPageIndex]
-          // Student's screens
-          : <Widget>[
-              bodyTemplate(
-                body: SafeArea(
-                    child: StudentHomePage(
-                  isLogged: isLogged,
-                  studentUser: user,
-                )),
-              ),
-              bodyTemplate(
-                  body: isLogged
-                      ? SafeArea(child: SavedAdsPage(currentUserUid: user.uid!))
-                      : const LoginPage()),
-              bodyTemplate(
-                  body: isLogged
-                      ? const SafeArea(child: StudentChatPage())
-                      : const LoginPage()),
-              bodyTemplate(
-                  body: isLogged ? AccountPage(user: user) : const LoginPage()),
-            ][currentStudentPageIndex],
-      bottomNavigationBar: isHost
-          ? HostNavigationBar(
-              currentPageIndex: currentHostPageIndex,
-              onDestinationSelected: (int index) {
-                setState(() {
-                  currentHostPageIndex = index;
-                });
-              },
-            )
-          : StudentNavigationBar(
-              currentPageIndex: currentStudentPageIndex,
-              onDestinationSelected: (int index) {
-                setState(() {
-                  currentStudentPageIndex = index;
-                });
-              },
+    return isOnLoad
+        ? const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
             ),
-    );
+          )
+        : Scaffold(
+            body: isHost
+                // Host's screens
+                ? <Widget>[
+                    bodyTemplate(
+                        body: SafeArea(
+                            child: HostHomePage(
+                      hostUser: user,
+                    ))),
+                    bodyTemplate(body: const SafeArea(child: HostChatPage())),
+                    bodyTemplate(body: AccountPage(user: user)),
+                  ][currentHostPageIndex]
+                // Student's screens
+                : <Widget>[
+                    bodyTemplate(
+                      body: SafeArea(
+                          child: StudentHomePage(
+                        isLogged: isLogged,
+                        studentUser: user,
+                      )),
+                    ),
+                    bodyTemplate(
+                        body: isLogged
+                            ? SafeArea(
+                                child: SavedAdsPage(currentUserUid: user.uid!))
+                            : const LoginPage()),
+                    bodyTemplate(
+                        body: isLogged
+                            ? const SafeArea(child: StudentChatPage())
+                            : const LoginPage()),
+                    bodyTemplate(
+                        body: isLogged
+                            ? AccountPage(user: user)
+                            : const LoginPage()),
+                  ][currentStudentPageIndex],
+            bottomNavigationBar: isHost
+                ? HostNavigationBar(
+                    currentPageIndex: currentHostPageIndex,
+                    onDestinationSelected: (int index) {
+                      setState(() {
+                        currentHostPageIndex = index;
+                      });
+                    },
+                  )
+                : StudentNavigationBar(
+                    currentPageIndex: currentStudentPageIndex,
+                    onDestinationSelected: (int index) {
+                      setState(() {
+                        currentStudentPageIndex = index;
+                      });
+                    },
+                  ),
+          );
   }
 }

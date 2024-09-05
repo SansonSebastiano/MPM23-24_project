@@ -202,17 +202,20 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    Future.delayed(const Duration(milliseconds: 500), () async {
       var connectivityStatusProvider = ref.watch(networkAwareProvider);
+
+      if (connectivityStatusProvider != NetworkStatus.on) {
+        connectivityStatusProvider = ref.watch(networkAwareProvider);
+      }
+
       setState(() {
         isConnected = connectivityStatusProvider == NetworkStatus.on;
       });
 
-      if (isConnected) {
-        ref
-            .read(adNotifierProvider.notifier)
-            .getAdsByHostUid(hostUid: widget.hostUser.uid!);
-      }
+      ref
+          .read(adNotifierProvider.notifier)
+          .getAdsByHostUid(hostUid: widget.hostUser.uid!);
     });
   }
 
@@ -311,8 +314,7 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                             },
                             separatorBuilder:
                                 (BuildContext context, int index) {
-                              return SizedBox(
-                                  height: 20.h);
+                              return SizedBox(height: 20.h);
                             },
                           ),
                         ),

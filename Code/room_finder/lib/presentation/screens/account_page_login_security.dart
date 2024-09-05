@@ -8,7 +8,6 @@ import 'package:room_finder/presentation/components/buttons/rectangle_buttons.da
 import 'package:room_finder/presentation/components/input_text_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/snackbar.dart';
-import 'package:room_finder/presentation/screens/account_page.dart';
 import 'package:room_finder/presentation/screens/login_page.dart';
 import 'package:room_finder/provider/authentication_provider.dart';
 import 'package:room_finder/util/network_handler.dart';
