@@ -671,5 +671,9 @@
   "lblSubmitChanges": "Submit changes",
   "@lblSubmitChanges": {
     "description": "label for submitting changes button"
+  },
+  "lblReloadPage": "Reload page",
+  "@lblReloadPage": {
+    "description": "label for reload page button"
   }
 }

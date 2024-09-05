@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/main.dart';
 import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
@@ -124,11 +125,36 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                     )
                   : randomCityAds.isEmpty
                       ? Expanded(
-                          child: Center(
-                          child: NoDataErrorMessage(
-                            context: context,
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10.h),
+                                child: OutlinedButton.icon(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                                        return const MyHomePage();
+                                    }));
+                                  },
+                                  label: Text(AppLocalizations.of(context)!.lblReloadPage),
+                                  icon: const Icon(Icons.refresh),
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: Theme.of(context).colorScheme.error,
+                                    side: BorderSide(
+                                      color: Theme.of(context).colorScheme.error,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Center(
+                                  child: NoDataErrorMessage(
+                                    context: context,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ))
+                        )
                       : Expanded(
                           child: ListView.separated(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
