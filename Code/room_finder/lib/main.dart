@@ -103,7 +103,6 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
         // get the infos
         userAuthenticated =
             ref.read(authNotifierProvider.notifier).currentUser!;
-        print(userAuthenticated!.photoURL);
         // get the data
         await ref
             .read(userNotifierProvider.notifier)

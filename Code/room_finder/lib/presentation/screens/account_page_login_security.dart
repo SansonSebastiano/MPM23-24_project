@@ -64,6 +64,10 @@ class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
     }
   }
 
+  bool get _hasUnsavedChanges =>
+      _pswdController.text.isNotEmpty ||
+      _confirmPswdController.text.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
     ref.listen(authNotifierProvider, (previous, next) {
@@ -81,113 +85,142 @@ class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
       );
     });
 
-    return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DarkBackButton(
-                        onPressed: (_pswdController.text.isNotEmpty ||
-                                _confirmPswdController.text.isNotEmpty)
-                            ? () {
-                                showOptionsDialog(
-                                    context: context,
-                                    androidDialog: ActionsAndroidDialog(
-                                        title: AppLocalizations.of(context)!
-                                            .lblWarningTitleDialog,
-                                        content: Text(
-                                            AppLocalizations.of(context)!
-                                                .lblCancelWizard),
-                                        context: context,
-                                        onOk: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      AccountPage(
-                                                          user: widget.user)));
-                                        },
-                                        onCancel: () {
-                                          Navigator.of(context).pop();
-                                        }),
-                                    iosDialog: ActionsIosDialog(
-                                        title: AppLocalizations.of(context)!
-                                            .lblWarningTitleDialog,
-                                        content: Text(
-                                            AppLocalizations.of(context)!
-                                                .lblCancelWizard),
-                                        context: context,
-                                        onOk: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      AccountPage(
-                                                          user: widget.user)));
-                                        },
-                                        onCancel: () {
-                                          Navigator.of(context).pop();
-                                        }));
-                              }
-                            : () => Navigator.of(context).pop()),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 30.w, vertical: 20.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 20.h),
-                          Center(
-                            child: Image(
-                              image: const AssetImage(
-                                  'assets/images/Change-password.png'),
-                              width: 200.w,
-                              height: 200.h,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) {
+            return;
+        }
+        if (_hasUnsavedChanges) {
+          showOptionsDialog(
+            context: context,
+            androidDialog: ActionsAndroidDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+              context: context,
+              onOk: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              onCancel: () => Navigator.of(context).pop(),
+            ),
+            iosDialog: ActionsIosDialog(
+              title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+              content: Text(AppLocalizations.of(context)!.lblCancelWizard),
+              context: context,
+              onOk: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              onCancel: () => Navigator.of(context).pop(),
+            ),
+          );
+        } else {
+          Navigator.of(context).pop();
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DarkBackButton(
+                          onPressed: (_pswdController.text.isNotEmpty ||
+                                  _confirmPswdController.text.isNotEmpty)
+                              ? () {
+                                  showOptionsDialog(
+                                      context: context,
+                                      androidDialog: ActionsAndroidDialog(
+                                          title: AppLocalizations.of(context)!
+                                              .lblWarningTitleDialog,
+                                          content: Text(
+                                              AppLocalizations.of(context)!
+                                                  .lblCancelWizard),
+                                          context: context,
+                                          onOk: () {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                          },
+                                          onCancel: () {
+                                            Navigator.of(context).pop();
+                                          }),
+                                      iosDialog: ActionsIosDialog(
+                                          title: AppLocalizations.of(context)!
+                                              .lblWarningTitleDialog,
+                                          content: Text(
+                                              AppLocalizations.of(context)!
+                                                  .lblCancelWizard),
+                                          context: context,
+                                          onOk: () {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                          },
+                                          onCancel: () {
+                                            Navigator.of(context).pop();
+                                          }));
+                                }
+                              : () => Navigator.of(context).pop()),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30.w, vertical: 20.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20.h),
+                            Center(
+                              child: Image(
+                                image: const AssetImage(
+                                    'assets/images/Change-password.png'),
+                                width: 200.w,
+                                height: 200.h,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                          Text(AppLocalizations.of(context)!.btnLoginSecurity,
-                              style: Theme.of(context).textTheme.displayMedium),
-                          SizedBox(height: 20.h),
-                          Text(AppLocalizations.of(context)!.lblLoginSecurity,
-                              style: Theme.of(context).textTheme.bodyLarge),
-                          SizedBox(height: 20.h),
-                          RegistrationPswdTextField(
-                            onPswdValidationChanged: _onPasswordValidityChanged,
-                            pswdController: _pswdController,
-                            confirmPswdController: _confirmPswdController,
-                          ),
-                          SizedBox(height: 40.h),
-                          Center(
-                            child: Stack(
-                              children: [
-                                RectangleButton(
-                                  label: "Change password",
-                                  onPressed: _handleChangePassword,
-                                ),
-                                if (!_isPasswordValid)
-                                  Positioned.fill(
-                                    child: Container(
-                                      color: Colors.white.withOpacity(0.5),
-                                    ),
+                            SizedBox(height: 20.h),
+                            Text(AppLocalizations.of(context)!.btnLoginSecurity,
+                                style: Theme.of(context).textTheme.displayMedium),
+                            SizedBox(height: 20.h),
+                            Text(AppLocalizations.of(context)!.lblLoginSecurity,
+                                style: Theme.of(context).textTheme.bodyLarge),
+                            SizedBox(height: 20.h),
+                            RegistrationPswdTextField(
+                              onPswdValidationChanged: _onPasswordValidityChanged,
+                              pswdController: _pswdController,
+                              confirmPswdController: _confirmPswdController,
+                            ),
+                            SizedBox(height: 40.h),
+                            Center(
+                              child: Stack(
+                                children: [
+                                  RectangleButton(
+                                    label: "Change password",
+                                    onPressed: _handleChangePassword,
                                   ),
-                              ],
+                                  if (!_isPasswordValid)
+                                    Positioned.fill(
+                                      child: Container(
+                                        color: Colors.white.withOpacity(0.5),
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 20.h),
-                        ],
+                            SizedBox(height: 20.h),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
