@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:room_finder/main.dart';
 import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
@@ -210,9 +211,20 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
       );
     });
 
-    return SecondaryTemplateScreen(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (canPop) { 
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const MyHomePage();
+        }));
+      },
+      child: SecondaryTemplateScreen(
         leftHeaderWidget:
-            DarkBackButton(onPressed: () => Navigator.pop(context)),
+            DarkBackButton(
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const MyHomePage();
+              }))
+            ),
         centerHeaderWidget: CustomSearchBar(
           hintText: widget.searchCity,
           isLogged: widget.isLogged,
@@ -340,6 +352,7 @@ class _SearchResultsPageState extends ConsumerState<SearchResultsPage> {
                             ),
                   ],
                 ),
-              ));
+              ))
+    );
   }
 }
