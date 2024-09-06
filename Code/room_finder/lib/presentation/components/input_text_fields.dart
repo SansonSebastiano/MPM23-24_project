@@ -87,10 +87,6 @@ class _StandardTextFieldState extends State<StandardTextField> {
                 _isValueEmpty = value.isEmpty;
               });
               widget.onValueValidityChanged(!_isValueEmpty);
-
-              if (!_isValueEmpty) {
-                print('Submitted text: $value');
-              }
             },
           ),
         ),
@@ -191,10 +187,6 @@ class _EmailTextFieldState extends State<EmailTextField> {
                   _isEmailEmpty = value.isEmpty;
                   _userInteraction = true;
                 });
-
-                if (!_isEmailEmpty) {
-                  print('Submitted text: $value');
-                }
               },
             )),
       ],
@@ -303,10 +295,6 @@ class _LoginPswdTextFieldState extends State<LoginPswdTextField> {
                   _isPswdEmpty = value.isEmpty;
                   _userInteraction = true;
                 });
-
-                if (!_isPswdEmpty) {
-                  print('Submitted text: $value');
-                }
               },
             )),
       ],

@@ -10,6 +10,7 @@ import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/search_bar.dart';
+import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
 import 'package:room_finder/presentation/screens/wizard_screens/wizard_page1.dart';
 import 'package:room_finder/provider/ad_provider.dart';
@@ -69,7 +70,13 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
     ref.listen(adNotifierProvider, (previous, next) {
       next.maybeWhen(
         orElse: () => null,
-        multipleRandomFailedReads: () => print("Fail on reading multiple ads"),
+        multipleRandomFailedReads: () {
+          showErrorSnackBar(context,
+              AppLocalizations.of(context)!.lblFailOperation("retrieving ads"));
+        setState(() {
+            isOnLoad = false;
+          });
+        },
         multipleRandomSuccessfulReads: (adsData) {
           randomCityAds = adsData;
 
@@ -112,17 +119,17 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
               ],
             ),
           ),
-          isOnLoad
-              ? const Expanded(
+          ref.read(networkAwareProvider) == NetworkStatus.off
+              ? Expanded(
                   child: Center(
-                  child: CircularProgressIndicator(),
-                ))
-              : ref.read(networkAwareProvider) == NetworkStatus.off
-                  ? Expanded(
+                    child: NoInternetErrorMessage(context: context),
+                  ),
+                )
+              : isOnLoad
+                  ? const Expanded(
                       child: Center(
-                        child: NoInternetErrorMessage(context: context),
-                      ),
-                    )
+                      child: CircularProgressIndicator(),
+                    ))
                   : randomCityAds.isEmpty
                       ? Expanded(
                           child: Column(
@@ -131,16 +138,20 @@ class _StudentHomePageBodyState extends ConsumerState<_StudentHomePageBody> {
                                 padding: EdgeInsets.symmetric(vertical: 10.h),
                                 child: OutlinedButton.icon(
                                   onPressed: () {
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                                        return const MyHomePage();
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return const MyHomePage();
                                     }));
                                   },
-                                  label: Text(AppLocalizations.of(context)!.lblReloadPage),
+                                  label: Text(AppLocalizations.of(context)!
+                                      .lblReloadPage),
                                   icon: const Icon(Icons.refresh),
                                   style: OutlinedButton.styleFrom(
-                                    foregroundColor: Theme.of(context).colorScheme.error,
+                                    foregroundColor:
+                                        Theme.of(context).colorScheme.error,
                                     side: BorderSide(
-                                      color: Theme.of(context).colorScheme.error,
+                                      color:
+                                          Theme.of(context).colorScheme.error,
                                     ),
                                   ),
                                 ),
@@ -203,7 +214,6 @@ class HostHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MainTemplateScreen(
-      // TODO: screenLabel should be adapted to the host user's name
       screenLabel: AppLocalizations.of(context)!.lblWelcomeUser(hostUser.name!),
       screenContent: _HostHomePageBody(
         hostUser: hostUser,
@@ -231,10 +241,6 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
     Future.delayed(const Duration(milliseconds: 500), () async {
       var connectivityStatusProvider = ref.watch(networkAwareProvider);
 
-      if (connectivityStatusProvider != NetworkStatus.on) {
-        connectivityStatusProvider = ref.watch(networkAwareProvider);
-      }
-
       setState(() {
         isConnected = connectivityStatusProvider == NetworkStatus.on;
       });
@@ -250,7 +256,13 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
     ref.listen(adNotifierProvider, (previous, next) {
       next.maybeWhen(
         orElse: () => null,
-        multipleFailedReads: () => print("Fail on reading multiple ads"),
+        multipleFailedReads: () {
+          showErrorSnackBar(context,
+              AppLocalizations.of(context)!.lblFailOperation("retrieving ads"));
+        setState(() {
+            isOnLoad = false;
+          });
+        },
         multipleSuccessfulReads: (adsData) {
           hostAds = adsData;
 
@@ -294,17 +306,17 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
                 ],
               ),
             ),
-            isOnLoad
-                ? const Expanded(
+            ref.read(networkAwareProvider) == NetworkStatus.off
+                ? Expanded(
                     child: Center(
-                    child: CircularProgressIndicator(),
-                  ))
-                : !isConnected
-                    ? Expanded(
+                      child: NoInternetErrorMessage(context: context),
+                    ),
+                  )
+                : isOnLoad
+                    ? const Expanded(
                         child: Center(
-                          child: NoInternetErrorMessage(context: context),
-                        ),
-                      )
+                        child: CircularProgressIndicator(),
+                      ))
                     : hostAds.isEmpty
                         ? Expanded(
                             child: Center(

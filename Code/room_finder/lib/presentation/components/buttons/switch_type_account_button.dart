@@ -46,11 +46,6 @@ class _SwitchTypeAccountButtonState extends State<SwitchTypeAccountButton> {
               Expanded(
                 child: GestureDetector(
                   onTap: widget.onStudent,
-                  // () {
-                  //   setState(() {
-                  //     isStudentSelected = true;
-                  //   });
-                  // },
                   child: Container(
                     decoration: BoxDecoration(
                       color: widget.isStudentSelected
@@ -77,11 +72,6 @@ class _SwitchTypeAccountButtonState extends State<SwitchTypeAccountButton> {
               Expanded(
                 child: GestureDetector(
                   onTap: widget.onHost,
-                  // () {
-                  //   setState(() {
-                  //     isStudentSelected = false;
-                  //   });
-                  // },
                   child: Container(
                     decoration: BoxDecoration(
                       color: widget.isStudentSelected

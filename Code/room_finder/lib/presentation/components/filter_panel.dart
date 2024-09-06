@@ -231,11 +231,6 @@ class _CustomChoiceChipState extends State<_CustomChoiceChip> {
           onSelected: (value) {
             widget.onSelected(value, entry.key);
           },
-          // (bool selected) {
-          //   setState(() {
-          //     _selectedIndex = selected ? entry.key : 0;
-          //   });
-          // },
         );
       }).toList(),
     );

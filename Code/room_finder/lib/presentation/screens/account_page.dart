@@ -73,6 +73,7 @@ class _AccountPageState extends ConsumerState<AccountPage> {
             isOnLoad = false;
           });
         },
+        failedRead: () => showErrorSnackBar(context, AppLocalizations.of(context)!.lblFailOperation("loading user")),
       );
     });
 

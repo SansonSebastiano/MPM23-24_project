@@ -12,7 +12,7 @@ import 'package:room_finder/style/color_palette.dart';
 /// - [bookmarkButton], if specified it provides a way to save preferred ads;
 /// - [onPressed], specifies the redirect to the apartment page.
 class AdsBox extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final String city;
   final String street;
   final int price;
@@ -49,12 +49,14 @@ class AdsBox extends StatelessWidget {
                       topLeft: Radius.circular(12.r),
                       topRight: Radius.circular(12.r),
                     ),
-                    child: Image.network(
-                      imageUrl,
+                    child:  (imageUrl != null) 
+                    ? Image.network(
+                      imageUrl!,
                       height: 180.h,
                       width: double.infinity,
                       fit: BoxFit.cover,
-                    ),
+                    )
+                    : Image.asset('assets/images/placeholder.jpg'),
                   ),
                   if (bookmarkButton != null)
                     Positioned(

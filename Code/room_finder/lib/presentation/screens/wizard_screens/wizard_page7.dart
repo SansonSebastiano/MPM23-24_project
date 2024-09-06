@@ -145,7 +145,6 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
                 content: Text(AppLocalizations.of(context)!.lblCancelWizard),
                 context: context,
                 onOk: () {
-                  // TODO: Replace with the real data
                   backToHostHomePage(context);
                 },
                 onCancel: () {
@@ -156,7 +155,6 @@ class _WizardPage7State extends ConsumerState<WizardPage7> {
                 content: Text(AppLocalizations.of(context)!.lblCancelWizard),
                 context: context,
                 onOk: () {
-                  // TODO: Replace with the real data
                   backToHostHomePage(context);
                 },
                 onCancel: () {

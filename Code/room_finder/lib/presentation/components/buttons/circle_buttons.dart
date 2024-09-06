@@ -164,20 +164,6 @@ class InfoButton extends StatelessWidget {
         minimumSize: Size(size.w, size.h),
       ),
     );
-    // ElevatedButton(
-    //   style: ElevatedButton.styleFrom(
-    //     backgroundColor: buttonColor,
-    //     shape: CircleBorder(
-    //       side: BorderSide(
-    //         color: ColorPalette.oxfordBlue,
-    //         width: 2.w,
-    //       ),
-    //     ),
-    //     minimumSize: Size(size, size),
-    //   ),
-    //   onPressed: onPressed,
-    //   child: Icon(icon, color: iconColor, size: size - 5),
-    // );
   }
 }
 
@@ -218,51 +204,6 @@ class AddRemoveButton extends StatelessWidget {
         }),
       ),
     );
-    // ElevatedButton(
-    //   style: ButtonStyle(
-    //     shape: WidgetStateProperty.resolveWith((Set<WidgetState> states) {
-    //       if (states.contains(WidgetState.disabled)) {
-    //         return CircleBorder(
-    //           side: BorderSide(
-    //             color: Colors.grey,
-    //             width: 2.w,
-    //           ),
-    //         );
-    //       }
-    //       return CircleBorder(
-    //         side: BorderSide(
-    //           color: ColorPalette.oxfordBlue,
-    //           width: 2.w,
-    //         ),
-    //       );
-    //     }),
-    //     // WidgetStateProperty.all<CircleBorder>(
-    //     //    CircleBorder(
-    //     //     side: BorderSide(
-    //     //       color: ColorPalette.oxfordBlue,
-    //     //       width: 2.w,
-    //     //     ),
-    //     //   ),
-    //     // ),
-    //     minimumSize: WidgetStateProperty.all<Size>(Size(size.w, size.h)),
-    //     backgroundColor: WidgetStateProperty.all<Color>(buttonColor),
-    //   ),
-    //   // ElevatedButton.styleFrom(
-    //   //   backgroundColor: buttonColor,
-    //   //   shape: CircleBorder(
-    //   //     side: BorderSide(
-    //   //       color: ColorPalette.oxfordBlue,
-    //   //       width: 2.w,
-    //   //     ),
-    //   //   ),
-    //   //   minimumSize: Size(size.w, size.h),
-    //   // ),
-    //   onPressed: onPressed,
-    //   child: Icon(
-    //     isAddButton ? Icons.add : Icons.remove,
-    //       color: iconColor,
-    //       size: size.w - 5),
-    // );
   }
 }
 

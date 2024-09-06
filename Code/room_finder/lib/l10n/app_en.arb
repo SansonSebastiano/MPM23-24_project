@@ -695,5 +695,15 @@
   "lblChangePswd": "Change password",
   "@lblChangePswd": {
     "description": "label for changing password button"
+  },
+  "lblFailOperation": "Fail on {operation}! Please try again",
+  "@lblFailOperation": {
+    "description": "The error message on fail operation",
+    "placeholders": {
+      "operation": {
+        "type": "String",
+        "example": "Operation"
+      }
+    }
   }
 }

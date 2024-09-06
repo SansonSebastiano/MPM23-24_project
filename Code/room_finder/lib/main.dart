@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:room_finder/firebase_options.dart';
 import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/bottom_bar.dart';
+import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/presentation/screens/account_page.dart';
 import 'package:room_finder/presentation/screens/chat_page.dart';
 import 'package:room_finder/presentation/screens/home_page.dart';
@@ -49,7 +50,6 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'RoomFinder',
           theme: GlobalThemeData.lightTheme,
-          darkTheme: GlobalThemeData.darkTheme,
           themeMode: ThemeMode.system,
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -136,11 +136,11 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
             isOnLoad = false;
           });
         },
-        // TODO: decide this, on failed getting data
         failedRead: () {
           setState(() {
             isOnLoad = false;
           });
+          showErrorSnackBar(context, AppLocalizations.of(context)!.lblFailOperation("loading user"));
         },
       );
     });

@@ -101,7 +101,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   children: [
                     SafeArea(
                         child: CancelButton(
-                          // TODO: Navigator.pop
                             onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(

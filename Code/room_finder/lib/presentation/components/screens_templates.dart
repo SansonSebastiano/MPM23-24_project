@@ -26,11 +26,14 @@ class MainTemplateScreen extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(left: 30.w, top: 30.h, bottom: 30.h),
+          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 30.h),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text(screenLabel,
-                style: Theme.of(context).textTheme.displayMedium),
+            child: FittedBox(
+              fit: BoxFit.fitWidth, 
+              child: Text(screenLabel,
+                  style: Theme.of(context).textTheme.displayMedium),
+            ),
           ),
         ),
         screenContent,
@@ -259,11 +262,9 @@ class WizardTemplateScreen extends StatelessWidget {
                   ? Text(screenDesc!,
                       style: Theme.of(context).textTheme.bodyMedium)
                   : const SizedBox.shrink(),
-              // const Spacer(),
 
               screenContent,
 
-              // const Spacer(),
               Padding(
                 padding: EdgeInsets.only(bottom: 30.h),
                 child: WizardStepper(
@@ -288,7 +289,6 @@ class WizardTemplateScreen extends StatelessWidget {
 
 /// Method used to navigate back to the host home page from wizard pages.
 void backToHostHomePage(BuildContext context) {
-  // TODO: fix this: if the host start the wizard in editing mode, it should go back to the corresponding ads details page and not to the home page
   Navigator.push(
     context,
     MaterialPageRoute(

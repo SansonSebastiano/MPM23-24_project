@@ -6,6 +6,7 @@ import 'package:room_finder/presentation/components/ads_box.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/screens_templates.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:room_finder/presentation/components/snackbar.dart';
 import 'package:room_finder/presentation/screens/facility_detail_page.dart';
 import 'package:room_finder/provider/user_provider.dart';
 import 'package:room_finder/util/network_handler.dart';
@@ -65,7 +66,8 @@ class _StudentHomePageBodyState extends ConsumerState<_SavedAdsPageBody> {
     ref.listen(userNotifierProvider, (previous, next) {
       next.maybeWhen(
           orElse: () => null,
-          failedRead: () => print("Fail on reading user"),
+          failedRead: () => showErrorSnackBar(context,
+              AppLocalizations.of(context)!.lblFailOperation("reading user")),
           successfulRead: (userData) {
             savedAdsUids = userData.savedAds!;
 
@@ -73,8 +75,13 @@ class _StudentHomePageBodyState extends ConsumerState<_SavedAdsPageBody> {
                 .read(userNotifierProvider.notifier)
                 .getSavedAds(savedAds: savedAdsUids);
           },
-          failedMultipleReads: () =>
-              print("Fail on reading multiple saved ads"),
+          failedMultipleReads: () {
+            showErrorSnackBar(context,
+              AppLocalizations.of(context)!.lblFailOperation("retrieving saved ads"));
+              setState(() {
+              isOnLoad = false;
+            });
+          },
           successfulMultipleReads: (adsData) {
             savedAds = adsData;
 

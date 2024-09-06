@@ -91,7 +91,9 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
             setState(() {
               isSaved = isAdSavedValue;
             });
-          });
+          },
+          failedSavedAdRead: () => showErrorSnackBar(context, AppLocalizations.of(context)!.lblFailOperation("saving ad")),
+        );
     });
 
     if (widget.isLogged && widget.isStudent) {
@@ -190,11 +192,10 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
           );
         },
         failedAddNewAd: () {
-          // TODO:
           setState(() {
             isOnLoad = false;
           });
-
+          showErrorSnackBar(context, AppLocalizations.of(context)!.lblFailOperation("adding new ad"));
         },
         successfulDeleteAd: () {
           showSuccessSnackBar(
@@ -205,7 +206,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
           );
         },
         failedDeleteAd: () {
-          // TODO:
+          showErrorSnackBar(context, AppLocalizations.of(context)!.lblFailOperation("deleting ad"));
         },
         successfulUpdateAd: () {
           setState(() {
@@ -220,7 +221,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
           );
         },
         failedUpdateAd: () {
-          // TODO:
+          showErrorSnackBar(context, AppLocalizations.of(context)!.lblFailOperation("updating ad"));
           setState(() {
             isOnLoad = false;
           });

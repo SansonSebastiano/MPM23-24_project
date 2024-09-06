@@ -11,11 +11,6 @@ import 'package:room_finder/style/color_palette.dart';
 class GlobalThemeData {
   static final Color _lightFocusColor =
       const Color.fromARGB(255, 0, 0, 0).withOpacity(0.12);
-  static final Color _darkFocusColor =
-      const Color.fromARGB(255, 255, 255, 255).withOpacity(0.12);
-
-  static ThemeData darkTheme =
-      themeData(darkColorScheme, _darkFocusColor, Brightness.dark);
 
   static ThemeData lightTheme =
       themeData(lightColorScheme, _lightFocusColor, Brightness.light);
@@ -106,17 +101,5 @@ class GlobalThemeData {
     onSurface: ColorPalette.oxfordBlue,
     onError: ColorPalette.aliceBlue,
     brightness: Brightness.light,
-  );
-
-  static const ColorScheme darkColorScheme = ColorScheme(
-    primary: ColorPalette.aliceBlue,
-    secondary: ColorPalette.jordyBlue,
-    surface: ColorPalette.oxfordBlue,
-    error: ColorPalette.error,
-    onPrimary: ColorPalette.darkConflowerBlue,
-    onSecondary: ColorPalette.aliceBlue,
-    onSurface: ColorPalette.aliceBlue,
-    onError: ColorPalette.aliceBlue,
-    brightness: Brightness.dark,
   );
 }

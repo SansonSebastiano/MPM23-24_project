@@ -21,19 +21,9 @@ const String _rentersSubcollectionName = 'renters';
 const String _adsCollectionName = 'ads';
 const String _photosAdsRef = "photos/ads";
 
-const String _cityAddress = "city";
-const String _streetAddress = "street";
-
 const String _roomName = "name";
 const String _roomQuantity = "quantity";
 const String _numBeds = "numBeds";
-
-const String _renterName = "name";
-const String _renterAge = "age";
-const String _renterStudies = "facultyOfStudies";
-const String _renterInterests = "interests";
-const String _renterContractDeadline = "contractDeadline";
-
 /// This class allow to handle the ads collection in Firestore
 ///
 /// [_adCollection] refers to corresponding collection in Firestore
@@ -130,31 +120,8 @@ class AdDataSource {
   /// The method [addNewAd] allows to add a new ad that respects the passed parameters
   Future<Either<String, void>> addNewAd(
       {required AdData newAd,
-      // required String hostUid,
-      // required String name,
-      // required Address address,
-      // required List<Room> rooms,
-      // required int rentersCapacity,
-      // required List<Renter> renters,
-      // required List<String> services,
-      // required int monthlyRent,
       required List<File> photosPaths}) async {
     try {
-      // final docData = {
-      //   _hostUidField: newAd.hostUid,
-      //   _nameField: newAd.name,
-      //   _rentersCapacityField: newAd.rentersCapacity,
-      //   _monthlyRentField: newAd.monthlyRent,
-      //   _servicesField: newAd.services,
-      // };
-
-      // final addressData = {
-      //   _cityAddress: newAd.address.city,
-      //   _streetAddress: newAd.address.street
-      // };
-
-      // docData[_addressSubcollectionName] = addressData;
-
       // 1. Add standard fields
       DocumentReference adDocRef = await _adCollection.add({
         _hostUidField: newAd.hostUid,
@@ -548,8 +515,6 @@ class AdDataSource {
     int? roommates,
   }) async {
     try {
-      // Query query = _adCollection;
-
       // Fetch all ads
       final adsSnapshot = await _adCollection.get();
       final ads = adsSnapshot.docs; // list of all 'ads' collections
@@ -573,16 +538,11 @@ class AdDataSource {
 
       // Apply price range filter
       if (minRent != null) {
-        // query = query.where(_monthlyRentField, isGreaterThanOrEqualTo: minRent);
         filteredList.removeWhere((item) => item[_monthlyRentField] < minRent);
       }
       if (maxRent != null) {
-        // query = query.where(_monthlyRentField, isLessThanOrEqualTo: maxRent);
         filteredList.removeWhere((item) => item[_monthlyRentField] > maxRent);
       }
-
-      // Execute the query
-      // final adsSnapshot = await query.get();
 
       List<AdData> filteredAds = [];
 
@@ -611,7 +571,6 @@ class AdDataSource {
         }
 
         // Apply renter filters
-        // TODO: less than or equals ????
         if (roommates != null && rentersList.length != roommates) {
           continue;
         }

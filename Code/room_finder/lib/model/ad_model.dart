@@ -1,6 +1,6 @@
 /// [AdData] is the object that encapsulate all the elements that characterize a rental proposal
 ///
-/// *[id] the ad id
+/// *[uid] the ad id
 ///
 /// *[hostUid] the id of the host who manages the facility
 ///

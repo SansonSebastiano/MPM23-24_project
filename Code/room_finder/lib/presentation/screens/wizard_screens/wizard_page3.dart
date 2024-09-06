@@ -43,9 +43,6 @@ class _WizardPage3State extends State<WizardPage3> {
 
   late List<Renter> _renters;
 
-  // TODO: implement the button active logic: when the user has filled all the fields
-  // bool _isButtonActive = false;
-
   @override
   void initState() {
     super.initState();
@@ -95,7 +92,6 @@ class _WizardPage3State extends State<WizardPage3> {
   @override
   Widget build(BuildContext context) {
     return WizardTemplateScreen(
-      // TODO: complete the leftButton and rightButton
       leftButton: DarkBackButton(onPressed: () {
         Navigator.of(context).pop();
       }),
@@ -107,7 +103,6 @@ class _WizardPage3State extends State<WizardPage3> {
                 content: Text(AppLocalizations.of(context)!.lblCancelWizard),
                 context: context,
                 onOk: () {
-                  // TODO: Replace with the real data
                   backToHostHomePage(context);
                 },
                 onCancel: () {
@@ -118,7 +113,6 @@ class _WizardPage3State extends State<WizardPage3> {
                 content: Text(AppLocalizations.of(context)!.lblCancelWizard),
                 context: context,
                 onOk: () {
-                  // TODO: Replace with the real data
                   backToHostHomePage(context);
                 },
                 onCancel: () {
@@ -222,7 +216,6 @@ class _WizardPage3State extends State<WizardPage3> {
                 selectedDate = date!;
               });
             },
-            // FIXME: the enable of the button doesn't work properly
             onConfirmPressed: () {
               setState(() {
                 _renters[index] = Renter(
@@ -267,7 +260,6 @@ class _WizardPage3State extends State<WizardPage3> {
                 selectedDate = date!;
               });
             },
-            // FIXME: the enable of the button doesn't work properly
             onConfirmPressed: () {
               setState(() {
                 _renters.add(Renter(

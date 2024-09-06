@@ -86,9 +86,6 @@ class _PersonalInformationPageState
         nameNotUpdated: () => showErrorSnackBar(
             context, AppLocalizations.of(context)!.lblFailedUpdateName),
         personalInfoUpdated: (newName, photoURL) {
-          // if (newName != '') {
-          //   widget.user.setName(value: newName);
-          // }
           showSuccessSnackBar(context,
               AppLocalizations.of(context)!.lblSuccessfulPersInfoUpdate);
 

@@ -82,7 +82,6 @@ class _WizardPage2State extends State<WizardPage2> {
                 content: Text(AppLocalizations.of(context)!.lblCancelWizard),
                 context: context,
                 onOk: () {
-                  // TODO: Replace with the real data
                   backToHostHomePage(context);
                 },
                 onCancel: () {
@@ -93,7 +92,6 @@ class _WizardPage2State extends State<WizardPage2> {
                 content: Text(AppLocalizations.of(context)!.lblCancelWizard),
                 context: context,
                 onOk: () {
-                  // TODO: Replace with the real data
                   backToHostHomePage(context);
                 },
                 onCancel: () {
@@ -218,9 +216,6 @@ class _WizardPage2State extends State<WizardPage2> {
   void _onOk(BuildContext context) {
     setState(() {
       _rooms.add(Room(name: _controller.text, quantity: 0));
-      // _rooms.add(RoomOption(
-      //   roomName: _controller.text,
-      // ));
     });
     _controller.clear();
     Navigator.of(context).pop();

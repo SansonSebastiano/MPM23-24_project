@@ -72,7 +72,6 @@ class _WizardPage6State extends State<WizardPage6> {
                         Text(AppLocalizations.of(context)!.lblCancelWizard),
                     context: context,
                     onOk: () {
-                      // TODO: Replace with the real data
                       backToHostHomePage(context);
                     },
                     onCancel: () {
@@ -84,7 +83,6 @@ class _WizardPage6State extends State<WizardPage6> {
                         Text(AppLocalizations.of(context)!.lblCancelWizard),
                     context: context,
                     onOk: () {
-                      // TODO: Replace with the real data
                       backToHostHomePage(context);
                     },
                     onCancel: () {
