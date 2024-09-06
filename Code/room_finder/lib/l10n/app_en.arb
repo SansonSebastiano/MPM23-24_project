@@ -679,5 +679,17 @@
   "lblDeleteAdDialog": "Are you sure to delete this ad?",
   "@lblDeleteAdDialog": {
     "description": "label for ad deletion"
+  },
+  "lblTitleWaitingDialog": "Please waiting...",
+  "@lblTitleWaitingDialog": {
+    "description": "label for waiting dialog"
+  },
+  "lblContentUploadWaitingDialog": "Adding new ad...",
+  "@lblContentUploadWaitingDialog": {
+    "description": "label for waiting dialog"
+  },
+  "lblContentUpdateWaitingDialog": "Updating this ad...",
+  "@lblContentUpdateWaitingDialog": {
+    "description": "label for waiting dialog"
   }
 }

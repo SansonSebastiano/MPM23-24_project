@@ -292,12 +292,6 @@ void backToHostHomePage(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(
-        builder: (context) => const Scaffold(
-              body: SafeArea(
-                child: Center(
-                  child: MyHomePage(),
-                ),
-              ),
-            )),
+        builder: (context) => const MyHomePage(),)
   );
 }

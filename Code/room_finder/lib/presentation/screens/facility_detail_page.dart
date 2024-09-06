@@ -55,6 +55,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
   bool isSaved = false;
   bool oneTime = false;
 
+  bool isOnLoad = true;
+
   @override
   void initState() {
     super.initState();
@@ -138,25 +140,25 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
             isWizardPage: widget.isWizardPage,
             onDeletePressed: () {
               showOptionsDialog(
-                  context: context,
-                  androidDialog: ActionsAndroidDialog(
-                    title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-                    content: Text(AppLocalizations.of(context)!.lblDeleteAdDialog), 
+                context: context,
+                androidDialog: ActionsAndroidDialog(
+                    title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                    content:
+                        Text(AppLocalizations.of(context)!.lblDeleteAdDialog),
                     context: context,
                     onCancel: () => Navigator.pop(context),
                     onOk: () => ref
                         .read(adNotifierProvider.notifier)
-                        .deleteAd(adUid: widget.adUid!)
-                  ),
-                  iosDialog: ActionsIosDialog(
-                    title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
-                    content: Text(AppLocalizations.of(context)!.lblDeleteAdDialog), 
+                        .deleteAd(adUid: widget.adUid!)),
+                iosDialog: ActionsIosDialog(
+                    title: AppLocalizations.of(context)!.lblWarningTitleDialog,
+                    content:
+                        Text(AppLocalizations.of(context)!.lblDeleteAdDialog),
                     context: context,
                     onCancel: () => Navigator.pop(context),
                     onOk: () => ref
                         .read(adNotifierProvider.notifier)
-                        .deleteAd(adUid: widget.adUid!)
-                  ),
+                        .deleteAd(adUid: widget.adUid!)),
               );
             },
             onEditPressed: () {
@@ -176,7 +178,10 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
       next.maybeWhen(
         orElse: () => null,
         successfulAddNewAd: () {
-          // FIXME: too slow
+          setState(() {
+            isOnLoad = false;
+          });
+
           showSuccessSnackBar(
               context, AppLocalizations.of(context)!.lblSuccessfulAdUpload);
           Navigator.push(
@@ -186,6 +191,10 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
         },
         failedAddNewAd: () {
           // TODO:
+          setState(() {
+            isOnLoad = false;
+          });
+
         },
         successfulDeleteAd: () {
           showSuccessSnackBar(
@@ -199,7 +208,10 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
           // TODO:
         },
         successfulUpdateAd: () {
-          // FIXME: too slow
+          setState(() {
+            isOnLoad = false;
+          });
+
           showSuccessSnackBar(
               context, AppLocalizations.of(context)!.lblSuccessfulAdUpdated);
           Navigator.push(
@@ -209,6 +221,9 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
         },
         failedUpdateAd: () {
           // TODO:
+          setState(() {
+            isOnLoad = false;
+          });
         },
       );
     });
@@ -481,6 +496,77 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                             child: RectangleButton(
                                 label: AppLocalizations.of(context)!.btnConfirm,
                                 onPressed: () async {
+                                  setState(() {
+                                    isOnLoad = true;
+                                  });
+
+                                  if (isOnLoad) {
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return PopScope(
+                                          canPop: false,
+                                          child: AlertDialog(
+                                            content: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 16.w,
+                                                  vertical: 16.h),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        bottom: 16.h),
+                                                    child: SizedBox(
+                                                      height: 32.h,
+                                                      width: 32.w,
+                                                      child:
+                                                          const CircularProgressIndicator(),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 4.h),
+                                                      child: Text(
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .lblTitleWaitingDialog,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .bodyMedium!
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      )),
+                                                  Text(
+                                                    widget.isEditingMode
+                                                        ? AppLocalizations.of(
+                                                                context)!
+                                                            .lblContentUpdateWaitingDialog
+                                                        : AppLocalizations.of(
+                                                                context)!
+                                                            .lblContentUploadWaitingDialog,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                            fontSize: 14.sp),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
                                   widget.isEditingMode
                                       ? await updateAd()
                                       : await uploadNewAd();
