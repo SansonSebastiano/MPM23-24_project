@@ -198,7 +198,7 @@ class _LoginSecurityPageState extends ConsumerState<LoginSecurityPage> {
                               child: Stack(
                                 children: [
                                   RectangleButton(
-                                    label: "Change password",
+                                    label: AppLocalizations.of(context)!.lblChangePswd,
                                     onPressed: _handleChangePassword,
                                   ),
                                   if (!_isPasswordValid)

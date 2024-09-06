@@ -158,5 +158,6 @@
     "lblSuccessfulAdUpdated": "Annuncio aggiornato",
     "lblSubmitChanges": "Applica modifiche",
     "lblReloadPage": "Ricarica pagina",
-    "lblDeleteAdDialog": "Sei sicuro di voler eliminare questo annuncio?"
+    "lblDeleteAdDialog": "Sei sicuro di voler eliminare questo annuncio?",
+    "lblChangePswd": "Cambia password"
 }

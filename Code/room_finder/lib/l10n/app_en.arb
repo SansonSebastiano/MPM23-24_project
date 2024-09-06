@@ -679,5 +679,9 @@
   "lblDeleteAdDialog": "Are you sure to delete this ad?",
   "@lblDeleteAdDialog": {
     "description": "label for ad deletion"
+  },
+  "lblChangePswd": "Change password",
+  "@lblChangePswd": {
+    "description": "label for changing password button"
   }
 }
