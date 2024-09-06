@@ -40,8 +40,10 @@ class _AccountPageState extends ConsumerState<AccountPage> {
   }
 
   Future<void> _waitForFirebaseUrlUpdate() async {
+    PaintingBinding.instance.imageCache.clear();   // Clears the memory cache
+    PaintingBinding.instance.imageCache.clearLiveImages();  // Clears live images
     // Mock delay to simulate waiting for the Firebase URL update
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 2));
   }
 
   @override
