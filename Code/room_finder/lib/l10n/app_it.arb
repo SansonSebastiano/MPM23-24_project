@@ -161,5 +161,6 @@
     "lblDeleteAdDialog": "Sei sicuro di voler eliminare questo annuncio?",
     "lblTitleWaitingDialog": "Per favore attendi...",
     "lblContentUploadWaitingDialog": "Aggiunta del nuovo annuncio...",
-    "lblContentUpdateWaitingDialog": "Aggiornamento dell'annuncio..."
+    "lblContentUpdateWaitingDialog": "Aggiornamento dell'annuncio...",
+    "lblChangePswd": "Cambia password"
 }

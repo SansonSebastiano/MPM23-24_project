@@ -7,6 +7,7 @@ import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/circle_buttons.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
+import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/input_text_fields.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:room_finder/presentation/components/profile_photo_editor.dart';
@@ -98,6 +99,8 @@ class _PersonalInformationPageState
       );
     });
 
+    final networkStatus = ref.watch(networkAwareProvider);
+
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
@@ -133,122 +136,126 @@ class _PersonalInformationPageState
         }
       },
       child: Scaffold(
-        body: SafeArea(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DarkBackButton(
-                          onPressed: (_isNameChanged || _isPhotoChanged)
-                              ? () {
-                                  showOptionsDialog(
-                                      context: context,
-                                      androidDialog: ActionsAndroidDialog(
-                                          title: AppLocalizations.of(context)!
-                                              .lblWarningTitleDialog,
-                                          content: Text(
-                                              AppLocalizations.of(context)!
-                                                  .lblCancelWizard),
-                                          context: context,
-                                          onOk: () {
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context).pop();
-                                          },
-                                          onCancel: () {
-                                            Navigator.of(context).pop();
-                                          }),
-                                      iosDialog: ActionsIosDialog(
-                                          title: AppLocalizations.of(context)!
-                                              .lblWarningTitleDialog,
-                                          content: Text(
-                                              AppLocalizations.of(context)!
-                                                  .lblCancelWizard),
-                                          context: context,
-                                          onOk: () {
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context).pop();
-                                          },
-                                          onCancel: () {
-                                            Navigator.of(context).pop();
-                                          }));
-                                }
-                              : () => Navigator.of(context).pop()),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 30.w, vertical: 20.h),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 40.h),
-                            Text(AppLocalizations.of(context)!.btnPersonalInfo,
-                                style:
-                                    Theme.of(context).textTheme.displayMedium),
-                            SizedBox(height: 20.h),
-                            Text(
-                                AppLocalizations.of(context)!
-                                    .lblPersonalInformation,
-                                style: Theme.of(context).textTheme.bodyLarge),
-                            SizedBox(height: 40.h),
-                            Center(
-                              child: Text(
-                                AppLocalizations.of(context)!.lblAccountPhoto,
-                                style: Theme.of(context).textTheme.displaySmall,
-                              ),
-                            ),
-                            SizedBox(height: 20.h),
-                            Center(
-                              child: ProfilePhotoEditor(
-                                imageUrl: widget.user.photoUrl,
-                                onPhotoChanged: _onPhotoChanged,
-                                image: _image,
-                                onPhotoSetted: (newPhoto) {
-                                  setState(() {
-                                    _image = newPhoto;
-                                  });
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 20.h),
-                            StandardTextField(
-                              label: AppLocalizations.of(context)!.lblName,
-                              onValueValidityChanged: _onNameValidityChanged,
-                              controller: _nameController,
-                            ),
-                            SizedBox(height: 40.h),
-                            Center(
-                              child: Stack(
-                                children: [
-                                  RectangleButton(
-                                    label: AppLocalizations.of(context)!
-                                        .lblSubmitChanges,
-                                    onPressed: _handleSubmitChanges,
-                                  ),
-                                  if (!_isNameChanged && !_isPhotoChanged)
-                                    Positioned.fill(
-                                      child: Container(
-                                        color: Colors.white.withOpacity(0.5),
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 20.h),
-                          ],
-                        ),
+        body: networkStatus == NetworkStatus.off
+            ? Center(
+                heightFactor: 6.h,
+                child: NoInternetErrorMessage(context: context))
+            : SafeArea(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
                       ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DarkBackButton(
+                              onPressed: (_isNameChanged || _isPhotoChanged)
+                                  ? () {
+                                      showOptionsDialog(
+                                          context: context,
+                                          androidDialog: ActionsAndroidDialog(
+                                              title: AppLocalizations.of(context)!
+                                                  .lblWarningTitleDialog,
+                                              content: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .lblCancelWizard),
+                                              context: context,
+                                              onOk: () {
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pop();
+                                              },
+                                              onCancel: () {
+                                                Navigator.of(context).pop();
+                                              }),
+                                          iosDialog: ActionsIosDialog(
+                                              title: AppLocalizations.of(context)!
+                                                  .lblWarningTitleDialog,
+                                              content: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .lblCancelWizard),
+                                              context: context,
+                                              onOk: () {
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pop();
+                                              },
+                                              onCancel: () {
+                                                Navigator.of(context).pop();
+                                              }));
+                                    }
+                                  : () => Navigator.of(context).pop()),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30.w, vertical: 20.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 40.h),
+                                Text(AppLocalizations.of(context)!.btnPersonalInfo,
+                                    style:
+                                        Theme.of(context).textTheme.displayMedium),
+                                SizedBox(height: 20.h),
+                                Text(
+                                    AppLocalizations.of(context)!
+                                        .lblPersonalInformation,
+                                    style: Theme.of(context).textTheme.bodyLarge),
+                                SizedBox(height: 40.h),
+                                Center(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.lblAccountPhoto,
+                                    style: Theme.of(context).textTheme.displaySmall,
+                                  ),
+                                ),
+                                SizedBox(height: 20.h),
+                                Center(
+                                  child: ProfilePhotoEditor(
+                                    imageUrl: widget.user.photoUrl,
+                                    onPhotoChanged: _onPhotoChanged,
+                                    image: _image,
+                                    onPhotoSetted: (newPhoto) {
+                                      setState(() {
+                                        _image = newPhoto;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SizedBox(height: 20.h),
+                                StandardTextField(
+                                  label: AppLocalizations.of(context)!.lblName,
+                                  onValueValidityChanged: _onNameValidityChanged,
+                                  controller: _nameController,
+                                ),
+                                SizedBox(height: 40.h),
+                                Center(
+                                  child: Stack(
+                                    children: [
+                                      RectangleButton(
+                                        label: AppLocalizations.of(context)!
+                                            .lblSubmitChanges,
+                                        onPressed: _handleSubmitChanges,
+                                      ),
+                                      if (!_isNameChanged && !_isPhotoChanged)
+                                        Positioned.fill(
+                                          child: Container(
+                                            color: Colors.white.withOpacity(0.5),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 20.h),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
       ),
     );
   }

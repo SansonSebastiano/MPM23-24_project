@@ -691,5 +691,9 @@
   "lblContentUpdateWaitingDialog": "Updating this ad...",
   "@lblContentUpdateWaitingDialog": {
     "description": "label for waiting dialog"
+  },
+  "lblChangePswd": "Change password",
+  "@lblChangePswd": {
+    "description": "label for changing password button"
   }
 }
