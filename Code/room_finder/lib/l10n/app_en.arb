@@ -675,5 +675,9 @@
   "lblReloadPage": "Reload page",
   "@lblReloadPage": {
     "description": "label for reload page button"
+  },
+  "lblDeleteAdDialog": "Are you sure to delete this ad?",
+  "@lblDeleteAdDialog": {
+    "description": "label for ad deletion"
   }
 }

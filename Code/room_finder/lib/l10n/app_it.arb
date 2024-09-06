@@ -157,5 +157,6 @@
     "lblSuccessfulAdDeleted": "Annuncio rimosso",
     "lblSuccessfulAdUpdated": "Annuncio aggiornato",
     "lblSubmitChanges": "Applica modifiche",
-    "lblReloadPage": "Ricarica pagina"
+    "lblReloadPage": "Ricarica pagina",
+    "lblDeleteAdDialog": "Sei sicuro di voler eliminare questo annuncio?"
 }

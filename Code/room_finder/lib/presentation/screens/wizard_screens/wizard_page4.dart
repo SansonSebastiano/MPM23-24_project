@@ -57,14 +57,30 @@ class _WizardPage4State extends State<WizardPage4> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    if (!widget.isEditingMode) {
-      _amenitiesSwitches = {
-        AppLocalizations.of(context)!.lblWiFi: false,
-        AppLocalizations.of(context)!.lblDishwasher: false,
-        AppLocalizations.of(context)!.lblWashingMachine: false,
-        AppLocalizations.of(context)!.lblDedicatedParking: false,
-        AppLocalizations.of(context)!.lblAirConditioning: false,
-      }; 
+    if (!_amenitiesSwitches.keys
+        .contains(AppLocalizations.of(context)!.lblWiFi)) {
+      _amenitiesSwitches
+          .addEntries({AppLocalizations.of(context)!.lblWiFi: false}.entries);
+    }
+    if (!_amenitiesSwitches.keys
+        .contains(AppLocalizations.of(context)!.lblDishwasher)) {
+      _amenitiesSwitches
+          .addEntries({AppLocalizations.of(context)!.lblDishwasher: false}.entries);
+    }
+    if (!_amenitiesSwitches.keys
+        .contains(AppLocalizations.of(context)!.lblWashingMachine)) {
+      _amenitiesSwitches
+          .addEntries({AppLocalizations.of(context)!.lblWashingMachine: false}.entries);
+    }
+    if (!_amenitiesSwitches.keys
+        .contains(AppLocalizations.of(context)!.lblDedicatedParking)) {
+      _amenitiesSwitches
+          .addEntries({AppLocalizations.of(context)!.lblDedicatedParking: false}.entries);
+    }
+    if (!_amenitiesSwitches.keys
+        .contains(AppLocalizations.of(context)!.lblAirConditioning)) {
+      _amenitiesSwitches
+          .addEntries({AppLocalizations.of(context)!.lblAirConditioning: false}.entries);
     }
 
     _amenities = _amenitiesSwitches.entries
@@ -135,7 +151,7 @@ class _WizardPage4State extends State<WizardPage4> {
                 }
               }
 
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => WizardPage5(

@@ -7,6 +7,7 @@ import 'package:room_finder/main.dart';
 import 'package:room_finder/model/ad_model.dart';
 import 'package:room_finder/model/user_model.dart';
 import 'package:room_finder/presentation/components/account_photo.dart';
+import 'package:room_finder/presentation/components/alert_dialogs.dart';
 import 'package:room_finder/presentation/components/buttons/rectangle_buttons.dart';
 import 'package:room_finder/presentation/components/error_messages.dart';
 import 'package:room_finder/presentation/components/photo_carousel.dart';
@@ -136,9 +137,27 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                     .toList(),
             isWizardPage: widget.isWizardPage,
             onDeletePressed: () {
-              ref
-                  .read(adNotifierProvider.notifier)
-                  .deleteAd(adUid: widget.adUid!);
+              showOptionsDialog(
+                  context: context,
+                  androidDialog: ActionsAndroidDialog(
+                    title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
+                    content: Text(AppLocalizations.of(context)!.lblDeleteAdDialog), 
+                    context: context,
+                    onCancel: () => Navigator.pop(context),
+                    onOk: () => ref
+                        .read(adNotifierProvider.notifier)
+                        .deleteAd(adUid: widget.adUid!)
+                  ),
+                  iosDialog: ActionsIosDialog(
+                    title: AppLocalizations.of(context)!.lblWarningTitleDialog, 
+                    content: Text(AppLocalizations.of(context)!.lblDeleteAdDialog), 
+                    context: context,
+                    onCancel: () => Navigator.pop(context),
+                    onOk: () => ref
+                        .read(adNotifierProvider.notifier)
+                        .deleteAd(adUid: widget.adUid!)
+                  ),
+              );
             },
             onEditPressed: () {
               Navigator.push(
@@ -160,7 +179,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
           // FIXME: too slow
           showSuccessSnackBar(
               context, AppLocalizations.of(context)!.lblSuccessfulAdUpload);
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const MyHomePage()),
           );
@@ -180,9 +199,10 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
           // TODO:
         },
         successfulUpdateAd: () {
+          // FIXME: too slow
           showSuccessSnackBar(
               context, AppLocalizations.of(context)!.lblSuccessfulAdUpdated);
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const MyHomePage()),
           );
@@ -246,8 +266,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                 photoCarousel,
                 Expanded(
                   child: ListView(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 20.w, vertical: 20.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                     children: [
                       Column(
                         children: [
@@ -301,8 +321,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                 padding: EdgeInsets.zero,
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemBuilder:
-                                    (BuildContext context, int index) {
+                                itemBuilder: (BuildContext context, int index) {
                                   return RichText(
                                     text: TextSpan(
                                       text:
@@ -393,13 +412,11 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                               .displaySmall!
                                               .copyWith(
                                                   fontSize: 18.sp,
-                                                  color:
-                                                      ColorPalette.blueberry,
-                                                  decoration: TextDecoration
-                                                      .underline,
+                                                  color: ColorPalette.blueberry,
+                                                  decoration:
+                                                      TextDecoration.underline,
                                                   decorationColor:
-                                                      ColorPalette
-                                                          .blueberry)),
+                                                      ColorPalette.blueberry)),
                                     ),
                                   ))
                               : SizedBox(
@@ -413,10 +430,8 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                                           (BuildContext context, int index) {
                                         return HostFacilityDetailPageRenterBox(
                                           name: widget.ad.renters[index].name,
-                                          contractDeadline: widget
-                                              .ad
-                                              .renters[index]
-                                              .contractDeadline,
+                                          contractDeadline: widget.ad
+                                              .renters[index].contractDeadline,
                                         );
                                       },
                                       separatorBuilder:
@@ -439,8 +454,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.w, vertical: 20.h),
                         child: RectangleButton(
-                            label:
-                                AppLocalizations.of(context)!.btnRequestInfo,
+                            label: AppLocalizations.of(context)!.btnRequestInfo,
                             onPressed: () {
                               if (widget.isLogged) {
                                 Navigator.of(context).push(
@@ -455,8 +469,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                               } else {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginPage()),
+                                      builder: (context) => const LoginPage()),
                                 );
                               }
                             }),
@@ -466,8 +479,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20.w, vertical: 20.h),
                             child: RectangleButton(
-                                label:
-                                    AppLocalizations.of(context)!.btnConfirm,
+                                label: AppLocalizations.of(context)!.btnConfirm,
                                 onPressed: () async {
                                   widget.isEditingMode
                                       ? await updateAd()

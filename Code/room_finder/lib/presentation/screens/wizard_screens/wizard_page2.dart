@@ -107,7 +107,7 @@ class _WizardPage2State extends State<WizardPage2> {
       currentStep: 2,
       btnNextLabel: AppLocalizations.of(context)!.btnNext,
       onNextPressed: () {
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => WizardPage3(
@@ -144,7 +144,7 @@ class _WizardPage2State extends State<WizardPage2> {
                         onRoomIncrement: () => setState(() {
                           _rooms[index].quantity++;
                           if (_rooms[index].runtimeType == Bedroom) {
-                            (_rooms[index] as Bedroom).numBeds.add(0);
+                            (_rooms[index] as Bedroom).numBeds.add(1);
                           }
                         }),
                         onRoomDecrement: () {
@@ -152,6 +152,10 @@ class _WizardPage2State extends State<WizardPage2> {
                             setState(() {
                               _rooms[index].quantity--;
                             });
+                            if (_rooms[index].runtimeType == Bedroom) {
+                              (_rooms[index] as Bedroom).numBeds.remove(
+                                  (_rooms[index] as Bedroom).numBeds.last);
+                            }
                           }
                         },
                         bedCounter: _rooms[index].runtimeType == Bedroom

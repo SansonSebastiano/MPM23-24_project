@@ -261,90 +261,93 @@ class _HostHomePageBodyState extends ConsumerState<_HostHomePageBody> {
       );
     });
 
-    return Expanded(
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.w),
-            child: Column(
-              children: [
-                FittedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(AppLocalizations.of(context)!.lblCreateAds),
-                      AddRemoveButton(
-                        isAddButton: true,
-                        size: 40.w,
-                        onPressed: () {
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) {
-                            return WizardPage1(
-                              hostUser: widget.hostUser,
-                              isEditingMode: false,
-                            );
-                          }));
-                        },
-                      ),
-                    ],
+    return PopScope(
+      canPop: false,
+      child: Expanded(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.w),
+              child: Column(
+                children: [
+                  FittedBox(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(AppLocalizations.of(context)!.lblCreateAds),
+                        AddRemoveButton(
+                          isAddButton: true,
+                          size: 40.w,
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return WizardPage1(
+                                hostUser: widget.hostUser,
+                                isEditingMode: false,
+                              );
+                            }));
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          isOnLoad
-              ? const Expanded(
-                  child: Center(
-                  child: CircularProgressIndicator(),
-                ))
-              : !isConnected
-                  ? Expanded(
-                      child: Center(
-                        child: NoInternetErrorMessage(context: context),
-                      ),
-                    )
-                  : hostAds.isEmpty
-                      ? Expanded(
-                          child: Center(
-                          child: NoDataErrorMessage(
-                            context: context,
-                          ),
-                        ))
-                      : Expanded(
-                          child: ListView.separated(
-                            padding: EdgeInsets.all(20.w),
-                            itemCount: hostAds.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return AdsBox(
-                                  imageUrl: hostAds[index].photosURLs!.first,
-                                  city: hostAds[index].address.city,
-                                  street: hostAds[index].address.street,
-                                  price: hostAds[index].monthlyRent,
-                                  onPressed: () => {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                FacilityDetailPage(
-                                              isLogged: true,
-                                              isStudent: false,
-                                              isWizardPage: false,
-                                              ad: hostAds[index],
-                                              adUid: hostAds[index].uid,
-                                              host: widget.hostUser,
-                                              isEditingMode: false,
+            isOnLoad
+                ? const Expanded(
+                    child: Center(
+                    child: CircularProgressIndicator(),
+                  ))
+                : !isConnected
+                    ? Expanded(
+                        child: Center(
+                          child: NoInternetErrorMessage(context: context),
+                        ),
+                      )
+                    : hostAds.isEmpty
+                        ? Expanded(
+                            child: Center(
+                            child: NoDataErrorMessage(
+                              context: context,
+                            ),
+                          ))
+                        : Expanded(
+                            child: ListView.separated(
+                              padding: EdgeInsets.all(20.w),
+                              itemCount: hostAds.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return AdsBox(
+                                    imageUrl: hostAds[index].photosURLs!.first,
+                                    city: hostAds[index].address.city,
+                                    street: hostAds[index].address.street,
+                                    price: hostAds[index].monthlyRent,
+                                    onPressed: () => {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FacilityDetailPage(
+                                                isLogged: true,
+                                                isStudent: false,
+                                                isWizardPage: false,
+                                                ad: hostAds[index],
+                                                adUid: hostAds[index].uid,
+                                                host: widget.hostUser,
+                                                isEditingMode: false,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      });
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(height: 20.h);
-                            },
+                                        });
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return SizedBox(height: 20.h);
+                              },
+                            ),
                           ),
-                        ),
-        ],
+          ],
+        ),
       ),
     );
   }

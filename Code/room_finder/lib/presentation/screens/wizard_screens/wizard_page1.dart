@@ -133,7 +133,7 @@ class _WizardPage1State extends State<WizardPage1> {
         onOkDialog: () => Navigator.of(context).pop(),
         onNextPressed: (_isCityValid && _isStreetValid)
             ? () {
-                Navigator.pushReplacement(
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => WizardPage2(
