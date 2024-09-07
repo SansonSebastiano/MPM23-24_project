@@ -123,7 +123,7 @@ class _WizardPage6State extends State<WizardPage6> {
                   TextField(
                     textAlign: TextAlign.start,
                     keyboardType: TextInputType.multiline,
-                    maxLength: 50,
+                    maxLength: 20,
                     maxLines: 4,
                     controller: _controller,
                     decoration: InputDecoration(

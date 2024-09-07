@@ -215,6 +215,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
 
           showSuccessSnackBar(
               context, AppLocalizations.of(context)!.lblSuccessfulAdUpdated);
+              
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const MyHomePage()),
@@ -238,7 +239,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
             newAd: AdData(
                 hostUid: widget.host!.uid!,
                 hostName: widget.host!.name!,
-                hostPhotoURL: widget.host!.photoUrl!,
+                hostPhotoURL: widget.host!.photoUrl ?? '',
                 name: widget.ad.name,
                 address: widget.ad.address,
                 rooms: widget.ad.rooms,
@@ -260,7 +261,7 @@ class FacilityDetailPageState extends ConsumerState<FacilityDetailPage> {
                 uid: widget.ad.uid,
                 hostUid: widget.host!.uid!,
                 hostName: widget.host!.name!,
-                hostPhotoURL: widget.host!.photoUrl!,
+                hostPhotoURL: widget.host!.photoUrl ?? '',
                 name: widget.ad.name,
                 address: widget.ad.address,
                 rooms: widget.ad.rooms,
@@ -602,16 +603,19 @@ class _MainFacilityInfos extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            RichText(
-              text: TextSpan(
-                text: facilityName,
-                style: Theme.of(context).textTheme.displaySmall,
-                children: [
-                  TextSpan(
-                    text: '\n$facilityAddress',
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                ],
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: RichText(
+                text: TextSpan(
+                  text: facilityName,
+                  style: Theme.of(context).textTheme.displaySmall,
+                  children: [
+                    TextSpan(
+                      text: '\n$facilityAddress',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
               ),
             ),
             RichText(
