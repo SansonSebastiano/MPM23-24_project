@@ -21,16 +21,10 @@ import 'package:room_finder/provider/user_provider.dart';
 import 'package:room_finder/style/theme.dart';
 import 'package:room_finder/util/shared_preferences.dart';
 
-// Variable to store whether the on boarding screen has been shown
-bool _isShown = true;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Firebase initialization
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // Check if the user has seen the on boarding screen before
-  // WARNING: if this is set to false, means that the user cannot be an existing user => isHost must be false
-  _isShown = await OnBoardingScreenPreferences.getWasShown();
   // Set the device orientation to portrait
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) => runApp(const ProviderScope(
@@ -85,13 +79,29 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
   // Get the data about the logged user from Firestore
   late UserData user = UserData(isHost: isHost);
 
+  bool shouldShowOnboarding = false;
   bool isOnLoad = true;
 
   @override
   void initState() {
     super.initState();
 
-    _readUser();
+    _checkOnboardingAndLoadUser();
+  }
+
+  void _checkOnboardingAndLoadUser() async {
+    // Check if the user has seen the onboarding screen
+    shouldShowOnboarding = !(await OnBoardingScreenPreferences.getWasShown());
+
+    if (shouldShowOnboarding) {
+      // Show the onboarding screen if it hasn't been shown yet
+      setState(() {
+        isOnLoad = false;
+      });
+    } else {
+      // Load the user information if the onboarding screen was already shown
+      _readUser();
+    }
   }
 
   void _readUser() {
@@ -145,15 +155,14 @@ class MyHomePageState extends ConsumerState<MyHomePage> {
       );
     });
 
+    if (shouldShowOnboarding) {
+      return const OnBoardingPage();
+    }
+
     Widget bodyTemplate({required Widget body}) {
       return Center(
         child: body,
       );
-    }
-
-    if (!_isShown) {
-      _isShown = true;
-      return const OnBoardingPage();
     }
 
     return isOnLoad
