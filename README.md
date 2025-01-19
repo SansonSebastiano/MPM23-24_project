@@ -1,6 +1,6 @@
 # RoomFinder
 
-**A project for the Mobile Programming and Multimedia course - MSc Computer Science - Università degli Studi di Padova - A.Y. 2023/2024**
+**A project for the Mobile Programming and Multimedia course - MSc Computer Science - University of Study of Padua - A.Y. 2023/2024**
 
 The project consists in creating a mobile application that respects all the mobile design and usability principles seen during classes. The app must be also developed using a cross-platform framework, optimizing so the writing of the code for both Android and iOS platforms. 
 
